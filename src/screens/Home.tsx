@@ -17,7 +17,7 @@ function Home(): React.JSX.Element {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>Screen</Text>
+            <Text>home Screen</Text>
         </SafeAreaView>
     );
 }

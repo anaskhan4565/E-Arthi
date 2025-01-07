@@ -14,4 +14,7 @@ export default{
     WHITE:'#FFFFFF',
     LIGHT_GRAY:'rgba(0, 0, 0, 0.2)',
 
+
+    //For HomeScreen in mainApp
+    LIGHT_GREEN:'#F3FFFC'
 }

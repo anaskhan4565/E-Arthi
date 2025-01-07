@@ -23,7 +23,8 @@ import SignUp from './src/screens/SignUp';
 import Splash from './src/screens/Splash';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import SplashScreen from './src/SplashScreen/SplashScreen';
-
+import AboutMore from './src/screens/Profile.jsx';
+import HomeScr from './src/screens/MainApp/HomeScr.jsx';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
@@ -40,7 +41,13 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.MapSelection} component={MapSelection} />
         <Stack.Screen name={ScreensName.OTP} component={OTP} />
         <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
+        <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
+
+
+        {/* specific to After Login: */}
+        <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
+ 
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
     SafeAreaView,
-    ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
     Dimensions,
-    useColorScheme,
     View,
     TouchableOpacity,
     TextInput,
@@ -14,16 +11,15 @@ import {
 } from 'react-native';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import CustomButtonWithImage from '../components/CustomButtonWithImage';
-import { useNavigation } from '@react-navigation/native'
 import colors from '../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ScreensName from "../../util/ScreensName";
 
 const { height, width } = Dimensions.get("window");
+
 function SignUp(): React.JSX.Element {
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const navigation = useNavigation();
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.Header}>
@@ -70,7 +66,7 @@ function SignUp(): React.JSX.Element {
                 <CustomButton
                     MainText={"Register"}
                     BgGiven={colors.GREEN}
-                    name={ScreensName.SignUp}
+                    name={ScreensName.Home}
                     txColor={colors.WHITE}
                     isNavigation={1}
                 ></CustomButton>
@@ -92,14 +88,14 @@ function SignUp(): React.JSX.Element {
                         source={require("../assets/google.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65 }}>login with Google </Text>
+                    <Text style={{ fontSize: height / 65 }}>Register with Google </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
                         source={require("../assets/apple.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65 }}>login with Apple </Text>
+                    <Text style={{ fontSize: height / 65 }}>Register with Apple </Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

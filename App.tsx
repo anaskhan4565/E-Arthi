@@ -31,7 +31,7 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{headerShown:false}}>
+      <Stack.Navigator initialRouteName={ScreensName.SignUp} screenOptions={{headerShown:false}}>
         <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen}/>
         <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
         <Stack.Screen name={ScreensName.Home} component={Home} />

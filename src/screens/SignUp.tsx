@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    Dimensions,
-    View,
-    TouchableOpacity,
-    TextInput,
-    Image,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
@@ -19,16 +10,17 @@ const { height, width } = Dimensions.get("window");
 
 function SignUp(): React.JSX.Element {
     const [passwordVisible, setPasswordVisible] = useState(false);
-    
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.Header}>
                 <Text style={styles.Heading}>Register</Text>
                 <Text style={styles.SubHeading}>Welcome, please Register</Text>
             </View>
+ 
             <View style={styles.inputs}>
-                <CustomInput placeholder={"Full Name"} hide={0} />
-                <CustomInput placeholder="Phone No." hide={0} />
+                <CustomInput placeholder={"Full Name"} bg_give={colors.WHITE} b_radius={8} hide={0} />
+                <CustomInput placeholder="Phone No." bg_give={colors.WHITE} b_radius={8} hide={0} />
                 <View style={styles.passInputBox}>
                     <TextInput
                         style={styles.passInput}
@@ -54,12 +46,14 @@ function SignUp(): React.JSX.Element {
                         fillColor={colors.GREEN}
                         iconStyle={{ borderColor: colors.LIGHT_GRAY }}
                         style={styles.checkbox}
-                        textComponent={1}
                         innerIconStyle={{ borderRadius: 7 }}
+                        textComponent={
+                            <Text style={styles.RememberMeText}>
+                                Sign up for e-mails to get updates from E-Arthi tips and offers
+                            </Text>
+                        }
                     />
-                    <Text style={styles.RememberMeText}>Sign up for e-mails to get updates from E-Arthi tips and offers</Text>
                 </View>
-
             </View>
 
             <View style={styles.button}>
@@ -72,16 +66,23 @@ function SignUp(): React.JSX.Element {
                 ></CustomButton>
             </View>
 
+            <View style={styles.terms}>
+                <Text style={styles.infoText}>By creating your account, you agree to the </Text>
+                <TouchableOpacity>
+                    <Text style={styles.redirectLink}>Terms of Services </Text>
+                </TouchableOpacity>
+                <Text style={styles.infoText}>and </Text>
+                <TouchableOpacity>
+                    <Text style={styles.redirectLink}>Privacy Policy</Text>
+                </TouchableOpacity>
+            </View>
 
-
-            <Text style={styles.infoText}>
-                By creating your account, you agree to the Terms of Services and Privacy Policy
-            </Text>
             <View style={styles.break}>
                 <View style={styles.line} />
                 <Text style={styles.ORtext}>OR</Text>
                 <View style={styles.line} />
             </View>
+
             <View style={styles.altSignin}>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
@@ -105,32 +106,8 @@ function SignUp(): React.JSX.Element {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
-        justifyContent: 'center',
         backgroundColor: colors.WHITE,
         paddingHorizontal: width / 20,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    infoText: {
-        marginVertical: 10,
-        textAlign: 'center',
-        color: '#666',
-    },
-    orText: {
-        textAlign: 'center',
-        marginVertical: 10,
-        fontWeight: 'bold',
-    },
-    buttonContainer: {
-        marginTop: 20,
-    },
-    buttonWithSpacing: {
-        marginBottom: 10, // Adds space between buttons
     },
     Header: {
         marginTop: height / 10,
@@ -144,6 +121,10 @@ const styles = StyleSheet.create({
     SubHeading: {
         fontSize: height / 45,
         marginTop: height / 100,
+    },
+    infoText: {
+        // marginVertical: 10,
+        // color: '#666',
     },
     inputs: {
         gap: height / 40,
@@ -166,10 +147,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     RememberMeText: {
-        fontSize: height / 55,
+        // fontSize: height / 55,
         marginLeft: 5,
     },
-    checkbox: {},
+    checkbox: {
+        // padding: 10,
+    },
     forgotPassword: {
         flex: 1,
         alignItems: "flex-end",
@@ -217,9 +200,14 @@ const styles = StyleSheet.create({
         height: 20,
         marginRight: 10,
     },
+    checkboxContainer: {
+        padding: 10, // Padding around the checkbox container
+        flexDirection: "row", // To align the checkbox and the text together
+        alignItems: "center", // To vertically align the checkbox and text
+    },
     passInputBox: {
-        height: height / 20,
-        width: width / 1.1,
+        height: 50,
+        width: 330,
         fontSize: 16,
         justifyContent: "center",
         alignSelf: "center",
@@ -231,7 +219,16 @@ const styles = StyleSheet.create({
     },
     passInput: {
         flex: 3,
+        fontSize: 16,
     },
+    terms: {
+        flexDirection: "row",
+        flexWrap: "wrap"
+    },
+    redirectLink: {
+        color: colors.GREEN,
+        textDecorationLine: 'underline',
+    }
 });
 
 export default SignUp;

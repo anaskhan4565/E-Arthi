@@ -11,8 +11,16 @@ export default {
     SignIn: "SignIn",
     SignUp: "SignUp",
     Splash: "Splash",
+    MorePage:"More",
 
     //specific to Internet
     NoInternet: "NoInternet",
+
+    //Specific After logging in::
+    HomeScreen: "HomeScreen",
+    EMunshi: "EMunshi",
+    ELoan:"ELoan",
+    EInvetory:"EInventory",
+    EMarket:"EMarket"
 
 }

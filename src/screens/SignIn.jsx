@@ -18,6 +18,7 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import ScreensName from "../../util/ScreensName";
 import { useNavigation } from '@react-navigation/native'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 function SignIn() {

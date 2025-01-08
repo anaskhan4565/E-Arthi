@@ -1,10 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 
-const ProductBox = ({ name,price,save, SourceGiven, isNavigation, w = 160, h = 188 }) => {
+const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = 160, h = 188 }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
@@ -19,11 +18,18 @@ const ProductBox = ({ name,price,save, SourceGiven, isNavigation, w = 160, h = 1
 
   return (
     <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]}>
-      <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
-      <Text style={styles.TextStyle}>{name}</Text>
-      <Text style={styles.TextStyle}>{price}</Text>
-      <Text style={styles.TextStyle}>{save}</Text>
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 0.5 }}>
+        <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.TextStyle}>{name}</Text>
+        <View style={styles.priceContainer}>
+          <Text style={[styles.TextStyle, styles.price]}>Price: PKR{price}</Text>
+          <Text style={[styles.TextStyle, styles.save]}>PKR{old}</Text>
+        </View>
+        <Text style={styles.TextStyle}>Save:{save}</Text>
 
+      </View>
     </TouchableOpacity>
   );
 };
@@ -32,9 +38,7 @@ export default ProductBox;
 
 const styles = StyleSheet.create({
   Wrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign:'left',
+    textAlign: 'left',
     borderRadius: 10,
     backgroundColor: colors.WHITE,
     marginHorizontal: 4,
@@ -44,11 +48,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  TextStyle:{
-    fontWeight:'bold',
-    textAlign:'left',
-
-    fontSize: 12,
+  textContainer: {
+    rowGap: 5,
+    margin: 6,
+  },
+  priceContainer: {
+    flexDirection: 'row', // Ensures items are in a row
+    justifyContent: 'space-between', // Spaces items evenly
+    alignItems: 'center', // Aligns items vertically in the center
+  },
+  TextStyle: {
+    fontWeight: 'bold',
+    textAlign: 'left',
+    fontSize: 10,
+  },
+  price: {
+    flex: 1, // Allows the text to take up space equally
+    textAlign: 'left', // Align the first price text to the left
+},
+  save: {
+    flex: 1, // Allows the text to take up space equally
+    textAlign: 'right', // Align the second price text to the right
+    color: 'red', // Optional: Color for the save text
   },
   ImageStyle: {
     resizeMode: 'contain',

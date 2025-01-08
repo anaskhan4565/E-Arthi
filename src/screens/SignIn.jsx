@@ -23,7 +23,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const { height, width } = Dimensions.get("window");
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
@@ -31,9 +31,9 @@ function SignIn() {
         <Text style={styles.SubHeading}>Welcome back, please login again</Text>
       </View>
       <View style={styles.inputs}>
-      {/* height: height / 20,
+        {/* height: height / 20,
       width: width / 1.1, */}
-        <CustomInput placeholder={"Username"} hide={height/20} w={width/1.1} b_radius={10}  bg_give={colors.WHITE}/>
+        <CustomInput placeholder={"Username"} hide={hp('4%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
         <View style={styles.passInputBox}>
           <TextInput
             style={styles.passInput}
@@ -55,7 +55,7 @@ function SignIn() {
         <CustomButton
           MainText={"Login"}
           BgGiven={colors.GREEN}
-          name={ScreensName.HomeScreen}
+          name={ScreensName.MainTabNavigation}
           txColor={colors.WHITE}
           isNavigation={1}
         ></CustomButton>
@@ -63,16 +63,16 @@ function SignIn() {
       <View style={styles.options}>
         <View style={styles.RememberMe}>
           <BouncyCheckbox
-            size={25}
+            size={20}
             fillColor={colors.GREEN}
             iconStyle={{ borderColor: colors.LIGHT_GRAY }}
             style={styles.checkbox}
             textComponent={true}
-            innerIconStyle = {{borderRadius: 7}}
+            innerIconStyle={{ borderRadius: 7 }}
           />
           <Text style={styles.RememberMeText}>Remember Me</Text>
         </View>
-        <TouchableOpacity onPress={() => {navigation.navigate(ScreensName.ForgotPassword)}}>
+        <TouchableOpacity onPress={() => { navigation.navigate(ScreensName.ForgotPassword) }}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
@@ -87,14 +87,14 @@ function SignIn() {
             source={require("../assets/google.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: height / 65 }}>login with Google </Text>
+          <Text style={{ fontSize: hp('1.7%') }}>login with Google </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../assets/apple.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: height / 65 }}>login with Apple </Text>
+          <Text style={{ fontSize: hp('1.7%') }}>login with Apple </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -114,12 +114,13 @@ const styles = StyleSheet.create({
   Heading: {
     fontSize: height / 30,
     fontWeight: "bold",
-    
+    marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
     fontSize: height / 45,
     marginTop: height / 100,
+    marginLeft: wp('1.5%'),
   },
   inputs: {
     gap: height / 40,
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: height / 30,
+    marginTop: hp('2%'),
     alignItems: "center",
   },
   RememberMe: {
@@ -142,23 +143,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   RememberMeText: {
-    fontSize: height / 55,
+    fontSize: height / 58,
     marginLeft: 5,
   },
-  checkbox: {},
+  checkbox: {
+    marginLeft: wp('3%'),
+  },
   forgotPassword: {
     flex: 1,
     alignItems: "flex-end",
     color: colors.GREEN,
-    fontSize: height / 55,
+    fontSize: height / 58,
+    marginRight: wp('3%'),
+
   },
   break: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: height / 40, 
+    marginVertical: height / 40,
   },
   line: {
-    flex: 1, 
+    flex: 1,
     height: 1,
     backgroundColor: colors.LIGHT_GRAY,
   },
@@ -171,8 +176,8 @@ const styles = StyleSheet.create({
     gap: height / 80,
   },
   altSigninButton: {
-    width: width / 1.11,
-    height: height / 20,
+    height: hp('5.7%'),
+    width: wp('85%'),
     borderColor: colors.LIGHT_GRAY,
     borderWidth: 1,
     borderRadius: 8,
@@ -183,9 +188,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   altSigninButtonIcon: {
-    width: 20,
-    height: 20,
+    width: wp('7%'),
+    height: hp('4%'),
     marginRight: 10,
+    resizeMode: 'contain',
   },
   passToggleButton: {},
   showPassIcon: {
@@ -194,9 +200,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   passInputBox: {
-    height: height / 20,
-    width: width / 1.1,
-    fontSize: 16,
+    height: hp('5.7%'),
+    width: wp('85%'),
+    fontSize: 18,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
@@ -207,6 +213,7 @@ const styles = StyleSheet.create({
   },
   passInput: {
     flex: 3,
+    fontSize: 16,
   },
 });
 

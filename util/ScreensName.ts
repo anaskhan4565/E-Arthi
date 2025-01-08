@@ -1,4 +1,5 @@
 
+
 export default {
     SplashScreen:"SplashScreen",
 
@@ -17,10 +18,11 @@ export default {
     NoInternet: "NoInternet",
 
     //Specific After logging in::
-    HomeScreen: "HomeScreen",
-    EMunshi: "EMunshi",
-    ELoan:"ELoan",
-    EInvetory:"EInventory",
-    EMarket:"EMarket"
+    MainTabNavigation:"MainTabNavigation",
+    HomeScreen: "Home",
+    EMunshi: "E-Munshi",
+    ELoan:"E-Loan",
+    EInvetory:"E-Inventory",
+    EMarket:"E-Market"
 
 }

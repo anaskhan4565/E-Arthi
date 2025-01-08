@@ -17,28 +17,28 @@ import colors from '../../util/colors';
 function ForgotPassword(): React.JSX.Element {
     return (
         <View style={styles.container}>
-            <View style={styles.textWrapper}>
-                <Text style={styles.title}>Forgot Password</Text>
-
-                <Text style={styles.subtitle}>
-                    Enter your email to be sent a reset password
-                </Text>
+            <View style={{flex:0.5}}>
+                <View style={styles.textWrapper}>
+                    <Text style={styles.title}>selected</Text>
+                    <Text style={styles.subtitle}>Enter your email to be sent a reset password</Text>
+                </View>
+                <View style={styles.inputWrapper}>
+                    <CustomInput
+                        placeholder="email@email.com"
+                        hide={0}
+                    />
+                </View>
+                <View style={styles.resetWrapper}>
+                    <CustomButton
+                        MainText="Reset"
+                        BgGiven={colors.GREEN}
+                        txColor="#FFFFFF"
+                        isNavigation={false}
+                        name="Reset"
+                    />
+                </View>
             </View>
-            <View style={styles.inputWrapper}>
-                <CustomInput
-                    placeholder="email@email.com"
-                    hide={0}
-                />
-            </View>
-            <View style={styles.resetWrapper}>
-                <CustomButton
-                    MainText="Reset"
-                    BgGiven={colors.GREEN}
-                    txColor="#FFFFFF"
-                    isNavigation={false}
-                    name="Reset"
-                />
-            </View>
+            <View style={{flex:0.5}}></View>
         </View>
     );
 }
@@ -54,36 +54,27 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#000',
+        color: colors.BLACK,
         marginBottom: 10,
+        justifyContent: 'center',
+        textAlign: 'center',
     },
     subtitle: {
         fontSize: 16,
-        color: '#666',
+        color: colors.BLACK,
         marginBottom: 20,
         textAlign: 'center',
     },
     resetWrapper: {
-        width: 330,
-        height: 48,
+        flex:1,
         marginTop: 384,
-        paddingTop: 12,
-        paddingBottom: 12,
-        paddingLeft: 60,
-        paddingRight: 60,
         borderRadius: 8,
     },
     inputWrapper: {
-        width: 330,
-        height: 50,
+        flex:1,
         marginTop: 224,
-        marginLeft: 30,
     },
     textWrapper: {
-        width: 330,
-        height: 93,
-        marginTop: 116,
-        marginLeft: 30,
         gap: 16,
     },
 });

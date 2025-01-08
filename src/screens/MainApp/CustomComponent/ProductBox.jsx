@@ -2,8 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = 160, h = 188 }) => {
+const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('40%'), h = hp('22%') }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
@@ -18,7 +19,7 @@ const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = 160,
 
   return (
     <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]}>
-      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 0.5 }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
         <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
       </View>
       <View style={styles.textContainer}>
@@ -38,7 +39,6 @@ export default ProductBox;
 
 const styles = StyleSheet.create({
   Wrapper: {
-    textAlign: 'left',
     borderRadius: 10,
     backgroundColor: colors.WHITE,
     marginHorizontal: 4,
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   textContainer: {
     rowGap: 5,
     margin: 6,
+    marginTop:hp('2%')
   },
   priceContainer: {
     flexDirection: 'row',

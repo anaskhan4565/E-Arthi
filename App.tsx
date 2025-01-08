@@ -12,11 +12,10 @@ import {
 import ScreensName from './util/ScreensName.ts';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/screens/Home';
+//import Home from './src/screens/Home';
 import Connect from './src/screens/Connect';
 import ForgotPassword from './src/screens/ForgotPassword';
 import MapSelection from './src/screens/MapSelection';
-import NoInternet from './src/screens/NoInternet';
 import OTP from './src/screens/OTP';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
@@ -26,6 +25,8 @@ import SplashScreen from './src/SplashScreen/SplashScreen';
 import AboutMore from './src/screens/Profile.jsx';
 import HomeScr from './src/screens/MainApp/TabScreens/HomeScr.jsx';
 import MainTabNavigation from './src/screens/MainApp/TabScreens/MainTabNavigation.tsx';
+import LocationSys from './src/screens/LocationEnable.jsx';
+import NoInternet from './src/screens/NoInternet.jsx';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
@@ -44,6 +45,7 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
         <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
+        <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
 
 
         {/* specific to After Login: */}

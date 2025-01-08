@@ -17,6 +17,8 @@ export default {
     //specific to Internet
     NoInternet: "NoInternet",
 
+    //Specific to Location
+    LocationPermission: "LocationPermission",
     //Specific After logging in::
     MainTabNavigation:"MainTabNavigation",
     HomeScreen: "Home",

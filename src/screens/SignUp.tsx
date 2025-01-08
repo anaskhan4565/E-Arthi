@@ -5,6 +5,7 @@ import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ScreensName from "../../util/ScreensName";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -149,7 +150,8 @@ const styles = StyleSheet.create({
     },
     RememberMeText: {
         // fontSize: height / 55,
-        marginLeft: 5,
+        marginLeft: wp('2%'),
+        width:wp('70%')
     },
     checkbox: {
         // padding: 10,

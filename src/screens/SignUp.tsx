@@ -60,7 +60,7 @@ function SignUp(): React.JSX.Element {
                 <CustomButton
                     MainText={"Register"}
                     BgGiven={colors.GREEN}
-                    name={ScreensName.Home}
+                    name={ScreensName.OTP}
                     txColor={colors.WHITE}
                     isNavigation={1}
                 ></CustomButton>

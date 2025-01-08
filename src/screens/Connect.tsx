@@ -10,39 +10,41 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import CustomButton from '../components/CustomButton'
+import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
-
-
+import ScreensName from '../../util/ScreensName';
+import Logo from '../assets/logo_text.png'
 function Connect(): React.JSX.Element {
 
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.imageWrapper}>
-        <Image
-          source={require('../assets/logo_text.png')} // Replace with your logo path
-          resizeMode="contain"
-          style={styles.logo}
-        />
+      <View style={{ flex: 1 ,backgroundColor:colors.WHITE}}>
+        <View style={{ flex: 0.5,justifyContent:'center', marginTop: 181,alignItems:'center' }}>
+          <Image
+            source={Logo} // Replace with your logo path
+            resizeMode="contain"
+            style={styles.logo}
+          />
+        </View>
+        <View style={{flex: 0.5 }}>
+          <View style={{ flex:1,justifyContent:'center',alignItems:"center",gap:10 }}>
+              <CustomButton
+                MainText="Register Now"
+                BgGiven={colors.GREEN} // Background color for the button
+                txColor={colors.WHITE} // Text color for the button
+                isNavigation={true} // Indicates navigation
+                name={ScreensName.MorePage}
+              />
+              <CustomButton
+                MainText="Login"
+                BgGiven={colors.WHITE} // Background color for the button
+                txColor={colors.GREEN} // Text color for the button
+                isNavigation={true} // Indicates navigation
+                name={ScreensName.SignIn}// Navigation route name
+              />
+          </View>
+        </View>
       </View>
-      <View style={styles.buttonWrapper}>
-        <CustomButton
-          MainText="Register Now"
-          BgGiven={colors.GREEN} // Background color for the button
-          txColor="#FFFFFF" // Text color for the button
-          isNavigation={true} // Indicates navigation
-          name="Register" // Navigation route name
-        />
-        <CustomButton
-          MainText="Login"
-          BgGiven="#FFFFFF" // Background color for the button
-          txColor={colors.GREEN} // Text color for the button
-          isNavigation={true} // Indicates navigation
-          name="Login" // Navigation route name
-        />
-      </View>
-    </SafeAreaView>
   );
 }
 
@@ -51,13 +53,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.BLACK,
     paddingHorizontal: 20,
   },
   logo: {
-    width: 150,
-    height: 150,
-    marginBottom: 40,
+    width: 300,
+    height: 300,
   },
   imageWrapper: {
     width: 330,

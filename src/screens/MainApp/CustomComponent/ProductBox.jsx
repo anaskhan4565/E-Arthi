@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right', 
     color: 'red', 
+    textDecorationLine:'line-through'
   },
   ImageStyle: {
     resizeMode: 'contain',

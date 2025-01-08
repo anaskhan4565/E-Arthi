@@ -6,7 +6,10 @@ import CustomSearchApp from '../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../util/colors.js';
 import Categorybox from '../CustomComponent/Categorybox.jsx';
+import ProductBox from '../CustomComponent/ProductBox.jsx';
 
+import Image1 from '../../../../src/assets/MainApp/EmarketPlace/Products/prod1.png';
+import Image2 from '../../../../src/assets/MainApp/EmarketPlace/Products/prod2.png';
 import {
     SafeAreaView,
     ScrollView,
@@ -29,26 +32,48 @@ function EInventory(): React.JSX.Element {
             <View style={styles.navbarContainer}>
                 <Navbar />
             </View>
+            <ScrollView style={styles.container}>
 
-            <View style={styles.searchContainer}>
-                <CustomSearchApp placeholder={'Search in here'} />
-            </View>
-            <View style={styles.bodyContainer}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>E-Arthi Categories</Text>
+                <View style={styles.searchContainer}>
+                    <CustomSearchApp placeholder={'Search in here'} />
                 </View>
+                <View style={styles.bodyContainer}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.titleText}>E-Arthi Categories</Text>
+                    </View>
 
-                <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {ECategories.map((Category, index) => (
-                        Category.title.trim() !== '' && (
-                            <View style={styles.itemBoxWrapper} key={index}>
-                                <Categorybox name={Category.title} SourceGiven={Category.img} isNavigation={0} />
-                            </View>
-                        )
-                    ))}
-                </ScrollView>
-            </View>
-        </SafeAreaView>
+                    <View style={styles.scrollContainer}>
+                        {ECategories.map((Category, index) => (
+                            Category.title.trim() !== '' && (
+                                <View style={styles.itemBoxWrapper} key={index}>
+                                    <Categorybox name={Category.title} SourceGiven={Category.img} isNavigation={0} />
+                                </View>
+                            )
+                        ))}
+                    </View>
+
+                    <View style={styles.recommendedProducts}>
+                        <Text style={styles.recommendedTitle}>Recommended Products</Text>
+                        <View style={styles.productRow}>
+                            <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} isNavigation={0} />
+                            <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} isNavigation={0} />
+                        </View>
+                        <View style={styles.productRow}>
+                            <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} isNavigation={0} />
+                            <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} isNavigation={0} />
+                        </View>
+                    </View>
+
+
+
+
+
+
+
+
+                </View>
+            </ScrollView>
+        </SafeAreaView >
     );
 }
 
@@ -97,6 +122,19 @@ const styles = StyleSheet.create({
         marginHorizontal: wp('-3%'),
         alignItems: 'center',
 
+    },
+    recommendedProducts: {
+        marginTop: 20,
+    },
+    recommendedTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    productRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
     },
 
 });

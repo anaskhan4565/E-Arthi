@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 1, 
   },
-},
+
 searchContainer: {
     marginVertical: hp('3%'),
     height: hp('7%'),

@@ -7,9 +7,10 @@ import ItemBox from './CustomComponent/ItemBox.jsx';
 import Heart from '../../assets/MainApp/HomeScreen/Heart.png';
 import allNames from '../../../util/E-Offerings.js'; 
 
+
 const Home = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
+    <View style={{ flex: 1, backgroundColor: colors.WHITE}}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>

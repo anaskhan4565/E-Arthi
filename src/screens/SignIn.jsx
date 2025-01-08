@@ -54,7 +54,7 @@ function SignIn() {
         <CustomButton
           MainText={"Login"}
           BgGiven={colors.GREEN}
-          name={ScreensName.HomeScreen}
+          name={ScreensName.Connect}
           txColor={colors.WHITE}
           isNavigation={1}
         ></CustomButton>
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
   Heading: {
     fontSize: height / 30,
     fontWeight: "bold",
+    
     color: colors.BLACK,
   },
   SubHeading: {

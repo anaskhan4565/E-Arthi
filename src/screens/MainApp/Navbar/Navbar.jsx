@@ -10,7 +10,7 @@ import CustomImageButton from '../CustomComponent/CustomImageButton'
 
 const Navbar = () => {
   return (
-    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, backgroundColor: colors.LIGHT_GREEN }}>
+    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, backgroundColor: colors.LIGHT_GREEN,position:'absolute',maxHeight:100 }}>
       <View style={{flex: 0.3,paddingLeft:10,justifyContent:'center' }}>
 
         <Image source={ProfilePic} style={styles.Profile} />

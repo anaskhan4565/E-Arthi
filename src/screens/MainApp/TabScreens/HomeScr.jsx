@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
-import Navbar from './Navbar/Navbar';
-import CustomSearchApp from './CustomComponent/CustomSearchApp.jsx';
-import colors from '../../../util/colors';
-import ItemBox from './CustomComponent/ItemBox.jsx';
-import Heart from '../../assets/MainApp/HomeScreen/Heart.png';
-import allNames from '../../../util/E-Offerings.js'; 
+import Navbar from '../Navbar/Navbar.jsx';
+import CustomSearchApp from '../CustomComponent/CustomSearchApp.jsx';
+import colors from '../../../../util/colors.js';
+import ItemBox from '../CustomComponent/ItemBox.jsx';
+import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
+import allNames from '../../../../util/E-Offerings.js';
 
 
 const Home = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: colors.WHITE}}>
+    <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
@@ -44,7 +44,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   navbarContainer: {
-    height: 70, 
+    height: 70,
     backgroundColor: 'white',
   },
   contentContainer: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', 
+    flexWrap: 'wrap',
     justifyContent: 'space-between', // Space items evenly
     paddingVertical: 10,
   },

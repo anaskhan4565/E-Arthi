@@ -12,7 +12,7 @@ import {
 
 
 
-function Home(): React.JSX.Element {
+function EInventory(): React.JSX.Element {
 
 
     return (
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Home;
+export default EInventory;

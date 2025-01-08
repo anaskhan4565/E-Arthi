@@ -24,7 +24,8 @@ import Splash from './src/screens/Splash';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import SplashScreen from './src/SplashScreen/SplashScreen';
 import AboutMore from './src/screens/Profile.jsx';
-import HomeScr from './src/screens/MainApp/HomeScr.jsx';
+import HomeScr from './src/screens/MainApp/TabScreens/HomeScr.jsx';
+import MainTabNavigation from './src/screens/MainApp/TabScreens/MainTabNavigation.tsx';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
@@ -32,10 +33,9 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{headerShown:false}}>
-        <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen}/>
+      <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
         <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
-        <Stack.Screen name={ScreensName.Home} component={Home} />
         <Stack.Screen name={ScreensName.Connect} component={Connect} />
         <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
         <Stack.Screen name={ScreensName.MapSelection} component={MapSelection} />
@@ -43,11 +43,12 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
         <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
+        <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
 
 
         {/* specific to After Login: */}
         <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
- 
+
 
       </Stack.Navigator>
     </NavigationContainer>

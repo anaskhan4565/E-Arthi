@@ -55,7 +55,7 @@ function SignIn() {
         <CustomButton
           MainText={"Login"}
           BgGiven={colors.GREEN}
-          name={ScreensName.Connect}
+          name={ScreensName.MainTabNavigation}
           txColor={colors.WHITE}
           isNavigation={1}
         ></CustomButton>

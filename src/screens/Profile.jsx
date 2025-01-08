@@ -13,7 +13,7 @@ const AboutMore = () => {
 
     return (
         <SafeAreaView style={styles.MainContainer}>
-            <View style={{ flex: 0.74 }}>
+            <View style={{ flex: 0.74,backgroundColor:colors.WHITE }}>
                 {/* Logo Section */}
                 <View style={styles.logoContainer}>
                     <Image source={Logo} style={styles.logo} />
@@ -54,7 +54,7 @@ const AboutMore = () => {
 
             {/* Footer Section */}
             <View style={{ flex: 0.3, alignItems: 'center' }}>
-                <CustomButton BgGiven={colors.GREEN} MainText={"Continue"} txColor={colors.WHITE} isNavigation={true} name={ScreensName.HomeScreen} />
+                <CustomButton BgGiven={colors.GREEN} MainText={"Continue"} txColor={colors.WHITE} isNavigation={true} name={ScreensName.SignUp} />
             </View>
         </SafeAreaView>
     );
@@ -65,6 +65,7 @@ export default AboutMore;
 const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
+        backgroundColor:colors.WHITE,
         marginTop: 40,
     },
     logoContainer: {

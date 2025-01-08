@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     margin: 6,
   },
   priceContainer: {
-    flexDirection: 'row', // Ensures items are in a row
-    justifyContent: 'space-between', // Spaces items evenly
-    alignItems: 'center', // Aligns items vertically in the center
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
   },
   TextStyle: {
     fontWeight: 'bold',
@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   price: {
-    flex: 1, // Allows the text to take up space equally
-    textAlign: 'left', // Align the first price text to the left
+    flex: 1,
+    textAlign: 'left', 
 },
   save: {
-    flex: 1, // Allows the text to take up space equally
-    textAlign: 'right', // Align the second price text to the right
-    color: 'red', // Optional: Color for the save text
+    flex: 1,
+    textAlign: 'right', 
+    color: 'red', 
   },
   ImageStyle: {
     resizeMode: 'contain',

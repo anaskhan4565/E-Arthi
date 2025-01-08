@@ -23,7 +23,7 @@ function NoInternet(): React.JSX.Element {
 
             // Navigate if connected
             if (state.isConnected) {
-                navigation.navigate(ScreensName.SignIn);
+                navigation.navigate(ScreensName.Connect);
             }
         });
 

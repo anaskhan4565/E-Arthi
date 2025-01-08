@@ -7,23 +7,24 @@ import colors from '../../../../util/colors'
 import bellIcon from '../../../assets/MainApp/HomeScreen/Bell.png'
 import Hamburger from '../../../assets/MainApp/HomeScreen/Hamburger.png'
 import CustomImageButton from '../CustomComponent/CustomImageButton'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Navbar = () => {
   return (
-    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, backgroundColor: colors.LIGHT_GREEN,position:'absolute',maxHeight:100 }}>
-      <View style={{flex: 0.3,paddingLeft:10,justifyContent:'center' }}>
+    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, height: hp('4%'), backgroundColor: colors.LIGHT_GREEN }}>
+      <View style={{ flex: 0.3, paddingLeft: 10, justifyContent: 'center' }}>
 
         <Image source={ProfilePic} style={styles.Profile} />
 
       </View>
-      <View style={{justifyContent:'center',alignItems:'center', flex: 0.4 }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4 }}>
         <Image source={Earthi} style={styles.Icon} />
 
       </View>
-      <View style={{ flex: 0.3,flexDirection:'row',justifyContent:'center' ,alignItems:'center'}}>
-        <CustomImageButton SourceGiven={bellIcon}/>
-        <CustomImageButton SourceGiven={Hamburger}/>
-        </View>
+      <View style={{ flex: 0.3, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <CustomImageButton SourceGiven={bellIcon} />
+        <CustomImageButton SourceGiven={Hamburger} />
+      </View>
     </View>
   )
 }

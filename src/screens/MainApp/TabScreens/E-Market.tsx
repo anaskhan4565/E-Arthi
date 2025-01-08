@@ -1,5 +1,6 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import {
     SafeAreaView,
     ScrollView,

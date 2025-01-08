@@ -6,6 +6,7 @@ import colors from '../../../../util/colors.js';
 import ItemBox from '../CustomComponent/ItemBox.jsx';
 import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
 import allNames from '../../../../util/E-Offerings.js';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 const Home = () => {
@@ -44,17 +45,18 @@ export default Home;
 
 const styles = StyleSheet.create({
   navbarContainer: {
-    height: 70,
+    height: hp('8.5%'),
     backgroundColor: 'white',
-  },
+},
+searchContainer: {
+    marginVertical: hp('3%'),
+    height: hp('7%'),
+},
   contentContainer: {
     flex: 1,
-    marginTop: 10,
+    //marginTop: 10,
   },
-  searchContainer: {
-    marginVertical: 15,
-    height: 50,
-  },
+
   bodyContainer: {
     flex: 1,
     margin: 20,

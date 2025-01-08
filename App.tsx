@@ -23,6 +23,15 @@ import SignUp from './src/screens/SignUp';
 import Splash from './src/screens/Splash';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import SplashScreen from './src/SplashScreen/SplashScreen';
+<<<<<<< Updated upstream
+=======
+import AboutMore from './src/screens/Profile.jsx';
+import HomeScr from './src/screens/MainApp/TabScreens/HomeScr.jsx';
+import MainTabNavigation from './src/screens/MainApp/TabScreens/MainTabNavigation.tsx';
+import LocationSys from './src/screens/LocationEnable.jsx';
+import NoInternet from './src/screens/NoInternet.jsx';
+import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
+>>>>>>> Stashed changes
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +50,15 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.OTP} component={OTP} />
         <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
+<<<<<<< Updated upstream
+=======
+        <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
+        <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
+        <Stack.Screen name={ScreensName.Sidebar} component={Sidebar}/>
+        {/* specific to After Login: */}
+        <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
+
+>>>>>>> Stashed changes
 
       </Stack.Navigator>
     </NavigationContainer>

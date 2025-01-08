@@ -11,7 +11,12 @@ export default {
     SignIn: "SignIn",
     SignUp: "SignUp",
     Splash: "Splash",
+<<<<<<< Updated upstream
 
+=======
+    MorePage:"More",
+    Sidebar: "Sidebar",
+>>>>>>> Stashed changes
     //specific to Internet
     NoInternet: "NoInternet",
 

@@ -8,8 +8,8 @@ import colors from '../../../../util/colors.js';
 import Categorybox from '../CustomComponent/Categorybox.jsx';
 import ProductBox from '../CustomComponent/ProductBox.jsx';
 
-import Image1 from '../../../../src/assets/MainApp/EmarketPlace/Products/prod1.png';
-import Image2 from '../../../../src/assets/MainApp/EmarketPlace/Products/prod2.png';
+import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png';
+import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
 import {
     SafeAreaView,
     ScrollView,
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         // justifyContent: 'space-between',
         paddingVertical: hp('2%'),
-        marginLeft: wp('2%'),
         // backgroundColor: 'red',
         width: wp('95'),
 

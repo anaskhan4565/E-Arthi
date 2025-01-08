@@ -14,6 +14,10 @@ export default {
     Splash: "Splash",
     MorePage:"More",
 
+=======
+    MorePage:"More",
+    Sidebar: "Sidebar",
+>>>>>>> Stashed changes
     //specific to Internet
     NoInternet: "NoInternet",
 

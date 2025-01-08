@@ -19,6 +19,7 @@ function ELoan(): React.JSX.Element {
     return (
         <SafeAreaView style={styles.container}>
             <Text>home Screen</Text>
+            <Text>home Screen</Text>
         </SafeAreaView>
     );
 }

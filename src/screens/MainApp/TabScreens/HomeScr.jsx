@@ -36,7 +36,7 @@ const Home = () => {
               {allNames.map((name, index) => (
                 name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
-                    <ItemBox name={name} SourceGiven={Heart} />
+                    <ItemBox name={name} SourceGiven={Heart} isNavigation={true} />
                   </View>
                 )
               ))}

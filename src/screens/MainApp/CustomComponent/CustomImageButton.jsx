@@ -18,7 +18,7 @@ const CustomImageButton = ({ name, SourceGiven, isNavigation, w = 38, h = 38 }) 
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]}>
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation?handleNavigation:handleSubmit} >
       <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
     </TouchableOpacity>
   );

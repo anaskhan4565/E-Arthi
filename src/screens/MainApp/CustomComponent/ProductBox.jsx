@@ -1,6 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 import colors from '../../../../util/colors.js';
+//import ScreensName from '../../../../util/ScreensName.js';
+
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -9,7 +11,7 @@ const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('
 
   const handleNavigation = () => {
     if (name) {
-      navigation.navigate(name);
+      navigation.navigate("Product");
     }
   };
 
@@ -18,7 +20,7 @@ const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]}>
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation}>
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
         <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
       </View>

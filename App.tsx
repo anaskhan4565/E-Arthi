@@ -27,6 +27,8 @@ import HomeScr from './src/screens/MainApp/TabScreens/HomeScr.jsx';
 import MainTabNavigation from './src/screens/MainApp/TabScreens/MainTabNavigation.tsx';
 import LocationSys from './src/screens/LocationEnable.jsx';
 import NoInternet from './src/screens/NoInternet.jsx';
+import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
+import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
@@ -47,6 +49,8 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
         <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
 
+        <Stack.Screen name={ScreensName.Sidebar} component={Sidebar} />
+        <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
 
         {/* specific to After Login: */}
         <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />

@@ -1,44 +1,35 @@
 import React from 'react';
-import type { PropsWithChildren } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
     View,
+    Text,
+    StyleSheet
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
 import colors from '../../util/colors';
-
+import ScreensName from '../../util/ScreensName';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 function ForgotPassword(): React.JSX.Element {
     return (
         <View style={styles.container}>
-            <View style={{flex:0.5}}>
-                <View style={styles.textWrapper}>
-                    <Text style={styles.title}>selected</Text>
-                    <Text style={styles.subtitle}>Enter your email to be sent a reset password</Text>
+            <View style={styles.topSection}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.heading}>Forgot Password</Text>
+                    <Text style={styles.subHeading}>Enter your email to be sent a reset password</Text>
+                    <CustomInput placeholder={'email@email.com'} hide={false} />
                 </View>
-                <View style={styles.inputWrapper}>
-                    <CustomInput
-                        placeholder="email@email.com"
-                        hide={0}
-                    />
-                </View>
-                <View style={styles.resetWrapper}>
+                <View style={styles.buttonContainer}>
                     <CustomButton
                         MainText="Reset"
                         BgGiven={colors.GREEN}
-                        txColor="#FFFFFF"
-                        isNavigation={false}
-                        name="Reset"
+                        txColor={colors.WHITE}
+                        isNavigation={true}
+                        name={ScreensName.SignUp}
                     />
                 </View>
             </View>
-            <View style={{flex:0.5}}></View>
+            <View style={styles.bottomSection} />
         </View>
     );
 }
@@ -46,36 +37,32 @@ function ForgotPassword(): React.JSX.Element {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        paddingHorizontal: 20,
+        backgroundColor: colors.WHITE,
+        flexDirection: 'column',
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: colors.BLACK,
-        marginBottom: 10,
-        justifyContent: 'center',
-        textAlign: 'center',
+    topSection: {
+        height: hp('50%'),
     },
-    subtitle: {
-        fontSize: 16,
-        color: colors.BLACK,
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    resetWrapper: {
-        flex:1,
-        marginTop: 384,
-        borderRadius: 8,
-    },
-    inputWrapper: {
-        flex:1,
-        marginTop: 224,
-    },
-    textWrapper: {
+    textContainer: {
+        flex: 0.7,
+        justifyContent: 'flex-end',
         gap: 16,
+        marginHorizontal: wp('10%'),
+    },
+    heading: {
+        fontSize: 30,
+        fontWeight: '600',
+    },
+    subHeading: {
+        fontSize: 19,
+    },
+    buttonContainer: {
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    bottomSection: {
+        flex: 0.5,
     },
 });
 

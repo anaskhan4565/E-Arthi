@@ -14,10 +14,7 @@ export default {
     Splash: "Splash",
     MorePage:"More",
 
-=======
-    MorePage:"More",
     Sidebar: "Sidebar",
->>>>>>> Stashed changes
     //specific to Internet
     NoInternet: "NoInternet",
 
@@ -29,6 +26,9 @@ export default {
     EMunshi: "E-Munshi",
     ELoan:"E-Loan",
     EInvetory:"E-Inventory",
-    EMarket:"E-Market"
+    EMarket:"E-Market",
+
+    //specific to each product
+    ProductScr:"Product",
 
 }

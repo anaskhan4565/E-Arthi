@@ -36,10 +36,10 @@ import i18next from './services/i18next.js';
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
-  animation: "slide_from_left", // Slide animation
-  presentation: "card", // Ensures the new screen overlaps the current one
-  gestureEnabled: true, // Allows gesture-based navigation
-  animationDuration: 500, // Adjusts the duration for smoother transition
+  animation: "slide_from_right",
+  presentation: "card", 
+  gestureEnabled: true,
+  animationDuration: 300, 
 };
 
 function App(): React.JSX.Element {
@@ -61,15 +61,12 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.OTP} component={OTP} />
         <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
         <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
-        <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
         <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
         <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
-
-        <Stack.Screen name={ScreensName.Sidebar} component={Sidebar} />
+        <Stack.Screen name={ScreensName.Sidebar}
+          options={slideFromLeftOptions} component={Sidebar} />
         <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
-
-        {/* specific to After Login: */}
         <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
 
 

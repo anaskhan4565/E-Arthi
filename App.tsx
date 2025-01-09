@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import ScreensName from './util/ScreensName.ts';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator,NativeStackNavigationOptions } from '@react-navigation/native-stack';
 //import Home from './src/screens/Home';
 import Connect from './src/screens/Connect';
 import ForgotPassword from './src/screens/ForgotPassword';
@@ -36,8 +36,8 @@ import i18next from './services/i18next.js';
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
-  animation: "slide_from_right",
-  presentation: "card", 
+  animation: "slide_from_left",
+  presentation: "modal", 
   gestureEnabled: true,
   animationDuration: 300, 
 };

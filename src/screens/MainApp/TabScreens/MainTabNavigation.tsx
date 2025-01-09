@@ -48,7 +48,7 @@ export default function MainTabNavigation() {
                                 ]}
                             />
                         ),
-                        tabBarLabel: 'Home',
+                        tabBarLabel: t('Home'),
                     }}
                 />
                 <Tab.Screen
@@ -64,7 +64,7 @@ export default function MainTabNavigation() {
                                 ]}
                             />
                         ),
-                        tabBarLabel: 'E-Inventory',
+                        tabBarLabel: t('E-Inventory'),
                     }}
                 />
                 <Tab.Screen
@@ -80,7 +80,7 @@ export default function MainTabNavigation() {
                                 ]}
                             />
                         ),
-                        tabBarLabel: 'E-Market',
+                        tabBarLabel: t('E-Market'),
                     }}
                 />
                 <Tab.Screen
@@ -96,7 +96,7 @@ export default function MainTabNavigation() {
                                 ]}
                             />
                         ),
-                        tabBarLabel: 'E-Munshi',
+                        tabBarLabel: t('E-Munshi'),
                     }}
                 />
                 <Tab.Screen
@@ -112,7 +112,7 @@ export default function MainTabNavigation() {
                                 ]}
                             />
                         ),
-                        tabBarLabel: 'E-Loan',
+                        tabBarLabel: t('E-Loan'),
                     }}
                 />
             </Tab.Navigator>

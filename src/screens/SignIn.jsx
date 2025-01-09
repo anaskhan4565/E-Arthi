@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
+const isTablet = width > 600;
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
@@ -63,7 +64,7 @@ function SignIn() {
       <View style={styles.options}>
         <View style={styles.RememberMe}>
           <BouncyCheckbox
-            size={20}
+            size={isTablet ? wp('1.9%') : wp('5%')}
             fillColor={colors.GREEN}
             iconStyle={{ borderColor: colors.LIGHT_GRAY }}
             style={styles.checkbox}
@@ -108,19 +109,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: width / 20,
   },
   Header: {
-    marginTop: height / 10,
+    marginLeft: wp('2%'),
+    marginTop: isTablet ? height / 15 : height / 10,
     marginBottom: height / 20,
   },
   Heading: {
-    fontSize: height / 30,
+    fontSize: isTablet ? width / 38 : height / 30,
     fontWeight: "bold",
-    marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
-    fontSize: height / 45,
+    fontSize: isTablet ? width / 58 : height / 45,
     marginTop: height / 100,
-    marginLeft: wp('1.5%'),
   },
   inputs: {
     gap: height / 40,
@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   RememberMeText: {
-    fontSize: height / 58,
-    marginLeft: 5,
+    fontSize: isTablet ? width / 85 : height / 60,
+    marginLeft: isTablet ? wp('0.7%') : wp('2%'),
   },
   checkbox: {
     marginLeft: wp('3%'),
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "flex-end",
     color: colors.GREEN,
-    fontSize: height / 58,
+    fontSize: isTablet ? width / 85 : height / 60,
     marginRight: wp('3%'),
 
   },
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     gap: height / 80,
   },
   altSigninButton: {
-    height: hp('5.7%'),
+    height: isTablet ? hp('6.7%') : hp('5.7%'),
     width: wp('85%'),
     borderColor: colors.LIGHT_GRAY,
     borderWidth: 1,
@@ -200,15 +200,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   passInputBox: {
-    height: hp('5.7%'),
+    height: isTablet ? hp('6.7%') : hp('5.7%'),
     width: wp('85%'),
-    fontSize: 18,
+    fontSize: 16,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: width / 44,
+    borderRadius: 8,
     borderColor: colors.LIGHT_GRAY,
   },
   passInput: {

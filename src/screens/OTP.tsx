@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { View, TextInput, StyleSheet, Button, Text, ActivityIndicator } from 'react-native';
+import { View, TextInput, StyleSheet, Button, Text, ActivityIndicator, Dimensions } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
-
+const { height, width } = Dimensions.get("window");
+const isTablet = width > 600 || height > 950;
 
 const OTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -68,7 +69,11 @@ const OTP = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>OTP Verification</Text>
+            <View style={styles.maintextcontainer}>
+                <Text style={styles.title}>OTP Verification</Text>
+            </View>
+
+
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
                     Please enter the verification code we’ve sent you on 9999999999
@@ -88,7 +93,7 @@ const OTP = () => {
                 ))}
             </View>
             <View style={styles.bottomContainer}>
-                < ActivityIndicator size={23} color={colors.GREEN} style={styles.activityindicator} />
+                < ActivityIndicator size={isTablet ? width / 50 : height / 50} color={colors.GREEN} style={styles.activityindicator} />
                 <Text style={styles.autocapturetext}>Trying to Auto Capture</Text>
                 <Text style={styles.timetext}> {formatTime(timeLeft)}</Text>
             </View>
@@ -109,13 +114,13 @@ const styles = StyleSheet.create({
     },
     title: {
         marginTop: hp('10%'),
-        fontSize: 24,
+        fontSize: isTablet ? width / 38 : height / 35,
         fontWeight: "bold",
         marginBottom: 8,
         marginRight: wp('42%'),
     },
     subtitle: {
-        fontSize: 16,
+        fontSize: isTablet ? width / 70 : height / 50,
         marginBottom: 24,
         alignSelf: "flex-start",
         marginTop: hp('1%'),
@@ -125,29 +130,34 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginBottom: 24,
     },
+    maintextcontainer: {
+        justifyContent: 'flex-start',
+        width: wp('85%'),
+    },
     infotextcontainer: {
         width: wp('70%'),
         marginRight: wp('15%'),
     },
     inputBox: {
-        width: wp('13%'),
-        height: hp('6.5%'),
+        width: isTablet ? wp('9%') : wp('13%'),
+        height: isTablet ? wp('7.5%') : hp('6.5%'),
         borderWidth: 1,
         borderColor: "#ccc",
         borderRadius: 12,
         textAlign: "center",
         fontSize: 18,
         backgroundColor: "#FFF",
-        marginHorizontal: 3,
+        marginHorizontal: isTablet ? wp('1%') : wp('1%'), 
     },
     bottomContainer: {
+        justifyContent: 'space-between',
         flexDirection: "row",
         // marginRight: wp("43%"),
         marginBottom: hp('3%'),
 
     },
     autocapturetext: {
-        fontSize: 14,
+        fontSize: isTablet ? width / 70 : height / 70,
         fontWeight: '300',
         marginLeft: wp('3%'),
         marginRight: wp('33%'),
@@ -156,7 +166,7 @@ const styles = StyleSheet.create({
 
     },
     timetext: {
-
+        fontSize: isTablet ? width / 70 : height / 70,
     },
 });
 

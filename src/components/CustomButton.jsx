@@ -17,7 +17,7 @@ const CustomButton = ({MainText,BgGiven,name,txColor ,isNavigation}) => {
   }
   return (
     <TouchableOpacity style={[styles.Wrapper, { width:wp("85%"), height:hp("5.7%"),backgroundColor:BgGiven,borderColor:colors.GREEN,borderWidth:1,borderRadius:8}]} onPress={isNavigation?handleNavigation:handleSubmit}>    
-        <Text style={{color:txColor}}>{MainText}</Text>
+        <Text style={{color:txColor,fontSize:hp('2%')}}>{MainText}</Text>
     </TouchableOpacity>
 
   )

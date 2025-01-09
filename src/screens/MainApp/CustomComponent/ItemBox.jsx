@@ -3,8 +3,9 @@ import React from 'react';
 
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const ItemBox = ({ name, SourceGiven, isNavigation, w = 100, h = 100 }) => {
+const ItemBox = ({ name, SourceGiven, isNavigation, w = wp('19%'), h = hp('8.5') }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
@@ -31,9 +32,9 @@ const styles = StyleSheet.create({
   Wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: hp('1.3%'),
     backgroundColor: colors.WHITE,
-    marginHorizontal: 4,
+    marginHorizontal: hp('1.4%'),
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   TextStyle:{
     fontWeight:'bold',
-    fontSize: 12,
+    fontSize:hp('1.5%') ,
   },
   ImageStyle: {
     resizeMode: 'contain',

@@ -104,26 +104,26 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        padding: 16,
+        padding: hp('1.5%'),
         backgroundColor: "white",
     },
     title: {
         marginTop: hp('10%'),
-        fontSize: 24,
+        fontSize: hp('3%'),
         fontWeight: "bold",
-        marginBottom: 8,
-        marginRight: wp('42%'),
+        marginBottom: hp('1.5%'),
+        marginRight: wp('36%'),
     },
     subtitle: {
-        fontSize: 16,
-        marginBottom: 24,
+        fontSize: hp('2%'),
+        marginBottom: hp('1.9%'),
         alignSelf: "flex-start",
         marginTop: hp('1%'),
     },
     inputContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 24,
+        marginBottom: hp('3.5%'),
     },
     infotextcontainer: {
         width: wp('70%'),
@@ -131,14 +131,14 @@ const styles = StyleSheet.create({
     },
     inputBox: {
         width: wp('13%'),
-        height: hp('6.5%'),
-        borderWidth: 1,
+        height: hp('7.5%'),
+        borderWidth: hp('0.1%'),
         borderColor: "#ccc",
-        borderRadius: 12,
+        borderRadius: hp('1.5%'),
         textAlign: "center",
-        fontSize: 18,
+        fontSize: hp('2.5%'),
         backgroundColor: "#FFF",
-        marginHorizontal: 3,
+        marginHorizontal: hp('0.5%'),
     },
     bottomContainer: {
         flexDirection: "row",
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 
     },
     autocapturetext: {
-        fontSize: 14,
+        fontSize: hp('1.5%'),
         fontWeight: '300',
         marginLeft: wp('3%'),
         marginRight: wp('33%'),
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
 
     },
     timetext: {
-
+        fontSize:hp('2%')
     },
 });
 

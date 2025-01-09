@@ -1,8 +1,11 @@
 import { StyleSheet, TextInput } from 'react-native';
 import React from 'react';
 import colors from '../../util/colors';
-
-const CustomInput = ({ placeholder, hide, w = 330, h = 50,bg_give=colors.GREAT_WHITE,b_radius=3 }) => {
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+const CustomInput = ({ placeholder, hide, w = wp('85%'), h = hp('5.5%'),bg_give=colors.GREAT_WHITE,b_radius=3 }) => {
   return (
     <TextInput
       style={[styles.textInputStyle, { width: w, height: h,backgroundColor:bg_give,borderRadius:b_radius }]}
@@ -16,7 +19,7 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   textInputStyle: {
-    fontSize: 16,
+    fontSize: hp('1.7%'),
     alignSelf: 'center',
     borderColor: colors.GREAT_WHITE,
     borderWidth: 1,

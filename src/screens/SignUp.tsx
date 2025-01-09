@@ -6,6 +6,7 @@ import colors from '../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ScreensName from "../../util/ScreensName";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { fonts } from "../../util/FontName";
 
 const { height, width } = Dimensions.get("window");
 
@@ -20,8 +21,8 @@ function SignUp(): React.JSX.Element {
             </View>
  
             <View style={styles.inputs}>
-                <CustomInput placeholder={"Full Name"} bg_give={colors.WHITE} b_radius={8} hide={0} />
-                <CustomInput placeholder="Phone No." bg_give={colors.WHITE} b_radius={8} hide={0} />
+                <CustomInput placeholder={"Full Name"} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
+                <CustomInput placeholder="Phone No." bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
                 <View style={styles.passInputBox}>
                     <TextInput
                         style={styles.passInput}
@@ -64,6 +65,7 @@ function SignUp(): React.JSX.Element {
                     name={ScreensName.OTP}
                     txColor={colors.WHITE}
                     isNavigation={1}
+                    
                 ></CustomButton>
             </View>
 
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
         marginBottom: height / 20,
     },
     Heading: {
-        fontSize: height / 30,
+        fontSize: height / 25,
         fontWeight: "bold",
         color: colors.BLACK,
     },
@@ -126,6 +128,8 @@ const styles = StyleSheet.create({
     infoText: {
         // marginVertical: 10,
         // color: '#666',
+        fontSize:hp('1.6%')
+
     },
     inputs: {
         gap: height / 40,
@@ -151,7 +155,8 @@ const styles = StyleSheet.create({
     RememberMeText: {
         // fontSize: height / 55,
         marginLeft: wp('2%'),
-        width:wp('70%')
+        width:wp('70%'),
+        fontSize:hp('1.6%')
     },
     checkbox: {
         // padding: 10,
@@ -209,28 +214,34 @@ const styles = StyleSheet.create({
         alignItems: "center", // To vertically align the checkbox and text
     },
     passInputBox: {
-        height: 50,
-        width: 330,
-        fontSize: 16,
+        height: hp('5.5%'),
+        width: wp('85%'),
+        fontSize: hp('1.7%'),
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
         flexDirection: "row",
         borderWidth: 1,
-        borderRadius: width / 44,
+        borderRadius: hp('1.2%'),
         borderColor: colors.LIGHT_GRAY,
     },
     passInput: {
         flex: 3,
-        fontSize: 16,
+        fontSize: hp('1.7%'),
+        fontFamily:fonts.Medium,
+        borderRadius:hp('1.3%')
     },
     terms: {
         flexDirection: "row",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        
+        
     },
     redirectLink: {
         color: colors.GREEN,
         textDecorationLine: 'underline',
+        fontSize:hp('1.6%')
+
     }
 });
 

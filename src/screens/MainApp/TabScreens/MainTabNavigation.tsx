@@ -26,7 +26,7 @@ export default function MainTabNavigation() {
                         height: hp('9%'),
                         borderTopWidth: 1,
                         borderTopColor: '#ccc',
-                        borderBottomLeftRadius: 15,
+                        borderBottomLeftRadius: hp('1.5%'),
                         borderBottomRightRadius: 15,
                         overflow: 'hidden',
                     },
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     labelStyle: {
-        fontSize: 14,
+        fontSize: hp('1.5%'),
         fontWeight: 'bold',
     },
 });

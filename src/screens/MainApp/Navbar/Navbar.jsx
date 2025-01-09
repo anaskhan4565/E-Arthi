@@ -20,7 +20,7 @@ const Navbar = () => {
       style={{
         flex: 1,
         flexDirection: "row",
-        marginTop: 10,
+        marginTop: hp('1%'),
         height: hp("4%"),
         backgroundColor: colors.LIGHT_GREEN,
       }}
@@ -52,20 +52,20 @@ export default Navbar;
 
 const styles = StyleSheet.create({
   Profile: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
+    width: wp('9%'),
+    height: hp('5%'),
+    borderRadius: hp('1%'),
   },
   Icon: {
-    width: 60,
-    height: 60,
+    width: wp('14%'),
+    height: hp('7%'),
   },
   Wrapper: {
     justifyContent: "center", 
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: hp('1.2%'),
     backgroundColor: colors.WHITE,
-    marginHorizontal: 4,
+    marginHorizontal: wp('1%'),
     elevation: 3,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

@@ -24,7 +24,7 @@ const Home = () => {
         <Navbar />
       </View>
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: 70 }}> 
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}> 
         <View style={styles.contentContainer}>
           <View style={styles.searchContainer}>
             <CustomSearchApp placeholder={'Search in here'} />
@@ -88,37 +88,37 @@ searchContainer: {
 
   bodyContainer: {
     flex: 1,
-    margin: 20,
+    margin: hp('1%'),
   },
   titleContainer: {
-    padding: 10,
+    padding: hp('1%'),
   },
   titleText: {
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: hp('3%'),
   },
   scrollContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: hp('3%'),
   },
   itemBoxWrapper: {
-    width: '30%', 
-    marginBottom: 15,
+    width: wp('30%'), 
+    marginBottom: hp('2%'),
     alignItems: 'center',
   },
   recommendedProducts: {
-    marginTop: 20,
+    marginTop: hp('2%'),
   },
   recommendedTitle: {
-    fontSize: 23,
+    fontSize: hp('3%'),
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: hp('2%'),
   },
   productRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: hp('3%'),
   },
 });

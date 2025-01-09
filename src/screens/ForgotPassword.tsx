@@ -41,23 +41,23 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     topSection: {
-        height: hp('50%'),
+        height: hp('60%'),
     },
     textContainer: {
         flex: 0.7,
         justifyContent: 'flex-end',
-        gap: 16,
-        marginHorizontal: wp('10%'),
+        gap: hp('2%'),
+        marginHorizontal: wp('8%'),
     },
     heading: {
-        fontSize: 30,
+        fontSize: hp('3%'),
         fontWeight: '600',
     },
     subHeading: {
-        fontSize: 19,
+        fontSize: hp('2%'),
     },
     buttonContainer: {
-        flex: 0.5,
+        flex: 0.3,
         alignItems: 'center',
         justifyContent: 'flex-end',
     },

@@ -24,6 +24,7 @@ const { height, width } = Dimensions.get("window");
 
  import i18next from "../../services/i18next";;
 import { useTranslation } from "react-i18next";
+import { fonts } from "../../util/FontName";
 
 
 function SignIn() {
@@ -44,7 +45,7 @@ function SignIn() {
       <View style={styles.inputs}>
         {/* height: height / 20,
       width: width / 1.1, */}
-        <CustomInput placeholder={t('Username')} hide={hp('4%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
+        <CustomInput placeholder={t('Username')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
         <View style={styles.passInputBox}>
           <TextInput
             style={styles.passInput}
@@ -123,13 +124,14 @@ const styles = StyleSheet.create({
     marginBottom: height / 20,
   },
   Heading: {
-    fontSize: height / 30,
+    fontSize: height / 25,
     fontWeight: "bold",
     marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
     fontSize: height / 45,
+    fontFamily:fonts.Medium,
     marginTop: height / 100,
     marginLeft: wp('1.5%'),
   },
@@ -219,12 +221,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: width / 44,
+    borderRadius: hp('1%'),
     borderColor: colors.LIGHT_GRAY,
   },
   passInput: {
     flex: 3,
-    fontSize: 16,
+    fontSize: hp('1.7%'),
   },
 });
 

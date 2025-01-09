@@ -3,8 +3,14 @@ import React from 'react';
 
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
-const CustomImageButton = ({ name, SourceGiven, isNavigation, w = 38, h = 38 }) => {
+
+
+const CustomImageButton = ({ name, SourceGiven, isNavigation, w = wp('6.5%'), h = hp('3.6%') }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
@@ -30,14 +36,14 @@ const styles = StyleSheet.create({
   Wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: hp('0.8%'),
     backgroundColor: colors.WHITE,
-    marginHorizontal: 4,
+    marginHorizontal: wp('1.6%'),
     elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    shadowOffset: { width: 0, height: hp('1.2%') },
+    shadowOpacity: hp('1.3%'),
+    shadowRadius: hp('1.3%'),
   },
   ImageStyle: {
     resizeMode: 'contain',

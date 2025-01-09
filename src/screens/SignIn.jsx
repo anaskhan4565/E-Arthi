@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: width / 44,
+    borderRadius: hp('1.5%'),
     borderColor: colors.LIGHT_GRAY,
   },
   passInput: {

@@ -17,7 +17,7 @@ function ForgotPassword(): React.JSX.Element {
                 <View style={styles.textContainer}>
                     <Text style={styles.heading}>Forgot Password</Text>
                     <Text style={styles.subHeading}>Enter your email to be sent a reset password</Text>
-                    <CustomInput placeholder={'email@email.com'} hide={false} />
+                    <CustomInput placeholder={"email@email.com"} hide={false} />
                 </View>
                 <View style={styles.buttonContainer}>
                     <CustomButton

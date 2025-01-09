@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
-
+import { useTranslation } from "react-i18next";
 
 const OTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -20,6 +20,7 @@ const OTP = () => {
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 
     };
+    const {t}=useTranslation();
 
     useEffect(() => {
         if (isFocused) {
@@ -68,10 +69,10 @@ const OTP = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>OTP Verification</Text>
+            <Text style={styles.title}>{t('OTP Verification')}</Text>
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
-                    Please enter the verification code we’ve sent you on 9999999999
+                    {t('Please enter the verification code we’ve sent you on 9999999999')}
                 </Text>
             </View>
 
@@ -89,12 +90,12 @@ const OTP = () => {
             </View>
             <View style={styles.bottomContainer}>
                 < ActivityIndicator size={23} color={colors.GREEN} style={styles.activityindicator} />
-                <Text style={styles.autocapturetext}>Trying to Auto Capture</Text>
+                <Text style={styles.autocapturetext}>{t('Trying to Auto Capture')}</Text>
                 <Text style={styles.timetext}> {formatTime(timeLeft)}</Text>
             </View>
 
             <CustomButton
-                MainText="Verify"
+                MainText={t('Verify')}
                 BgGiven={colors.GREEN} name={ScreensName.SignIn} txColor={colors.WHITE} isNavigation={1} />
         </View>
     );

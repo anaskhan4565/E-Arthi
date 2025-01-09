@@ -22,23 +22,26 @@ import Back from "../../../assets/MainApp/Sidebar/Back.png";
 import ProfilePic from "../../../assets/MainApp/HomeScreen/ProfilePic.png";
 import Power from "../../../assets/MainApp/Sidebar/Power.png";
 import links from "../../../../util/SidebarLinks";
+import { useTranslation } from "react-i18next";
+
 
 function Sidebar() {
   const navigation = useNavigation();
+  const {t} = useTranslation();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.HomeScreen}/>
-        <Text style={styles.Heading}>My Account</Text>
+        <Text style={styles.Heading}>{t('My Account')}</Text>
         <CustomImageButton SourceGiven={Bell} h={hp("4%")} w={hp("4%")} />
       </View>
       <View style={styles.User}>
         <Image source={ProfilePic} style={styles.Profile} />
         <View style={styles.UserInfo}>
           <Text style={{ fontSize: hp("2.75%"), fontWeight: "500" }}>
-            MAAZ NAVAID
+            {t('MAAZ NAVAID')}
           </Text>
-          <Text style={{ fontSize: hp("1.95%") }}>maaznavaid@gmail.com</Text>
+          <Text style={{ fontSize: hp("1.95%") }}>{t('maaznavaid@gmail.com')}</Text>
         </View>
       </View>
       <View style={styles.body}></View>
@@ -47,14 +50,14 @@ function Sidebar() {
           link.name.trim() !== "" && (
             <TouchableOpacity style={styles.linkWrapper} key={index}>
               <Image source={link.icon} style={styles.Icons} />
-              <Text style={styles.link}>{link.name}</Text>
+              <Text style={styles.link}>{t(link.name)}</Text>
             </TouchableOpacity>
           )
       )}
       <View style={styles.logout}>
         <TouchableOpacity style={styles.logoutButton} onPress={() => {navigation.navigate(ScreensName.Connect)}}>
           <Image source={Power} style={styles.logoutIcon} />
-          <Text style={styles.logoutText}>Log Out</Text>
+          <Text style={styles.logoutText}>{t('Log Out')}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

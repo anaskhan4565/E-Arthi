@@ -9,19 +9,22 @@ import CustomInput from '../components/CustomInput';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from "react-i18next";
+
 
 function ForgotPassword(): React.JSX.Element {
+    const {t}=useTranslation();
     return (
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.heading}>Forgot Password</Text>
-                    <Text style={styles.subHeading}>Enter your email to be sent a reset password</Text>
+                    <Text style={styles.heading}>{t('Forgot Password')}</Text>
+                    <Text style={styles.subHeading}>{t('Enter your email to be sent a reset password')}</Text>
                     <CustomInput placeholder={"email@email.com"} hide={false} />
                 </View>
                 <View style={styles.buttonContainer}>
                     <CustomButton
-                        MainText="Reset"
+                        MainText={t('Reset')}
                         BgGiven={colors.GREEN}
                         txColor={colors.WHITE}
                         isNavigation={true}

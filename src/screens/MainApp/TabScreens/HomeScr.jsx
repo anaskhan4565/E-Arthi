@@ -27,12 +27,12 @@ const Home = () => {
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}> 
         <View style={styles.contentContainer}>
           <View style={styles.searchContainer}>
-            <CustomSearchApp placeholder={'Search in here'} />
+            <CustomSearchApp placeholder={t('Search in here')} />
           </View>
 
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>E-Arthi-Offerings</Text>
+              <Text style={styles.titleText}>{t('E-Arthi-Offerings')}</Text>
             </View>
 
             <View style={styles.scrollContainer}>
@@ -47,7 +47,7 @@ const Home = () => {
 
             {/* Section for Recommended Products */}
             <View style={styles.recommendedProducts}>
-              <Text style={styles.recommendedTitle}>Recommended Products</Text>
+              <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
               <View style={styles.productRow}>
                 <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
                 <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"}/>

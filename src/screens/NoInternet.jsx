@@ -14,10 +14,12 @@ import ScreensName from '../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import InternetErr from '../assets/NoInternet/Internet_sn.png'
+import { useTranslation } from "react-i18next";
+
 const NoInternet = () => {
     const [isConnected, setIsConnected] = useState(null);
     const navigation = useNavigation();
-
+    const {t} = useTranslation();
     useEffect(() => {
         const unsubscribe = NetInfo.addEventListener(state => {
             console.log('Connection type', state.type);
@@ -38,16 +40,15 @@ const NoInternet = () => {
     return (
         <SafeAreaView style={styles.container}>
             {isConnected === null ? (
-                <Text>Checking connection...</Text>
+                <Text>{t('Checking connection...')}</Text>
             ) : isConnected ? null : (
                 <View style={{ alignItems: 'center', gap: 10 }}>
                     <Image source={InternetErr} style={styles.errorMsg} />
-                    <Text style={{ fontSize: wp('7%'), fontWeight: 'bold' }}>No Internet Connection</Text>
-                    <Text style={{ width: wp('80%'), textAlign: 'center', color: colors.BLACK }}>Your internet connection is currently
-                        not available please check or try again.</Text>
+                    <Text style={{ fontSize: wp('7%'), fontWeight: 'bold' }}>{t('No Internet Connection')}</Text>
+                    <Text style={{ width: wp('80%'), textAlign: 'center', color: colors.BLACK }}>{t('Your internet connection is currently not available please check or try again.')}</Text>
                     <View style={{ marginTop: hp('3%') }}>
                         <CustomButton
-                            MainText={"Try Again"}
+                            MainText={t('Try Again')}
                             BgGiven={colors.GREEN}
                             name={ScreensName.SplashScreen}
                             txColor={colors.WHITE}

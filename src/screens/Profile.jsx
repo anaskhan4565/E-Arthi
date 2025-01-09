@@ -6,11 +6,11 @@ import Logo from '../assets/Icon/Logo.png';
 import VectorMen from '../assets/AboutMoreicons/Vectormen.png';
 import CustomButton from '../components/CustomButton';
 import ScreensName from '../../util/ScreensName';
-
+import { useTranslation } from 'react-i18next';
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer'); 
     // Default selection is 'Farmer'
-
+    const {t} = useTranslation();
     return (
         <SafeAreaView style={styles.MainContainer}>
             <View style={{ flex: 0.74,backgroundColor:colors.WHITE }}>
@@ -21,7 +21,7 @@ const AboutMore = () => {
 
                 {/* Content Section */}
                 <View style={styles.contentContainer}>
-                    <Text style={styles.headerText}>Tell us more about you</Text>
+                    <Text style={styles.headerText}>{t('Tell us more about you')}</Text>
 
                     {/* Row of Items */}
                     <View style={{ flexDirection: 'row' }}>
@@ -34,7 +34,7 @@ const AboutMore = () => {
                             onPress={() => setSelectedCard('Farmer')}
                         >
                             <Image source={VectorMen} style={styles.vectorLogo} />
-                            <Text style={styles.cardText}>Farmer</Text>
+                            <Text style={styles.cardText}>{t('Farmer')}</Text>
                         </TouchableOpacity>
 
                         {/* Dealer Card */}
@@ -46,7 +46,7 @@ const AboutMore = () => {
                             onPress={() => setSelectedCard('Dealer')}
                         >
                             <Image source={VectorMen} style={styles.vectorLogo} />
-                            <Text style={styles.cardText}>Vender</Text>
+                            <Text style={styles.cardText}>{t('Vender')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -54,7 +54,7 @@ const AboutMore = () => {
 
             {/* Footer Section */}
             <View style={{ flex: 0.3, alignItems: 'center' }}>
-                <CustomButton BgGiven={colors.GREEN} MainText={"Continue"} txColor={colors.WHITE} isNavigation={true} name={ScreensName.SignUp} />
+                <CustomButton BgGiven={colors.GREEN} MainText={t('Continue')} txColor={colors.WHITE} isNavigation={true} name={ScreensName.SignUp} />
             </View>
         </SafeAreaView>
     );

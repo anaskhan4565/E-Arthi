@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import colors from "../../../../util/colors";
@@ -25,7 +26,7 @@ import links from "../../../../util/SidebarLinks";
 function Sidebar() {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.HomeScreen}/>
         <Text style={styles.Heading}>My Account</Text>
@@ -56,7 +57,7 @@ function Sidebar() {
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -104,7 +105,8 @@ const styles = StyleSheet.create({
     marginLeft: wp("2%"),
   },
   logout: {
-    marginTop: hp("1.5%"),
+    marginTop: hp("2.5%"),
+
   },
   logoutText: {
     fontSize: hp("2%"),
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginLeft: wp("7%"),
     alignItems: "center",
-    borderRadius: hp("2.5%")
+    borderRadius: hp("2.5%"),
   },
   logoutIcon: {
     width: wp("8%"),

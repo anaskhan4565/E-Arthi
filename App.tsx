@@ -1,5 +1,5 @@
-import React from 'react';
-import type { PropsWithChildren } from 'react';
+import React from "react";
+import type { PropsWithChildren } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -35,9 +35,14 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from './services/i18next.js';
 const Stack = createNativeStackNavigator();
 
+const slideFromLeftOptions: NativeStackNavigationOptions = {
+  animation: "slide_from_left", // Slide animation
+  presentation: "card", // Ensures the new screen overlaps the current one
+  gestureEnabled: true, // Allows gesture-based navigation
+  animationDuration: 500, // Adjusts the duration for smoother transition
+};
+
 function App(): React.JSX.Element {
-
-
   return (
     <I18nextProvider i18n={i18next}>
     <NavigationContainer>
@@ -45,10 +50,17 @@ function App(): React.JSX.Element {
         <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
         <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
         <Stack.Screen name={ScreensName.Connect} component={Connect} />
-        <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
-        <Stack.Screen name={ScreensName.MapSelection} component={MapSelection} />
+        <Stack.Screen
+          name={ScreensName.ForgotPassword}
+          component={ForgotPassword}
+        />
+        <Stack.Screen
+          name={ScreensName.MapSelection}
+          component={MapSelection}
+        />
         <Stack.Screen name={ScreensName.OTP} component={OTP} />
         <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
+        <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
         <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />

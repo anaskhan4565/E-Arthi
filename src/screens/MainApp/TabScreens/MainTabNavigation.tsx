@@ -9,10 +9,11 @@ import EInventory from './E-Inventory';
 import EMarket from './E-Market';
 import EMunshi from './E-Munshi';
 import colors from '../../../../util/colors';
+import { useTranslation } from 'react-i18next';
 
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
-
+    const {t}=useTranslation();
     return (
         <View style={styles.container}>
             <Tab.Navigator
@@ -35,7 +36,7 @@ export default function MainTabNavigation() {
                 }}
             >
                 <Tab.Screen
-                    name={ScreensName.Home}
+                    name={t(ScreensName.Home)}
                     component={Home}
                     options={{
                         tabBarIcon: ({ focused }) => (
@@ -51,7 +52,7 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={ScreensName.EInvetory}
+                    name={t(ScreensName.EInvetory)}
                     component={EInventory}
                     options={{
                         tabBarIcon: ({ focused }) => (
@@ -67,7 +68,7 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={ScreensName.EMarket}
+                    name={t(ScreensName.EMarket)}
                     component={EMarket}
                     options={{
                         tabBarIcon: ({ focused }) => (
@@ -83,7 +84,7 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={ScreensName.EMunshi}
+                    name={t(ScreensName.EMunshi)}
                     component={EMunshi}
                     options={{
                         tabBarIcon: ({ focused }) => (
@@ -99,7 +100,7 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={ScreensName.ELoan}
+                    name={t(ScreensName.ELoan)}
                     component={ELoan}
                     options={{
                         tabBarIcon: ({ focused }) => (

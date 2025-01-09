@@ -1,5 +1,4 @@
 {
-
     "Connect_With_us":"Connect with us and Digitalise in the Agriculture market!",
     "Register_Now":"Register Now",
     "Sign-in": "Sign In",
@@ -11,9 +10,50 @@
     "Forgot Password":"Forgot password?",
     "OR":"OR",
     "Login with google":"login with Google",
-    "Login with Apple":"login with Apple"
-    
-
-
-}   
-  
+    "Login with Apple":"login with Apple",
+    "E-Market": "E-Market",
+    "E-Munshi": "E-Munshi",
+    "E-Inventory": "E-Inventory",
+    "E-Loan": "E-Loan",
+    "E-Collateral": "E-Collateral",
+    "E-Orders": "E-Orders",
+    "E-Vendors": "E-Vendors",
+    "Enter your email to be sent a reset password": "Enter your email to be sent a reset password",
+    "Reset":"Reset",
+    "Location":"Location",
+    "Allow maps to access your location while you use the app?": "Allow maps to access your location while you use the app?",
+    "Allow": "Allow",
+    "Skip for now": "Skip for now",
+    "Screen": "Screen",
+    "Checking connection...": "Checking connection...",
+    "No Internet Connection": "No Internet Connection",
+    "Your internet connection is currently not available please check or try again.": "Your internet connection is currently not available please check or try again.",
+    "Try Again": "Try Again",
+    "OTP Verification": "OTP Verification",
+    "Please enter the verification code we’ve sent you on 9999999999": "Please enter the verification code we’ve sent you on 9999999999",
+    "Trying to Auto Capture": "Trying to Auto Capture",
+    "Verify": "Verify",
+    "Tell us more about you": "Tell us more about you",
+    "Farmer": "Farmer",
+    "Vender": "Vender",
+    "Continue": "Continue",
+    "Register": "Register",
+    "Welcome, please Register": "Welcome, please Register",
+    "Full Name": "Full Name",
+    "Phone No.": "Phone No.",
+    "Sign up for e-mails to get updates from E-Arthi tips and offers": "Sign up for e-mails to get updates from E-Arthi tips and offers",
+    "By creating your account, you agree to the ": "By creating your account, you agree to the ",
+    "Terms of Services ": "Terms of Services ",
+    "and ": "and ",
+    "Privacy Policy": "Privacy Policy",
+    "Register with Google ": "Register with Google ",
+    "Register with Apple ": "Register with Apple ",
+    "My Account": "My Account",
+    "MAAZ NAVAID": "MAAZ NAVAID",
+    "maaznavaid@gmail.com": "maaznavaid@gmail.com",
+    "Log Out": "Log Out",
+    "Search in here": "Search in here",
+    "E-Arthi Categories": "E-Arthi Categories",
+    "Recommended Products": "Recommended Products",
+    "E-Arthi-Offerings": "E-Arthi-Offerings"
+}

@@ -21,23 +21,34 @@ import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
+
+ import i18next from "../../services/i18next";;
+import { useTranslation } from "react-i18next";
+
+
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
+  
+
+  //for translation
+  const {t}=useTranslation();
+
+  //
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
-        <Text style={styles.Heading}>Sign in</Text>
-        <Text style={styles.SubHeading}>Welcome back, please login again</Text>
+        <Text style={styles.Heading}>{t('Sign-in')}</Text>
+        <Text style={styles.SubHeading}>{t('Welcome back, please login again')}</Text>
       </View>
       <View style={styles.inputs}>
         {/* height: height / 20,
       width: width / 1.1, */}
-        <CustomInput placeholder={"Username"} hide={hp('4%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
+        <CustomInput placeholder={t('Username')} hide={hp('4%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
         <View style={styles.passInputBox}>
           <TextInput
             style={styles.passInput}
-            placeholder={"Password"}
+            placeholder={t('Password')}
             secureTextEntry={passwordVisible}
           />
           <TouchableOpacity
@@ -53,7 +64,7 @@ function SignIn() {
       </View>
       <View style={styles.button}>
         <CustomButton
-          MainText={"Login"}
+          MainText={t('Login')}
           BgGiven={colors.GREEN}
           name={ScreensName.MainTabNavigation}
           txColor={colors.WHITE}
@@ -70,15 +81,15 @@ function SignIn() {
             textComponent={true}
             innerIconStyle={{ borderRadius: 7 }}
           />
-          <Text style={styles.RememberMeText}>Remember Me</Text>
+          <Text style={styles.RememberMeText}>{t('Remember me')}</Text>
         </View>
         <TouchableOpacity onPress={() => { navigation.navigate(ScreensName.ForgotPassword) }}>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+          <Text style={styles.forgotPassword}>{t('Forgot Password')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.break}>
         <View style={styles.line} />
-        <Text style={styles.ORtext}>OR</Text>
+        <Text style={styles.ORtext}>{t('OR')}</Text>
         <View style={styles.line} />
       </View>
       <View style={styles.altSignin}>
@@ -87,14 +98,14 @@ function SignIn() {
             source={require("../assets/google.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: hp('1.7%') }}>login with Google </Text>
+          <Text style={{ fontSize: hp('1.7%') }}>{t('Login with google')} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../assets/apple.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: hp('1.7%') }}>login with Apple </Text>
+          <Text style={{ fontSize: hp('1.7%') }}>{t('Login with Apple')}  </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

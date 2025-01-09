@@ -29,12 +29,17 @@ import LocationSys from './src/screens/LocationEnable.jsx';
 import NoInternet from './src/screens/NoInternet.jsx';
 import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
 import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
+
+//for i18-next
+import { I18nextProvider } from 'react-i18next';
+import i18next from './services/i18next.js';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
 
 
   return (
+    <I18nextProvider i18n={i18next}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
         <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
@@ -58,7 +63,7 @@ function App(): React.JSX.Element {
 
       </Stack.Navigator>
     </NavigationContainer>
-
+    </I18nextProvider>
   );
 }
 

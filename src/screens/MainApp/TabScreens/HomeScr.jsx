@@ -8,6 +8,7 @@ import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
 import allNames from '../../../../util/E-Offerings.js';
 import ProductBox from '../CustomComponent/ProductBox.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 
 //Need to edit this later, passing images literl
@@ -15,6 +16,8 @@ import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png'
 import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png'
 
 const Home = () => {
+    const {t}=useTranslation()
+  
   return (
     <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={styles.navbarContainer}>
@@ -36,7 +39,7 @@ const Home = () => {
               {allNames.map((name, index) => (
                 name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
-                    <ItemBox name={name} SourceGiven={Heart} isNavigation={true} />
+                    <ItemBox name={t(name)} SourceGiven={Heart} isNavigation={true} />
                   </View>
                 )
               ))}

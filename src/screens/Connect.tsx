@@ -6,10 +6,14 @@ import ScreensName from '../../util/ScreensName';
 import Logo from '../assets/Icon/Logo-only.png';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../util/FontName';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 function Connect(): React.JSX.Element {
   const { i18n } = useTranslation(); // To access the i18n instance for language change
   const [modalVisible, setModalVisible] = useState(false); // To manage dropdown visibility
-  const {t}=useTranslation()
+  const { t } = useTranslation()
   // Function to change the language based on selection
   const handleLanguageChange = (language: string) => {
     i18n.changeLanguage(language); // Changes the language
@@ -29,7 +33,7 @@ function Connect(): React.JSX.Element {
             alignItems: 'center',
           }}
         >
-          <Text style={{ color: colors.WHITE, fontSize: 16,fontFamily:fonts.Medium }}>Select Language</Text>
+          <Text style={{ color: colors.WHITE, fontSize: hp(2), fontFamily: fonts.Medium }}>Select Language</Text>
         </TouchableOpacity>
 
         {/* Modal for Language Options */}
@@ -53,31 +57,31 @@ function Connect(): React.JSX.Element {
                 backgroundColor: colors.WHITE,
                 paddingHorizontal: 40,
                 borderRadius: 10,
-                flex:0.2,
-                justifyContent:'space-evenly'
+                flex: 0.2,
+                justifyContent: 'space-evenly'
               }}
             >
               <TouchableOpacity onPress={() => handleLanguageChange('en')}>
-                <Text style={{ fontSize: 18, marginBottom: 10,fontFamily:fonts.Medium }}>English</Text>
+                <Text style={{ fontSize: hp(2), marginBottom: 10, fontFamily: fonts.Medium }}>English</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleLanguageChange('ur')}>
-                <Text style={{ fontSize: 18,fontFamily:fonts.Medium }}>اردو</Text>
+                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>اردو</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleLanguageChange('sin')}>
-                <Text style={{ fontSize: 18,fontFamily:fonts.Medium }}>سنڌي</Text>
+                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>سنڌي</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
       </View>
 
-      <View style={{ flex: 0.75, justifyContent: 'center', marginTop: 105, alignItems: 'center' }}>
+      <View style={{ flex: 0.75, justifyContent: 'center', marginTop: hp(16), alignItems: 'center' }}>
         <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
           <Image source={Logo} resizeMode="contain" style={styles.logo} />
-          <Text style={{fontSize:50,textAlign:'center',fontWeight:'bold'}}>{t('E-Arthi')}</Text>
+          <Text style={{ fontSize: hp(5), textAlign: 'center', fontWeight: 'bold' }}>{t('E-Arthi')}</Text>
         </View>
-        <View style={{ flex: 0.5, justifyContent: 'center'}}>
-          <Text style={{fontSize:20,textAlign:'center',fontFamily:fonts.Regular}}>{t('Connect_With_us')}</Text>
+        <View style={{ flex: 0.5, justifyContent: 'center' }}>
+          <Text style={{ fontSize: hp(2), textAlign: 'center', fontFamily: fonts.Regular }}>{t('Connect_With_us')}</Text>
         </View>
       </View>
 
@@ -88,7 +92,7 @@ function Connect(): React.JSX.Element {
             BgGiven={colors.GREEN}
             txColor={colors.WHITE}
             isNavigation={true}
-            name={ScreensName.SignUp}
+            name={ScreensName.MorePage}
           />
           <CustomButton
             MainText={t('Login')}
@@ -105,8 +109,8 @@ function Connect(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 170,
-    height: 170,
+    width: wp(60),
+    height: hp(24),
   },
 });
 

@@ -27,11 +27,11 @@ import { useTranslation } from "react-i18next";
 
 function Sidebar() {
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.MainTabNavigation}/>
+        <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.MainTabNavigation} />
         <Text style={styles.Heading}>{t('My Account')}</Text>
         <CustomImageButton SourceGiven={Bell} h={hp("4%")} w={hp("4%")} />
       </View>
@@ -55,7 +55,7 @@ function Sidebar() {
           )
       )}
       <View style={styles.logout}>
-        <TouchableOpacity style={styles.logoutButton} onPress={() => {navigation.navigate(ScreensName.Connect)}}>
+        <TouchableOpacity style={styles.logoutButton} onPress={() => { navigation.navigate(ScreensName.Connect) }}>
           <Image source={Power} style={styles.logoutIcon} />
           <Text style={styles.logoutText}>{t('Log Out')}</Text>
         </TouchableOpacity>
@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
     borderColor: colors.GREEN,
     borderWidth: 3,
     borderRadius: 20,
+
+
   },
   UserInfo: {
     marginLeft: wp("5%"),
@@ -109,6 +111,7 @@ const styles = StyleSheet.create({
   },
   logout: {
     marginTop: hp("2.5%"),
+    marginBottom: hp('2%'),
 
   },
   logoutText: {
@@ -117,9 +120,9 @@ const styles = StyleSheet.create({
     marginLeft: wp("3.5%"),
   },
   logoutButton: {
-    backgroundColor:colors.GREEN,
+    backgroundColor: colors.GREEN,
     width: wp("35%"),
-    height: hp("5%"),
+    height: hp("5.5%"),
     flexDirection: "row",
     marginLeft: wp("7%"),
     alignItems: "center",
@@ -127,8 +130,9 @@ const styles = StyleSheet.create({
   },
   logoutIcon: {
     width: wp("8%"),
-    height: wp("8%"),
+    height: hp("4%"),
     marginLeft: wp("3%"),
+    resizeMode: 'contain',
   }
 });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import {
     SafeAreaView,
     ScrollView,
@@ -12,7 +13,7 @@ import {
 
 
 
-function Home(): React.JSX.Element {
+function EMunshi(): React.JSX.Element {
 
 
     return (
@@ -28,4 +29,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Home;
+export default EMunshi;

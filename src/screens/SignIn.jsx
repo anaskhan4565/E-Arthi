@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import type { PropsWithChildren } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -19,23 +18,38 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import ScreensName from "../../util/ScreensName";
 import { useNavigation } from '@react-navigation/native'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
+
+ import i18next from "../../services/i18next";;
+import { useTranslation } from "react-i18next";
+import { fonts } from "../../util/FontName";
+
+
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigation=useNavigation();
+  const navigation = useNavigation();
+  
+
+  //for translation
+  const {t}=useTranslation();
+
+  //
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
-        <Text style={styles.Heading}>Sign in</Text>
-        <Text style={styles.SubHeading}>Welcome back, please login again</Text>
+        <Text style={styles.Heading}>{t('Sign-in')}</Text>
+        <Text style={styles.SubHeading}>{t('Welcome back, please login again')}</Text>
       </View>
       <View style={styles.inputs}>
-        <CustomInput placeholder={"Username"} hide={0} />
+        {/* height: height / 20,
+      width: width / 1.1, */}
+        <CustomInput placeholder={t('Username')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
         <View style={styles.passInputBox}>
           <TextInput
             style={styles.passInput}
-            placeholder={"Password"}
+            placeholder={t('Password')}
             secureTextEntry={passwordVisible}
           />
           <TouchableOpacity
@@ -51,9 +65,9 @@ function SignIn() {
       </View>
       <View style={styles.button}>
         <CustomButton
-          MainText={"Login"}
+          MainText={t('Login')}
           BgGiven={colors.GREEN}
-          name={ScreensName.Home}
+          name={ScreensName.MainTabNavigation}
           txColor={colors.WHITE}
           isNavigation={1}
         ></CustomButton>
@@ -61,22 +75,22 @@ function SignIn() {
       <View style={styles.options}>
         <View style={styles.RememberMe}>
           <BouncyCheckbox
-            size={25}
+            size={20}
             fillColor={colors.GREEN}
             iconStyle={{ borderColor: colors.LIGHT_GRAY }}
             style={styles.checkbox}
-            textComponent={1}
-            innerIconStyle = {{borderRadius: 7}}
+            textComponent={true}
+            innerIconStyle={{ borderRadius: 7 }}
           />
-          <Text style={styles.RememberMeText}>Remember Me</Text>
+          <Text style={styles.RememberMeText}>{t('Remember me')}</Text>
         </View>
-        <TouchableOpacity onPress={() => {navigation.navigate(ScreensName.ForgotPassword)}}>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        <TouchableOpacity onPress={() => { navigation.navigate(ScreensName.ForgotPassword) }}>
+          <Text style={styles.forgotPassword}>{t('Forgot Password')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.break}>
         <View style={styles.line} />
-        <Text style={styles.ORtext}>OR</Text>
+        <Text style={styles.ORtext}>{t('OR')}</Text>
         <View style={styles.line} />
       </View>
       <View style={styles.altSignin}>
@@ -85,14 +99,14 @@ function SignIn() {
             source={require("../assets/google.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: height / 65 }}>login with Google </Text>
+          <Text style={{ fontSize: hp('1.7%') }}>{t('Login with google')} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../assets/apple.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: height / 65 }}>login with Apple </Text>
+          <Text style={{ fontSize: hp('1.7%') }}>{t('Login with Apple')}  </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -110,13 +124,16 @@ const styles = StyleSheet.create({
     marginBottom: height / 20,
   },
   Heading: {
-    fontSize: height / 30,
+    fontSize: height / 25,
     fontWeight: "bold",
+    marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
     fontSize: height / 45,
+    fontFamily:fonts.Medium,
     marginTop: height / 100,
+    marginLeft: wp('1.5%'),
   },
   inputs: {
     gap: height / 40,
@@ -129,7 +146,7 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: height / 30,
+    marginTop: hp('2%'),
     alignItems: "center",
   },
   RememberMe: {
@@ -139,23 +156,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   RememberMeText: {
-    fontSize: height / 55,
+    fontSize: height / 58,
     marginLeft: 5,
   },
-  checkbox: {},
+  checkbox: {
+    marginLeft: wp('3%'),
+  },
   forgotPassword: {
     flex: 1,
     alignItems: "flex-end",
     color: colors.GREEN,
-    fontSize: height / 55,
+    fontSize: height / 58,
+    marginRight: wp('3%'),
+
   },
   break: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: height / 40, 
+    marginVertical: height / 40,
   },
   line: {
-    flex: 1, 
+    flex: 1,
     height: 1,
     backgroundColor: colors.LIGHT_GRAY,
   },
@@ -168,8 +189,8 @@ const styles = StyleSheet.create({
     gap: height / 80,
   },
   altSigninButton: {
-    width: width / 1.11,
-    height: height / 20,
+    height: hp('5.7%'),
+    width: wp('85%'),
     borderColor: colors.LIGHT_GRAY,
     borderWidth: 1,
     borderRadius: 8,
@@ -180,9 +201,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   altSigninButtonIcon: {
-    width: 20,
-    height: 20,
+    width: wp('7%'),
+    height: hp('4%'),
     marginRight: 10,
+    resizeMode: 'contain',
   },
   passToggleButton: {},
   showPassIcon: {
@@ -191,19 +213,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   passInputBox: {
-    height: height / 20,
-    width: width / 1.1,
-    fontSize: 16,
+    height: hp('5.7%'),
+    width: wp('85%'),
+    fontSize: 18,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: width / 44,
+    borderRadius: hp('1%'),
     borderColor: colors.LIGHT_GRAY,
   },
   passInput: {
     flex: 3,
+    fontSize: hp('1.7%'),
   },
 });
 

@@ -1,4 +1,5 @@
 
+
 export default {
     SplashScreen:"SplashScreen",
 
@@ -11,13 +12,23 @@ export default {
     SignIn: "SignIn",
     SignUp: "SignUp",
     Splash: "Splash",
-<<<<<<< Updated upstream
-
-=======
     MorePage:"More",
+
     Sidebar: "Sidebar",
->>>>>>> Stashed changes
     //specific to Internet
     NoInternet: "NoInternet",
+
+    //Specific to Location
+    LocationPermission: "LocationPermission",
+    //Specific After logging in::
+    MainTabNavigation:"MainTabNavigation",
+    HomeScreen: "Home",
+    EMunshi: "E-Munshi",
+    ELoan:"E-Loan",
+    EInvetory:"E-Inventory",
+    EMarket:"E-Market",
+
+    //specific to each product
+    ProductScr:"Product",
 
 }

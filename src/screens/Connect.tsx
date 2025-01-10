@@ -5,7 +5,10 @@ import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import Logo from '../assets/Icon/Logo.png';
 import { useTranslation } from 'react-i18next';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 function Connect(): React.JSX.Element {
   const { i18n } = useTranslation(); // To access the i18n instance for language change
   const [modalVisible, setModalVisible] = useState(false); // To manage dropdown visibility
@@ -29,7 +32,7 @@ function Connect(): React.JSX.Element {
             alignItems: 'center',
           }}
         >
-          <Text style={{ color: colors.WHITE, fontSize: 16 }}>Select Language</Text>
+          <Text style={{ color: colors.WHITE, fontSize: hp(2) }}>Select Language</Text>
         </TouchableOpacity>
 
         {/* Modal for Language Options */}
@@ -73,7 +76,7 @@ function Connect(): React.JSX.Element {
 
       <View style={{ flex: 0.5,gap:9, justifyContent: 'center', marginTop: 181, alignItems: 'center' }}>
         <Image source={Logo} resizeMode="contain" style={styles.logo} />
-        <Text style={{fontSize:20,textAlign:'center'}}>{t('Connect_With_us')}</Text>
+        <Text style={{fontSize:hp(2),textAlign:'center'}}>{t('Connect_With_us')}</Text>
       </View>
 
       <View style={{ flex: 0.5 }}>
@@ -83,7 +86,7 @@ function Connect(): React.JSX.Element {
             BgGiven={colors.GREEN}
             txColor={colors.WHITE}
             isNavigation={true}
-            name={ScreensName.SignUp}
+            name={ScreensName.MorePage}
           />
           <CustomButton
             MainText={t('Login')}
@@ -100,8 +103,8 @@ function Connect(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 200,
-    height: 200,
+    width: wp(60),
+    height: hp(24),
   },
 });
 

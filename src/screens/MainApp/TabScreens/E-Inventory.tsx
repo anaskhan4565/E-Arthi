@@ -19,12 +19,12 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-
+import { useTranslation } from 'react-i18next';
 
 
 
 function EInventory(): React.JSX.Element {
-
+    const {t}=useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -35,25 +35,25 @@ function EInventory(): React.JSX.Element {
             <ScrollView style={styles.container}>
 
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={'Search in here'} />
+                    <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.titleText}>E-Arthi Categories</Text>
+                        <Text style={styles.titleText}>{t('E-Arthi Categories')}</Text>
                     </View>
 
                     <View style={styles.scrollContainer}>
                         {ECategories.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <Categorybox name={Category.title} SourceGiven={Category.img} isNavigation={0} />
+                                    <Categorybox name={t(Category.title)} SourceGiven={Category.img} isNavigation={0} />
                                 </View>
                             )
                         ))}
                     </View>
 
                     <View style={styles.recommendedProducts}>
-                        <Text style={styles.recommendedTitle}>Recommended Products</Text>
+                        <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
                         <View style={styles.productRow}>
                             <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} isNavigation={0} />
                             <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} isNavigation={0} />

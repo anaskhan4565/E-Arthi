@@ -3,6 +3,12 @@ import React from 'react';
 import colors from '../../../../util/colors.js';
 import magnifierIcon from '../../../assets/CustomComponents/magnifer.png'; 
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+
 const CustomSearchApp = ({ placeholder }) => {
   return (
     <View style={styles.inputContainer}>
@@ -22,14 +28,14 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 50,
-    width: '90%',
+    height: hp('5%'),
+    width: wp('85%'),
     alignSelf: 'center',
     borderColor: colors.LIGHT_GRAY,
     backgroundColor: colors.GREAT_WHITE,
     borderRadius: 5,
-    paddingHorizontal: 10,
-    marginHorizontal: 4,
+    paddingHorizontal: hp('1%'),
+    marginHorizontal: hp('2%'),
     elevation:4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1},
@@ -38,12 +44,12 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     flex: 1, // Makes the TextInput take the remaining space
-    fontSize: 14,
+    fontSize: hp('1.5%'),
     color:colors.BLACK
   },
   iconStyle: {
-    width: 20, // Adjust the size of the icon
-    height: 20,
+    width: wp('4.5%'), // Adjust the size of the icon
+    height: hp('4.5%'),
     resizeMode: 'contain',
   },
 });

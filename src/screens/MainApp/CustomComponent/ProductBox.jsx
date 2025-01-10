@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   Wrapper: {
     borderRadius: 10,
     backgroundColor: colors.WHITE,
-    marginHorizontal: 4,
+    marginHorizontal: hp('0.5%'),
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   textContainer: {
-    rowGap: 5,
-    margin: 6,
+    rowGap: hp('1%'),
+    margin: hp('0.5%'),
     marginTop:hp('2%')
   },
   priceContainer: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   TextStyle: {
     fontWeight: 'bold',
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: hp('1.2%'),
   },
   price: {
     flex: 1,

@@ -12,10 +12,12 @@ import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Location from '../assets/LocationOpen/Location.png';
+import { useTranslation } from "react-i18next";
 
 const LocationSys = () => {
     const [isLocationEnabled, setIsLocationEnabled] = useState(true); // Renamed for clarity
     const navigation = useNavigation();
+    const {t} = useTranslation();
 
     // Navigate to the "Connect" screen if location is enabled
     useEffect(() => {
@@ -34,19 +36,19 @@ const LocationSys = () => {
             {!isLocationEnabled ? (
                 <View style={{ alignItems: 'center', gap: 10 }}>
                     <Image source={Location} style={styles.errorMsg} />
-                    <Text style={{ fontSize: wp('7%'), fontWeight: 'bold' }}>Location</Text>
+                    <Text style={{ fontSize: wp('7%'), fontWeight: 'bold' }}>{t('Location')}</Text>
                     <Text style={{ width: wp('80%'), textAlign: 'center', color: colors.BLACK }}>
-                        Allow maps to access your location while you use the app?
+                        {t('Allow maps to access your location while you use the app?')}
                     </Text>
                     <View style={{ marginTop: hp('3%'), gap: 8 }}>
                         <CustomButton
-                            MainText={"Allow"}
+                            MainText={t('Allow')}
                             BgGiven={colors.GREEN}
                             onPress={handleEnableLocation} // Enable location when clicked
                             txColor={colors.WHITE}
                         />
                         <CustomButton
-                            MainText={"Skip for now"}
+                            MainText={t('Skip for now')}
                             BgGiven={colors.WHITE}
                             name={ScreensName.Connect} // Navigate directly
                             txColor={colors.GREEN}

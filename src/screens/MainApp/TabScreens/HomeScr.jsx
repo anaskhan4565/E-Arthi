@@ -8,6 +8,7 @@ import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
 import allNames from '../../../../util/E-Offerings.js';
 import ProductBox from '../CustomComponent/ProductBox.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 
 //Need to edit this later, passing images literl
@@ -15,28 +16,30 @@ import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png'
 import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png'
 
 const Home = () => {
+    const {t}=useTranslation()
+  
   return (
     <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: 70 }}> 
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}> 
         <View style={styles.contentContainer}>
           <View style={styles.searchContainer}>
-            <CustomSearchApp placeholder={'Search in here'} />
+            <CustomSearchApp placeholder={t('Search in here')} />
           </View>
 
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>E-Arthi-Offerings</Text>
+              <Text style={styles.titleText}>{t('E-Arthi-Offerings')}</Text>
             </View>
 
             <View style={styles.scrollContainer}>
               {allNames.map((name, index) => (
                 name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
-                    <ItemBox name={name} SourceGiven={Heart} isNavigation={true} />
+                    <ItemBox name={t(name)} SourceGiven={Heart} isNavigation={true} />
                   </View>
                 )
               ))}
@@ -44,7 +47,7 @@ const Home = () => {
 
             {/* Section for Recommended Products */}
             <View style={styles.recommendedProducts}>
-              <Text style={styles.recommendedTitle}>Recommended Products</Text>
+              <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
               <View style={styles.productRow}>
                 <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
                 <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"}/>
@@ -85,37 +88,37 @@ searchContainer: {
 
   bodyContainer: {
     flex: 1,
-    margin: 20,
+    margin: hp('1%'),
   },
   titleContainer: {
-    padding: 10,
+    padding: hp('1%'),
   },
   titleText: {
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: hp('3%'),
   },
   scrollContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: hp('3%'),
   },
   itemBoxWrapper: {
-    width: '30%', 
-    marginBottom: 15,
+    width: wp('30%'), 
+    marginBottom: hp('2%'),
     alignItems: 'center',
   },
   recommendedProducts: {
-    marginTop: 20,
+    marginTop: hp('2%'),
   },
   recommendedTitle: {
-    fontSize: 23,
+    fontSize: hp('3%'),
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: hp('2%'),
   },
   productRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: hp('3%'),
   },
 });

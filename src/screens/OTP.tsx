@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
-
+import { useTranslation } from "react-i18next";
 
 const OTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -20,6 +20,7 @@ const OTP = () => {
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 
     };
+    const {t}=useTranslation();
 
     useEffect(() => {
         if (isFocused) {
@@ -68,10 +69,10 @@ const OTP = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>OTP Verification</Text>
+            <Text style={styles.title}>{t('OTP Verification')}</Text>
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
-                    Please enter the verification code we’ve sent you on 9999999999
+                    {t('Please enter the verification code we’ve sent you on 9999999999')}
                 </Text>
             </View>
 
@@ -89,12 +90,12 @@ const OTP = () => {
             </View>
             <View style={styles.bottomContainer}>
                 < ActivityIndicator size={23} color={colors.GREEN} style={styles.activityindicator} />
-                <Text style={styles.autocapturetext}>Trying to Auto Capture</Text>
+                <Text style={styles.autocapturetext}>{t('Trying to Auto Capture')}</Text>
                 <Text style={styles.timetext}> {formatTime(timeLeft)}</Text>
             </View>
 
             <CustomButton
-                MainText="Verify"
+                MainText={t('Verify')}
                 BgGiven={colors.GREEN} name={ScreensName.SignIn} txColor={colors.WHITE} isNavigation={1} />
         </View>
     );
@@ -104,26 +105,26 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        padding: 16,
+        padding: hp('1.5%'),
         backgroundColor: "white",
     },
     title: {
         marginTop: hp('10%'),
-        fontSize: 24,
+        fontSize: hp('3%'),
         fontWeight: "bold",
-        marginBottom: 8,
-        marginRight: wp('42%'),
+        marginBottom: hp('1.5%'),
+        marginRight: wp('36%'),
     },
     subtitle: {
-        fontSize: 16,
-        marginBottom: 24,
+        fontSize: hp('2%'),
+        marginBottom: hp('1.9%'),
         alignSelf: "flex-start",
         marginTop: hp('1%'),
     },
     inputContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 24,
+        marginBottom: hp('3.5%'),
     },
     infotextcontainer: {
         width: wp('70%'),
@@ -131,14 +132,14 @@ const styles = StyleSheet.create({
     },
     inputBox: {
         width: wp('13%'),
-        height: hp('6.5%'),
-        borderWidth: 1,
+        height: hp('7.5%'),
+        borderWidth: hp('0.1%'),
         borderColor: "#ccc",
-        borderRadius: 12,
+        borderRadius: hp('1.5%'),
         textAlign: "center",
-        fontSize: 18,
+        fontSize: hp('2.5%'),
         backgroundColor: "#FFF",
-        marginHorizontal: 3,
+        marginHorizontal: hp('0.5%'),
     },
     bottomContainer: {
         flexDirection: "row",
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
 
     },
     autocapturetext: {
-        fontSize: 14,
+        fontSize: hp('1.5%'),
         fontWeight: '300',
         marginLeft: wp('3%'),
         marginRight: wp('33%'),
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
 
     },
     timetext: {
-
+        fontSize:hp('2%')
     },
 });
 

@@ -9,15 +9,15 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-
+import { useTranslation } from 'react-i18next';
 
 
 function Splash(): React.JSX.Element {
-
+    const {t} = useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>Screen</Text>
+            <Text>{t('Screen')}</Text>
         </SafeAreaView>
     );
 }

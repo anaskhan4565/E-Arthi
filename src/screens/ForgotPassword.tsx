@@ -9,19 +9,22 @@ import CustomInput from '../components/CustomInput';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from "react-i18next";
+
 
 function ForgotPassword(): React.JSX.Element {
+    const {t}=useTranslation();
     return (
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.heading}>Forgot Password</Text>
-                    <Text style={styles.subHeading}>Enter your email to be sent a reset password</Text>
-                    <CustomInput placeholder={'email@email.com'} hide={false} />
+                    <Text style={styles.heading}>{t('Forgot Password')}</Text>
+                    <Text style={styles.subHeading}>{t('Enter your email to be sent a reset password')}</Text>
+                    <CustomInput placeholder={"email@email.com"} hide={false} />
                 </View>
                 <View style={styles.buttonContainer}>
                     <CustomButton
-                        MainText="Reset"
+                        MainText={t('Reset')}
                         BgGiven={colors.GREEN}
                         txColor={colors.WHITE}
                         isNavigation={true}
@@ -41,23 +44,23 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     topSection: {
-        height: hp('50%'),
+        height: hp('60%'),
     },
     textContainer: {
         flex: 0.7,
         justifyContent: 'flex-end',
-        gap: 16,
-        marginHorizontal: wp('10%'),
+        gap: hp('2%'),
+        marginHorizontal: wp('8%'),
     },
     heading: {
-        fontSize: 30,
+        fontSize: hp('3%'),
         fontWeight: '600',
     },
     subHeading: {
-        fontSize: 19,
+        fontSize: hp('2%'),
     },
     buttonContainer: {
-        flex: 0.5,
+        flex: 0.3,
         alignItems: 'center',
         justifyContent: 'flex-end',
     },

@@ -6,26 +6,28 @@ import colors from '../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ScreensName from "../../util/ScreensName";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {useTranslation} from 'react-i18next';
+import { fonts } from "../../util/FontName";
 
 const { height, width } = Dimensions.get("window");
 
 function SignUp(): React.JSX.Element {
     const [passwordVisible, setPasswordVisible] = useState(false);
-
+    const {t} = useTranslation();
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.Header}>
-                <Text style={styles.Heading}>Register</Text>
-                <Text style={styles.SubHeading}>Welcome, please Register</Text>
+                <Text style={styles.Heading}>{t('Register')}</Text>
+                <Text style={styles.SubHeading}>{t('Welcome, please Register')}</Text>
             </View>
  
             <View style={styles.inputs}>
-                <CustomInput placeholder={"Full Name"} bg_give={colors.WHITE} b_radius={8} hide={0} />
-                <CustomInput placeholder="Phone No." bg_give={colors.WHITE} b_radius={8} hide={0} />
+                <CustomInput placeholder={t('Full Name')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
+                <CustomInput placeholder={t('Phone No.')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
                 <View style={styles.passInputBox}>
                     <TextInput
                         style={styles.passInput}
-                        placeholder={"Password"}
+                        placeholder={t('Password')}
                         secureTextEntry={passwordVisible}
                     />
                     <TouchableOpacity
@@ -50,7 +52,7 @@ function SignUp(): React.JSX.Element {
                         innerIconStyle={{ borderRadius: 7 }}
                         textComponent={
                             <Text style={styles.RememberMeText}>
-                                Sign up for e-mails to get updates from E-Arthi tips and offers
+                                {t('Sign up for e-mails to get updates from E-Arthi tips and offers')}
                             </Text>
                         }
                     />
@@ -59,28 +61,29 @@ function SignUp(): React.JSX.Element {
 
             <View style={styles.button}>
                 <CustomButton
-                    MainText={"Register"}
+                    MainText={t('Register')}
                     BgGiven={colors.GREEN}
                     name={ScreensName.OTP}
                     txColor={colors.WHITE}
                     isNavigation={1}
+                    
                 ></CustomButton>
             </View>
 
             <View style={styles.terms}>
-                <Text style={styles.infoText}>By creating your account, you agree to the </Text>
+                <Text style={styles.infoText}>{t('By creating your account, you agree to the ')}</Text>
                 <TouchableOpacity>
-                    <Text style={styles.redirectLink}>Terms of Services </Text>
+                    <Text style={styles.redirectLink}>{('Terms of Services ')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.infoText}>and </Text>
+                <Text style={styles.infoText}>{t('and ')}</Text>
                 <TouchableOpacity>
-                    <Text style={styles.redirectLink}>Privacy Policy</Text>
+                    <Text style={styles.redirectLink}>{t('Privacy Policy')}</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.break}>
                 <View style={styles.line} />
-                <Text style={styles.ORtext}>OR</Text>
+                <Text style={styles.ORtext}>{t('OR')}</Text>
                 <View style={styles.line} />
             </View>
 
@@ -90,14 +93,14 @@ function SignUp(): React.JSX.Element {
                         source={require("../assets/google.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65 }}>Register with Google </Text>
+                    <Text style={{ fontSize: height / 65 }}>{t('Register with Google ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
                         source={require("../assets/apple.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65 }}>Register with Apple </Text>
+                    <Text style={{ fontSize: height / 65 }}>{t('Register with Apple ')}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
         marginBottom: height / 20,
     },
     Heading: {
-        fontSize: height / 30,
+        fontSize: height / 25,
         fontWeight: "bold",
         color: colors.BLACK,
     },
@@ -126,6 +129,8 @@ const styles = StyleSheet.create({
     infoText: {
         // marginVertical: 10,
         // color: '#666',
+        fontSize:hp('1.6%')
+
     },
     inputs: {
         gap: height / 40,
@@ -151,7 +156,8 @@ const styles = StyleSheet.create({
     RememberMeText: {
         // fontSize: height / 55,
         marginLeft: wp('2%'),
-        width:wp('70%')
+        width:wp('70%'),
+        fontSize:hp('1.6%')
     },
     checkbox: {
         // padding: 10,
@@ -209,28 +215,34 @@ const styles = StyleSheet.create({
         alignItems: "center", // To vertically align the checkbox and text
     },
     passInputBox: {
-        height: 50,
-        width: 330,
-        fontSize: 16,
+        height: hp('5.5%'),
+        width: wp('85%'),
+        fontSize: hp('1.7%'),
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
         flexDirection: "row",
         borderWidth: 1,
-        borderRadius: width / 44,
+        borderRadius: hp('1.2%'),
         borderColor: colors.LIGHT_GRAY,
     },
     passInput: {
         flex: 3,
-        fontSize: 16,
+        fontSize: hp('1.7%'),
+        fontFamily:fonts.Medium,
+        borderRadius:hp('1.3%')
     },
     terms: {
         flexDirection: "row",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        
+        
     },
     redirectLink: {
         color: colors.GREEN,
         textDecorationLine: 'underline',
+        fontSize:hp('1.6%')
+
     }
 });
 

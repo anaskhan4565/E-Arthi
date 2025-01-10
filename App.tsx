@@ -1,5 +1,5 @@
-import React from 'react';
-import type { PropsWithChildren } from 'react';
+import React from "react";
+import type { PropsWithChildren } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import ScreensName from './util/ScreensName.ts';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator,NativeStackNavigationOptions } from '@react-navigation/native-stack';
 //import Home from './src/screens/Home';
 import Connect from './src/screens/Connect';
 import ForgotPassword from './src/screens/ForgotPassword';
@@ -29,36 +29,50 @@ import LocationSys from './src/screens/LocationEnable.jsx';
 import NoInternet from './src/screens/NoInternet.jsx';
 import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
 import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
+
+//for i18-next
+import { I18nextProvider } from 'react-i18next';
+import i18next from './services/i18next.js';
 const Stack = createNativeStackNavigator();
 
+const slideFromLeftOptions: NativeStackNavigationOptions = {
+  animation: "slide_from_left",
+  presentation: "modal", 
+  gestureEnabled: true,
+  animationDuration: 300, 
+};
+
 function App(): React.JSX.Element {
-
-
   return (
+    <I18nextProvider i18n={i18next}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
         <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
         <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
         <Stack.Screen name={ScreensName.Connect} component={Connect} />
-        <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
-        <Stack.Screen name={ScreensName.MapSelection} component={MapSelection} />
+        <Stack.Screen
+          name={ScreensName.ForgotPassword}
+          component={ForgotPassword}
+        />
+        <Stack.Screen
+          name={ScreensName.MapSelection}
+          component={MapSelection}
+        />
         <Stack.Screen name={ScreensName.OTP} component={OTP} />
         <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
         <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
         <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
         <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
         <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
-
-        <Stack.Screen name={ScreensName.Sidebar} component={Sidebar} />
+        <Stack.Screen name={ScreensName.Sidebar}
+          options={slideFromLeftOptions} component={Sidebar} />
         <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
-
-        {/* specific to After Login: */}
         <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
 
 
       </Stack.Navigator>
     </NavigationContainer>
-
+    </I18nextProvider>
   );
 }
 

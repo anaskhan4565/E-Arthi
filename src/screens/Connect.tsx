@@ -3,7 +3,7 @@ import { Image, SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Modal } 
 import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
-import Logo from '../assets/Icon/Logo.png';
+import Logo from '../assets/Icon/Logo-only.png';
 import { useTranslation } from 'react-i18next';
 
 function Connect(): React.JSX.Element {
@@ -71,9 +71,14 @@ function Connect(): React.JSX.Element {
         </Modal>
       </View>
 
-      <View style={{ flex: 0.5,gap:9, justifyContent: 'center', marginTop: 181, alignItems: 'center' }}>
-        <Image source={Logo} resizeMode="contain" style={styles.logo} />
-        <Text style={{fontSize:20,textAlign:'center'}}>{t('Connect_With_us')}</Text>
+      <View style={{ flex: 0.75, justifyContent: 'center', marginTop: 105, alignItems: 'center' }}>
+        <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
+          <Image source={Logo} resizeMode="contain" style={styles.logo} />
+          <Text style={{fontSize:50,textAlign:'center',fontWeight:'bold'}}>{t('E-Arthi')}</Text>
+        </View>
+        <View style={{ flex: 0.5, justifyContent: 'center'}}>
+          <Text style={{fontSize:20,textAlign:'center'}}>{t('Connect_With_us')}</Text>
+        </View>
       </View>
 
       <View style={{ flex: 0.5 }}>
@@ -100,8 +105,8 @@ function Connect(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 200,
-    height: 200,
+    width: 170,
+    height: 170,
   },
 });
 

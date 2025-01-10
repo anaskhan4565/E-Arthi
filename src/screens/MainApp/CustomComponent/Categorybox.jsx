@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
+import { fonts } from '../../../../util/FontName.js';
 
 const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9%') }) => {
     const navigation = useNavigation();
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         // marginHorizontal: wp('%'),
     },
     TextStyle: {
-        fontWeight: 'bold',
+        fontFamily:fonts.Regular,
         fontSize: 12,
     },
     ImageStyle: {

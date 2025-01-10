@@ -7,10 +7,7 @@ import VectorMen from '../assets/AboutMoreicons/Vectormen.png';
 import CustomButton from '../components/CustomButton';
 import ScreensName from '../../util/ScreensName';
 import { useTranslation } from 'react-i18next';
-import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { fonts } from '../../util/FontName';
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer'); 
     // Default selection is 'Farmer'
@@ -70,47 +67,49 @@ const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
         backgroundColor:colors.WHITE,
-        marginTop: hp(4),
+        marginTop: 40,
     },
     logoContainer: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginBottom: hp(2),
+        marginBottom: 10,
     },
     logo: {
-        width: wp(40),
-        height: hp(20),
+        width: 160,
+        height: 160,
         resizeMode: 'contain',
     },
     contentContainer: {
         flex: 0.5,
-        margin: hp(2),
+        margin: 5,
     },
     headerText: {
         textAlign: 'center',
-        fontSize: hp(2.3),
-        marginBottom: hp(2),
+        fontSize: 20,
+        fontFamily:fonts.Regular,
+        marginBottom: 10,
     },
     card: {
         flex: 1,
-        marginHorizontal: hp(2),
+        marginHorizontal: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'gray', 
-        borderRadius: hp(1),
-        width: wp(20),
-        height: hp(13), 
+        borderRadius: 10,
+        width: '30%',
+        height: '90%', 
     },
     vectorLogo: {
-        width: wp(30),
-        height: hp(6),
+        width: 60,
+        height: 60,
         resizeMode: 'contain',
     },
     cardText: {
-        marginTop: hp(1),
-        fontSize: hp(2),
+        marginTop: 5,
+        fontSize: 16,
+        fontFamily:fonts.Regular,
         textAlign: 'center',
     },
 });

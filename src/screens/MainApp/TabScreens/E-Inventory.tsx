@@ -20,6 +20,7 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { fonts } from '../../../../util/FontName.js';
 
 
 
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     titleText: {
-        fontWeight: 'bold',
+        fontFamily:fonts.SemiBold,
         fontSize: 25,
     },
     scrollContainer: {
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     },
     recommendedTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontFamily:fonts.SemiBold,
         marginBottom: 10,
     },
     productRow: {

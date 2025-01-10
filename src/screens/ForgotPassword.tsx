@@ -10,6 +10,7 @@ import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from "react-i18next";
+import { fonts } from '../../util/FontName';
 
 
 function ForgotPassword(): React.JSX.Element {
@@ -54,10 +55,11 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontSize: hp('3%'),
-        fontWeight: '600',
+        fontFamily:fonts.SemiBold,
     },
     subHeading: {
         fontSize: hp('2%'),
+        fontFamily:fonts.Regular,
     },
     buttonContainer: {
         flex: 0.3,

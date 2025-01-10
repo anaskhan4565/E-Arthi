@@ -15,6 +15,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import InternetErr from '../assets/NoInternet/Internet_sn.png'
 import { useTranslation } from "react-i18next";
+import { fonts } from '../../util/FontName';
 
 const NoInternet = () => {
     const [isConnected, setIsConnected] = useState(null);
@@ -44,7 +45,7 @@ const NoInternet = () => {
             ) : isConnected ? null : (
                 <View style={{ alignItems: 'center', gap: 10 }}>
                     <Image source={InternetErr} style={styles.errorMsg} />
-                    <Text style={{ fontSize: wp('7%'), fontWeight: 'bold' }}>{t('No Internet Connection')}</Text>
+                    <Text style={{ fontSize: wp('7%'),fontFamily:fonts.SemiBold, }}>{t('No Internet Connection')}</Text>
                     <Text style={{ width: wp('80%'), textAlign: 'center', color: colors.BLACK }}>{t('Your internet connection is currently not available please check or try again.')}</Text>
                     <View style={{ marginTop: hp('3%') }}>
                         <CustomButton

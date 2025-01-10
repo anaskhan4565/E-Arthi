@@ -5,10 +5,7 @@ import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import Logo from '../assets/Icon/Logo.png';
 import { useTranslation } from 'react-i18next';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { fonts } from '../../util/FontName';
 function Connect(): React.JSX.Element {
   const { i18n } = useTranslation(); // To access the i18n instance for language change
   const [modalVisible, setModalVisible] = useState(false); // To manage dropdown visibility
@@ -32,7 +29,7 @@ function Connect(): React.JSX.Element {
             alignItems: 'center',
           }}
         >
-          <Text style={{ color: colors.WHITE, fontSize: hp(2) }}>Select Language</Text>
+          <Text style={{ color: colors.WHITE, fontSize: 16,fontFamily:fonts.Medium }}>Select Language</Text>
         </TouchableOpacity>
 
         {/* Modal for Language Options */}
@@ -61,13 +58,13 @@ function Connect(): React.JSX.Element {
               }}
             >
               <TouchableOpacity onPress={() => handleLanguageChange('en')}>
-                <Text style={{ fontSize: 18, marginBottom: 10 }}>English</Text>
+                <Text style={{ fontSize: 18, marginBottom: 10,fontFamily:fonts.Medium }}>English</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleLanguageChange('ur')}>
-                <Text style={{ fontSize: 18 }}>اردو</Text>
+                <Text style={{ fontSize: 18,fontFamily:fonts.Medium }}>اردو</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleLanguageChange('sin')}>
-                <Text style={{ fontSize: 18 }}>سنڌي</Text>
+                <Text style={{ fontSize: 18,fontFamily:fonts.Medium }}>سنڌي</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -76,7 +73,7 @@ function Connect(): React.JSX.Element {
 
       <View style={{ flex: 0.5,gap:9, justifyContent: 'center', marginTop: 181, alignItems: 'center' }}>
         <Image source={Logo} resizeMode="contain" style={styles.logo} />
-        <Text style={{fontSize:hp(2),textAlign:'center'}}>{t('Connect_With_us')}</Text>
+        <Text style={{fontSize:20,textAlign:'center',fontFamily:fonts.Regular}}>{t('Connect_With_us')}</Text>
       </View>
 
       <View style={{ flex: 0.5 }}>
@@ -86,7 +83,7 @@ function Connect(): React.JSX.Element {
             BgGiven={colors.GREEN}
             txColor={colors.WHITE}
             isNavigation={true}
-            name={ScreensName.MorePage}
+            name={ScreensName.SignUp}
           />
           <CustomButton
             MainText={t('Login')}
@@ -103,8 +100,8 @@ function Connect(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   logo: {
-    width: wp(60),
-    height: hp(24),
+    width: 200,
+    height: 200,
   },
 });
 

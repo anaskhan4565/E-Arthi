@@ -93,14 +93,14 @@ function SignUp(): React.JSX.Element {
                         source={require("../assets/google.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65 }}>{t('Register with Google ')}</Text>
+                    <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Google ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
                         source={require("../assets/apple.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65 }}>{t('Register with Apple ')}</Text>
+                    <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Apple ')}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -119,17 +119,19 @@ const styles = StyleSheet.create({
     },
     Heading: {
         fontSize: height / 25,
-        fontWeight: "bold",
+        fontFamily:fonts.SemiBold,
         color: colors.BLACK,
     },
     SubHeading: {
         fontSize: height / 45,
+        fontFamily:fonts.Regular,
         marginTop: height / 100,
     },
     infoText: {
         // marginVertical: 10,
         // color: '#666',
-        fontSize:hp('1.6%')
+        fontSize:hp('1.6%'),
+        fontFamily:fonts.Regular,
 
     },
     inputs: {
@@ -157,7 +159,8 @@ const styles = StyleSheet.create({
         // fontSize: height / 55,
         marginLeft: wp('2%'),
         width:wp('70%'),
-        fontSize:hp('1.6%')
+        fontSize:hp('1.6%'),
+        fontFamily:fonts.Regular,
     },
     checkbox: {
         // padding: 10,
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
         color: colors.GREEN,
         fontSize: height / 55,
+        fontFamily:fonts.Regular,
     },
     break: {
         flexDirection: "row",
@@ -181,6 +185,7 @@ const styles = StyleSheet.create({
     ORtext: {
         marginHorizontal: 10,
         fontSize: height / 55,
+        fontFamily:fonts.Regular,
         color: colors.GREEN,
     },
     altSignin: {
@@ -218,6 +223,7 @@ const styles = StyleSheet.create({
         height: hp('5.5%'),
         width: wp('85%'),
         fontSize: hp('1.7%'),
+        fontFamily:fonts.Regular,
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
@@ -241,7 +247,8 @@ const styles = StyleSheet.create({
     redirectLink: {
         color: colors.GREEN,
         textDecorationLine: 'underline',
-        fontSize:hp('1.6%')
+        fontSize:hp('1.6%'),
+        fontFamily:fonts.Regular,
 
     }
 });

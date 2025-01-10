@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import colors from "../../../../util/colors";
 import CustomImageButton from "../CustomComponent/CustomImageButton";
 import ScreensName from "../../../../util/ScreensName";
@@ -23,6 +22,7 @@ import ProfilePic from "../../../assets/MainApp/HomeScreen/ProfilePic.png";
 import Power from "../../../assets/MainApp/Sidebar/Power.png";
 import links from "../../../../util/SidebarLinks";
 import { useTranslation } from "react-i18next";
+import { fonts } from "../../../../util/FontName";
 
 
 function Sidebar() {
@@ -38,10 +38,10 @@ function Sidebar() {
       <View style={styles.User}>
         <Image source={ProfilePic} style={styles.Profile} />
         <View style={styles.UserInfo}>
-          <Text style={{ fontSize: hp("2.75%"), fontWeight: "500" }}>
+          <Text style={{ fontSize: hp("2.75%"),fontFamily:fonts.SemiBold, }}>
             {t('MAAZ NAVAID')}
           </Text>
-          <Text style={{ fontSize: hp("1.95%") }}>{t('maaznavaid@gmail.com')}</Text>
+          <Text style={{ fontSize: hp("1.95%"),fontFamily:fonts.Regular, }}>{t('maaznavaid@gmail.com')}</Text>
         </View>
       </View>
       <View style={styles.body}></View>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   Heading: {
     fontSize: hp("2.5%"),
     alignSelf: "center",
-    fontWeight: "bold"
+    fontFamily:fonts.SemiBold,
   },
   User: {
     flexDirection: "row",
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontSize: hp("2%"),
+    fontFamily:fonts.Regular,
     marginLeft: wp("2%"),
   },
   logout: {
@@ -112,9 +113,10 @@ const styles = StyleSheet.create({
 
   },
   logoutText: {
-    fontSize: hp("2%"),
+    fontSize: hp("1.9%"),
+    fontFamily:fonts.Medium,
     color: colors.WHITE,
-    marginLeft: wp("3.5%"),
+    marginLeft: wp("3.1%"),
   },
   logoutButton: {
     backgroundColor:colors.GREEN,

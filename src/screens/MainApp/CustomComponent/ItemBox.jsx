@@ -4,6 +4,7 @@ import React from 'react';
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { fonts } from '../../../../util/FontName.js';
 
 const ItemBox = ({ name, SourceGiven, isNavigation, w = wp('19%'), h = hp('8.5') }) => {
   const navigation = useNavigation();
@@ -42,8 +43,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   TextStyle:{
-    fontWeight:'bold',
-    fontSize:hp('1.5%') ,
+    fontFamily:fonts.Medium,
+    fontSize:hp('1.3%') ,
   },
   ImageStyle: {
     resizeMode: 'contain',

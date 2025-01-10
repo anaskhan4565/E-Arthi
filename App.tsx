@@ -37,7 +37,7 @@ const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
   animation: "slide_from_left",
-  presentation: "modal", 
+  presentation: "transparentModal", 
   gestureEnabled: true,
   animationDuration: 300, 
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image } from 'react-native';
+import {SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
@@ -8,11 +8,7 @@ import ScreensName from "../../util/ScreensName";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
-const isTablet = width > 600;
-console.log(isTablet);
 
-console.log(height);
-console.log(width);
 function SignUp(): React.JSX.Element {
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -22,7 +18,7 @@ function SignUp(): React.JSX.Element {
                 <Text style={styles.Heading}>Register</Text>
                 <Text style={styles.SubHeading}>Welcome, please Register</Text>
             </View>
-
+ 
             <View style={styles.inputs}>
                 <CustomInput placeholder={"Full Name"} bg_give={colors.WHITE} b_radius={8} hide={0} />
                 <CustomInput placeholder="Phone No." bg_give={colors.WHITE} b_radius={8} hide={0} />
@@ -47,7 +43,7 @@ function SignUp(): React.JSX.Element {
             <View style={styles.options}>
                 <View style={styles.RememberMe}>
                     <BouncyCheckbox
-                        size={isTablet ? wp('1.9%') : wp('5%')}
+                        size={25}
                         fillColor={colors.GREEN}
                         iconStyle={{ borderColor: colors.LIGHT_GRAY }}
                         style={styles.checkbox}
@@ -94,14 +90,14 @@ function SignUp(): React.JSX.Element {
                         source={require("../assets/google.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: hp('1.7%') }}>Register with Google </Text>
+                    <Text style={{ fontSize: height / 65 }}>Register with Google </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
                         source={require("../assets/apple.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: hp('1.7%') }}>Register with Apple </Text>
+                    <Text style={{ fontSize: height / 65 }}>Register with Apple </Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -115,31 +111,28 @@ const styles = StyleSheet.create({
         paddingHorizontal: width / 20,
     },
     Header: {
-        marginLeft: wp('2%'),
-        marginTop: isTablet ? height / 15 : height / 10,
+        marginTop: height / 10,
         marginBottom: height / 20,
     },
     Heading: {
-        fontSize: isTablet ? width / 38 : height / 30,
+        fontSize: height / 30,
         fontWeight: "bold",
         color: colors.BLACK,
     },
     SubHeading: {
-        fontSize: isTablet ? width / 58 : height / 45,
+        fontSize: height / 45,
         marginTop: height / 100,
     },
     infoText: {
         // marginVertical: 10,
         // color: '#666',
-        fontSize: isTablet ? width / 90 : height / 60,
-        marginLeft: wp('1%'),
     },
     inputs: {
         gap: height / 40,
         alignItems: "center",
     },
     button: {
-        marginTop: isTablet ? height / 45 : height / 40,
+        marginTop: height / 40,
         marginBottom: height / 40,
         alignItems: "center",
     },
@@ -154,15 +147,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf: "flex-start",
         flex: 1,
-        marginLeft: wp('1%'),
     },
     RememberMeText: {
-        fontSize: isTablet ? width / 90 : height / 60,
+        // fontSize: height / 55,
         marginLeft: wp('2%'),
-        width: wp('70%')
+        width:wp('70%')
     },
     checkbox: {
-        marginLeft: wp('2%'),
+        // padding: 10,
     },
     forgotPassword: {
         flex: 1,
@@ -187,11 +179,10 @@ const styles = StyleSheet.create({
     },
     altSignin: {
         gap: height / 80,
-        marginBottom: isTablet ? hp('10%') : hp('0%'),
     },
     altSigninButton: {
-        height: isTablet ? hp('6.7%') : hp('5.7%'),
-        width: wp('85%'),
+        width: width / 1.11,
+        height: height / 20,
         borderColor: colors.LIGHT_GRAY,
         borderWidth: 1,
         borderRadius: 8,
@@ -202,10 +193,9 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
     altSigninButtonIcon: {
-        width: wp('7%'),
-        height: hp('4%'),
+        width: 20,
+        height: 20,
         marginRight: 10,
-        resizeMode: 'contain',
     },
     passToggleButton: {},
     showPassIcon: {
@@ -219,15 +209,15 @@ const styles = StyleSheet.create({
         alignItems: "center", // To vertically align the checkbox and text
     },
     passInputBox: {
-        height: isTablet ? hp('6.7%') : hp('5.7%'),
-        width: wp('85%'),
+        height: 50,
+        width: 330,
         fontSize: 16,
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
         flexDirection: "row",
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: width / 44,
         borderColor: colors.LIGHT_GRAY,
     },
     passInput: {

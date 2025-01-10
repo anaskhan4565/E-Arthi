@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Dimensions } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -12,9 +12,10 @@ import colors from '../../../../util/colors';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../util/FontName';
 
+const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
-    const {t}=useTranslation();
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <Tab.Navigator
@@ -33,7 +34,7 @@ export default function MainTabNavigation() {
                         overflow: 'hidden',
                     },
                     tabBarLabelStyle: styles.labelStyle,
-                    tabBarIconStyle: { width: wp('4%'), height: hp('4%'), marginTop: hp('1%') },
+                    tabBarIconStyle: { width: wp('5%'), height: hp('5%'), justifyContent: 'center', alignItems: 'center' },
                 }}
             >
                 <Tab.Screen
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
         width: wp('6%'),
         height: hp('3%'),
         resizeMode: 'contain',
+        marginRight: width > 600 ? wp('1.5%') : wp('0%'),
     },
     labelStyle: {
         fontSize: hp('1.3%'),

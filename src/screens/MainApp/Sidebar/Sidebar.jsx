@@ -31,7 +31,7 @@ function Sidebar() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.HomeScreen}/>
+        <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.MainTabNavigation}/>
         <Text style={styles.Heading}>{t('My Account')}</Text>
         <CustomImageButton SourceGiven={Bell} h={hp("4%")} w={hp("4%")} />
       </View>

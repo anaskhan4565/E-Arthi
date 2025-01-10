@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 //Need to edit this later, passing images literl
 import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png'
 import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png'
+import { fonts } from '../../../../util/FontName.js';
 
 const Home = () => {
     const {t}=useTranslation()
@@ -94,7 +95,7 @@ searchContainer: {
     padding: hp('1%'),
   },
   titleText: {
-    fontWeight: 'bold',
+    fontFamily:fonts.SemiBold,
     fontSize: hp('3%'),
   },
   scrollContainer: {
@@ -112,8 +113,8 @@ searchContainer: {
     marginTop: hp('2%'),
   },
   recommendedTitle: {
-    fontSize: hp('3%'),
-    fontWeight: 'bold',
+    fontSize: hp('2.5%'),
+    fontFamily:fonts.SemiBold,
     marginBottom: hp('2%'),
   },
   productRow: {

@@ -7,6 +7,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { fonts } from '../../../../util/FontName.js';
 
 
 const CustomSearchApp = ({ placeholder }) => {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     width: wp('85%'),
     alignSelf: 'center',
     borderColor: colors.LIGHT_GRAY,
-    backgroundColor: colors.GREAT_WHITE,
+    backgroundColor: colors.WHITE,
     borderRadius: 5,
     paddingHorizontal: hp('1%'),
     marginHorizontal: hp('2%'),
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1, // Makes the TextInput take the remaining space
     fontSize: hp('1.5%'),
+    fontFamily:fonts.Regular,
     color:colors.BLACK
   },
   iconStyle: {

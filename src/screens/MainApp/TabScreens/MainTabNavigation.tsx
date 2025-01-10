@@ -10,6 +10,7 @@ import EMarket from './E-Market';
 import EMunshi from './E-Munshi';
 import colors from '../../../../util/colors';
 import { useTranslation } from 'react-i18next';
+import { fonts } from '../../../../util/FontName';
 
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     labelStyle: {
-        fontSize: hp('1.5%'),
-        fontWeight: 'bold',
+        fontSize: hp('1.3%'),
+        fontFamily:fonts.Medium,
     },
 });

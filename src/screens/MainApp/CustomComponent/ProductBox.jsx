@@ -5,6 +5,7 @@ import colors from '../../../../util/colors.js';
 
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { fonts } from '../../../../util/FontName.js';
 
 const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('40%'), h = hp('22%') }) => {
   const navigation = useNavigation();
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
   },
   TextStyle: {
-    fontWeight: 'bold',
+    fontFamily:fonts.Medium,
     textAlign: 'left',
     fontSize: hp('1.2%'),
   },

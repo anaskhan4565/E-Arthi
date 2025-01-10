@@ -6,6 +6,7 @@ import CustomButton from '../components/CustomButton';
 import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import { useTranslation } from "react-i18next";
+import { fonts } from '../../util/FontName';
 
 const OTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -111,12 +112,13 @@ const styles = StyleSheet.create({
     title: {
         marginTop: hp('10%'),
         fontSize: hp('3%'),
-        fontWeight: "bold",
+        fontFamily:fonts.SemiBold,
         marginBottom: hp('1.5%'),
         marginRight: wp('36%'),
     },
     subtitle: {
-        fontSize: hp('2%'),
+        fontSize: hp('1.8%'),
+        fontFamily:fonts.Regular,
         marginBottom: hp('1.9%'),
         alignSelf: "flex-start",
         marginTop: hp('1%'),
@@ -138,6 +140,7 @@ const styles = StyleSheet.create({
         borderRadius: hp('1.5%'),
         textAlign: "center",
         fontSize: hp('2.5%'),
+        fontFamily:fonts.Regular,
         backgroundColor: "#FFF",
         marginHorizontal: hp('0.5%'),
     },
@@ -149,6 +152,7 @@ const styles = StyleSheet.create({
     },
     autocapturetext: {
         fontSize: hp('1.5%'),
+        fontFamily:fonts.Light,
         fontWeight: '300',
         marginLeft: wp('3%'),
         marginRight: wp('33%'),
@@ -157,7 +161,8 @@ const styles = StyleSheet.create({
 
     },
     timetext: {
-        fontSize:hp('2%')
+        fontSize:hp('2%'),
+        fontFamily:fonts.Regular,
     },
 });
 

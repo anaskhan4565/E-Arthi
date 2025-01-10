@@ -99,14 +99,14 @@ function SignIn() {
             source={require("../assets/google.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: hp('1.7%') }}>{t('Login with google')} </Text>
+          <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with google')} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../assets/apple.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: hp('1.7%') }}>{t('Login with Apple')}  </Text>
+          <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with Apple')}  </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -125,13 +125,13 @@ const styles = StyleSheet.create({
   },
   Heading: {
     fontSize: height / 25,
-    fontWeight: "bold",
+    fontFamily:fonts.SemiBold,
     marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
     fontSize: height / 45,
-    fontFamily:fonts.Medium,
+    fontFamily:fonts.Regular,
     marginTop: height / 100,
     marginLeft: wp('1.5%'),
   },
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
   RememberMeText: {
     fontSize: height / 58,
     marginLeft: 5,
+    fontFamily:fonts.Regular,
   },
   checkbox: {
     marginLeft: wp('3%'),
@@ -167,6 +168,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     color: colors.GREEN,
     fontSize: height / 58,
+    fontFamily:fonts.Regular,
     marginRight: wp('3%'),
 
   },
@@ -184,6 +186,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: height / 55,
     color: colors.GREEN,
+    fontFamily:fonts.Medium,
   },
   altSignin: {
     gap: height / 80,
@@ -216,6 +219,7 @@ const styles = StyleSheet.create({
     height: hp('5.7%'),
     width: wp('85%'),
     fontSize: 18,
+    fontFamily:fonts.Medium,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
@@ -227,6 +231,7 @@ const styles = StyleSheet.create({
   passInput: {
     flex: 3,
     fontSize: hp('1.7%'),
+    fontFamily:fonts.Medium,
   },
 });
 

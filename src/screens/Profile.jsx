@@ -12,6 +12,7 @@ import {
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer');
     // Default selection is 'Farmer'
@@ -71,17 +72,18 @@ export default AboutMore;
 const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
-        backgroundColor: colors.WHITE,
+        backgroundColor:colors.WHITE,
+        marginTop: hp(3),
     },
     logoContainer: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginBottom: hp(2),
+        marginBottom: hp(1),
     },
     logo: {
         width: wp(40),
-        height: hp(20),
+        height: hp(30),
         resizeMode: 'contain',
     },
     contentContainer: {
@@ -90,29 +92,30 @@ const styles = StyleSheet.create({
     },
     headerText: {
         textAlign: 'center',
-        fontSize: hp(2.3),
-        marginBottom: hp(2),
-        fontFamily: fonts.Medium
+        fontSize: hp('2.5%'),
+        fontFamily:fonts.Regular,
+        marginBottom: hp(1),
     },
     card: {
         flex: 1,
-        marginHorizontal: hp(2),
+        marginHorizontal: wp(2),
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: hp(1),
-        width: wp(20),
-        height: hp(13),
+        borderColor: 'gray', 
+        borderRadius: 10,
+        width: wp('30%'),
+        height: hp('13%'), 
     },
     vectorLogo: {
-        width: wp(30),
-        height: hp(6),
+        width: wp(10),
+        height: hp(9),
         resizeMode: 'contain',
     },
     cardText: {
-        marginTop: hp(1),
+        marginTop: 5,
         fontSize: hp(2),
+        fontFamily:fonts.Regular,
         textAlign: 'center',
         fontFamily: fonts.Medium
     },

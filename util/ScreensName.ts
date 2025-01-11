@@ -1,7 +1,9 @@
 
 
+
+
 export default {
-    SplashScreen:"SplashScreen",
+    SplashScreen: "SplashScreen",
 
     // Module1
     Connect: "Connect",
@@ -12,7 +14,7 @@ export default {
     SignIn: "SignIn",
     SignUp: "SignUp",
     Splash: "Splash",
-    MorePage:"More",
+    MorePage: "More",
 
     Sidebar: "Sidebar",
     //specific to Internet
@@ -21,14 +23,23 @@ export default {
     //Specific to Location
     LocationPermission: "LocationPermission",
     //Specific After logging in::
-    MainTabNavigation:"MainTabNavigation",
+    MainTabNavigation: "MainTabNavigation",
     HomeScreen: "Home",
     EMunshi: "E-Munshi",
-    ELoan:"E-Loan",
-    EInvetory:"E-Inventory",
-    EMarket:"E-Market",
+    ELoan: "E-Loan",
+    EInvetory: "E-Inventory",
+    EMarket: "E-Market",
 
     //specific to each product
-    ProductScr:"Product",
+    ProductScr: "Product",
+
+    EInventoryMainStack: "EInventoryMainStack",
+    Inventory: "Invetory",
+    PurchaseHistory: "PurchaseHistory",
+    Sales: "Sales",
+    Suppliers: "Suppliers",
+    InventoryMonitoring: "InvetoryMonitoring",
+
+
 
 }

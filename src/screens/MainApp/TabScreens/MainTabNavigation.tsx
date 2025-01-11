@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import ScreensName from '../../../../util/ScreensName';
 import Home from './HomeScr';
 import ELoan from './E-Loan';
-import EInventory from './E-Inventory';
+import EInventory from './E-InventoryScreens/E-Inventory';
 import EMarket from './E-Market';
 import EMunshi from './E-Munshi';
 import colors from '../../../../util/colors';
@@ -134,6 +134,6 @@ const styles = StyleSheet.create({
     },
     labelStyle: {
         fontSize: hp('1.3%'),
-        fontFamily:fonts.Medium,
+        fontFamily: fonts.Medium,
     },
 });

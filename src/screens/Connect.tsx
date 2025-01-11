@@ -5,6 +5,10 @@ import colors from '../../util/colors';
 import ScreensName from '../../util/ScreensName';
 import Logo from '../assets/Icon/Logo-only.png';
 import { useTranslation } from 'react-i18next';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
 function Connect(): React.JSX.Element {
   const { i18n } = useTranslation(); // To access the i18n instance for language change
@@ -71,10 +75,10 @@ function Connect(): React.JSX.Element {
         </Modal>
       </View>
 
-      <View style={{ flex: 0.75, justifyContent: 'center', marginTop: 105, alignItems: 'center' }}>
+      <View style={{ flex: 0.75, justifyContent: 'center', marginTop:hp(24) , alignItems: 'center' }}>
         <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
           <Image source={Logo} resizeMode="contain" style={styles.logo} />
-          <Text style={{fontSize:50,textAlign:'center',fontWeight:'bold'}}>{t('E-Arthi')}</Text>
+          <Text style={{fontSize:hp(4.5),textAlign:'center',fontWeight:'bold',fontFamily:fonts.Medium,letterSpacing:4}}>{t('E-Arthi').toUpperCase()}</Text>
         </View>
         <View style={{ flex: 0.5, justifyContent: 'center'}}>
           <Text style={{fontSize:20,textAlign:'center',fontFamily:fonts.Regular}}>{t('Connect_With_us')}</Text>
@@ -88,7 +92,7 @@ function Connect(): React.JSX.Element {
             BgGiven={colors.GREEN}
             txColor={colors.WHITE}
             isNavigation={true}
-            name={ScreensName.SignUp}
+            name={ScreensName.MorePage}
           />
           <CustomButton
             MainText={t('Login')}
@@ -105,8 +109,9 @@ function Connect(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 170,
-    height: 170,
+    width: wp(400),
+    height: hp(20),
+    marginLeft:hp(2.2)
   },
 });
 

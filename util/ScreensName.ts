@@ -31,4 +31,6 @@ export default {
     //specific to each product
     ProductScr:"Product",
 
+    ChangeLanguage:"ChangeLang",
+
 }

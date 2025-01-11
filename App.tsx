@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import ScreensName from './util/ScreensName.ts';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator,NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 //import Home from './src/screens/Home';
 import Connect from './src/screens/Connect';
 import ForgotPassword from './src/screens/ForgotPassword';
@@ -33,45 +33,48 @@ import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
 //for i18-next
 import { I18nextProvider } from 'react-i18next';
 import i18next from './services/i18next.js';
+import ChangeLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
   animation: "slide_from_left",
-  presentation: "transparentModal", 
+  presentation: "transparentModal",
   gestureEnabled: true,
-  animationDuration: 300, 
+  animationDuration: 300,
 };
 
 function App(): React.JSX.Element {
   return (
     <I18nextProvider i18n={i18next}>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
-        <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
-        <Stack.Screen name={ScreensName.Connect} component={Connect} />
-        <Stack.Screen
-          name={ScreensName.ForgotPassword}
-          component={ForgotPassword}
-        />
-        <Stack.Screen
-          name={ScreensName.MapSelection}
-          component={MapSelection}
-        />
-        <Stack.Screen name={ScreensName.OTP} component={OTP} />
-        <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
-        <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
-        <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
-        <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
-        <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
-        <Stack.Screen name={ScreensName.Sidebar}
-          options={slideFromLeftOptions} component={Sidebar} />
-        <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
-        <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
+          <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
+          <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
+          <Stack.Screen name={ScreensName.Connect} component={Connect} />
+          <Stack.Screen
+            name={ScreensName.ForgotPassword}
+            component={ForgotPassword}
+          />
+          <Stack.Screen
+            name={ScreensName.MapSelection}
+            component={MapSelection}
+          />
+          <Stack.Screen name={ScreensName.OTP} component={OTP} />
+          <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
+          <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
+          <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
+          <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
+          <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
+          <Stack.Screen name={ScreensName.Sidebar}
+            options={slideFromLeftOptions} component={Sidebar} />
+          <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
+          <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
 
+          {/* Specific to changing Lang */}
+          <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
 
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
     </I18nextProvider>
   );
 }

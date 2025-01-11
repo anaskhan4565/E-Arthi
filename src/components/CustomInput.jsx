@@ -5,10 +5,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-const CustomInput = ({ placeholder, hide, w = wp('85%'), h = hp('5.5%'),bg_give=colors.GREAT_WHITE,b_radius=3 }) => {
+import { fonts } from '../../util/FontName';
+const CustomInput = ({ placeholder, hide, w = wp('85%'), h = hp('5.5%'), bg_give = colors.GREAT_WHITE, b_radius = 3 }) => {
   return (
     <TextInput
-      style={[styles.textInputStyle, { width: w, height: h,backgroundColor:bg_give,borderRadius:b_radius }]}
+      style={[styles.textInputStyle, { width: w, height: h, backgroundColor: bg_give, borderRadius: b_radius }]}
       placeholder={placeholder}
       secureTextEntry={hide == 1 ? true : false}
     />
@@ -23,8 +24,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: colors.GREAT_WHITE,
     borderWidth: 1,
+    fontFamily: fonts.Medium,
     //backgroundColor: colors.GREAT_WHITE,
-   // borderRadius: 3,
+    // borderRadius: 3,
     borderColor: colors.LIGHT_GRAY,
   },
 });

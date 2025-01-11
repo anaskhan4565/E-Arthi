@@ -3,11 +3,12 @@ import { StyleSheet, View, Image } from 'react-native';
 import { CommonActions, NavigationProp } from '@react-navigation/native';
 import ScreensName from '../../util/ScreensName';
 import colors from '../../util/colors';
-import ArthiLogo from '../assets/Icon/Logo.png'; 
+import ArthiLogo from '../assets/Icon/Logo.png';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 type RootStackParamList = {
   SplashScreen: undefined;
-  Home: undefined; 
+  Home: undefined;
 };
 type SplashScreenProps = {
   navigation: NavigationProp<RootStackParamList>;
@@ -23,7 +24,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
       );
     }, 3000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [navigation]);
 
   return (
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 250, 
-    height: 250,
+    width: wp('50%'),
+    height: hp('40%'),
     resizeMode: 'contain',
   },
 });

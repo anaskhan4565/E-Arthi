@@ -8,6 +8,7 @@ import CustomButton from '../components/CustomButton';
 import ScreensName from '../../util/ScreensName';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../util/FontName';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer'); 
     // Default selection is 'Farmer'
@@ -67,17 +68,17 @@ const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
         backgroundColor:colors.WHITE,
-        marginTop: 40,
+        marginTop: hp(3),
     },
     logoContainer: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: hp(1),
     },
     logo: {
-        width: 160,
-        height: 160,
+        width: wp(40),
+        height: hp(30),
         resizeMode: 'contain',
     },
     contentContainer: {
@@ -86,29 +87,29 @@ const styles = StyleSheet.create({
     },
     headerText: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: hp('2.5%'),
         fontFamily:fonts.Regular,
-        marginBottom: 10,
+        marginBottom: hp(1),
     },
     card: {
         flex: 1,
-        marginHorizontal: 10,
+        marginHorizontal: wp(2),
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'gray', 
         borderRadius: 10,
-        width: '30%',
-        height: '90%', 
+        width: wp('30%'),
+        height: hp('13%'), 
     },
     vectorLogo: {
-        width: 60,
-        height: 60,
+        width: wp(10),
+        height: hp(9),
         resizeMode: 'contain',
     },
     cardText: {
         marginTop: 5,
-        fontSize: 16,
+        fontSize: hp(2),
         fontFamily:fonts.Regular,
         textAlign: 'center',
     },

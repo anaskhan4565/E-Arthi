@@ -53,15 +53,17 @@ export default Navbar;
 const styles = StyleSheet.create({
   Profile: {
     width: wp('9%'),
-    height: hp('5%'),
+    height: hp('7%'),
     borderRadius: hp('1%'),
+    resizeMode: 'contain',
   },
   Icon: {
     width: wp('14%'),
     height: hp('7%'),
+    resizeMode: 'contain',
   },
   Wrapper: {
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
     borderRadius: hp('1.2%'),
     backgroundColor: colors.WHITE,

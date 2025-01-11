@@ -29,7 +29,7 @@ function EInventory(): React.JSX.Element {
 
     return (
         <SafeAreaView style={styles.container}>
-
+{/* 
             <View style={styles.navbarContainer}>
                 <Navbar />
             </View>
@@ -73,7 +73,7 @@ function EInventory(): React.JSX.Element {
 
 
                 </View>
-            </ScrollView>
+            </ScrollView> */}
         </SafeAreaView >
     );
 }
@@ -86,56 +86,56 @@ const styles = StyleSheet.create({
         backgroundColor: colors.WHITE,
 
     },
-    navbarContainer: {
-        height: hp('8.2%'),
-        backgroundColor: 'white',
-        marginTop: hp('0.14%'),
-    },
-    searchContainer: {
-        marginVertical: hp('3.2%'),
-        height: hp('7%'),
-    },
-    bodyContainer: {
-        flex: 1,
-        margin: 20,
+    // navbarContainer: {
+    //     height: hp('8.2%'),
+    //     backgroundColor: 'white',
+    //     marginTop: hp('0.14%'),
+    // },
+    // searchContainer: {
+    //     marginVertical: hp('3.2%'),
+    //     height: hp('7%'),
+    // },
+    // bodyContainer: {
+    //     flex: 1,
+    //     margin: 20,
 
-    },
-    titleContainer: {
-        padding: 10,
-    },
-    titleText: {
-        fontFamily:fonts.SemiBold,
-        fontSize: 25,
-    },
-    scrollContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        // justifyContent: 'space-between',
-        paddingVertical: hp('2%'),
-        // backgroundColor: 'red',
-        width: wp('95'),
+    // },
+    // titleContainer: {
+    //     padding: 10,
+    // },
+    // titleText: {
+    //     fontWeight: 'bold',
+    //     fontSize: 25,
+    // },
+    // scrollContainer: {
+    //     flexDirection: 'row',
+    //     flexWrap: 'wrap',
+    //     // justifyContent: 'space-between',
+    //     paddingVertical: hp('2%'),
+    //     // backgroundColor: 'red',
+    //     width: wp('95'),
 
-    },
-    itemBoxWrapper: {
-        width: '30%',
-        marginBottom: hp('2%'),
-        marginHorizontal: wp('-3%'),
-        alignItems: 'center',
+    // },
+    // itemBoxWrapper: {
+    //     width: '30%',
+    //     marginBottom: hp('2%'),
+    //     marginHorizontal: wp('-3%'),
+    //     alignItems: 'center',
 
-    },
-    recommendedProducts: {
-        marginTop: 20,
-    },
-    recommendedTitle: {
-        fontSize: 18,
-        fontFamily:fonts.SemiBold,
-        marginBottom: 10,
-    },
-    productRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-    },
+    // },
+    // recommendedProducts: {
+    //     marginTop: 20,
+    // },
+    // recommendedTitle: {
+    //     fontSize: 18,
+    //     fontWeight: 'bold',
+    //     marginBottom: 10,
+    // },
+    // productRow: {
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between',
+    //     marginBottom: 20,
+    // },
 
 });
 

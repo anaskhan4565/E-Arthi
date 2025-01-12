@@ -10,24 +10,19 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+
 function Connect(): React.JSX.Element {
   const { i18n } = useTranslation(); // To access the i18n instance for language change
   const [modalVisible, setModalVisible] = useState(false); // To manage dropdown visibility
   const { t } = useTranslation()
-  // Function to change the language based on selection
   const handleLanguageChange = (language: string) => {
-    i18n.changeLanguage(language); // Changes the language
-    setModalVisible(false); // Close the modal after selection
+    i18n.changeLanguage(language); 
+    setModalVisible(false); 
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={{ padding: 10 }}>
-        {/* Language Dropdown Button */}
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
           style={{

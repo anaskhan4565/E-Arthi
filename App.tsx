@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import type { PropsWithChildren } from "react";
 import {
   SafeAreaView,
@@ -72,7 +72,7 @@ function App(): React.JSX.Element {
 
           {/* Specific to changing Lang */}
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
-
+            
         </Stack.Navigator>
       </NavigationContainer>
     </I18nextProvider>

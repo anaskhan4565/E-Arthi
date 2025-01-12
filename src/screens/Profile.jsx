@@ -12,7 +12,6 @@ import {
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer');
     // Default selection is 'Farmer'

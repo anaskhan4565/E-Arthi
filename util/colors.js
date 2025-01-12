@@ -1,5 +1,5 @@
 export default{
-    PRIMARY: '#2D9CDB',
+    PRIMARY: '#00A980',
     SKY: '#1897C8',
     LAVENDER_SYRUP: '#e4e6f0',
     BLACK: '#000000',

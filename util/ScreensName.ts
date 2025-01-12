@@ -39,6 +39,7 @@ export default {
     Sales: "Sales",
     Suppliers: "Suppliers",
     InventoryMonitoring: "InvetoryMonitoring",
+    EInventoryReminder:"EInventoryReminder"
 
 
 

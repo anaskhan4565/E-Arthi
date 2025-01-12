@@ -61,11 +61,28 @@ function EInventoryReminder(): React.JSX.Element {
                             selectedValue={selectedValue}
                             onValueChange={(itemValue) => setSelectedValue(itemValue)}
                             style={styles.dropdown}
+                            itemStyle={styles.pickerItem}
                         >
-                            <Picker.Item label="search SKU item#" value="" />
-                            <Picker.Item label="All" value="all" />
-                            <Picker.Item label="Low Stock" value="low" />
-                            <Picker.Item label="Out of Stock" value="out" />
+                            <Picker.Item 
+                                label="search SKU item#" 
+                                value="" 
+                                style={styles.pickerItemText} 
+                            />
+                            <Picker.Item 
+                                label="All" 
+                                value="all" 
+                                style={styles.pickerItemText} 
+                            />
+                            <Picker.Item 
+                                label="Low Stock" 
+                                value="low" 
+                                style={styles.pickerItemText} 
+                            />
+                            <Picker.Item 
+                                label="Out of Stock" 
+                                value="out" 
+                                style={styles.pickerItemText} 
+                            />
                         </Picker>
                     </View>
                 </View>
@@ -157,7 +174,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: wp('6%'),
     },
     scrollContainer: {
         flexWrap: 'wrap',
@@ -175,17 +192,17 @@ const styles = StyleSheet.create({
 
     },
     recommendedProducts: {
-        marginTop: 20,
+        marginTop: hp('2.5%'),
     },
     recommendedTitle: {
-        fontSize: 18,
+        fontSize: wp('4.5%'),
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: hp('1.25%'),
     },
     productRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 20,
+        marginBottom: hp('2.5%'),
     },
     headingContainer: {
         paddingHorizontal: wp('5%'),
@@ -236,10 +253,10 @@ const styles = StyleSheet.create({
         shadowColor: colors.BLACK,
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: hp('0.25%'),
         },
         shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowRadius: wp('1%'),
         elevation: 5,
     },
     frequencyTitle: {
@@ -330,6 +347,15 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
         marginVertical: hp('2%'),
+    },
+    pickerItem: {
+        fontSize: wp('3.5%'),
+        fontFamily: 'Poppins Regular',
+    },
+    pickerItemText: {
+        fontSize: wp('3.5%'),
+        fontFamily: 'Poppins Regular',
+        color: colors.BLACK,
     },
 });
 

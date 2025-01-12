@@ -6,13 +6,14 @@ import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../util/FontName.js';
+import ScreensName from '../../../../util/ScreensName.ts';
 
 const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('40%'), h = hp('22%') }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
     if (name) {
-      navigation.navigate("Product");
+      navigation.navigate(ScreensName.InventoryMonitoring);
     }
   };
 

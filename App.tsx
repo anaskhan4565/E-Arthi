@@ -34,6 +34,7 @@ import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
 import { I18nextProvider } from 'react-i18next';
 import i18next from './services/i18next.js';
 import ChangeLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
+import InventoryMonitoring from "./src/screens/MainApp/TabScreens/E-InventoryScreens/InventoryMonitoring.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -73,6 +74,9 @@ function App(): React.JSX.Element {
           {/* Specific to changing Lang */}
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
             
+
+          <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </I18nextProvider>

@@ -34,7 +34,7 @@ export default {
     ProductScr: "Product",
 
     EInventoryMainStack: "EInventoryMainStack",
-    Inventory: "Invetory",
+    Inventory: "Inventory",
     PurchaseHistory: "PurchaseHistory",
     Sales: "Sales",
     Suppliers: "Suppliers",

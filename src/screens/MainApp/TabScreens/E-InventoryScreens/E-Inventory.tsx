@@ -26,6 +26,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
+import { Button } from 'react-native-paper';
 
 
 
@@ -49,7 +50,7 @@ function EInventory(): React.JSX.Element {
                         {EInventoryDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={'Inventory'} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}

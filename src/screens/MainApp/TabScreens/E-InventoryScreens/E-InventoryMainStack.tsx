@@ -23,6 +23,7 @@ import Suppliers from "./Suppliers";
 import EInventory from "./E-Inventory";
 import InventoryMonitoring from "./InventoryMonitoring";
 import PurchaseHisotry from "./PurchaseHistory";
+import EInventoryReminder from "./E-InventoryReminder";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -42,6 +43,7 @@ function EInventoryMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.Suppliers} component={Suppliers} />
                     <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
                     <Stack.Screen name={ScreensName.PurchaseHistory} component={PurchaseHisotry} />
+                    <Stack.Screen name={ScreensName.EInventoryReminder} component={EInventoryReminder} />
                 </Stack.Navigator>
         // </I18nextProvider>
     );

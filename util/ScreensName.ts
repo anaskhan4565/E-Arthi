@@ -1,7 +1,4 @@
 
-
-
-
 export default {
     SplashScreen: "SplashScreen",
 
@@ -39,7 +36,9 @@ export default {
     Sales: "Sales",
     Suppliers: "Suppliers",
     InventoryMonitoring: "InvetoryMonitoring",
-    EInventoryReminder:"EInventoryReminder"
+    EInventoryReminder:"EInventoryReminder",
+    EInventoryAddNew:"EInventoryAddNew",
+    EInventoryAddNewGroup:"EInventoryAddNewGroup"
 
 
 

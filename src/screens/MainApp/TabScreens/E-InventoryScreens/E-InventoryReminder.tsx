@@ -1,39 +1,20 @@
 import React from 'react';
-import type { PropsWithChildren } from 'react';
-import ECategories from '../../../../../util/E-Categories.js';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import Categorybox from '../../CustomComponent/Categorybox.jsx';
-import ProductBox from '../../CustomComponent/ProductBox.jsx';
-import ItemBox from '../../CustomComponent/ItemBox.jsx';
-import { EInventoryDet } from '../../../../../util/E-Inventory.js';
-import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { TouchableOpacity, TextInput } from 'react-native';
 import CustomButton from '../../../../components/CustomButton.jsx';
-
-
-
-
-// import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png';
-// import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
 import {
     SafeAreaView,
     ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
-    useColorScheme,
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
-
-
 
 function EInventoryReminder(): React.JSX.Element {
     const { t } = useTranslation();
@@ -49,7 +30,7 @@ function EInventoryReminder(): React.JSX.Element {
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t('Search SKU item#')} />
+                    <CustomSearchApp placeholder={t('Search In Here')} />
                 </View>
                 <View style={styles.headingContainer}>
                     <Text style={styles.headingText}>{t('Inventory Reminder')}</Text>

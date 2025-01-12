@@ -38,8 +38,7 @@ export default {
     InventoryMonitoring: "InvetoryMonitoring",
     EInventoryReminder:"EInventoryReminder",
     EInventoryAddNew:"EInventoryAddNew",
-    EInventoryAddNewGroup:"EInventoryAddNewGroup"
-
-
+    EInventoryAddNewGroup:"EInventoryAddNewGroup",
+    ChangeLanguage:"ChangeLang",
 
 }

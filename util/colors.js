@@ -16,5 +16,6 @@ export default{
 
 
     //For HomeScreen in mainApp
-    LIGHT_GREEN:'#F3FFFC'
+    LIGHT_GREEN:'#F3FFFC',
+    DARK_GREEN:'#00A980'
 }

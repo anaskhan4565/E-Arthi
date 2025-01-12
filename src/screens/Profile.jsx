@@ -2,23 +2,27 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import colors from '../../util/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Logo from '../assets/Icon/Logo.png';
+import Logo from '../assets/Icon/Logo-only.png';
 import VectorMen from '../assets/AboutMoreicons/Vectormen.png';
 import CustomButton from '../components/CustomButton';
 import ScreensName from '../../util/ScreensName';
 import { useTranslation } from 'react-i18next';
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 const AboutMore = () => {
-    const [selectedCard, setSelectedCard] = useState('Farmer'); 
+    const [selectedCard, setSelectedCard] = useState('Farmer');
     // Default selection is 'Farmer'
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
         <SafeAreaView style={styles.MainContainer}>
-            <View style={{ flex: 0.74,backgroundColor:colors.WHITE }}>
+            <View style={{ flex: 0.74, backgroundColor: colors.WHITE }}>
                 {/* Logo Section */}
-                <View style={styles.logoContainer}>
-                    <Image source={Logo} style={styles.logo} />
+                <View style={{ flex: 0.8, justifyContent: 'center', alignItems: 'center' }}>
+                    <Image source={Logo} resizeMode="contain" style={{height:hp(20),width:wp(200),marginLeft:hp(2.2)}} />
+                    <Text style={{ fontSize: hp(4.5), textAlign: 'center', fontWeight: 'bold', fontFamily: fonts.Medium, letterSpacing: 4 }}>{t('E-Arthi').toUpperCase()}</Text>
                 </View>
 
                 {/* Content Section */}
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 0.5,
-        margin: 5,
+        margin: hp(2),
     },
     headerText: {
         textAlign: 'center',
@@ -112,5 +116,6 @@ const styles = StyleSheet.create({
         fontSize: hp(2),
         fontFamily:fonts.Regular,
         textAlign: 'center',
+        fontFamily: fonts.Medium
     },
 });

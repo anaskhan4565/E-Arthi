@@ -17,7 +17,7 @@ function Inventory(): React.JSX.Element {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>{t('Screen')}</Text>
+            <Text>{t('Screenddd')}</Text>
         </SafeAreaView>
     );
 }

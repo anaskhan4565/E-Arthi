@@ -27,14 +27,14 @@ export default {
     HomeScreen: "Home",
     EMunshi: "E-Munshi",
     ELoan: "E-Loan",
-    EInvetory: "E-Inventory",
+    EInventory: "E-Inventory",
     EMarket: "E-Market",
 
     //specific to each product
     ProductScr: "Product",
 
     EInventoryMainStack: "EInventoryMainStack",
-    Inventory: "Invetory",
+    Inventory: "Inventory",
     PurchaseHistory: "PurchaseHistory",
     Sales: "Sales",
     Suppliers: "Suppliers",

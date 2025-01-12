@@ -27,7 +27,7 @@ export default {
     HomeScreen: "Home",
     EMunshi: "E-Munshi",
     ELoan: "E-Loan",
-    EInvetory: "E-Inventory",
+    EInventory: "E-Inventory",
     EMarket: "E-Market",
 
     //specific to each product

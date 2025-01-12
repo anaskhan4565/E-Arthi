@@ -8,13 +8,12 @@ import { fonts } from '../../../../util/FontName.js';
 import ScreensName from '../../../../util/ScreensName.ts';
 // import ScreensName from '../../../../util/ScreensName.js';
 
-const EInventoryBoxes = ({ name, SourceGiven, isNavigation, w = wp('80%'), h = hp('30%') }) => {
+const EInventoryBoxes = ({ name, SourceGiven, screenName, navigationName, isNavigation, w = wp('80%'), h = hp('30%') }) => {
     const navigation = useNavigation();
 
     const handleNavigation = () => {
         if (name) {
-            console.log('Navigating to:', name); // Log the name for debugging
-            navigation.navigate(name);
+            navigation.navigate(navigationName, { screen: (screenName) });
         }
     };
 

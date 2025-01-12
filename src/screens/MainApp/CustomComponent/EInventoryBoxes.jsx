@@ -6,15 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../util/FontName.js';
 
-const EInventoryBoxes = ({ name, SourceGiven, navigationName, isNavigation, w = wp('80%'), h = hp('30%') }) => {
+const EInventoryBoxes = ({ name, SourceGiven, screenName, navigationName, isNavigation, w = wp('80%'), h = hp('30%') }) => {
     const navigation = useNavigation();
 
     const handleNavigation = () => {
         if (name) {
-            console.log("hi");
-            console.log(navigationName);
-            console.log(name);
-            navigation.navigate(navigationName, { screen: (name) });
+            navigation.navigate(navigationName, { screen: (screenName) });
         }
     };
 

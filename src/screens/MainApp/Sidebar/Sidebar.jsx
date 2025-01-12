@@ -44,7 +44,7 @@ function Sidebar() {
           <Text style={{ fontSize: hp("1.95%"),fontFamily:fonts.Regular, }}>{t('maaznavaid@gmail.com')}</Text>
         </View>
       </View>
-      <View style={styles.body}></View>
+      {/* <View style={styles.body}></View> */}
       {links.map(
         (link, index) =>
           link.name.trim() !== "" && (

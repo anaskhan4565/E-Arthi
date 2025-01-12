@@ -13,7 +13,7 @@ const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('
 
   const handleNavigation = () => {
     if (name) {
-      navigation.navigate(ScreensName.InventoryMonitoring);
+      navigation.navigate(ScreensName.ProductScr);
     }
   };
 

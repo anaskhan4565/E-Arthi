@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native';
 
-function EInventoryAddNew(): React.JSX.Element {
+function EInventoryAddNewGroup(): React.JSX.Element {
     const { t } = useTranslation();
     const [isToggled, setIsToggled] = useState(false);
 
@@ -232,4 +232,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EInventoryAddNew;
+export default EInventoryAddNewGroup;

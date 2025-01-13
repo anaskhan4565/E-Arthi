@@ -7,12 +7,13 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { fonts } from '../../../../../util/FontName.js';
 // import ScreensName from '../../../../util/ScreensName.js';
 
-const EInventoryBoxes = ({ name, SourceGiven, isNavigation, w = wp('80%'), h = hp('30%') }) => {
+const EInventoryBoxes = ({ name, SourceGiven, isNavigation, w = wp('80%'), h = hp('30%'),navigateName }) => {
     const navigation = useNavigation();
 
     const handleNavigation = () => {
-        if (name) {
-            console.log('Navigating to:', name); // Log the name for debugging
+        if (navigateName) {
+            console.log('Navigating to:', name);
+            navigation.navigate(navigateName);
         }
     };
 
@@ -21,7 +22,7 @@ const EInventoryBoxes = ({ name, SourceGiven, isNavigation, w = wp('80%'), h = h
     };
 
     return (
-        <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
+        <TouchableOpacity onPress={isNavigation=1?handleNavigation:null} style={[styles.Wrapper, { width: w, height: h }]}>
             <Image source={SourceGiven} style={styles.ImageStyle} />
             <Text style={styles.TextStyle}>{name}</Text>
         </TouchableOpacity>

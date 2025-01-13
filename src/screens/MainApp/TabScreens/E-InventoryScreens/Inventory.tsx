@@ -1,20 +1,12 @@
 import React from 'react';
-import type { PropsWithChildren } from 'react';
-import ECategories from '../../../../../util/E-Categories.js';
+
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import Categorybox from '../../CustomComponent/Categorybox.jsx';
-import ProductBox from '../../CustomComponent/ProductBox.jsx';
-import ItemBox from '../../CustomComponent/ItemBox.jsx';
-import { EInventoryDet } from '../../../../../util/E-Inventory.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
 import { InventoryDet } from '../../../../../util/E-Inventory.js';
 
-
-// import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png';
-// import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
 import {
     SafeAreaView,
     ScrollView,
@@ -55,14 +47,6 @@ function Inventory(): React.JSX.Element {
                             )
                         ))}
                     </View>
-
-
-
-
-
-
-
-
                 </View>
             </ScrollView>
         </SafeAreaView >

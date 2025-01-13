@@ -10,6 +10,8 @@ import AddBox from '../../../MainApp/CustomComponent/InventoryComponents/AddBox.
 import Image3 from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/image.png'
 import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
 
+import ScreensName from '../../../../../util/ScreensName.ts';
+
 const InventoryMonitoring = () => {
     const { t } = useTranslation()
 
@@ -26,11 +28,11 @@ const InventoryMonitoring = () => {
                     </View>
 
                     <View style={styles.bodyContainer}>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'New Inventory'} />
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'New Group'} />
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'Inventory Reminder'} />
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'New Inventory'} navigateName={ScreensName.EInventoryAddNew}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'New Group'} navigateName={ScreensName.EInventoryAddNewGroup}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'Inventory Reminder'} navigateName={ScreensName.EInventoryReminder}/>
 
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'Manage Inventory'} />
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'Manage Inventory'}  navigateName={ScreensName.EInventoryManageGroup}/>
                     </View>
 
                     {/* Section for Recommended Products */}

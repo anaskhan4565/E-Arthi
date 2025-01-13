@@ -72,18 +72,20 @@ function EInventory(): React.JSX.Element {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        //alignItems: 'center',
+        //justifyContent: 'center',
         backgroundColor: colors.WHITE,
 
     },
     navbarContainer: {
         height: hp('8.5%'),
-        backgroundColor:colors.WHITE,
+        backgroundColor: colors.WHITE,
     },
     searchContainer: {
         marginVertical: hp('3.2%'),
         height: hp('7%'),
+        //    backgroundColor: 'red',
+
     },
     bodyContainer: {
         alignItems: 'center',
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     scrollContainer: {
-        flexWrap: 'wrap',
+        //flexWrap: 'wrap',
         justifyContent: 'center',
         paddingVertical: hp('2%'),
         // backgroundColor: 'red',

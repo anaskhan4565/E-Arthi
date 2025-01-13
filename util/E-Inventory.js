@@ -1,5 +1,6 @@
 import ScreensName from './ScreensName.ts';
 const EInventoryDet = [
+
     {
         screen: ScreensName.Inventory,
         title: "Inventory",
@@ -28,6 +29,7 @@ const InventoryDet = [
         title: "Inventory Monitoring",
         img: require('../src/assets/MainApp/E-Inventory/InventoryMonitoring.png')
     },
+    
 ];
 
 export { InventoryDet, EInventoryDet };

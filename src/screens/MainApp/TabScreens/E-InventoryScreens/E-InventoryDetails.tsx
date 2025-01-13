@@ -66,7 +66,7 @@ function EInventoryDetails(): React.JSX.Element {
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Item Descripion')}</Text>
-                            <Text style={styles.value}>{t('Introducing BRINC Ball transforming rescue and tactical operations! This throwable communication device enables two-way audio')}</Text>
+                            <Text style={styles.value}>{t('Introducing BRINC Ball transforming rescue and tactical operations! This throwable communication device enables two-way audio.')}</Text>
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Item Regular sale expectations')}</Text>

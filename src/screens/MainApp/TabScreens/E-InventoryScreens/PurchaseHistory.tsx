@@ -33,13 +33,13 @@ function PurchaseHisotry(): React.JSX.Element {
         </View>
         <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-            Purchase History
+            {t('Purchase History')}
           </Text>
         </View>
         <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>Item {'\n'}Description {'\n'}& Qty</Text>
-          <Text style={[styles.HeaderCol, { textAlign: "center" }]}>Cost</Text>
-          <Text style={styles.HeaderCol}>Date Order Placed</Text>
+          <Text style={styles.HeaderCol}>{t('Item')} {'\n'}{t('Description')} {'\n'}{t('& Qty')}</Text>
+          <Text style={[styles.HeaderCol, { textAlign: "center" }]}>{t('Cost')}</Text>
+          <Text style={styles.HeaderCol}>{t('Date Order Placed')}</Text>
         </View>
         {PurchaseHistory.map(
           (data, index) =>

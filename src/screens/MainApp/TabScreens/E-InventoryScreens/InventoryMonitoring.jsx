@@ -28,18 +28,18 @@ const InventoryMonitoring = () => {
                     </View>
 
                     <View style={styles.bodyContainer}>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'New Inventory'} navigateName={ScreensName.EInventoryAddNew}/>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'New Group'} navigateName={ScreensName.EInventoryAddNewGroup}/>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'Inventory Reminder'} navigateName={ScreensName.EInventoryReminder}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('New Inventory')} navigateName={ScreensName.EInventoryAddNew}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('New Group')} navigateName={ScreensName.EInventoryAddNewGroup}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Inventory Reminder')} navigateName={ScreensName.EInventoryReminder}/>
 
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={'Manage Inventory'}  navigateName={ScreensName.EInventoryManageGroup}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Manage Inventory')}  navigateName={ScreensName.EInventoryManageGroup}/>
                     </View>
 
                     {/* Section for Recommended Products */}
                     <View style={styles.recommendedProducts}>
                         <Text style={styles.recommendedTitle}>{t('Inventory')}</Text>
                         <View style={styles.productRow}>
-                            <InventoryProduct name={'Product ABC'} price={1280} />
+                            <InventoryProduct name={'Product ABC'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
                             <InventoryProduct name={'Product ABC'} price={1000} />
                             <InventoryProduct name={'Product ABC'} price={1500} />
                             <InventoryProduct name={'Product ABC'} price={1400} />

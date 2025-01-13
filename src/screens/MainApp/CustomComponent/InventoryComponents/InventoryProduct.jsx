@@ -4,11 +4,17 @@ import colors from '../../../../../util/colors.js';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../../util/FontName.js';
 import Image4 from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
-const InventoryProduct = ({ name, price, SourceGiven, isNavigation, w = wp('80%'), h = hp('30%') }) => {
+const InventoryProduct = ({ name, price, SourceGiven, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
+      const navigation = useNavigation();
+        const { t } = useTranslation()
+    
     const handleNavigation = () => {
-        if (name) {
+        if (isNavigation) {
             console.log('Navigating to:', name);
+            navigation.navigate(navigateTo)
         }
     };
 
@@ -17,14 +23,14 @@ const InventoryProduct = ({ name, price, SourceGiven, isNavigation, w = wp('80%'
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: wp(90), height: hp(10) }]}>
+        <TouchableOpacity style={[styles.Wrapper, { width: wp(90), height: hp(10) }]}onPress={handleNavigation}>
             <View style={styles.rowContainer}>
                 <View style={styles.imageContainer}>
                     <Image source={Image4} style={styles.ImageStyle} />
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.TextStyle}>{name}</Text>
-                    <Text style={styles.descriptionText}>Introducing BRINC Ball transforming rescue and tactical operations.</Text>
+                    <Text style={styles.descriptionText}>{t("Introducing BRINC Ball transforming rescue and tactical operations.")}</Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>PKR {price}</Text>

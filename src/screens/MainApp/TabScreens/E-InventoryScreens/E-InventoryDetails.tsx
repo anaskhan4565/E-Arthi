@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName';
 
-function EInventory(): React.JSX.Element {
+function EInventoryDetails(): React.JSX.Element {
     const { t } = useTranslation();
     const navigation = useNavigation();
     return (
@@ -167,4 +167,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EInventory;
+export default EInventoryDetails;

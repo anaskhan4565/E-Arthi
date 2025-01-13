@@ -27,6 +27,7 @@ import EInventoryReminder from "./E-InventoryReminder";
 import EInventoryAddNew from "./E-InventoryAddNew";
 import EInventoryAddNewGroup from "./E-InventoryAddNewGroup";
 import EInventoryManageGroup from "./E-InventoryManageGroup";
+import EInventoryDetails from "./E-InventoryDetails";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -50,6 +51,7 @@ function EInventoryMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EInventoryAddNew} component={EInventoryAddNew} />
                     <Stack.Screen name={ScreensName.EInventoryAddNewGroup} component={EInventoryAddNewGroup} />
                     <Stack.Screen name={ScreensName.EInventoryManageGroup} component={EInventoryManageGroup} />
+                    <Stack.Screen name={ScreensName.EInventoryDetails} component={EInventoryDetails} />
 
                 </Stack.Navigator>
         // </I18nextProvider>

@@ -40,11 +40,11 @@ const InventoryMonitoring = () => {
                         <Text style={styles.recommendedTitle}>{t('Inventory')}</Text>
                         <View style={styles.productRow}>
                             <InventoryProduct name={'Product ABC'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Product ABC'} price={1000} />
-                            <InventoryProduct name={'Product ABC'} price={1500} />
-                            <InventoryProduct name={'Product ABC'} price={1400} />
-                            <InventoryProduct name={'Product ABC'} price={1400} />
-                            <InventoryProduct name={'Product ABC'} price={1400} />
+                            <InventoryProduct name={'Product ABC'} price={1000}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Product ABC'} price={1500}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Product ABC'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Product ABC'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Product ABC'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
 
                         </View>
 

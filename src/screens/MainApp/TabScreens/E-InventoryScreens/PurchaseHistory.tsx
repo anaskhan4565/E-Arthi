@@ -1,5 +1,4 @@
 import React from "react";
-import type { PropsWithChildren } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -25,19 +24,21 @@ function PurchaseHisotry(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Navbar />
+      <View style={styles.navbarContainer}>
+        <Navbar />
+      </View>      
       <View style={{ flex: 7 }}>
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={"Search in here"} />
         </View>
-        <View style={{ marginBottom: hp(1.2),marginTop: hp(0),marginHorizontal: wp(5), }}>
+        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
             Purchase History
           </Text>
         </View>
         <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>Item {"\n"}Description {"\n"}& Qty</Text>
-          <Text style={[styles.HeaderCol,{textAlign: "center"}]}>Cost</Text>
+          <Text style={styles.HeaderCol}>Item {'\n'}Description {'\n'}& Qty</Text>
+          <Text style={[styles.HeaderCol, { textAlign: "center" }]}>Cost</Text>
           <Text style={styles.HeaderCol}>Date Order Placed</Text>
         </View>
         {PurchaseHistory.map(
@@ -59,11 +60,16 @@ function PurchaseHisotry(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  navbarContainer: {
+    height: hp(8.5),
     backgroundColor: colors.WHITE,
   },
-  searchbar : {
+  container: {
+    flex: 1,
+
+    backgroundColor: colors.WHITE,
+  },
+  searchbar: {
     marginTop: hp(1.3),
     height: hp('7%'),
 
@@ -77,10 +83,10 @@ const styles = StyleSheet.create({
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,
-    fontSize: hp(2),    
+    fontSize: hp(2),
     width: wp(29),
     textAlign: "left"
-    
+
   },
   cost: {
     fontFamily: fonts.Regular,
@@ -102,14 +108,14 @@ const styles = StyleSheet.create({
     width: wp(30),
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    
+
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: wp(4),
-    
+
   },
 });
 

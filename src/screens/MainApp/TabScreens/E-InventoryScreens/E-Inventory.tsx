@@ -78,9 +78,8 @@ const styles = StyleSheet.create({
 
     },
     navbarContainer: {
-        height: hp('8.2%'),
-        backgroundColor: 'white',
-        marginTop: hp('0.14%'),
+        height: hp('8.5%'),
+        backgroundColor:colors.WHITE,
     },
     searchContainer: {
         marginVertical: hp('3.2%'),

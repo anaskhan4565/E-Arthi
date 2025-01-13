@@ -5,16 +5,10 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import Categorybox from '../../CustomComponent/Categorybox.jsx';
-import ProductBox from '../../CustomComponent/ProductBox.jsx';
-import ItemBox from '../../CustomComponent/ItemBox.jsx';
 import { EInventoryDet } from '../../../../../util/E-Inventory.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
 
 
-
-// import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png';
-// import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
 import {
     SafeAreaView,
     ScrollView,
@@ -55,14 +49,6 @@ function EInventory(): React.JSX.Element {
                             )
                         ))}
                     </View>
-
-
-
-
-
-
-
-
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -84,8 +70,6 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginVertical: hp('3.2%'),
         height: hp('7%'),
-        //    backgroundColor: 'red',
-
     },
     bodyContainer: {
         alignItems: 'center',

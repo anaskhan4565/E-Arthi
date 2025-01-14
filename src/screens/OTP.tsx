@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
         fontFamily:fonts.Regular,
         backgroundColor: "#FFF",
         marginHorizontal: hp('0.5%'),
+        color: colors.BLACK
     },
     bottomContainer: {
         flexDirection: "row",

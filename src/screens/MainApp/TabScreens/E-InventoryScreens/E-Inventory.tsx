@@ -5,16 +5,10 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import Categorybox from '../../CustomComponent/Categorybox.jsx';
-import ProductBox from '../../CustomComponent/ProductBox.jsx';
-import ItemBox from '../../CustomComponent/ItemBox.jsx';
 import { EInventoryDet } from '../../../../../util/E-Inventory.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
 
 
-
-// import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png';
-// import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
 import {
     SafeAreaView,
     ScrollView,
@@ -26,6 +20,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
+import ScreensName from '../../../../../util/ScreensName.ts';
 
 
 
@@ -49,19 +44,11 @@ function EInventory(): React.JSX.Element {
                         {EInventoryDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}
                     </View>
-
-
-
-
-
-
-
-
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -71,15 +58,14 @@ function EInventory(): React.JSX.Element {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        //alignItems: 'center',
+        //justifyContent: 'center',
         backgroundColor: colors.WHITE,
 
     },
     navbarContainer: {
-        height: hp('8.2%'),
-        backgroundColor: 'white',
-        marginTop: hp('0.14%'),
+        height: hp('8.5%'),
+        backgroundColor: colors.WHITE,
     },
     searchContainer: {
         marginVertical: hp('3.2%'),
@@ -97,7 +83,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     scrollContainer: {
-        flexWrap: 'wrap',
+        //flexWrap: 'wrap',
         justifyContent: 'center',
         paddingVertical: hp('2%'),
         // backgroundColor: 'red',

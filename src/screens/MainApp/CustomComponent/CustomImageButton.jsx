@@ -14,8 +14,11 @@ const CustomImageButton = ({ name, SourceGiven, isNavigation, w = wp('6.5%'), h 
   const navigation = useNavigation();
 
   const handleNavigation = () => {
-    if (name) {
+    if(name=='GoBack'){
+      navigation.goBack()
+    }else if(name){
       navigation.navigate(name);
+
     }
   };
 

@@ -1,7 +1,4 @@
 
-
-
-
 export default {
     SplashScreen: "SplashScreen",
 
@@ -27,19 +24,22 @@ export default {
     HomeScreen: "Home",
     EMunshi: "E-Munshi",
     ELoan: "E-Loan",
-    EInvetory: "E-Inventory",
+    EInventory: "E-Inventory",
     EMarket: "E-Market",
 
     //specific to each product
     ProductScr: "Product",
 
     EInventoryMainStack: "EInventoryMainStack",
-    Inventory: "Invetory",
+    Inventory: "Inventory",
     PurchaseHistory: "PurchaseHistory",
     Sales: "Sales",
     Suppliers: "Suppliers",
     InventoryMonitoring: "InvetoryMonitoring",
-
-
-
+    EInventoryReminder:"EInventoryReminder",
+    EInventoryAddNew:"EInventoryAddNew",
+    EInventoryAddNewGroup:"EInventoryAddNewGroup",
+    ChangeLanguage:"ChangeLang",
+    EInventoryManageGroup:"EInventoryManageGroup",
+    EInventoryDetails:'EInventoryDetails'
 }

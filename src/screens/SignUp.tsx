@@ -28,6 +28,7 @@ function SignUp(): React.JSX.Element {
                     <TextInput
                         style={styles.passInput}
                         placeholder={t('Password')}
+                        placeholderTextColor={colors.LIGHT_GRAY}
                         secureTextEntry={passwordVisible}
                     />
                     <TouchableOpacity
@@ -235,8 +236,9 @@ const styles = StyleSheet.create({
     passInput: {
         flex: 3,
         fontSize: hp('1.7%'),
-        fontFamily:fonts.Medium,
-        borderRadius:hp('1.3%')
+        fontFamily:fonts.Regular,
+        borderRadius:hp('1.3%'),
+        color: colors.BLACK
     },
     terms: {
         flexDirection: "row",

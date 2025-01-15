@@ -15,6 +15,7 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import ScreensName from '../../../../../util/ScreensName.ts';
 
 function EInventoryReminder(): React.JSX.Element {
     const { t } = useTranslation();
@@ -116,9 +117,9 @@ function EInventoryReminder(): React.JSX.Element {
                     <CustomButton 
                         MainText={t('Save')}
                         BgGiven={colors.GREEN}
-                        name={""}
+                        name={ScreensName.InventoryMonitoring}
                         txColor={colors.WHITE}
-                        isNavigation={false}
+                        isNavigation={true}
                     />
                 </View>
                 <View style={styles.bodyContainer}>

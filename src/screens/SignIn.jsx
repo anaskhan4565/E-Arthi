@@ -50,6 +50,7 @@ function SignIn() {
           <TextInput
             style={styles.passInput}
             placeholder={t('Password')}
+            placeholderTextColor={colors.LIGHT_GRAY}
             secureTextEntry={passwordVisible}
           />
           <TouchableOpacity
@@ -231,7 +232,8 @@ const styles = StyleSheet.create({
   passInput: {
     flex: 3,
     fontSize: hp('1.7%'),
-    fontFamily:fonts.Medium,
+    fontFamily:fonts.Regular,
+    color: colors.BLACK
   },
 });
 

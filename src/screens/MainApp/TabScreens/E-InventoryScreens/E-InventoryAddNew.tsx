@@ -16,6 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native';
+import ScreensName from '../../../../../util/ScreensName.ts';
 
 function EInventoryAddNew(): React.JSX.Element {
     const { t } = useTranslation();
@@ -132,9 +133,9 @@ function EInventoryAddNew(): React.JSX.Element {
                     <CustomButton 
                         MainText={t('Save')}
                         BgGiven={colors.GREEN}
-                        name={""}
+                        name={ScreensName.InventoryMonitoring}
                         txColor={colors.WHITE}
-                        isNavigation={false}
+                        isNavigation={true}
                     />
                 </View>
             </ScrollView>
@@ -216,7 +217,6 @@ const styles = StyleSheet.create({
     labelText: {
         fontSize: wp('3%'),
         fontFamily: 'Poppins Medium',
-        color: colors.BLACK,
         flex: 0.35,
     },
     input: {
@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
         fontSize: wp('3%'),
         flex: 0.6,
         fontFamily: 'Poppins',
+        color: colors.BLACK
     },
     pickerContainer: {
         height: hp('4%'),
@@ -246,6 +247,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         overflow: 'hidden',
         flex: 0.6,
+        
     },
     pickerItem: {
         fontSize: wp('3%'),

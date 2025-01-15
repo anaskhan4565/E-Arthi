@@ -37,7 +37,7 @@ function EInventoryReminder(): React.JSX.Element {
                     <Text style={styles.headingText}>{t('Inventory Reminder')}</Text>
                 </View>
                 <View style={styles.filterContainer}>
-                    <Text style={styles.skuText}>SKU Item</Text>
+                    <Text style={styles.skuText}>{t('SKU Item')}</Text>
                     <View style={styles.dropdownContainer}>
                         <Picker
                             selectedValue={selectedValue}
@@ -46,22 +46,22 @@ function EInventoryReminder(): React.JSX.Element {
                             itemStyle={styles.pickerItem}
                         >
                             <Picker.Item 
-                                label="search SKU item#" 
+                                label={t('search SKU item#')} 
                                 value="" 
                                 style={styles.pickerItemText} 
                             />
                             <Picker.Item 
-                                label="All" 
+                                label={t('All')} 
                                 value="all" 
                                 style={styles.pickerItemText} 
                             />
                             <Picker.Item 
-                                label="Low Stock" 
+                                label={t('Low Stock')} 
                                 value="low" 
                                 style={styles.pickerItemText} 
                             />
                             <Picker.Item 
-                                label="Out of Stock" 
+                                label={t('Out of Stock')} 
                                 value="out" 
                                 style={styles.pickerItemText} 
                             />
@@ -82,21 +82,21 @@ function EInventoryReminder(): React.JSX.Element {
                                         <View style={styles.checkboxInner} />
                                     )}
                                 </View>
-                                <Text style={styles.checkboxLabel}>{option}</Text>
+                                <Text style={styles.checkboxLabel}>{t(option)}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
                 </View>
                 <View style={styles.reminderBox}>
-                    <Text style={styles.reminderTitle}>Reminder sent via</Text>
+                    <Text style={styles.reminderTitle}>{t('Reminder sent via')}</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputRow}>
-                            <Text style={styles.inputLabel}>Text Message</Text>
+                            <Text style={styles.inputLabel}>{t('Text Message')}</Text>
                             <TextInput
                                 style={styles.input}
                                 value={textMessage}
                                 onChangeText={setTextMessage}
-                                placeholder="Enter phone number"
+                                placeholder={t('Enter phone number')}
                                 keyboardType="phone-pad"
                             />
                         </View>
@@ -106,7 +106,7 @@ function EInventoryReminder(): React.JSX.Element {
                                 style={styles.input}
                                 value={email}
                                 onChangeText={setEmail}
-                                placeholder="Enter email address"
+                                placeholder={t('Enter email address')}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                             />
@@ -115,7 +115,7 @@ function EInventoryReminder(): React.JSX.Element {
                 </View>
                 <View style={styles.buttonContainer}>
                     <CustomButton 
-                        MainText="Save"
+                        MainText={t('Save')}
                         BgGiven={colors.GREEN}
                         name={ScreensName.InventoryMonitoring}
                         txColor={colors.WHITE}

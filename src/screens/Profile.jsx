@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
         backgroundColor:colors.WHITE,
-        marginTop: hp(3),
     },
     logoContainer: {
         flex: 1,
@@ -112,7 +111,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     cardText: {
-        marginTop: 5,
+        marginTop: hp(0.6),
         fontSize: hp(2),
         fontFamily:fonts.Regular,
         textAlign: 'center',

@@ -64,12 +64,12 @@ function EInventoryAddNew(): React.JSX.Element {
                                         style={styles.pickerItem}
                                     />
                                     <Picker.Item 
-                                        label="Place 1" 
+                                        label={t('Place 1')} 
                                         value="1" 
                                         style={styles.pickerItem}
                                     />
                                     <Picker.Item 
-                                        label="Place 2" 
+                                        label={t('Place 2')} 
                                         value="2" 
                                         style={styles.pickerItem}
                                     />
@@ -90,12 +90,12 @@ function EInventoryAddNew(): React.JSX.Element {
                                         style={styles.pickerItem}
                                     />
                                     <Picker.Item 
-                                        label="Group 1" 
+                                        label={t('Group 1')} 
                                         value="1" 
                                         style={styles.pickerItem}
                                     />
                                     <Picker.Item 
-                                        label="Group 2" 
+                                        label={t('Group 2')}
                                         value="2" 
                                         style={styles.pickerItem}
                                     />
@@ -131,7 +131,7 @@ function EInventoryAddNew(): React.JSX.Element {
 
                 <View style={styles.buttonContainer}>
                     <CustomButton 
-                        MainText="Save"
+                        MainText={t('Save')}
                         BgGiven={colors.GREEN}
                         name={ScreensName.InventoryMonitoring}
                         txColor={colors.WHITE}

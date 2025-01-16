@@ -41,5 +41,6 @@ export default {
     EInventoryAddNewGroup:"EInventoryAddNewGroup",
     ChangeLanguage:"ChangeLang",
     EInventoryManageGroup:"EInventoryManageGroup",
-    EInventoryDetails:'EInventoryDetails'
+    EInventoryDetails:'EInventoryDetails',
+    cnic_page_1:'cnic_page_1'
 }

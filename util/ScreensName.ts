@@ -23,7 +23,18 @@ export default {
     MainTabNavigation: "MainTabNavigation",
     HomeScreen: "Home",
     EMunshi: "E-Munshi",
+
+    ELoanMainStack: "ELoanMainStack",
     ELoan: "E-Loan",
+    EloanOTP: "E-LoanOTP",
+    EloanPreviousLoan: "EloanPreviousLoan",
+    EloanIDVerify: "EloanIDVerify",
+    EloanLandVerify: "EloanLandVerify",
+    EloanCurrentLoan: "EloanCurrentLoan",
+    EloanSelectedLoan: "EloanSelectedLoan",
+    ELoanNewLoan: "ELoanNewLoan",
+
+
     EInventory: "E-Inventory",
     EMarket: "E-Market",
 

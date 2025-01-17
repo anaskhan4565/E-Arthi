@@ -41,5 +41,10 @@ export default {
     EInventoryAddNewGroup:"EInventoryAddNewGroup",
     ChangeLanguage:"ChangeLang",
     EInventoryManageGroup:"EInventoryManageGroup",
-    EInventoryDetails:'EInventoryDetails'
+    EInventoryDetails:'EInventoryDetails',
+    EInventorySupplier:'EInventorySupplier',
+    EInventorySuppliersList:'EInventorySuppliersList',
+    EInventoryAddSuppliers:'EInventoryAddSuppliers',
+    EInventorySupplierReports:'EInventorySupplierReports'
+
 }

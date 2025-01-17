@@ -32,4 +32,119 @@ const InventoryDet = [
     
 ];
 
-export { InventoryDet, EInventoryDet };
+const InventorySupplierDet = [
+    {
+        screen: ScreensName.EInventorySupplier,
+        title: "Supplier Report",
+        img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
+    },
+    {
+        screen: ScreensName.EInventorySupplier,
+        title: "Download Report",
+        img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
+    },
+    
+];
+
+const InventorySuppliersListDet = [
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+    {
+        id: "A12",
+        name: "name",
+        item: "item name"
+    },
+];
+
+const SupplierReports = [
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+    'Report 2/13/2024',
+];
+
+export { InventoryDet, EInventoryDet, InventorySupplierDet, InventorySuppliersListDet, SupplierReports };

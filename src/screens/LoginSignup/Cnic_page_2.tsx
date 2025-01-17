@@ -12,105 +12,85 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import colors from "../../../util/colors";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ScreensName from "../../../util/ScreensName";
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
- import i18next from "../../../services/i18next";;
+import i18next from "../../../services/i18next";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../util/FontName";
 
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-function SignIn() {
+function Cnic_page_2() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false); // State to toggle the date picker
+  const [selectedDate, setSelectedDate] = useState(null); // State to store selected date
   const navigation = useNavigation();
-  
 
-  //for translation
-  const {t}=useTranslation();
+  const { t } = useTranslation();
 
-  //
+  const handleDateConfirm = (date) => {
+    // Format the selected date (example: 'DD/MM/YYYY')
+    const formattedDate = date.toLocaleDateString();
+    setSelectedDate(formattedDate);
+    setDatePickerVisible(false); // Close the picker once a date is selected
+  };
+
+  const handleDateCancel = () => {
+    setDatePickerVisible(false); // Close the picker if canceled
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.Header}>
-        <Text style={styles.Heading}>{t('Sign-in')}</Text>
-        <Text style={styles.SubHeading}>{t('Welcome back, please login again')}</Text>
+        <Text style={styles.Heading}>CNIC Verification</Text>
+        <Text style={styles.SubHeading}>Please enter your CNIC details</Text>
       </View>
-      <View style={styles.inputs}>
-        {/* height: height / 20,
-      width: width / 1.1, */}
-        <CustomInput placeholder={t('Username')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
-        <View style={styles.passInputBox}>
-          <TextInput
-            style={styles.passInput}
-            placeholder={t('Password')}
-            placeholderTextColor={colors.LIGHT_GRAY}
-            secureTextEntry={passwordVisible}
-          />
-          <TouchableOpacity
-            style={styles.passToggleButton}
-            onPress={() => setPasswordVisible(!passwordVisible)}
-          >
-            <Image
-              source={require("../assets/EyeHide.png")}
-              style={styles.showPassIcon}
-            ></Image>
-          </TouchableOpacity>
+
+      <View style={styles.buttonContainer}>
+        <View style={styles.buttonSpacing} />
+        <View style={styles.textcontainer}>
+          <Text style={styles.inputText}>Your CNIC number </Text>
         </View>
+
+        <CustomInput placeholder={t('CNIC')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} hide={0} />
+
+        <View style={styles.textcontainer}>
+          <Text style={styles.inputText}>Your CNIC date of issue</Text>
+        </View>
+
+
+        <TouchableOpacity onPress={() => setDatePickerVisible(true)} style={styles.dateButton}>
+          <Text style={styles.dateButtonText}>
+            {selectedDate ? selectedDate : t('Date')}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.button}>
+
+      {/* Date Picker Modal */}
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={handleDateCancel}
+      />
+
+      <View style={styles.buttoncontainer}>
         <CustomButton
-          MainText={t('Login')}
+          MainText="Verify"
           BgGiven={colors.GREEN}
-          name={ScreensName.MainTabNavigation}
           txColor={colors.WHITE}
-          isNavigation={1}
-        ></CustomButton>
+          isNavigation={true}
+          name={ScreensName.BiometricVerification}
+        />
       </View>
-      <View style={styles.options}>
-        <View style={styles.RememberMe}>
-          <BouncyCheckbox
-            size={20}
-            fillColor={colors.GREEN}
-            iconStyle={{ borderColor: colors.LIGHT_GRAY }}
-            style={styles.checkbox}
-            textComponent={true}
-            innerIconStyle={{ borderRadius: 7 }}
-          />
-          <Text style={styles.RememberMeText}>{t('Remember me')}</Text>
-        </View>
-        <TouchableOpacity onPress={() => { navigation.navigate(ScreensName.ForgotPassword) }}>
-          <Text style={styles.forgotPassword}>{t('Forgot Password')}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.break}>
-        <View style={styles.line} />
-        <Text style={styles.ORtext}>{t('OR')}</Text>
-        <View style={styles.line} />
-      </View>
-      <View style={styles.altSignin}>
-        <TouchableOpacity style={styles.altSigninButton}>
-          <Image
-            source={require("../assets/google.png")}
-            style={styles.altSigninButtonIcon}
-          />
-          <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with google')} </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.altSigninButton}>
-          <Image
-            source={require("../assets/apple.png")}
-            style={styles.altSigninButtonIcon}
-          />
-          <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with Apple')}  </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -118,123 +98,73 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.WHITE,
-    paddingHorizontal: width / 20,
+    paddingHorizontal: wp('5%'),
   },
   Header: {
-    marginTop: height / 10,
-    marginBottom: height / 20,
+    marginTop: hp('10%'),
+    marginBottom: hp('5%'),
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   Heading: {
     fontSize: height / 25,
-    fontFamily:fonts.SemiBold,
-    marginLeft: wp('1.5%'),
+    fontFamily: fonts.SemiBold,
     color: colors.BLACK,
+    marginLeft: wp('1.5%'),
   },
   SubHeading: {
     fontSize: height / 45,
-    fontFamily:fonts.Regular,
-    marginTop: height / 100,
+    fontFamily: fonts.Regular,
+    color: colors.BLACK,
+    marginTop: hp('1%'),
     marginLeft: wp('1.5%'),
   },
-  inputs: {
-    gap: height / 40,
-    alignItems: "center",
+  inputText: {
+    fontSize: hp('2%'),
+    fontFamily: fonts.Regular,
+    color: colors.BLACK,
+    marginBottom: hp('1%'),
+    marginLeft: wp('8%'),
+    justifyContent: 'flex-start',
   },
-  button: {
-    marginTop: height / 20,
-    alignItems: "center",
-  },
-  options: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: hp('2%'),
-    alignItems: "center",
-  },
-  RememberMe: {
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "flex-start",
-    flex: 1,
-  },
-  RememberMeText: {
-    fontSize: height / 58,
-    marginLeft: 5,
-    fontFamily:fonts.Regular,
-  },
-  checkbox: {
-    marginLeft: wp('3%'),
-  },
-  forgotPassword: {
-    flex: 1,
-    alignItems: "flex-end",
-    color: colors.GREEN,
-    fontSize: height / 58,
-    fontFamily:fonts.Regular,
-    marginRight: wp('3%'),
-
-  },
-  break: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: height / 40,
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: colors.LIGHT_GRAY,
-  },
-  ORtext: {
-    marginHorizontal: 10,
-    fontSize: height / 55,
-    color: colors.GREEN,
-    fontFamily:fonts.Medium,
-  },
-  altSignin: {
-    gap: height / 80,
-  },
-  altSigninButton: {
-    height: hp('5.7%'),
-    width: wp('85%'),
-    borderColor: colors.LIGHT_GRAY,
-    borderWidth: 1,
-    borderRadius: 8,
-    display: "flex",
-    flexDirection: "row",
+  buttoncontainer: {
+    marginTop: hp(5),
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
   },
-  altSigninButtonIcon: {
-    width: wp('7%'),
-    height: hp('4%'),
-    marginRight: 10,
-    resizeMode: 'contain',
+  textcontainer: {
+    width: wp(100),
+    justifyContent: 'flex-start',
+    marginTop: hp(3),
   },
-  passToggleButton: {},
-  showPassIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
-  },
-  passInputBox: {
-    height: hp('5.7%'),
-    width: wp('85%'),
-    fontSize: 18,
-    fontFamily:fonts.Medium,
-    justifyContent: "center",
-    alignSelf: "center",
-    alignItems: "center",
-    flexDirection: "row",
+  dateButton: {
+    backgroundColor: colors.WHITE,
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 10,
     borderWidth: 1,
-    borderRadius: hp('1%'),
     borderColor: colors.LIGHT_GRAY,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: hp('1%'),
+    width: wp(85),
+    height: hp(5.5),
   },
-  passInput: {
-    flex: 3,
-    fontSize: hp('1.7%'),
-    fontFamily:fonts.Regular,
-    color: colors.BLACK
+  dateButtonText: {
+    fontSize: hp('2%'),
+    fontFamily: fonts.Regular,
+    color: colors.BLACK,
+  },
+  buttonContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: hp('5%'),
+  },
+  buttonSpacing: {
+    height: hp('2%'),
   },
 });
 
-export default SignIn;
+export default Cnic_page_2;

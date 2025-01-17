@@ -36,6 +36,8 @@ import i18next from './services/i18next.js';
 import ChangeLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 import InventoryMonitoring from "./src/screens/MainApp/TabScreens/E-InventoryScreens/InventoryMonitoring.jsx";
 import Cnic_page_1 from "./src/screens/LoginSignup/Cnic_page_1.tsx";
+import Cnic_page_2 from "./src/screens/LoginSignup/Cnic_page_2.tsx";
+import BiometricVerification from "./src/screens/LoginSignup/BiometricVerification.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -49,7 +51,7 @@ function App(): React.JSX.Element {
   return (
     <I18nextProvider i18n={i18next}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreensName.cnic_page_1} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.Cnic_page_2} screenOptions={{ headerShown: false }}>
           <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
           <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
           <Stack.Screen name={ScreensName.Connect} component={Connect} />
@@ -71,7 +73,9 @@ function App(): React.JSX.Element {
             options={slideFromLeftOptions} component={Sidebar} />
           <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
           <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
-          <Stack.Screen name={ScreensName.cnic_page_1} component={Cnic_page_1} />
+          <Stack.Screen name={ScreensName.Cnic_page_1} component={Cnic_page_1} />
+          <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2}/>
+          <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification}/>
 
           {/* Specific to changing Lang */}
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />

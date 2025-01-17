@@ -12,6 +12,9 @@ export default {
     SignUp: "SignUp",
     Splash: "Splash",
     MorePage: "More",
+    Cnic_page_1: 'Cnic_page_1',
+    Cnic_page_2: 'Cnic_page_2',
+    BiometricVerification: "BiometricVerification",
 
     Sidebar: "Sidebar",
     //specific to Internet
@@ -36,11 +39,11 @@ export default {
     Sales: "Sales",
     Suppliers: "Suppliers",
     InventoryMonitoring: "InvetoryMonitoring",
-    EInventoryReminder:"EInventoryReminder",
-    EInventoryAddNew:"EInventoryAddNew",
-    EInventoryAddNewGroup:"EInventoryAddNewGroup",
-    ChangeLanguage:"ChangeLang",
-    EInventoryManageGroup:"EInventoryManageGroup",
-    EInventoryDetails:'EInventoryDetails',
-    cnic_page_1:'cnic_page_1'
+    EInventoryReminder: "EInventoryReminder",
+    EInventoryAddNew: "EInventoryAddNew",
+    EInventoryAddNewGroup: "EInventoryAddNewGroup",
+    ChangeLanguage: "ChangeLang",
+    EInventoryManageGroup: "EInventoryManageGroup",
+    EInventoryDetails: 'EInventoryDetails',
+  
 }

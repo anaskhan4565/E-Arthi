@@ -35,6 +35,10 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from './services/i18next.js';
 import ChangeLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 import InventoryMonitoring from "./src/screens/MainApp/TabScreens/E-InventoryScreens/InventoryMonitoring.jsx";
+import Cnic_page_1 from "./src/screens/LoginSignup/Cnic_page_1.tsx";
+import Cnic_page_2 from "./src/screens/LoginSignup/Cnic_page_2.tsx";
+import BiometricVerification from "./src/screens/LoginSignup/BiometricVerification.tsx";
+import BiometricSuccess from "./src/screens/LoginSignup/BiometricSuccess.tsx";
 import Overview from "./src/screens/MainApp/EMandi/Screens/Overview.jsx";
 import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
 import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
@@ -73,10 +77,15 @@ function App(): React.JSX.Element {
             options={slideFromLeftOptions} component={Sidebar} />
           <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
           <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
+          <Stack.Screen name={ScreensName.Cnic_page_1} component={Cnic_page_1} />
+          <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2} />
+          <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification} />
+          <Stack.Screen name={ScreensName.BiometricSuccess} component={BiometricSuccess} />
+
 
           {/* Specific to changing Lang */}
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
-            
+
 
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
 

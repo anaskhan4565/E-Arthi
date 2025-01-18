@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../util/FontName.js';
 
-const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('19%'), h = hp('8.5') }) => {
+const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('21%'), h = hp('8.5') }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {

@@ -4,8 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ScreensName from '../../../../util/ScreensName';
 import Home from './HomeScr';
-import ELoan from './E-Loan/E-LoanHome';
-import EInventory from './E-InventoryScreens/E-Inventory';
 import EMarket from './E-Market';
 import EMunshi from './E-Munshi';
 import colors from '../../../../util/colors';
@@ -13,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../util/FontName';
 import EInventoryMainStack from './E-InventoryScreens/E-InventoryMainStack';
 import ELoanMainStack from "./E-Loan/E-LoanMainStack"
+import EWarehouseMainStack from "./E-Warehouse/E-WarehouseMainStack"
 import TopNavigator from '../EMandi/MainNavigator/TopNavigator';
 
 const { height, width } = Dimensions.get("window");
@@ -122,6 +121,10 @@ export default function MainTabNavigation() {
                         tabBarLabel: t('E-Loan'),
                     }}
                 />
+                {/* <Tab.Screen
+                    name={t(ScreensName.EWarehouseMainStack)}
+                    component={EWarehouseMainStack}
+                /> */}
             </Tab.Navigator>
         </View>
     );

@@ -29,12 +29,6 @@ import EloanSelectedLoan from "./E-LoanSelectedLoan"
 
 const Stack = createNativeStackNavigator();
 
-const slideFromLeftOptions: NativeStackNavigationOptions = {
-    animation: "slide_from_left",
-    presentation: "transparentModal",
-    gestureEnabled: true,
-    animationDuration: 300,
-};
 
 function ELoanMainStack(): React.JSX.Element {
     return (

@@ -6,12 +6,12 @@ import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { fonts } from '../../../../util/FontName.js';
 
-const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9%') }) => {
+const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9%'),navigationName,screenName }) => {
     const navigation = useNavigation();
 
     const handleNavigation = () => {
         if (name) {
-            navigation.navigate(name);
+            navigation.navigate(navigationName, { screen: (screenName) });
         }
     };
 
@@ -20,7 +20,7 @@ const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]}>
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation} >
             <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
             <Text style={styles.TextStyle}>{name}</Text>
         </TouchableOpacity>

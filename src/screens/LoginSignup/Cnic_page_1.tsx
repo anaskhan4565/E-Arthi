@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Dimensions, Image, Alert, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text, Dimensions, Image, Alert, TouchableOpacity } from 'react-native';
 import colors from '../../../util/colors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomButton from '../../components/CustomButton';
@@ -53,7 +53,7 @@ const Cnic_page_1 = () => {
                     <View style={styles.imageWrapper}>
                         <Image source={{ uri: selectedImage }} style={styles.image} />
                         <TouchableOpacity style={styles.closeButton} onPress={handleRemoveImage}>
-                            <Text style={styles.closeButtonText}>×</Text>
+                            <Text style={styles.closeButtonText}>x</Text>
                         </TouchableOpacity>
                     </View>
                 ) : (

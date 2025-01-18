@@ -7,7 +7,7 @@ export default {
     ForgotPassword: "ForgotPassword",
     Home: "Home",
     MapSelection: "MapSelection",
-    OTP: "OTP",
+    OTP: "OTP.tsx",
     SignIn: "SignIn",
     SignUp: "SignUp",
     Splash: "Splash",

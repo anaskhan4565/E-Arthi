@@ -7,11 +7,15 @@ export default {
     ForgotPassword: "ForgotPassword",
     Home: "Home",
     MapSelection: "MapSelection",
-    OTP: "OTP",
+    OTP: "OTP.tsx",
     SignIn: "SignIn",
     SignUp: "SignUp",
     Splash: "Splash",
     MorePage: "More",
+    Cnic_page_1: 'Cnic_page_1',
+    Cnic_page_2: 'Cnic_page_2',
+    BiometricVerification: "BiometricVerification",
+    BiometricSuccess: "BiometricSuccess",
 
     Sidebar: "Sidebar",
     //specific to Internet
@@ -47,10 +51,11 @@ export default {
     Sales: "Sales",
     Suppliers: "Suppliers",
     InventoryMonitoring: "InvetoryMonitoring",
-    EInventoryReminder:"EInventoryReminder",
-    EInventoryAddNew:"EInventoryAddNew",
-    EInventoryAddNewGroup:"EInventoryAddNewGroup",
-    ChangeLanguage:"ChangeLang",
-    EInventoryManageGroup:"EInventoryManageGroup",
-    EInventoryDetails:'EInventoryDetails'
+    EInventoryReminder: "EInventoryReminder",
+    EInventoryAddNew: "EInventoryAddNew",
+    EInventoryAddNewGroup: "EInventoryAddNewGroup",
+    ChangeLanguage: "ChangeLang",
+    EInventoryManageGroup: "EInventoryManageGroup",
+    EInventoryDetails: 'EInventoryDetails',
+
 }

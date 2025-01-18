@@ -8,7 +8,7 @@ const allNames = [
   { name: "E-Collateral", screen: "" },
   { name: "E-Orders", screen: "" },
   { name: "E-Vendors", screen: "" },
-  { name: "E-Market", screen: "" },
+  { name: "E-WareHouse", screen: ScreensName.EWarehouseMainStack },
   { name: "E-Market", screen: "" },
   { name: "", screen: "" },
 ];

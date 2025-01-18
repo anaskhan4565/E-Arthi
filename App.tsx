@@ -29,7 +29,7 @@ import LocationSys from './src/screens/LocationEnable.jsx';
 import NoInternet from './src/screens/NoInternet.jsx';
 import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
 import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
-
+import EWarehouseMainStack from "./src/screens/MainApp/TabScreens/E-Warehouse/E-WarehouseMainStack.tsx";
 //for i18-next
 import { I18nextProvider } from 'react-i18next';
 import i18next from './services/i18next.js';
@@ -83,7 +83,7 @@ function App(): React.JSX.Element {
           {/* Specific to changing Lang */}
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
 
-
+          <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
 
         </Stack.Navigator>

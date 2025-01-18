@@ -38,6 +38,13 @@ export default {
     EloanSelectedLoan: "EloanSelectedLoan",
     ELoanNewLoan: "ELoanNewLoan",
 
+    EWarehouseMainStack: "EWarehouseMainStack",
+    EWarehouse: "EWarehouse",
+    EWarehouseNewSpaceCropSelect: "EWarehouseNewSpaceCropSelect",
+    EWarehouseNewSpaceWarehouseSelect: "EWarehouseNewSpaceWarehouseSelect",
+    EWarehouseNewSpaceConfirmWarehouse: "EWarehouseNewSpaceConfirmWarehouse",
+    EWarehousePreviousWarehouses: "EWarehousePreviousWarehouses",
+    EWarehousePreviousWarehouseDetails: "EWarehousePreviousWarehouseDetails",
 
     EInventory: "E-Inventory",
     EMarket: "E-Market",

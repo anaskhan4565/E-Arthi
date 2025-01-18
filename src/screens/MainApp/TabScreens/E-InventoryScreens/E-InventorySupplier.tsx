@@ -19,17 +19,18 @@ import {
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
+import CustomButton from '../../../../components/CustomButton.jsx';
 
 
 
-function Inventory(): React.JSX.Element {
+function SupplersComp(): React.JSX.Element {
     const { t } = useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-                <Navbar />
+            <Navbar  />
             </View>
             <ScrollView style={styles.container}>
 
@@ -47,6 +48,7 @@ function Inventory(): React.JSX.Element {
                             )
                         ))}
                     </View>
+                    <CustomButton MainText={'Add New Supplier'} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EInventoryAddSuppliers}/>
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -114,4 +116,4 @@ const styles = StyleSheet.create({
 
 
 
-export default Inventory;
+export default SupplersComp;

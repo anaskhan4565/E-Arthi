@@ -15,7 +15,7 @@ import ScreensName from '../../../../../util/ScreensName.ts';
 //Need to edit this later, passing images literl
 import { fonts } from '../../../../../util/FontName.js';
 
-const Home = () => {
+const SuppliersReport = () => {
     const {t}=useTranslation()
     const navigation = useNavigation();
   
@@ -58,7 +58,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default SuppliersReport;
 
 const styles = StyleSheet.create({
   navbarContainer: {

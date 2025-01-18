@@ -46,6 +46,7 @@ import BiometricSuccess from "./src/screens/LoginSignup/BiometricSuccess.tsx";
 import Overview from "./src/screens/MainApp/EMandi/Screens/Overview.jsx";
 import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
 import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
+import EInventory from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-Inventory.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {

@@ -36,7 +36,7 @@ function EInventoryDetails(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-                <Navbar />
+                <Navbar isbackSet={true} isBackTo={ScreensName.EInventorySupplier} />
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
@@ -92,14 +92,14 @@ function EInventoryDetails(): React.JSX.Element {
                             BgGiven={colors.GREEN}
                             txColor={colors.WHITE}
                             isNavigation={true}
-                            name={ScreensName.SignIn}
+                            name={ScreensName.EInventorySupplier}
                         />
                         <CustomButton 
                             MainText={t('Edit')}
                             BgGiven={colors.WHITE}
                             txColor={colors.GREEN}
                             isNavigation={true}
-                            name={ScreensName.SignIn}
+                            name={ScreensName.EInventorySuppliersList}
                         />
                     </View>
                 </View>

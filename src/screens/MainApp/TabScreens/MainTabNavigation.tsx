@@ -13,7 +13,7 @@ import EInventoryMainStack from './E-InventoryScreens/E-InventoryMainStack';
 import ELoanMainStack from "./E-Loan/E-LoanMainStack"
 import EWarehouseMainStack from "./E-Warehouse/E-WarehouseMainStack"
 import TopNavigator from '../EMandi/MainNavigator/TopNavigator';
-
+import EInventory from '../../../screens/MainApp/TabScreens/E-Loan/E-LoanHome'
 const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -107,7 +107,7 @@ export default function MainTabNavigation() {
                     name={t(ScreensName.ELoanMainStack)}
                     component={ELoanMainStack}
                    name={t(ScreensName.ELoan)}
-                    component={ELoan}
+                    component={EInventory}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image

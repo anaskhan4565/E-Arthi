@@ -15,7 +15,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 
-const Navbar = ({isbackSet=false}) => {
+const Navbar = ({isbackSet=false,isBackTo=ScreensName.MainTabNavigation,gobackOnly}) => {
   const navigation=useNavigation()
   return (
     <View
@@ -27,7 +27,7 @@ const Navbar = ({isbackSet=false}) => {
         backgroundColor: colors.LIGHT_GREEN,
       }}
     >
-      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={()=>isbackSet?navigation.navigate(ScreensName.MainTabNavigation):null}>
+      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={()=>gobackOnly?navigation.goBack():isbackSet?navigation.navigate(isBackTo):null}>
         <Image source={isbackSet?backImg:ProfilePic} style={isbackSet?styles.BackIMG:styles.Profile} />
       </TouchableOpacity>
       <View

@@ -14,7 +14,7 @@ import { fonts } from '../../../../util/FontName';
 import img1 from '../../../assets/MainApp/ProductScreen/product1.png'
 import img2 from '../../../assets/MainApp/ProductScreen/product2.png'
 import img3 from '../../../assets/MainApp/ProductScreen/product3.png'
-import ScreensName from '../../../../util/ScreensName';
+import ScreensName from '../../../../util/ScreensName.ts';
 import { useNavigation } from '@react-navigation/native';
 import Navbar from '../Navbar/Navbar';
 

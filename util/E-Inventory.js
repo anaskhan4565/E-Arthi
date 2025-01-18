@@ -34,12 +34,12 @@ const InventoryDet = [
 
 const InventorySupplierDet = [
     {
-        screen: ScreensName.EInventorySupplier,
-        title: "Supplier Report",
+        screen: ScreensName.EInventorySuppliersList,
+        title: "Supplier List",
         img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },
     {
-        screen: ScreensName.EInventorySupplier,
+        screen: ScreensName.EInventorySupplierReports,
         title: "Download Report",
         img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },

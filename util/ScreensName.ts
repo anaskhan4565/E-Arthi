@@ -65,19 +65,11 @@ export default {
     EInventoryManageGroup: "EInventoryManageGroup",
     EInventoryDetails: 'EInventoryDetails',
 
-    EInventoryReminder:"EInventoryReminder",
-    EInventoryAddNew:"EInventoryAddNew",
-    EInventoryAddNewGroup:"EInventoryAddNewGroup",
-    ChangeLanguage:"ChangeLang",
-    EInventoryManageGroup:"EInventoryManageGroup",
-    EInventoryDetails:'EInventoryDetails',
+   
     EInventorySupplier:'EInventorySupplier',
     EInventorySuppliersList:'EInventorySuppliersList',
     EInventoryAddSuppliers:'EInventoryAddSuppliers',
-    EInventorySupplierReports:'EInventorySupplierReports'
-
-    EInventoryDetails:'EInventoryDetails',
-
+    EInventorySupplierReports:'EInventorySupplierReports',
 
 
     //For E-Mandi

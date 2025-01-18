@@ -64,7 +64,7 @@ function SignUp(): React.JSX.Element {
                 <CustomButton
                     MainText={t('Register')}
                     BgGiven={colors.GREEN}
-                    name={ScreensName.OTP}
+                    name={ScreensName.Cnic_page_1}
                     txColor={colors.WHITE}
                     isNavigation={1}
                 />

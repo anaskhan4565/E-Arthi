@@ -41,7 +41,7 @@ function BiometricSuccess() {
         <CustomButton
           MainText={t('Continue')}
           BgGiven={colors.GREEN}
-          name={ScreensName.MainTabNavigation}
+          name={ScreensName.OTP}
           txColor={colors.WHITE}
           isNavigation={1}
         ></CustomButton>

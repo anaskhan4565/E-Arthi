@@ -38,6 +38,7 @@ import InventoryMonitoring from "./src/screens/MainApp/TabScreens/E-InventoryScr
 import Cnic_page_1 from "./src/screens/LoginSignup/Cnic_page_1.tsx";
 import Cnic_page_2 from "./src/screens/LoginSignup/Cnic_page_2.tsx";
 import BiometricVerification from "./src/screens/LoginSignup/BiometricVerification.tsx";
+import BiometricSuccess from "./src/screens/LoginSignup/BiometricSuccess.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -51,7 +52,7 @@ function App(): React.JSX.Element {
   return (
     <I18nextProvider i18n={i18next}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreensName.Cnic_page_1} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
           <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
           <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
           <Stack.Screen name={ScreensName.Connect} component={Connect} />
@@ -74,12 +75,14 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
           <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
           <Stack.Screen name={ScreensName.Cnic_page_1} component={Cnic_page_1} />
-          <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2}/>
-          <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification}/>
+          <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2} />
+          <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification} />
+          <Stack.Screen name={ScreensName.BiometricSuccess} component={BiometricSuccess} />
+
 
           {/* Specific to changing Lang */}
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
-            
+
 
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
 

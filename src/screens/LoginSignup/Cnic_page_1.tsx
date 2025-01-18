@@ -75,7 +75,7 @@ const Cnic_page_1 = () => {
                                 borderRadius: 8,
                             },
                         ]}
-                        onPress={() => { navigation.navigate("OTP") }}
+                        onPress={() => { navigation.navigate(ScreensName.OTP) }}
 
                     >
                         <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>Continue</Text>

@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import colors from "../../../util/colors";
 import CustomButton from "../../components/CustomButton";
-import ScreensName from "../../../util/ScreensName";
+import ScreensName from "../../../util/ScreensName.ts";
 import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { launchCamera } from 'react-native-image-picker';
@@ -33,6 +33,7 @@ const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; 
 
 function BiometricVerification() {
   const [handCaptured, setHandCaptured] = useState(false);
+  const navigation = useNavigation();
 
   const handleScanHands = () => {
     launchCamera({ mediaType: 'photo' }, (response) => {
@@ -76,12 +77,19 @@ function BiometricVerification() {
         />
       </View>
       <View style={styles.button}>
-        <MyButton
+
+        {handCaptured ? (<MyButton
+          title="Continue"
+          onPress={() => navigation.navigate(ScreensName.BiometricSuccess)}
+          bgColor={colors.GREEN}
+          textColor={colors.WHITE}
+        />) : (<MyButton
           title="Scan Hands"
           onPress={handleScanHands}
           bgColor={colors.GREEN}
           textColor={colors.WHITE}
-        />
+        />)}
+
       </View>
     </SafeAreaView>
   );

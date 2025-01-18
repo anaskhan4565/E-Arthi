@@ -15,6 +15,7 @@ export default {
     Cnic_page_1: 'Cnic_page_1',
     Cnic_page_2: 'Cnic_page_2',
     BiometricVerification: "BiometricVerification",
+    BiometricSuccess: "BiometricSuccess",
 
     Sidebar: "Sidebar",
     //specific to Internet
@@ -45,5 +46,5 @@ export default {
     ChangeLanguage: "ChangeLang",
     EInventoryManageGroup: "EInventoryManageGroup",
     EInventoryDetails: 'EInventoryDetails',
-  
+
 }

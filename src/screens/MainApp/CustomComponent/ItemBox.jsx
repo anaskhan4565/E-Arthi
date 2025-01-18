@@ -6,13 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../util/FontName.js';
 
-const ItemBox = ({ name, SourceGiven, isNavigation, w = wp('19%'), h = hp('8.5') }) => {
+const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('19%'), h = hp('8.5') }) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
-    if (name) {
-      console.log('navigating to ',name)
-      navigation.navigate(name);
+    if (screen) {
+      navigation.navigate(screen);
     }
   };
 
@@ -21,7 +20,7 @@ const ItemBox = ({ name, SourceGiven, isNavigation, w = wp('19%'), h = hp('8.5')
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation}>
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation ? handleNavigation:handleSubmit}>
       <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
       <Text style={styles.TextStyle}>{name}</Text>
     </TouchableOpacity>

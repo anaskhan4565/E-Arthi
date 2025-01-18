@@ -1,19 +1,9 @@
 import React from 'react';
-import type { PropsWithChildren } from 'react';
-import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
-    View,
-} from 'react-native';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import { useTranslation } from "react-i18next";
 
-
 function MapSelection(): React.JSX.Element {
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>

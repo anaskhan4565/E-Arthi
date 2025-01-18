@@ -1,3 +1,5 @@
+import ScreensName from "./ScreensName";
+
 const allNames = [
     'E-Market',
     'E-Munshi',

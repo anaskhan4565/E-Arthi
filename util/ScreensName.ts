@@ -71,6 +71,12 @@ export default {
     ChangeLanguage:"ChangeLang",
     EInventoryManageGroup:"EInventoryManageGroup",
     EInventoryDetails:'EInventoryDetails',
+    EInventorySupplier:'EInventorySupplier',
+    EInventorySuppliersList:'EInventorySuppliersList',
+    EInventoryAddSuppliers:'EInventoryAddSuppliers',
+    EInventorySupplierReports:'EInventorySupplierReports'
+
+    EInventoryDetails:'EInventoryDetails',
 
 
 

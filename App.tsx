@@ -28,6 +28,11 @@ import LocationSys from './src/screens/LocationEnable.jsx';
 import NoInternet from './src/screens/NoInternet.jsx';
 import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
 import ProductScr from './src/screens/MainApp/Product/ProductScr.jsx';
+import EInventorySupplier from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventorySupplier.tsx";
+import EInventorySuppliersList from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InvetorySuppliersList.tsx";
+import EInventoryAddSuppliers from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryAddSuppliers.tsx";
+import EInventorySupplierReports from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventorySupplierReports.tsx";
+
 import EWarehouseMainStack from "./src/screens/MainApp/TabScreens/E-Warehouse/E-WarehouseMainStack.tsx";
 //for i18-next
 import { I18nextProvider } from 'react-i18next';
@@ -87,6 +92,10 @@ function App(): React.JSX.Element {
 
           <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
+          <Stack.Screen name={ScreensName.EInventorySupplier} component={EInventorySupplier} />
+          <Stack.Screen name={ScreensName.EInventorySuppliersList} component={EInventorySuppliersList} />
+          <Stack.Screen name={ScreensName.EInventoryAddSuppliers} component={EInventoryAddSuppliers} />
+          <Stack.Screen name={ScreensName.EInventorySupplierReports} component={EInventorySupplierReports} />
 
 
 

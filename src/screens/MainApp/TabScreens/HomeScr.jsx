@@ -37,10 +37,10 @@ const Home = () => {
             </View>
 
             <View style={styles.scrollContainer}>
-              {allNames.map((name, index) => (
-                name.trim() !== '' && (
+              {allNames.map((data, index) => (
+                data.name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
-                    <ItemBox name={t(name)} SourceGiven={Heart} isNavigation={true} />
+                    <ItemBox name={t(data.name)} SourceGiven={Heart} isNavigation={true} screen={data.screen} />
                   </View>
                 )
               ))}

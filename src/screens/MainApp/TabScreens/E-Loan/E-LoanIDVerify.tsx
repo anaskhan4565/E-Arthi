@@ -1,6 +1,5 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import {
     SafeAreaView,
     ScrollView,
@@ -10,16 +9,15 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 
-
-function ELoan(): React.JSX.Element {
-
+function Splash(): React.JSX.Element {
+    const {t} = useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>home Screen</Text>
-            <Text>home Screen</Text>
+            <Text>{t('Screen')}</Text>
         </SafeAreaView>
     );
 }
@@ -30,4 +28,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoan;
+export default Splash;

@@ -1,14 +1,16 @@
+import ScreensName from "./ScreensName";
+
 const allNames = [
-    'E-Market',
-    'E-Munshi',
-    'E-Inventory',
-    'E-Loan',
-    'E-Collateral',
-    'E-Orders',
-    'E-Vendors',
-    'E-Market',
-    'E-Market',
-    ''
+  { name: "E-Market", screen: "" },
+  { name: "E-Munshi", screen: "" },
+  { name: "E-Inventory", screen: "" },
+  { name: "E-Loan", screen: ScreensName.ELoanMainStack },
+  { name: "E-Collateral", screen: "" },
+  { name: "E-Orders", screen: "" },
+  { name: "E-Vendors", screen: "" },
+  { name: "E-Market", screen: "" },
+  { name: "E-Market", screen: "" },
+  { name: "", screen: "" },
 ];
 
 export default allNames;

@@ -54,7 +54,6 @@ function EInventoryAddNew(): React.JSX.Element {
                             <Text style={styles.labelText}>{t('Place')}</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
-                                    style={styles.picker}
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
@@ -80,7 +79,6 @@ function EInventoryAddNew(): React.JSX.Element {
                             <Text style={styles.labelText}>{t('Group')}</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
-                                    style={styles.picker}
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
@@ -251,8 +249,7 @@ const styles = StyleSheet.create({
     },
     pickerItem: {
         fontSize: wp('3%'),
-        height: hp('4%'),
-        fontFamily: 'Poppins',
+        height: hp('6%'),
     },
     alertRow: {
         flexDirection: 'row',

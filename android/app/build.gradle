@@ -117,3 +117,8 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+// project.ext.vectoricons = [
+//     iconFontNames: ['AntDesign.ttf', 'Entypo.ttf', 'FontAwesome.ttf'] // Add as needed
+// ]
+// apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

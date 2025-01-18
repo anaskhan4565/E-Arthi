@@ -41,5 +41,12 @@ export default {
     EInventoryAddNewGroup:"EInventoryAddNewGroup",
     ChangeLanguage:"ChangeLang",
     EInventoryManageGroup:"EInventoryManageGroup",
-    EInventoryDetails:'EInventoryDetails'
+    EInventoryDetails:'EInventoryDetails',
+
+
+
+    //For E-Mandi
+    EMandi:'E-Mandi',
+    MarketDept:'MarketDept',
+    Profile:'Profile'
 }

@@ -6,7 +6,7 @@ const allNames = [
     'E-Collateral',
     'E-Orders',
     'E-Vendors',
-    'E-Market',
+    'E-Mandi',
     'E-Market',
     ''
 ];

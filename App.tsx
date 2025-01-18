@@ -35,6 +35,9 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from './services/i18next.js';
 import ChangeLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 import InventoryMonitoring from "./src/screens/MainApp/TabScreens/E-InventoryScreens/InventoryMonitoring.jsx";
+import Overview from "./src/screens/MainApp/EMandi/Screens/Overview.jsx";
+import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
+import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -76,6 +79,12 @@ function App(): React.JSX.Element {
             
 
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
+
+
+
+          <Stack.Screen name={ScreensName.EMandi} component={Overview} />
+          <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
+          <Stack.Screen name={ScreensName.Profile} component={Profile} />
 
         </Stack.Navigator>
       </NavigationContainer>

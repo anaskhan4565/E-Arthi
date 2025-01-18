@@ -11,6 +11,7 @@ const ItemBox = ({ name, SourceGiven, isNavigation, w = wp('19%'), h = hp('8.5')
 
   const handleNavigation = () => {
     if (name) {
+      console.log('navigating to ',name)
       navigation.navigate(name);
     }
   };
@@ -20,7 +21,7 @@ const ItemBox = ({ name, SourceGiven, isNavigation, w = wp('19%'), h = hp('8.5')
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]}>
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation}>
       <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
       <Text style={styles.TextStyle}>{name}</Text>
     </TouchableOpacity>

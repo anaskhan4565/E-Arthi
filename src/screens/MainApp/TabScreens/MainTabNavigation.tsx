@@ -12,6 +12,7 @@ import colors from '../../../../util/colors';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../util/FontName';
 import EInventoryMainStack from './E-InventoryScreens/E-InventoryMainStack';
+import TopNavigator from '../EMandi/MainNavigator/TopNavigator';
 
 const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
@@ -103,7 +104,7 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={t(ScreensName.ELoan)}
+                   name={t(ScreensName.ELoan)}
                     component={ELoan}
                     options={{
                         tabBarIcon: ({ focused }) => (

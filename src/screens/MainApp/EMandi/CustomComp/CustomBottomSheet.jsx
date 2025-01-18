@@ -25,16 +25,16 @@ const CustomBottomSheetExport = () => {
                             { label: "Option 1", value: "302301" },
                             { label: "Option 2", value: "300001" },
                             { label: "Option 3", value: "301011" },
-                        ]} />
+                        ]}  key={2}/>
 
                         <CustomPicker items={[
                             { label: "Buy", value: "Buy" },
                             { label: "Sell", value: "Sell" },
-                        ]} />
+                        ]} key={24}/>
                         <CustomPicker items={[
                             { label: "Limit", value: "Limit" },
                             { label: "Market", value: "Market" },
-                        ]} />
+                        ]}  key={8}/>
                         <View >
                             <TextInput placeholder='100' style={{backgroundColor:colors.LIGHT_GRAY}} />
                         </View>

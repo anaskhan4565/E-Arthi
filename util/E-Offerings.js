@@ -7,8 +7,7 @@ const allNames = [
     'E-Orders',
     'E-Vendors',
     'E-Mandi',
-    'E-Market',
-    ''
+    'Others',
 ];
 
 export default allNames;

@@ -7,14 +7,16 @@ import bellIcon from "../../../assets/MainApp/HomeScreen/Bell.png";
 import Hamburger from "../../../assets/MainApp/HomeScreen/Hamburger.png";
 import CustomImageButton from "../CustomComponent/CustomImageButton";
 import ScreensName from "../../../../util/ScreensName";
-
+import backImg from '../../../assets/MainApp/Sidebar/Back.png'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
 
 
-const Navbar = () => {
+const Navbar = ({isbackSet=false}) => {
+  const navigation=useNavigation()
   return (
     <View
       style={{
@@ -25,9 +27,9 @@ const Navbar = () => {
         backgroundColor: colors.LIGHT_GREEN,
       }}
     >
-      <View style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }}>
-        <Image source={ProfilePic} style={styles.Profile} />
-      </View>
+      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={()=>isbackSet?navigation.navigate(ScreensName.MainTabNavigation):null}>
+        <Image source={isbackSet?backImg:ProfilePic} style={isbackSet?styles.BackIMG:styles.Profile} />
+      </TouchableOpacity>
       <View
         style={{ justifyContent: "center", alignItems: "center", flex: 0.4 }}
       >
@@ -56,6 +58,13 @@ const styles = StyleSheet.create({
     height: hp('7%'),
     borderRadius: hp('1%'),
     resizeMode: 'contain',
+  },
+  BackIMG:{
+    width: wp('10%'),
+    height: hp('7%'),
+    resizeMode: 'contain',
+    
+
   },
   Icon: {
     width: wp('14%'),

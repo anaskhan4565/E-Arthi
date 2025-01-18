@@ -10,7 +10,7 @@ const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) 
     return (
         <View style={styles.StickyNavbar}>
             <View style={styles.header}>
-                <CustomImageButton SourceGiven={require("../../../../assets/MainApp/Sidebar/Back.png")} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.Home} />
+                <CustomImageButton SourceGiven={require("../../../../assets/MainApp/Sidebar/Back.png")} h={hp("4%")} w={hp("4%")} isNavigation={1} name={ScreensName.MainTabNavigation} />
                 <Text style={styles.Heading}>POTATO MOK</Text>
                 <CustomImageButton SourceGiven={require("../../../../assets/MainApp/HomeScreen/Bell.png")} h={hp("4%")} w={hp("4%")} />
             </View>

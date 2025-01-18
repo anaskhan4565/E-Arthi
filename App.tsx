@@ -19,7 +19,6 @@ import MapSelection from './src/screens/MapSelection';
 import OTP from './src/screens/OTP';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
-import Splash from './src/screens/Splash';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import SplashScreen from './src/SplashScreen/SplashScreen';
 import AboutMore from './src/screens/Profile.jsx';

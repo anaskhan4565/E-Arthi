@@ -17,33 +17,27 @@ const Overview = () => {
     const [totalTrades, setTotalTrades] = useState(1402);
     const [lastTradeTime, setLastTradeTime] = useState(new Date().toLocaleTimeString());
     
-    const generateRandomValue = (currentValue) => {
-        const change = Math.random() > 0.5 ? 1 : -1; 
-        const amount = Math.floor(Math.random() * 5) + 1; 
-        return currentValue + (change * amount);
-    };
-
     const getColorForPriceChange = (percentage) => {
         return percentage >= 1 ? colors.GREEN : (percentage <= -1 ? colors.RED : colors.GREEN);
     };
     useEffect(() => {
         const interval = setInterval(() => {
-            const priceChangeFactor = Math.random() * 0.02; // Small random change between 0 and 0.02 (2%)
-            const changeDirection = Math.random() > 0.5 ? 1 : -1; // Randomly decide if the price increases or decreases
-            const newPrice = price + (price * priceChangeFactor * changeDirection); // Apply the change
+            const priceChangeFactor = Math.random() * 0.02; 
+            const changeDirection = Math.random() > 0.5 ? 1 : -1; //
+            const newPrice = price + (price * priceChangeFactor * changeDirection);
     
             const newPriceChange = ((newPrice - price) / price) * 100;
     
             setPrice(newPrice);
             setPriceChange(newPriceChange);
     
-            setTradeVolume(prevVolume => prevVolume + Math.floor(Math.random() * 10) + 1); // Slow increment
-            setTotalTrades(prevTrades => prevTrades + Math.floor(Math.random() * 3) + 1); // Slow increment
+            setTradeVolume(prevVolume => prevVolume + Math.floor(Math.random() * 10) + 1); 
+            setTotalTrades(prevTrades => prevTrades + Math.floor(Math.random() * 3) + 1); 
     
             setLastTradeTime(new Date().toLocaleTimeString());
         }, 1000);
     
-        return () => clearInterval(interval); // Cleanup the interval on component unmount
+        return () => clearInterval(interval); 
     }, [price]);
     
 

@@ -10,11 +10,18 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { fonts } from '../../../../util/FontName';
+import img1 from '../../../assets/MainApp/ProductScreen/product1.png'
+import img2 from '../../../assets/MainApp/ProductScreen/product2.png'
+import img3 from '../../../assets/MainApp/ProductScreen/product3.png'
+import ScreensName from '../../../../util/ScreensName';
+import { useNavigation } from '@react-navigation/native';
+import Navbar from '../Navbar/Navbar';
 
 const ProductScr = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [Count, SetCount] = useState(1);
-
+    const Navigation = useNavigation()
     const toggleSelection = (value) => {
         if (selectedOptions.includes(value)) {
             setSelectedOptions(selectedOptions.filter((item) => item !== value));
@@ -25,16 +32,23 @@ const ProductScr = () => {
 
     function configureCount(less) {
         let newCount;
-        if(Count>0){
-        newCount = less ? Count - 1 : Count + 1;
-    }
-    console.log(Count);
+        if (Count > 0) {
+            newCount = less ? Count - 1 : Count + 1;
+        }
+        console.log(Count);
         SetCount(newCount);
     }
-    
+    const products = [
+        { name: "Agri Moss", image: img1 },
+        { name: "Agri - Humic Granules", image: img2 },
+        { name: "Agri - Aquagel", image: img3 },
+    ];
 
     return (
         <View style={styles.container}>
+            <View style={{flex:0.13,marginBottom:hp(1)}} >
+                <Navbar isbackSet={true}/>
+            </View>
             <View style={styles.topSection}>
                 <View style={styles.imageContainer}>
                     <Image source={Prod2} style={styles.productImage} />
@@ -48,11 +62,11 @@ const ProductScr = () => {
                             <Text style={styles.saveText}>Save: PKR 1000</Text>
                         </View>
                         <View style={styles.quantityContainer}>
-                            <TouchableOpacity onPress={()=>configureCount(1)}>
+                            <TouchableOpacity onPress={() => configureCount(1)}>
                                 <Image source={ButtonLess} style={styles.quantityButton} />
                             </TouchableOpacity >
-                            <Text style={styles.quantityText}>{Count<10 && Count>0?'0'+Count:Count>0?Count:0}</Text>
-                            <TouchableOpacity onPress={()=>configureCount()}>
+                            <Text style={styles.quantityText}>{Count < 10 && Count > 0 ? '0' + Count : Count > 0 ? Count : 0}</Text>
+                            <TouchableOpacity onPress={() => configureCount()}>
                                 <Image source={ButtonPlus} style={styles.quantityButton} />
                             </TouchableOpacity>
                         </View>
@@ -66,27 +80,29 @@ const ProductScr = () => {
                 <Text style={styles.addOnTitle}>Choices of Add On</Text>
                 <View style={styles.addOnContainer}>
                     <View style={styles.addOnProducts}>
-                        {["first", "second", "third"].map((item) => (
-                            <View key={item} style={styles.addOnItem}>
-                                <Image source={Prod2} style={styles.addOnImage} />
-                                <Text style={styles.addOnText}>Item Name</Text>
+                        {products.map((product) => (
+                            <View key={product.name} style={styles.addOnItem}>
+                                <Image source={product.image} style={styles.addOnImage} />
+                                <Text style={styles.addOnText}>{product.name}</Text>
                             </View>
                         ))}
                     </View>
                     <View style={styles.radioContainer}>
-                        {["first", "second", "third"].map((value) => (
-                            <RadioButton
-                                key={value}
-                                value={value}
-                                status={selectedOptions.includes(value) ? 'checked' : 'unchecked'}
-                                onPress={() => toggleSelection(value)}
-                            />
+                        {["first", "second", "third"].map((value, third) => (
+                            <View style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: hp(1.6), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
+                                <RadioButton
+                                    key={value}
+                                    value={value}
+                                    status={selectedOptions.includes(value) ? 'checked' : 'unchecked'}
+                                    onPress={() => toggleSelection(value)}
+                                /></View>
                         ))}
                     </View>
                 </View>
             </View>
             <View style={styles.addToCartSection}>
-                <TouchableOpacity style={styles.addToCartButton}>
+                <TouchableOpacity style={styles.addToCartButton} onPress={() => Navigation.navigate(ScreensName.MainTabNavigation)}>
                     <Image source={Cart} style={styles.cartIcon} />
                     <Text style={styles.cartText}>Add to Cart</Text>
                 </TouchableOpacity>
@@ -121,7 +137,7 @@ const styles = StyleSheet.create({
     productTitle: {
         fontSize: wp(6),
         fontWeight: 'bold',
-        marginBottom:hp(2)
+        marginBottom: hp(2)
     },
     priceContainer: {
         flexDirection: 'row',
@@ -152,7 +168,7 @@ const styles = StyleSheet.create({
     quantityButton: {
         width: wp(8),
         height: wp(8),
-        marginHorizontal:wp(1)
+        marginHorizontal: wp(1)
     },
     quantityText: {
         fontSize: wp(7),
@@ -163,7 +179,7 @@ const styles = StyleSheet.create({
         color: colors.BLACK,
         fontWeight: '400',
         marginTop: wp(3),
-        fontSize:hp(1.6)
+        fontSize: hp(1.6)
     },
     addOnSection: {
         flex: 0.3,
@@ -172,7 +188,7 @@ const styles = StyleSheet.create({
     addOnTitle: {
         fontSize: wp(6),
         fontWeight: '600',
-        marginBottom:hp(1)
+        marginBottom: hp(1)
     },
     addOnContainer: {
         flexDirection: 'row',
@@ -180,6 +196,7 @@ const styles = StyleSheet.create({
     },
     addOnProducts: {
         flex: 0.8,
+        justifyContent: 'center',
     },
     addOnItem: {
         flexDirection: 'row',
@@ -187,8 +204,8 @@ const styles = StyleSheet.create({
         marginBottom: wp(2),
     },
     addOnImage: {
-        width: wp(12),
-        height: wp(12),
+        width: wp(14),
+        height: wp(14),
         marginRight: wp(3),
     },
     addOnText: {
@@ -200,7 +217,7 @@ const styles = StyleSheet.create({
     },
     addToCartSection: {
         flex: 0.2,
-        marginTop:hp(3),
+        marginTop: hp(3),
         justifyContent: 'center',
         alignItems: 'center',
     },

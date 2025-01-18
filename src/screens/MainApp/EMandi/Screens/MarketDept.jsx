@@ -2,10 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import CustomImageButton from '../../CustomComponent/CustomImageButton';
-import ScreensName from '../../../../../util/ScreensName';
 import colors from '../../../../../util/colors';
-import CustomButton from '../../../../components/CustomButton';
 import MandiNavbar from '../CustomComp/MandiNavbar';
 import CustomBottomSheetExport from '../CustomComp/CustomBottomSheet';
 import CustomNavigationMandi from '../CustomComp/CustomNavigation'
@@ -26,8 +23,8 @@ const MarketDept = () => {
   }, [generateRandomValue]);
 
   useEffect(() => {
-    generateMarketData(); // Generate initial data
-    const interval = setInterval(generateMarketData, 2000); // Update every 2 seconds
+    generateMarketData();
+    const interval = setInterval(generateMarketData, 2000);
     return () => clearInterval(interval);
   }, [generateMarketData]);
 

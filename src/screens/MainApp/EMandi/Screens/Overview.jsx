@@ -28,7 +28,6 @@ const Overview = () => {
     };
     useEffect(() => {
         const interval = setInterval(() => {
-            // Adjust the price change rate to be slower and less extreme
             const priceChangeFactor = Math.random() * 0.02; // Small random change between 0 and 0.02 (2%)
             const changeDirection = Math.random() > 0.5 ? 1 : -1; // Randomly decide if the price increases or decreases
             const newPrice = price + (price * priceChangeFactor * changeDirection); // Apply the change

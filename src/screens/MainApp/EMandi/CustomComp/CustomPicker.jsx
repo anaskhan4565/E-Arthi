@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: hp('1.5%'),
+        marginVertical: hp('1.5%'),
+        backgroundColor:colors.LIGHT_GRAY,
+        borderRadius:hp(0.5)
     },
     pickerContainer: {
         height: hp('4%'),

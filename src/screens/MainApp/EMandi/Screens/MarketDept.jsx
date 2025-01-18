@@ -50,7 +50,7 @@ const MarketDept = () => {
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <MandiNavbar />
-       <CustomNavigationMandi/>
+        <CustomNavigationMandi />
 
         <View style={styles.marketDeptContainer}>
           <View style={styles.headerContainer}>
@@ -65,11 +65,25 @@ const MarketDept = () => {
               <Text style={styles.tableHeaderText}>Shares</Text>
               <Text style={styles.tableHeaderText}>Flag</Text>
             </View>
-            <FlatList
-              data={marketData}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {marketData.map((item, index) => (
+              <View key={index.toString()} style={styles.tableRow}>
+                <Text style={styles.tableCell}>{item.flag}</Text>
+                <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
+                  {item.shares}
+                </Text>
+                <Text style={[styles.tableCell, item.bid >= 4 ? styles.greenText : styles.blueText]}>
+                  {item.bid}
+                </Text>
+                <Text style={[styles.tableCell, item.ask >= 7 ? styles.redText : styles.blueText]}>
+                  {item.ask}
+                </Text>
+                <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
+                  {item.shares}
+                </Text>
+                <Text style={styles.tableCell}>{item.flag}</Text>
+              </View>
+            ))}
+
           </View>
         </View>
 
@@ -86,11 +100,25 @@ const MarketDept = () => {
               <Text style={styles.tableHeaderText}>Shares</Text>
               <Text style={styles.tableHeaderText}>Orders</Text>
             </View>
-            <FlatList
-              data={marketData}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {marketData.map((item, index) => (
+              <View key={index.toString()} style={styles.tableRow}>
+                <Text style={styles.tableCell}>{item.flag}</Text>
+                <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
+                  {item.shares}
+                </Text>
+                <Text style={[styles.tableCell, item.bid >= 4 ? styles.greenText : styles.blueText]}>
+                  {item.bid}
+                </Text>
+                <Text style={[styles.tableCell, item.ask >= 7 ? styles.redText : styles.blueText]}>
+                  {item.ask}
+                </Text>
+                <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
+                  {item.shares}
+                </Text>
+                <Text style={styles.tableCell}>{item.flag}</Text>
+              </View>
+            ))}
+
           </View>
         </View>
       </ScrollView>
@@ -105,7 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
   scrollViewContent: {
-    paddingBottom: hp(16),  // Adjust based on bottom sheet height
+    paddingBottom: hp(16),
   },
   navButtonsContainer: {
     flex: 0.1,

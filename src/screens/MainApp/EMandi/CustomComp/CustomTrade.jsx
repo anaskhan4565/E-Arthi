@@ -16,9 +16,7 @@ import colors from '../../../../../util/colors'
 import { fonts } from '../../../../../util/FontName';
 import HandImg from '../../../../assets/MainApp/E-Mandi/Hand.png'
 const CustomTrade = ({ isExpanded, setIsExpanded }) => {
-    useEffect(() => {
-        console.log(isExpanded)
-    }, [isExpanded])
+
     return (
         <View style={{
             flex: 0.19,
@@ -56,7 +54,7 @@ const CustomTrade = ({ isExpanded, setIsExpanded }) => {
                         </View>
                         <View style={{ flex: 0.4 }}>
 
-                            <Text style={{color:colors.GREEN,fontWeight:'bold'}}>102</Text>
+                            <Text style={{color:colors.GREEN,fontWeight:'bold'}}>10.2</Text>
                         </View>
                     </View>
                 </View>

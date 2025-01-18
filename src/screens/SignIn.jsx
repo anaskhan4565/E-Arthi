@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   Dimensions,
-  useColorScheme,
   View,
   TouchableOpacity,
   TextInput,
@@ -22,20 +19,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 const { height, width } = Dimensions.get("window");
 
- import i18next from "../../services/i18next";;
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../util/FontName";
-
 
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
-  
-
-  //for translation
   const {t}=useTranslation();
 
-  //
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
@@ -43,8 +34,6 @@ function SignIn() {
         <Text style={styles.SubHeading}>{t('Welcome back, please login again')}</Text>
       </View>
       <View style={styles.inputs}>
-        {/* height: height / 20,
-      width: width / 1.1, */}
         <CustomInput placeholder={t('Username')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
         <View style={styles.passInputBox}>
           <TextInput
@@ -171,7 +160,6 @@ const styles = StyleSheet.create({
     fontSize: height / 58,
     fontFamily:fonts.Regular,
     marginRight: wp('3%'),
-
   },
   break: {
     flexDirection: "row",

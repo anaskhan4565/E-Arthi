@@ -12,26 +12,20 @@ import {
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
+
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer');
-    // Default selection is 'Farmer'
     const { t } = useTranslation();
     return (
         <SafeAreaView style={styles.MainContainer}>
             <View style={{ flex: 0.74, backgroundColor: colors.WHITE }}>
-                {/* Logo Section */}
                 <View style={{ flex: 0.8, justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={Logo} resizeMode="contain" style={{height:hp(20),width:wp(200),marginLeft:hp(2.2)}} />
                     <Text style={{ fontSize: hp(4.5), textAlign: 'center', fontWeight: 'bold', fontFamily: fonts.Medium, letterSpacing: 4 }}>{t('E-Arthi').toUpperCase()}</Text>
                 </View>
-
-                {/* Content Section */}
                 <View style={styles.contentContainer}>
                     <Text style={styles.headerText}>{t('Tell us more about you')}</Text>
-
-                    {/* Row of Items */}
                     <View style={{ flexDirection: 'row' }}>
-                        {/* Farmer Card */}
                         <TouchableOpacity
                             style={[
                                 styles.card,
@@ -42,8 +36,6 @@ const AboutMore = () => {
                             <Image source={VectorMen} style={styles.vectorLogo} />
                             <Text style={styles.cardText}>{t('Farmer')}</Text>
                         </TouchableOpacity>
-
-                        {/* Dealer Card */}
                         <TouchableOpacity
                             style={[
                                 styles.card,
@@ -57,8 +49,6 @@ const AboutMore = () => {
                     </View>
                 </View>
             </View>
-
-            {/* Footer Section */}
             <View style={{ flex: 0.3, alignItems: 'center' }}>
                 <CustomButton BgGiven={colors.GREEN} MainText={t('Continue')} txColor={colors.WHITE} isNavigation={true} name={ScreensName.SignUp} />
             </View>
@@ -72,17 +62,6 @@ const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
         backgroundColor:colors.WHITE,
-    },
-    logoContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginBottom: hp(1),
-    },
-    logo: {
-        width: wp(40),
-        height: hp(30),
-        resizeMode: 'contain',
     },
     contentContainer: {
         flex: 0.5,

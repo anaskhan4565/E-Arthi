@@ -16,18 +16,16 @@ import { useTranslation } from "react-i18next";
 import { fonts } from '../../util/FontName';
 
 const LocationSys = () => {
-    const [isLocationEnabled, setIsLocationEnabled] = useState(true); // Renamed for clarity
+    const [isLocationEnabled, setIsLocationEnabled] = useState(true);
     const navigation = useNavigation();
     const {t} = useTranslation();
 
-    // Navigate to the "Connect" screen if location is enabled
     useEffect(() => {
         if (isLocationEnabled) {
             navigation.navigate(ScreensName.Connect);
         }
     }, [isLocationEnabled, navigation]);
 
-    // Mock function to simulate enabling location
     const handleEnableLocation = () => {
         setIsLocationEnabled(true);
     };
@@ -45,13 +43,13 @@ const LocationSys = () => {
                         <CustomButton
                             MainText={t('Allow')}
                             BgGiven={colors.GREEN}
-                            onPress={handleEnableLocation} // Enable location when clicked
+                            onPress={handleEnableLocation}
                             txColor={colors.WHITE}
                         />
                         <CustomButton
                             MainText={t('Skip for now')}
                             BgGiven={colors.WHITE}
-                            name={ScreensName.Connect} // Navigate directly
+                            name={ScreensName.Connect}
                             txColor={colors.GREEN}
                             isNavigation={true}
                         />

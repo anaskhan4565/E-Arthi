@@ -38,7 +38,7 @@ function SignUp(): React.JSX.Element {
                         <Image
                             source={require("../assets/EyeHide.png")}
                             style={styles.showPassIcon}
-                        ></Image>
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -67,8 +67,7 @@ function SignUp(): React.JSX.Element {
                     name={ScreensName.OTP}
                     txColor={colors.WHITE}
                     isNavigation={1}
-                    
-                ></CustomButton>
+                />
             </View>
 
             <View style={styles.terms}>
@@ -129,11 +128,8 @@ const styles = StyleSheet.create({
         marginTop: height / 100,
     },
     infoText: {
-        // marginVertical: 10,
-        // color: '#666',
         fontSize:hp('1.6%'),
         fontFamily:fonts.Regular,
-
     },
     inputs: {
         gap: height / 40,
@@ -157,22 +153,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     RememberMeText: {
-        // fontSize: height / 55,
         marginLeft: wp('2%'),
         width:wp('70%'),
         fontSize:hp('1.6%'),
         fontFamily:fonts.Regular,
     },
-    checkbox: {
-        // padding: 10,
-    },
-    forgotPassword: {
-        flex: 1,
-        alignItems: "flex-end",
-        color: colors.GREEN,
-        fontSize: height / 55,
-        fontFamily:fonts.Regular,
-    },
+    checkbox: {},
     break: {
         flexDirection: "row",
         alignItems: "center",
@@ -215,11 +201,6 @@ const styles = StyleSheet.create({
         height: 20,
         marginRight: 10,
     },
-    checkboxContainer: {
-        padding: 10, // Padding around the checkbox container
-        flexDirection: "row", // To align the checkbox and the text together
-        alignItems: "center", // To vertically align the checkbox and text
-    },
     passInputBox: {
         height: hp('5.5%'),
         width: wp('85%'),
@@ -243,15 +224,12 @@ const styles = StyleSheet.create({
     terms: {
         flexDirection: "row",
         flexWrap: "wrap",
-        
-        
     },
     redirectLink: {
         color: colors.GREEN,
         textDecorationLine: 'underline',
         fontSize:hp('1.6%'),
         fontFamily:fonts.Regular,
-
     }
 });
 

@@ -106,8 +106,6 @@ export default function MainTabNavigation() {
                 <Tab.Screen
                     name={t(ScreensName.ELoanMainStack)}
                     component={ELoanMainStack}
-                   name={t(ScreensName.ELoan)}
-                    component={EInventory}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image

@@ -1,13 +1,13 @@
 import ScreensName from './ScreensName.ts';
 export default [
     {
-        screen: ScreensName.EloanIDVerify,
+        screen: ScreensName.EloanOTP,
         title: "New Loan",
         img: require('../src/assets/MainApp/E-Inventory/Inventory.png')
     },
     {
         screen: ScreensName.EloanCurrentLoan,
-        title: "View existing Loan",
+        title: "View current Loan",
         img: require('../src/assets/MainApp/E-Inventory/Sales.png')
     },
     {

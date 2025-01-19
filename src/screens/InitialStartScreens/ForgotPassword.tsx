@@ -4,13 +4,13 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import CustomButton from '../components/CustomButton';
-import CustomInput from '../components/CustomInput';
-import colors from '../../util/colors';
-import ScreensName from '../../util/ScreensName';
+import CustomButton from '../../components/CustomButton';
+import CustomInput from '../../components/CustomInput';
+import colors from '../../../util/colors';
+import ScreensName from '../../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../util/FontName';
+import { fonts } from '../../../util/FontName';
 
 
 function ForgotPassword(): React.JSX.Element {

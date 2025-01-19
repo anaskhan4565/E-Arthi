@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import colors from '../../util/colors';
+import colors from '../../../util/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Logo from '../assets/Icon/Logo-only.png';
-import VectorMen from '../assets/AboutMoreicons/Vectormen.png';
-import CustomButton from '../components/CustomButton';
-import ScreensName from '../../util/ScreensName';
+import Logo from '../../assets/Icon/Logo-only.png';
+import VectorMen from '../../assets/AboutMoreicons/Vectormen.png';
+import CustomButton from '../../components/CustomButton';
+import ScreensName from '../../../util/ScreensName';
 import { useTranslation } from 'react-i18next';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../util/FontName';
+import { fonts } from '../../../util/FontName';
 
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('Farmer');

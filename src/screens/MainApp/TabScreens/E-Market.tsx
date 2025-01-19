@@ -39,7 +39,7 @@ function EMarket(): React.JSX.Element {
                 </View>
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.titleText}>{t('E-Arthi Categories')}</Text>
+                        <Text style={styles.titleText}>{t('E-Agri Categories')}</Text>
                     </View>
 
                     <View style={styles.scrollContainer}>

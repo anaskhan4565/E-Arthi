@@ -33,7 +33,7 @@ const Home = () => {
 
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>{t('E-Arthi-Offerings')}</Text>
+              <Text style={styles.titleText}>{t('E-Agri-Offerings')}</Text>
             </View>
 
             <View style={styles.scrollContainer}>

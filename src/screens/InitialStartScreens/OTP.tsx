@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { View, TextInput, StyleSheet, Button, Text, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import CustomButton from '../components/CustomButton';
-import colors from '../../util/colors';
-import ScreensName from '../../util/ScreensName';
+import CustomButton from '../../components/CustomButton';
+import colors from '../../../util/colors';
+import ScreensName from '../../../util/ScreensName';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../util/FontName';
+import { fonts } from '../../../util/FontName';
 
 const OTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);

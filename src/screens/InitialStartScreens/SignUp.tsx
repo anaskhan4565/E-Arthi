@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image} from 'react-native';
-import CustomInput from '../components/CustomInput';
-import CustomButton from '../components/CustomButton';
-import colors from '../../util/colors';
+import CustomInput from '../../components/CustomInput';
+import CustomButton from '../../components/CustomButton';
+import colors from '../../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import ScreensName from "../../util/ScreensName";
+import ScreensName from "../../../util/ScreensName";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import {useTranslation} from 'react-i18next';
-import { fonts } from "../../util/FontName";
+import { fonts } from "../../../util/FontName";
 
 const { height, width } = Dimensions.get("window");
 
@@ -36,7 +36,7 @@ function SignUp(): React.JSX.Element {
                         onPress={() => setPasswordVisible(!passwordVisible)}
                     >
                         <Image
-                            source={require("../assets/EyeHide.png")}
+                            source={require("../../assets/EyeHide.png")}
                             style={styles.showPassIcon}
                         />
                     </TouchableOpacity>
@@ -90,14 +90,14 @@ function SignUp(): React.JSX.Element {
             <View style={styles.altSignin}>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
-                        source={require("../assets/google.png")}
+                        source={require("../../assets/google.png")}
                         style={styles.altSigninButtonIcon}
                     />
                     <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Google ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
-                        source={require("../assets/apple.png")}
+                        source={require("../../assets/apple.png")}
                         style={styles.altSigninButtonIcon}
                     />
                     <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Apple ')}</Text>

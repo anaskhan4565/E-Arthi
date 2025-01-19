@@ -7,13 +7,13 @@ import {
     Image,
     Text,
 } from 'react-native';
-import CustomButton from '../components/CustomButton';
-import colors from '../../util/colors';
-import ScreensName from '../../util/ScreensName';
+import CustomButton from '../../components/CustomButton';
+import colors from '../../../util/colors';
+import ScreensName from '../../../util/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Location from '../assets/LocationOpen/Location.png';
+import Location from '../../assets/LocationOpen/Location.png';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../util/FontName';
+import { fonts } from '../../../util/FontName';
 
 const LocationSys = () => {
     const [isLocationEnabled, setIsLocationEnabled] = useState(true);

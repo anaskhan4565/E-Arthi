@@ -10,17 +10,17 @@ import {
   Image,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import colors from "../../util/colors";
-import CustomInput from "../components/CustomInput";
-import CustomButton from "../components/CustomButton";
-import ScreensName from "../../util/ScreensName";
+import colors from "../../../util/colors";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
+import ScreensName from "../../../util/ScreensName";
 import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../util/FontName";
+import { fonts } from "../../../util/FontName";
 
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -47,7 +47,7 @@ function SignIn() {
             onPress={() => setPasswordVisible(!passwordVisible)}
           >
             <Image
-              source={require("../assets/EyeHide.png")}
+              source={require("../../assets/EyeHide.png")}
               style={styles.showPassIcon}
             ></Image>
           </TouchableOpacity>
@@ -86,14 +86,14 @@ function SignIn() {
       <View style={styles.altSignin}>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
-            source={require("../assets/google.png")}
+            source={require("../../assets/google.png")}
             style={styles.altSigninButtonIcon}
           />
           <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with google')} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
-            source={require("../assets/apple.png")}
+            source={require("../../assets/apple.png")}
             style={styles.altSigninButtonIcon}
           />
           <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with Apple')}  </Text>

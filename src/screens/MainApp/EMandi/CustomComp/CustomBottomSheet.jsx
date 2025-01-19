@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomBottomSheet from './CustomDownBar'
 import CustomTrade from './CustomTrade'
 import CustomPicker from './CustomPicker'
@@ -14,6 +14,7 @@ const CustomBottomSheetExport = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const[currentState,setCurrentState]=useState(['Buy'])
 
     return (
         <CustomBottomSheet expanded={isExpanded}>
@@ -30,7 +31,7 @@ const CustomBottomSheetExport = () => {
                         <CustomPicker items={[
                             { label: "Buy", value: "Buy" },
                             { label: "Sell", value: "Sell" },
-                        ]} key={24}/>
+                        ]} key={24} currentState={currentState} setCurrentState={setCurrentState}/>
                         <CustomPicker items={[
                             { label: "Limit", value: "Limit" },
                             { label: "Market", value: "Market" },
@@ -64,7 +65,7 @@ const CustomBottomSheetExport = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <CustomButton MainText={'Buy'} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={colors.GREEN} txColor={colors.WHITE} />
+                            <CustomButton MainText={currentState=='Buy'?'Buy':'Sell'} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={currentState=='Buy'?colors.GREEN:colors.RED} txColor={colors.WHITE} />
                         </View>
                     </View>
                     <View style={{ flex: 0.6, borderWidth: 1 }}>

@@ -27,7 +27,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
     return () => clearTimeout(timer);
   }, [navigation]);
 
-  return (
+  return ( 
     <View style={styles.container}>
       <Image source={ArthiLogo} style={styles.logo} />
     </View>

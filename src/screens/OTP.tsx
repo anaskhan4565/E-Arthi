@@ -73,7 +73,7 @@ const OTP = () => {
             <Text style={styles.title}>{t('OTP Verification')}</Text>
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
-                    {t('Please enter the verification code we’ve sent you on 9999999999')}
+                    {t('Please enter the verification code we’ve sent you on +92-0332521550')}
                 </Text>
             </View>
 

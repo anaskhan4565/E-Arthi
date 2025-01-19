@@ -9,7 +9,7 @@ const allNames = [
   { name: "E-Orders", screen: "" },
   { name: "E-Vendors", screen: "" },
   { name: "E-WareHouse", screen: ScreensName.EWarehouseMainStack },
-  { name: "E-Mandi", screen: "" },
+  { name: "E-Mandi", screen: ScreensName.EMandi },
   { name: "Others", screen: "" },
 ];
 

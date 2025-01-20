@@ -26,7 +26,7 @@ import EWarehouseMainStack from './E-WarehouseMainStack.tsx';
 
 
 
-function EInventory(): React.JSX.Element {
+function CropSelect(): React.JSX.Element {
     const { t } = useTranslation();
 
     return (
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
 
 
 
-export default EInventory;
+export default CropSelect;

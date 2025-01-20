@@ -6,13 +6,15 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
-const CustomInput = ({ placeholder, hide, w = wp('85%'), h = hp('5.5%'), bg_give = colors.GREAT_WHITE, b_radius = 3 }) => {
+const CustomInput = ({ placeholder, hide, w = wp('85%'), h = hp('5.5%'), bg_give = colors.GREAT_WHITE, b_radius = 3,editable = true, value = "" }) => {
   return (
     <TextInput
       style={[styles.textInputStyle, { width: w, height: h, backgroundColor: bg_give, borderRadius: b_radius }]}
       placeholder={placeholder}
       placeholderTextColor={colors.LIGHT_GRAY}
       secureTextEntry={hide == 1 ? true : false}
+      editable ={editable}
+      value={value}
     />
   );
 };

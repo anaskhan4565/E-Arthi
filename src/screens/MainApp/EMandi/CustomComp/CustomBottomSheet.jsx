@@ -23,9 +23,9 @@ const CustomBottomSheetExport = () => {
                 <View style={{ flex: 0.8, flexDirection: 'row' }}>
                     <View style={{ flex: 0.4, gap: hp(2) }}>
                         <CustomPicker items={[
-                            { label: "Option 1", value: "302301" },
-                            { label: "Option 2", value: "300001" },
-                            { label: "Option 3", value: "301011" },
+                            { label: "Option 1", value: "9.6" },
+                            { label: "Option 2", value: "10" },
+                            { label: "Option 3", value: "9.3" },
                         ]}  key={2}/>
 
                         <CustomPicker items={[

@@ -39,11 +39,11 @@ function CurrentLoan(): React.JSX.Element {
         </View>
         <View style={styles.MainHeader}>
         <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Loan Amount')}</Text>
+          <Text style={styles.SectionHead}>{t('Requested amount')}</Text>
           <Text style={styles.SectionBody}>PKR 100,000</Text>
         </View>
         <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{(t'Amount Left')}</Text>
+          <Text style={styles.SectionHead}>{t('Amount Left')}</Text>
           <Text style={styles.SectionBody}>PKR 25,000</Text>
         </View>
         <View style={styles.HeaderSection}>

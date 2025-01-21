@@ -8,9 +8,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../../../util/FontName.js';
+import { useTranslation } from 'react-i18next';
 
 
 const CustomSearchApp = ({ placeholder }) => {
+    const { t } = useTranslation();
+  
   return (
     <View style={styles.inputContainer}>
       <TextInput

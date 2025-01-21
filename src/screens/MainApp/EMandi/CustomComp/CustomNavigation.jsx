@@ -3,8 +3,11 @@ import React from 'react'
 import CustomButton from '../../../../components/CustomButton'
 import ScreensName from '../../../../../util/ScreensName'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 const CustomNavigationMandi = () => {
+      const { t } = useTranslation();
+    
     return (
         <View style={styles.navButtonsContainer}>
             <View style={styles.navButtons}>

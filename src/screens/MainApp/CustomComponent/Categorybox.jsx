@@ -5,9 +5,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { fonts } from '../../../../util/FontName.js';
+import { useTranslation } from 'react-i18next';
 
-const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9%'),navigationName,screenName }) => {
+const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9%'), navigationName, screenName }) => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
 
     const handleNavigation = () => {
         if (name) {
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
         // marginHorizontal: wp('%'),
     },
     TextStyle: {
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         fontSize: 12,
     },
     ImageStyle: {

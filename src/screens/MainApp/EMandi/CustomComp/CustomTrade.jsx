@@ -15,7 +15,9 @@ import CustomButton from '../../../../components/CustomButton'
 import colors from '../../../../../util/colors'
 import { fonts } from '../../../../../util/FontName';
 import HandImg from '../../../../assets/MainApp/E-Mandi/Hand.png'
+import { useTranslation } from 'react-i18next';
 const CustomTrade = ({ isExpanded, setIsExpanded }) => {
+  const { t } = useTranslation();
 
     return (
         <View style={{

@@ -43,7 +43,7 @@ function EInventory(): React.JSX.Element {
         </View>
         <View style={styles.body}>
         <View style={styles.header}>
-          <Text style={styles.heading}>{t("New Loan")}</Text>
+          <Text style={styles.heading}>{t("Requested amount")}</Text>
         </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Loan Amount (in PKR)</Text>

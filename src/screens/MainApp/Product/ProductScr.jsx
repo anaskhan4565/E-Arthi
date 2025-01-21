@@ -80,7 +80,7 @@ const ProductScr = () => {
                 <Text style={styles.addOnTitle}>Choices of Add On</Text>
                 <View style={styles.addOnContainer}>
                     <View style={styles.addOnProducts}>
-                        {products.map((product) => (
+                        {products.map((product,key) => (
                             <View key={product.name} style={styles.addOnItem}>
                                 <Image source={product.image} style={styles.addOnImage} />
                                 <Text style={styles.addOnText}>{product.name}</Text>

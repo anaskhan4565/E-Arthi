@@ -7,13 +7,13 @@ import ScreensName from '../../../util/ScreensName';
 import { fonts } from '../../../util/FontName';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { useTranslation } from 'react-i18next';
+
 const { height, width } = Dimensions.get("window");
 
 const Cnic_page_1 = () => {
     const navigation = useNavigation();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    const { t } = useTranslation();
+
     const handlePickImage = async () => {
         try {
             const result = await launchImageLibrary({
@@ -43,8 +43,8 @@ const Cnic_page_1 = () => {
     return (
         <View style={styles.container}>
             <View style={styles.Header}>
-                <Text style={styles.Heading}>{t('CNIC Verification')}</Text>
-                <Text style={styles.SubHeading}>{t('Please enter your CNIC details')}</Text>
+                <Text style={styles.Heading}>CNIC Verification</Text>
+                <Text style={styles.SubHeading}>Please enter your CNIC details</Text>
             </View>
 
             <View style={styles.buttonContainer}>
@@ -75,10 +75,10 @@ const Cnic_page_1 = () => {
                                 borderRadius: 8,
                             },
                         ]}
-                        onPress={() => { navigation.navigate(ScreensName.BiometricVerification) }}
+                        onPress={() => { navigation.navigate(ScreensName.OTP) }}
 
                     >
-                        <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>{t('Continue')}</Text>
+                        <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>Continue</Text>
                     </TouchableOpacity>
                 ) : (
                     <TouchableOpacity
@@ -95,7 +95,7 @@ const Cnic_page_1 = () => {
                         ]}
                         onPress={handlePickImage}
                     >
-                        <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>{t('Upload CNIC Image')}</Text>
+                        <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>Upload CNIC Image</Text>
                     </TouchableOpacity>
 
                 )}

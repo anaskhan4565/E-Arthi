@@ -5,10 +5,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import colors from '../../../../../util/colors';
 import MandiNavbar from '../CustomComp/MandiNavbar';
 import CustomBottomSheetExport from '../CustomComp/CustomBottomSheet';
-import CustomNavigationMandi from '../CustomComp/CustomNavigation'
+import CustomNavigationMandi from '../CustomComp/CustomNavigation';
+import { useTranslation } from 'react-i18next';
 const MarketDept = () => {
   const [marketData, setMarketData] = useState([]);
-
+  const { t } = useTranslation();
   const generateRandomValue = useCallback(() => {
     const randomFlag = "dc";
     const randomShares = Math.floor(Math.random() * 100) + 1;
@@ -31,15 +32,15 @@ const MarketDept = () => {
   const renderItem = ({ item }) => (
     <View style={styles.tableRow}>
       <Text style={styles.tableCell}>{item.flag}</Text>
-      <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>{item.shares}</Text>
+      <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>{t(item.shares)}</Text>
       <Text style={[styles.tableCell, item.bid >= 4 ? styles.greenText : styles.blueText]}>
-        {item.bid}
+        {t(item.bid)}
       </Text>
       <Text style={[styles.tableCell, item.ask >= 7 ? styles.redText : styles.blueText]}>
-        {item.ask}
+        {t(item.ask)}
       </Text>
-      <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>{item.shares}</Text>
-      <Text style={styles.tableCell}>{item.flag}</Text>
+      <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>{t(item.shares)}</Text>
+      <Text style={styles.tableCell}>{t(item.flag)}</Text>
     </View>
   );
 
@@ -51,33 +52,33 @@ const MarketDept = () => {
 
         <View style={styles.marketDeptContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>MBO-Market Depth By Order</Text>
+            <Text style={styles.headerText}>{t('MBO-Market Depth By Order')}</Text>
           </View>
           <View style={styles.dataContainer}>
             <View style={styles.tableHeader}>
-              <Text style={styles.tableHeaderText}>Flag</Text>
-              <Text style={styles.tableHeaderText}>Shares</Text>
-              <Text style={[styles.tableHeaderText, styles.greenText]}>Bid</Text>
-              <Text style={[styles.tableHeaderText, styles.redText]}>Ask</Text>
-              <Text style={styles.tableHeaderText}>Shares</Text>
-              <Text style={styles.tableHeaderText}>Flag</Text>
+              <Text style={styles.tableHeaderText}>{t('Flag')}</Text>
+              <Text style={styles.tableHeaderText}>{t('Shares')}</Text>
+              <Text style={[styles.tableHeaderText, styles.greenText]}>{t('Bid')}</Text>
+              <Text style={[styles.tableHeaderText, styles.redText]}>{t('Ask')}</Text>
+              <Text style={styles.tableHeaderText}>{t('Shares')}</Text>
+              <Text style={styles.tableHeaderText}>{t('Flag')}</Text>
             </View>
             {marketData.map((item, index) => (
               <View key={index.toString()} style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.flag}</Text>
+                <Text style={styles.tableCell}>{t(item.flag)}</Text>
                 <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
-                  {item.shares}
+                  {t(item.shares)}
                 </Text>
                 <Text style={[styles.tableCell, item.bid >= 4 ? styles.greenText : styles.blueText]}>
-                  {item.bid}
+                  {t(item.bid)}
                 </Text>
                 <Text style={[styles.tableCell, item.ask >= 7 ? styles.redText : styles.blueText]}>
-                  {item.ask}
+                  {t(item.ask)}
                 </Text>
                 <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
-                  {item.shares}
+                  {t(item.shares)}
                 </Text>
-                <Text style={styles.tableCell}>{item.flag}</Text>
+                <Text style={styles.tableCell}>{t(item.flag)}</Text>
               </View>
             ))}
 
@@ -86,33 +87,33 @@ const MarketDept = () => {
 
         <View style={styles.marketDeptContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>MBO-Market Depth By Price</Text>
+            <Text style={styles.headerText}>{t('MBO-Market Depth By Price')}</Text>
           </View>
           <View style={styles.dataContainer}>
             <View style={styles.tableHeader}>
-              <Text style={styles.tableHeaderText}>Orders</Text>
-              <Text style={styles.tableHeaderText}>Shares</Text>
-              <Text style={[styles.tableHeaderText, styles.greenText]}>Bid</Text>
-              <Text style={[styles.tableHeaderText, styles.redText]}>Ask</Text>
-              <Text style={styles.tableHeaderText}>Shares</Text>
-              <Text style={styles.tableHeaderText}>Orders</Text>
+              <Text style={styles.tableHeaderText}>{t('Orders')}</Text>
+              <Text style={styles.tableHeaderText}>{t('Shares')}</Text>
+              <Text style={[styles.tableHeaderText, styles.greenText]}>{t('Bid')}</Text>
+              <Text style={[styles.tableHeaderText, styles.redText]}>{t('Ask')}</Text>
+              <Text style={styles.tableHeaderText}>{t('Shares')}</Text>
+              <Text style={styles.tableHeaderText}>{t('Orders')}</Text>
             </View>
             {marketData.map((item, index) => (
               <View key={index.toString()} style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.flag}</Text>
+                <Text style={styles.tableCell}>{t(item.flag)}</Text>
                 <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
-                  {item.shares}
+                  {t(item.shares)}
                 </Text>
                 <Text style={[styles.tableCell, item.bid >= 4 ? styles.greenText : styles.blueText]}>
-                  {item.bid}
+                  {t(item.bid)}
                 </Text>
                 <Text style={[styles.tableCell, item.ask >= 7 ? styles.redText : styles.blueText]}>
-                  {item.ask}
+                  {t(item.ask)}
                 </Text>
                 <Text style={[styles.tableCell, item.shares >= 60 ? styles.greenText : styles.blueText]}>
-                  {item.shares}
+                  {t(item.shares)}
                 </Text>
-                <Text style={styles.tableCell}>{item.flag}</Text>
+                <Text style={styles.tableCell}>{t(item.flag)}</Text>
               </View>
             ))}
 

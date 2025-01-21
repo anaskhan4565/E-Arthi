@@ -57,8 +57,8 @@ function InvetorySuppliersList(): React.JSX.Element {
                 <View style={styles.decsAndQty}>
                   <Text style={styles.decs}>{data.id}</Text>
                 </View>
-                <Text style={styles.cost}>{data.name}</Text>
-                <Text style={styles.date}>{data.item}</Text>
+                <Text style={styles.cost}>{t(data.name)}</Text>
+                <Text style={styles.date}>{t(data.item)}</Text>
               </View>
             )
         )}

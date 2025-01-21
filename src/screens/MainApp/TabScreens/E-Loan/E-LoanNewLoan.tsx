@@ -43,7 +43,7 @@ function EInventory(): React.JSX.Element {
         </View>
         <View style={styles.body}>
         <View style={styles.header}>
-          <Text style={styles.heading}>{t("New Loan")}</Text>
+          <Text style={styles.heading}>{t("Requested amount")}</Text>
         </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Loan Amount (in PKR)</Text>
@@ -59,7 +59,7 @@ function EInventory(): React.JSX.Element {
           <Text style={styles.subHeading}>Past Performance</Text>
           {currentYear && ["Current", currentYear - 1, currentYear - 2,currentYear - 3].map((year) => (
             <View key={year} style={styles.inputContainer}>
-              <Text style={styles.label}>{year}</Text>
+              <Text style={styles.label}>{t(year)}</Text>
               <CustomInput
                 placeholder=""
                 h={hp("5.5%")}

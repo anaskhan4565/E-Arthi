@@ -60,10 +60,10 @@ const Overview = () => {
                 <View style={styles.mandiContainer}>
                     <View style={styles.mandiHeader}>
                         <Image source={FarmerHand} style={styles.farmerImage} />
-                        <Text style={styles.heading}>Mandi Of Khairpur</Text>
+                        <Text style={styles.heading}>{t('Mandi Of Khairpur')}</Text>
                         <View style={styles.marketCapContainer}>
-                            <Text>MarketCap:</Text>
-                            <Text>32M</Text>
+                            <Text>{t('MarketCap:')}</Text>
+                            <Text>{t('32M')}</Text>
                         </View>
                     </View>
 
@@ -74,35 +74,35 @@ const Overview = () => {
                             {priceChange.toFixed(2)} ({priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}%)
                         </Text>
                         <View style={styles.minMax}>
-                            <Text style={styles.low}>l:10.10</Text>
-                            <Text style={styles.high}>h:10.35</Text>
+                            <Text style={styles.low}>{t('l:10.10')}</Text>
+                            <Text style={styles.high}>{t('h:10.35')}</Text>
                         </View>
-                        <Text style={styles.avgPrice}>Avg Price: 10.20</Text>
+                        <Text style={styles.avgPrice}>{t('Avg Price: 10.20')}</Text>
                     </View>
 
                     <View style={styles.rightHeader}>
                         <View style={styles.row}>
-                            <Text style={styles.textBold}>Last Trade Vol:</Text>
+                            <Text style={styles.textBold}>{t('Last Trade Vol:')}</Text>
                             <Text style={styles.textMuted}>{tradeVolume}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.textBold}>Last Trade Time:</Text>
+                            <Text style={styles.textBold}>{t('Last Trade Time:')}</Text>
                             <Text style={styles.textMuted}>{lastTradeTime}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.textBold}>Total Volume:</Text>
+                            <Text style={styles.textBold}>{t('Total Volume:')}</Text>
                             <Text style={styles.textMuted}>{tradeVolume}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.textBold}>Total Trades:</Text>
+                            <Text style={styles.textBold}>{t('Total Trades:')}</Text>
                             <Text style={styles.textMuted}>{totalTrades}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.textBold}>Upper Cap:</Text>
+                            <Text style={styles.textBold}>{t('Upper Cap:')}</Text>
                             <Text style={styles.textGreen}>22.37</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.textBold}>Lower Lock:</Text>
+                            <Text style={styles.textBold}>{t('Lower Lock:')}</Text>
                             <Text style={styles.textRed}>9.22</Text>
                         </View>
                     </View>
@@ -132,8 +132,8 @@ const Overview = () => {
                 </View>
 
                 <View style={styles.kseInfo}>
-                    <Text style={styles.kseText}>KSE100 113.852</Text>
-                    <Text style={styles.kseChange}>-13.852(0.2%)</Text>
+                    <Text style={styles.kseText}>{t('KSE100 113.852')}</Text>
+                    <Text style={styles.kseChange}>{t('-13.852(0.2%)')}</Text>
                 </View>
             </ScrollView>
 

@@ -6,6 +6,11 @@ export default [
         img: require('../src/assets/MainApp/E-Inventory/Inventory.png')
     },
     {
+        screen: ScreensName.EloanOTP,
+        title: "Women Satisfied Program",
+        img: require('../src/assets/MainApp/E-Inventory/women.webp')
+    },
+    {
         screen: ScreensName.EloanCurrentLoan,
         title: "View current Loan",
         img: require('../src/assets/MainApp/E-Inventory/Sales.png')

@@ -18,6 +18,11 @@ const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) 
                     <CustomPicker items={[
                         { label: "POTATO/MOK", value: "POTATO/MOK" },
                         { label: "Carrots/MOK", value: "CARROTS/MOK" },
+                        { label: "Cotton/MOK", value: "COTTON/MOK" },
+                        { label: "WHEAT/MOK", value: "WHEAT/MOK" },
+                        { label: "APPLES/MOK", value: "APPLES/MOK" },
+
+
                     ]} key={0} isheader={true}
                     />
                     </View>

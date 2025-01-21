@@ -59,28 +59,28 @@ function EInventoryDetails(): React.JSX.Element {
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Item Amount')}</Text>
                             <TextInput 
-                            placeholder='Enter Here' 
+                            placeholder={t('Enter Here')} 
                             style={styles.value}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Delivery Address')}</Text>
                             <TextInput 
-                            placeholder='Enter Here' 
+                            placeholder={t('Enter Here')}
                             style={styles.value}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Seller Information')}</Text>
                             <TextInput 
-                            placeholder='Enter Here' 
+                            placeholder={t('Enter Here')}
                             style={styles.value}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Delivery Time')}</Text>
                             <TextInput 
-                            placeholder='Enter Here' 
+                            placeholder={t('Enter Here')}
                             style={styles.value}
                             />
                         </View>

@@ -39,19 +39,19 @@ function CurrentLoan(): React.JSX.Element {
         </View>
         <View style={styles.MainHeader}>
         <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>Loan Amount</Text>
+          <Text style={styles.SectionHead}>{t('Loan Amount')}</Text>
           <Text style={styles.SectionBody}>PKR 100,000</Text>
         </View>
         <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>Amount Left</Text>
+          <Text style={styles.SectionHead}>{(t'Amount Left')}</Text>
           <Text style={styles.SectionBody}>PKR 25,000</Text>
         </View>
         <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>Line of Credit</Text>
+          <Text style={styles.SectionHead}>{t('Line of Credit')}</Text>
           <Text style={styles.SectionBody}>PKR 70,000</Text>
         </View>
         <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>Cash</Text>
+          <Text style={styles.SectionHead}>{t('Cash')}</Text>
           <Text style={styles.SectionBody}>PKR 30,000</Text>
         </View>
       </View>
@@ -66,9 +66,9 @@ function CurrentLoan(): React.JSX.Element {
                   data.category.trim() !== "" && (
                     <View style={styles.row} key={index}>
                       <View style={styles.decsAndQty}>
-                        <Text style={styles.date}>{data.category}</Text>
+                        <Text style={styles.date}>{t(data.category)}</Text>
                       </View>
-                      <Text style={styles.cost}>{data.cost}</Text>
+                      <Text style={styles.cost}>{t(data.cost)}</Text>
                     </View>
                   )
               )}

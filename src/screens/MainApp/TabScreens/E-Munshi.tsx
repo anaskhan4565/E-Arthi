@@ -10,15 +10,16 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 
 
 function EMunshi(): React.JSX.Element {
-
+    const { t } = useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>home Screen</Text>
+            <Text>{t('home Screen')}</Text>
         </SafeAreaView>
     );
 }

@@ -4,7 +4,7 @@ import React from 'react'
 const TopNavigator = () => {
   return (
     <View>
-      <Text>TopNavigator</Text>
+      <Text>{t('TopNavigator')}</Text>
     </View>
   )
 }

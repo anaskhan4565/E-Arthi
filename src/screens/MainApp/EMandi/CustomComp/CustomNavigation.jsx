@@ -8,9 +8,9 @@ const CustomNavigationMandi = () => {
     return (
         <View style={styles.navButtonsContainer}>
             <View style={styles.navButtons}>
-                <CustomButton MainText={'Overview'} hgiven={hp(4)} wgiven={wp(30)} isNavigation={true} name={ScreensName.EMandi} b_width={0} b_end_only={2} />
-                <CustomButton MainText={'Market Dept'} hgiven={hp(4)} wgiven={wp(30)} isNavigation={true} name={ScreensName.MarketDept} b_width={0} b_end_only={2} />
-                <CustomButton MainText={'Profile'} hgiven={hp(4)} wgiven={wp(30)} isNavigation={true} name={ScreensName.Profile} b_width={0} b_end_only={2} />
+                <CustomButton MainText={t('Overview')} hgiven={hp(4)} wgiven={wp(30)} isNavigation={true} name={ScreensName.EMandi} b_width={0} b_end_only={2} />
+                <CustomButton MainText={t('Market Dept')} hgiven={hp(4)} wgiven={wp(30)} isNavigation={true} name={ScreensName.MarketDept} b_width={0} b_end_only={2} />
+                <CustomButton MainText={t('Profile')} hgiven={hp(4)} wgiven={wp(30)} isNavigation={true} name={ScreensName.Profile} b_width={0} b_end_only={2} />
             </View>
         </View>
     )

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -10,7 +10,7 @@ import ScreensName from '../../../../util/ScreensName.ts';
 
 const EInventoryBoxes = ({ name, SourceGiven, screenName, navigationName, isNavigation, w = wp('80%'), h = hp('30%') }) => {
     const navigation = useNavigation();
-
+    const { t } = useTranslation();
     const handleNavigation = () => {
         if (name) {
             navigation.navigate(navigationName, { screen: (screenName) });
@@ -24,7 +24,7 @@ const EInventoryBoxes = ({ name, SourceGiven, screenName, navigationName, isNavi
     return (
         <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
             <Image source={SourceGiven} style={styles.ImageStyle} />
-            <Text style={styles.TextStyle}>{name}</Text>
+            <Text style={styles.TextStyle}>{t(name)}</Text>
         </TouchableOpacity>
     );
 };

@@ -42,7 +42,7 @@ function Inventory(): React.JSX.Element {
                         {InventoryDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)}  SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={ScreensName.EInventoryMainStack}  SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}

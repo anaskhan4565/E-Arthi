@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -8,7 +8,7 @@ import { fonts } from '../../../../util/FontName.js';
 
 const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('21%'), h = hp('8.5') }) => {
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
   const handleNavigation = () => {
     if (screen) {
       navigation.navigate(screen);
@@ -22,7 +22,7 @@ const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('21%'), h = hp
   return (
     <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation ? handleNavigation:handleSubmit}>
       <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
-      <Text style={styles.TextStyle}>{name}</Text>
+      <Text style={styles.TextStyle}>{t(name)}</Text>
     </TouchableOpacity>
   );
 };

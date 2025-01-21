@@ -22,7 +22,7 @@ const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9
     return (
         <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation} >
             <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
-            <Text style={styles.TextStyle}>{name}</Text>
+            <Text style={styles.TextStyle}>{t(name)}</Text>
         </TouchableOpacity>
     );
 };

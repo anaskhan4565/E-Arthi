@@ -7,10 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../util/FontName.js';
 import ScreensName from '../../../../util/ScreensName.ts';
+import { useTranslation } from 'react-i18next';
 
 const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('40%'), h = hp('22%') }) => {
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
   const handleNavigation = () => {
     if (name) {
       navigation.navigate(ScreensName.ProductScr);
@@ -27,12 +28,12 @@ const ProductBox = ({ name, price, save,old, SourceGiven, isNavigation, w = wp('
         <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.TextStyle}>{name}</Text>
+        <Text style={styles.TextStyle}>{t(name)}</Text>
         <View style={styles.priceContainer}>
-          <Text style={[styles.TextStyle, styles.price]}>Price: PKR{price}</Text>
-          <Text style={[styles.TextStyle, styles.save]}>PKR{old}</Text>
+          <Text style={[styles.TextStyle, styles.price]}>{t('Price')}: PKR{price}</Text>
+          <Text style={[styles.TextStyle, styles.save]}>{t('PKR')}{t(old)}</Text>
         </View>
-        <Text style={styles.TextStyle}>Save:{save}</Text>
+        <Text style={styles.TextStyle}>{t('Save')}:{t(save)}</Text>
 
       </View>
     </TouchableOpacity>

@@ -15,7 +15,7 @@ const CustomSearchApp = ({ placeholder }) => {
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.textInputStyle}
-        placeholder={placeholder}
+        placeholder={t(placeholder)}
         placeholderTextColor={colors.LIGHT_GRAY}
       />
       <Image source={magnifierIcon} style={styles.iconStyle} />

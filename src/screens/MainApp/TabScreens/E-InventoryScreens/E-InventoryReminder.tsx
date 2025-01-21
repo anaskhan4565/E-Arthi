@@ -101,7 +101,7 @@ function EInventoryReminder(): React.JSX.Element {
                             />
                         </View>
                         <View style={styles.inputRow}>
-                            <Text style={styles.inputLabel}>Email</Text>
+                            <Text style={styles.inputLabel}>{t('Email')}</Text>
                             <TextInput
                                 style={styles.input}
                                 value={email}

@@ -37,14 +37,14 @@ const CustomBottomSheetExport = () => {
                             { label: "Market", value: "Market" },
                         ]}  key={8}/>
                         <View >
-                            <TextInput placeholder='100' style={{backgroundColor:colors.LIGHT_GRAY}} />
+                            <TextInput placeholder={t('100')} style={{backgroundColor:colors.LIGHT_GRAY}} />
                         </View>
                         <View style={{ flex: 0.01, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Text style={{ fontWeight: '900', color: colors.RED }}>9.22</Text>
                             <Text style={{ fontWeight: '900', color: colors.GREEN }}>11.22</Text>
                         </View>
                         <View style={{ flex: 0.2 }}>
-                            <TextInput placeholder='10.15' style={{ backgroundColor: colors.LIGHT_GRAY }} />
+                            <TextInput placeholder={t('10.15')} style={{ backgroundColor: colors.LIGHT_GRAY }} />
                         </View>
 
                         <View style={[styles.passInputBox,{marginTop:hp(3)}]}>
@@ -65,7 +65,7 @@ const CustomBottomSheetExport = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <CustomButton MainText={currentState=='Buy'?'Buy':'Sell'} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={currentState=='Buy'?colors.GREEN:colors.RED} txColor={colors.WHITE} />
+                            <CustomButton MainText={currentState=='Buy'?t('Buy'):t('Sell')} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={currentState=='Buy'?colors.GREEN:colors.RED} txColor={colors.WHITE} />
                         </View>
                     </View>
                     <View style={{ flex: 0.6, borderWidth: 1 }}>
@@ -88,7 +88,7 @@ const CustomBottomSheetExport = () => {
                                 }}
                             >
                                 <Text style={{ textAlign: 'center', fontSize: hp(1.8), fontWeight: '700' }}>
-                                    MBO-Market Depth By Order
+                                    {t('MBO-Market Depth By Order')}
                                 </Text>
                             </View>
                         </View>
@@ -114,7 +114,7 @@ const CustomBottomSheetExport = () => {
                                     }}
                                 >
                                     <Text style={{ textAlign: 'center', fontSize: hp(1.8), fontWeight: '700' }}>
-                                        MBO-Market Depth By Price
+                                        {t('MBO-Market Depth By Price')}
                                     </Text>
                                 </View>
                             </View>

@@ -46,7 +46,7 @@ function PurchaseHisotry(): React.JSX.Element {
             data.desc.trim() !== "" && (
               <View style={styles.row} key={index}>
                 <View style={styles.decsAndQty}>
-                  <Text style={styles.decs}>{data.desc}</Text>
+                  <Text style={styles.decs}>{t(data.desc)}</Text>
                   <Text style={styles.decs}>{data.qty}</Text>
                 </View>
                 <Text style={styles.cost}>{data.cost}</Text>

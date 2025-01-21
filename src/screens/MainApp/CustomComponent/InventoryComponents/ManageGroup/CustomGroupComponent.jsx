@@ -5,6 +5,7 @@ import colors from '../../../../../../util/colors';
 import { fonts } from '../../../../../../util/FontName';
 import Pen from '../../../../../assets/MainApp/E-Inventory/E-Inventory-ManageGroup/Pen.png'
 import Demo from '../../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png';
+import { t } from 'i18next';
 
 const CustomGroupComponent = ({MainHeading,typ1,typ2,typ3,val1,val2,val3}) => {
     const data = [
@@ -16,7 +17,7 @@ const CustomGroupComponent = ({MainHeading,typ1,typ2,typ3,val1,val2,val3}) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>{MainHeading}</Text>
+          <Text style={styles.headerText}>{t(MainHeading)}</Text>
         </View>
         <View style={styles.headerIconContainer}>
           <Image source={Pen} style={styles.icon} />
@@ -27,10 +28,10 @@ const CustomGroupComponent = ({MainHeading,typ1,typ2,typ3,val1,val2,val3}) => {
           <View key={index} style={styles.itemContainer}>
             <View style={styles.itemInfoContainer}>
               <Image style={styles.itemImage} source={Demo} />
-              <Text style={styles.itemText}>{item.type}</Text>
+              <Text style={styles.itemText}>{t(item.type)}</Text>
             </View>
             <View style={styles.itemValueContainer}>
-              <Text style={styles.itemValue}>{item.value}</Text>
+              <Text style={styles.itemValue}>{t(item.value)}</Text>
             </View>
           </View>
         ))}

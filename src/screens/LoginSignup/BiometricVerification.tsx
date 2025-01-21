@@ -19,7 +19,7 @@ import ScreensName from "../../../util/ScreensName.ts";
 import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { launchCamera } from 'react-native-image-picker';
-
+import { useTranslation } from "react-i18next";
 const { height, width } = Dimensions.get("window");
 
 import { fonts } from "../../../util/FontName";
@@ -34,7 +34,7 @@ const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; 
 function BiometricVerification() {
   const [handCaptured, setHandCaptured] = useState(false);
   const navigation = useNavigation();
-
+  const {t} = useTranslation();
   const handleScanHands = () => {
     launchCamera({ mediaType: 'photo' }, (response) => {
       if (response.didCancel) {
@@ -64,11 +64,11 @@ function BiometricVerification() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
-        <Text style={styles.Heading}>Biometric Verification</Text>
+        <Text style={styles.Heading}>{t('Biometric Verification')}</Text>
         <Text style={styles.SubHeading}>
-          Line up your hand with the guide. {'\n'}
-          Keep your fingers together. {'\n'}
-          Then stay still. {'\n'}
+          {t('Line up your hand with the guide.')} {'\n'}
+          {t('Keep your fingers together.')} {'\n'}
+          {t("Then stay still.")} {'\n'}
           <Text style={{ fontWeight: 'bold' }}>Scan Left Hand First and Then Right Hand</Text>
         </Text>
         <Image

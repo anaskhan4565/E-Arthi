@@ -29,11 +29,11 @@ const InventoryProduct = ({ name, price, SourceGiven, isNavigation, w = wp('80%'
                     <Image source={Image4} style={styles.ImageStyle} />
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.TextStyle}>{name}</Text>
+                    <Text style={styles.TextStyle}>{t(name)}</Text>
                     <Text style={styles.descriptionText}>{t("Introducing BRINC Ball transforming rescue and tactical operations.")}</Text>
                 </View>
                 <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>PKR {price}</Text>
+                    <Text style={styles.priceText}>{t('PKR')} {price}</Text>
                 </View>
             </View>
         </TouchableOpacity>

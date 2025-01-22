@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,61 +20,68 @@ import { fonts } from "../../../../../util/FontName";
 import Navbar from "../../Navbar/Navbar";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 
-const { height } = Dimensions.get("window");
-
-function EInventory(): React.JSX.Element {
+function ELoanNewLoan() {
   const { t } = useTranslation();
-
-  const [currentYear, setCurrentYear] = useState<number | null>(null);
+  const [currentYear, setCurrentYear] = useState(null);
 
   useEffect(() => {
-    const year: number = new Date().getFullYear();
-    setCurrentYear(year);
+    setCurrentYear(new Date().getFullYear());
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.searchContainer}>
           <CustomSearchApp placeholder={t("Search in here")} />
         </View>
         <View style={styles.body}>
-        <View style={styles.header}>
-          <Text style={styles.heading}>{t("Requested amount")}</Text>
-        </View>
+          <View style={styles.header}>
+            <Text style={styles.heading}>{t("Requested amount")}</Text>
+          </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Loan Amount (in PKR)</Text>
+            <Text style={[styles.inputLabel,{marginBottom: hp(1)}]}>Loan Amount (in PKR)</Text>
             <CustomInput
               placeholder={t("Amount")}
               h={hp("5.5%")}
               w={wp("85%")}
               b_radius={10}
               bg_give={colors.WHITE}
-              hide={(0)}
             />
-          </View>   
+          </View>
           <Text style={styles.subHeading}>Past Performance</Text>
-          {currentYear && ["Current", currentYear - 1, currentYear - 2,currentYear - 3].map((year) => (
-            <View key={year} style={styles.inputContainer}>
-              <Text style={styles.label}>{t(year)}</Text>
-              <CustomInput
-                placeholder=""
-                h={hp("5.5%")}
-                w={wp("85%")}
-                b_radius={10}
-                bg_give={colors.WHITE}
-                hide={(0)}
-              />
-            </View>
-          ))}
+          {currentYear &&
+            ["Current", currentYear - 1, currentYear - 2, currentYear - 3].map((year) => (
+              <View key={year} style={styles.inputContainer}>
+                <Text style={styles.label}>{t(year)}</Text>
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>Yield</Text>
+                  <CustomInput
+                    h={hp("5.5%")}
+                    w={wp("67%")}
+                    b_radius={10}
+                    bg_give={colors.WHITE}
+                  />
+                </View>
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>Revenue</Text>
+                  <CustomInput
+                    h={hp("5.5%")}
+                    w={wp("67%")}
+                    b_radius={10}
+                    bg_give={colors.WHITE}
+                  />
+                </View>
+              </View>
+            ))}
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton
             MainText={t("Apply")}
             BgGiven={colors.GREEN}
-            name={ScreensName.ELoan}
+            name={ScreensName.EloanOTP}
             txColor={colors.WHITE}
             isNavigation={1}
           />
@@ -94,41 +100,54 @@ const styles = StyleSheet.create({
     height: hp("8.5%"),
     backgroundColor: colors.WHITE,
   },
+  scrollContainer: {
+    flex: 1,
+  },
   searchContainer: {
     marginVertical: hp("3%"),
     height: hp("7%"),
+    paddingHorizontal: wp("5%"),
   },
   header: {
-    // borderWidth: 1,
-    // marginBottom: height / 20,
+    marginBottom: hp("2%"),
   },
   heading: {
-    fontSize: hp(3),
+    fontSize: hp("3%"),
     fontFamily: fonts.SemiBold,
     color: colors.BLACK,
-    // marginLeft: wp("2%"),
   },
   subHeading: {
-    fontSize: hp(2.5),
+    fontSize: hp("2.5%"),
     fontFamily: fonts.Medium,
     marginTop: hp("1%"),
     marginLeft: wp("2%"),
   },
   body: {
-    gap: hp("2%"),
-    alignItems: "center",
+    paddingHorizontal: wp("5%"),
+    paddingBottom: hp("5%"),
   },
   inputContainer: {
-    gap: hp("1%"),
+    marginVertical: hp("2%"),
   },
   label: {
-    fontFamily: fonts.Medium,
+    fontFamily: fonts.SemiBold,
     fontSize: hp("2%"),
+    marginBottom: hp("1%"),
+  },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: hp("1.5%"),
+  },
+  inputLabel: {
+    fontFamily: fonts.Regular,
+    fontSize: hp("2%"),
+    marginRight: wp("3%"),
+    flex: 1,
   },
   buttonContainer: {
-    marginTop: hp("5%"),
     alignItems: "center",
   },
 });
 
-export default EInventory;
+export default ELoanNewLoan;

@@ -97,7 +97,7 @@ const OTP = () => {
 
             <CustomButton
                 MainText={t('Verify')}
-                BgGiven={colors.GREEN} name={ScreensName.ELoanNewLoan} txColor={colors.WHITE} isNavigation={1} />
+                BgGiven={colors.GREEN} name={ScreensName.ELoan} txColor={colors.WHITE} isNavigation={1} />
         </View>
     );
 };

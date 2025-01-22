@@ -81,7 +81,7 @@ const ProductScr = () => {
                 <View style={styles.addOnContainer}>
                     <View style={styles.addOnProducts}>
                         {products.map((product,key) => (
-                            <View key={product.name} style={styles.addOnItem}>
+                            <View key={`product-${key}`} style={styles.addOnItem}>
                                 <Image source={product.image} style={styles.addOnImage} />
                                 <Text style={styles.addOnText}>{product.name}</Text>
                             </View>
@@ -92,7 +92,7 @@ const ProductScr = () => {
                             <View style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: hp(1.6), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
                                 <RadioButton
-                                    key={value}
+                                    key={`radio-${third}`}
                                     value={value}
                                     status={selectedOptions.includes(value) ? 'checked' : 'unchecked'}
                                     onPress={() => toggleSelection(value)}

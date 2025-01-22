@@ -33,8 +33,8 @@ const CustomButton = ({
   const handlePress = onPressG
     ? onPressG // Use the custom onPress event if provided
     : isNavigation
-    ? handleNavigation // Fallback to navigation
-    : handleSubmit; // Fallback to default
+      ? handleNavigation // Fallback to navigation
+      : handleSubmit; // Fallback to default
 
   return (
     <TouchableOpacity
@@ -47,7 +47,7 @@ const CustomButton = ({
           backgroundColor: BgGiven,
           borderColor: bordergiven,
           borderRadius: b_radius,
-          borderBottomWidth:b_end_only
+          borderBottomWidth: b_end_only
         },
       ]}
       onPress={handlePress} // Attach the decided handler

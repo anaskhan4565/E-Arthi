@@ -31,7 +31,7 @@ const Stack = createNativeStackNavigator();
 function EWarehouseMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.EWarehouse} screenOptions={{ headerShown: false }}>
+                <Stack.Navigator initialRouteName={ScreensName.EWarehousePreviousWarehouses} screenOptions={{ headerShown: false }}>
                     <Stack.Screen name={ScreensName.EWarehouse} component={EWarehouse} />
                     <Stack.Screen name={ScreensName.EWarehouseNewSpaceCropSelect} component={EWarehouseNewSpaceCropSelect} />
                     <Stack.Screen name={ScreensName.EWarehouseNewSpaceWarehouseSelect} component={EWarehouseNewSpaceWarehouseSelect} />

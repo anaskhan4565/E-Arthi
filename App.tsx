@@ -37,6 +37,7 @@ import Overview from "./src/screens/MainApp/EMandi/Screens/Overview.jsx";
 import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
 import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
 import EInventory from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-Inventory.tsx";
+import ETransportStack from "./src/screens/MainApp/TabScreens/E-Transport/E-TransportStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -50,7 +51,7 @@ function App(): React.JSX.Element {
   return (
     <I18nextProvider i18n={i18next}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.MainTabNavigation} screenOptions={{ headerShown: false }}>
           <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
           <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
           <Stack.Screen name={ScreensName.Connect} component={Connect} />
@@ -79,6 +80,8 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
 
           <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
+
+          <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
           <Stack.Screen name={ScreensName.EInventorySupplier} component={EInventorySupplier} />
           <Stack.Screen name={ScreensName.EInventorySuppliersList} component={EInventorySuppliersList} />

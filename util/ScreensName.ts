@@ -65,15 +65,28 @@ export default {
     EInventoryManageGroup: "EInventoryManageGroup",
     EInventoryDetails: 'EInventoryDetails',
 
-   
-    EInventorySupplier:'EInventorySupplier',
-    EInventorySuppliersList:'EInventorySuppliersList',
-    EInventoryAddSuppliers:'EInventoryAddSuppliers',
-    EInventorySupplierReports:'EInventorySupplierReports',
+
+    EInventorySupplier: 'EInventorySupplier',
+    EInventorySuppliersList: 'EInventorySuppliersList',
+    EInventoryAddSuppliers: 'EInventoryAddSuppliers',
+    EInventorySupplierReports: 'EInventorySupplierReports',
 
 
     //For E-Mandi
-    EMandi:'E-Mandi',
-    MarketDept:'MarketDept',
-    Profile:'Profile'
+    EMandi: 'E-Mandi',
+    MarketDept: 'MarketDept',
+    Profile: 'Profile',
+
+
+    ETransportStack: "ETransportStack",
+    ETransportAddDetails: "ETransportAddDetails",
+    ETransportAir: "ETransportAir",
+    ETransportAnalytics: "ETransportAnalytics",
+    ETransportDeliveryHistory: "ETransportDeliveryHistory",
+    ETransportNewTransport: "ETransportNewTransport",
+    ETransportSelectVehicleType: "ETransportSelectVehicleType",
+    ETransportShip: "ETransportShip",
+    ETransportTruck: "ETransportTruck",
+    ETransportMain: "ETransportMain",
+
 }

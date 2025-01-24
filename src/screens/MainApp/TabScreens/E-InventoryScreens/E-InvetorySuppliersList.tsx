@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -25,6 +25,17 @@ import { useNavigation } from '@react-navigation/native';
 function InvetorySuppliersList(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter suppliers based on search term
+  const filteredSuppliers = InventorySuppliersListDet.filter((supplier) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      supplier.id.toLowerCase().includes(searchLower) ||
+      supplier.name.toLowerCase().includes(searchLower) ||
+      supplier.item.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +44,11 @@ function InvetorySuppliersList(): React.JSX.Element {
       </View>      
       <View style={{ flex: 7 }}>
         <View style={styles.searchbar}>
-          <CustomSearchApp placeholder={"Search in here"} />
+          <CustomSearchApp 
+            placeholder={"Search Suppliers..."} 
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+          />
         </View>
         <View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(4), gap:wp(23)}}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(4) }}>
@@ -50,7 +65,7 @@ function InvetorySuppliersList(): React.JSX.Element {
           <Text style={[styles.HeaderCol, { textAlign: "center" }]}>{t('Supplier Name')}</Text>
           <Text style={styles.HeaderCol}>{t('Item')}</Text>
         </View>
-        {InventorySuppliersListDet.map(
+        {filteredSuppliers.map(
           (data, index) =>
             data.id.trim() !== "" && (
               <View style={styles.row} key={index}>

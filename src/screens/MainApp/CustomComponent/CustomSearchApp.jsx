@@ -11,7 +11,7 @@ import { fonts } from '../../../../util/FontName.js';
 import { useTranslation } from 'react-i18next';
 
 
-const CustomSearchApp = ({ placeholder }) => {
+const CustomSearchApp = ({ placeholder, value, onChangeText }) => {
     const { t } = useTranslation();
   
   return (
@@ -20,6 +20,10 @@ const CustomSearchApp = ({ placeholder }) => {
         style={styles.textInputStyle}
         placeholder={t(placeholder)}
         placeholderTextColor={colors.LIGHT_GRAY}
+        value={value}
+        onChangeText={onChangeText}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
       <Image source={magnifierIcon} style={styles.iconStyle} />
     </View>

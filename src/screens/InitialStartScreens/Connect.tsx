@@ -69,6 +69,15 @@ function Connect(): React.JSX.Element {
               <TouchableOpacity onPress={() => handleLanguageChange('sin')}>
                 <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>سنڌي</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleLanguageChange('ps')}>
+                <Text style={{ fontSize: hp(2), marginBottom: 10, fontFamily: fonts.Medium }}>پښتو</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleLanguageChange('pa')}>
+                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>پنجابی</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleLanguageChange('bl')}>
+                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>بلوچی</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>

@@ -39,12 +39,12 @@ const InventoryMonitoring = () => {
                     <View style={styles.recommendedProducts}>
                         <Text style={styles.recommendedTitle}>{t('Inventory')}</Text>
                         <View style={styles.productRow}>
-                            <InventoryProduct name={'Product ABC'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Product ABC'} price={1000}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Product ABC'} price={1500}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Product ABC'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Product ABC'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Product ABC'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Fresh Vegetables'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Leather Products'} price={4562}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Canned Goods '} price={1500}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Farm Fresh Juices'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Flowers '} price={1394}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Fertilizers'} price={1412}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
 
                         </View>
 

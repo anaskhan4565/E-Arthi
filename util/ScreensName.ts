@@ -37,6 +37,7 @@ export default {
     EloanCurrentLoan: "EloanCurrentLoan",
     EloanSelectedLoan: "EloanSelectedLoan",
     ELoanNewLoan: "ELoanNewLoan",
+    ELoanSetAside:"ELoanSetAside",
 
     EWarehouseMainStack: "EWarehouseMainStack",
     EWarehouse: "EWarehouse",

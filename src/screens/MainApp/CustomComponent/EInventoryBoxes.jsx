@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Medium,
         fontSize: hp('2.5%'),
         marginTop: hp(0.9),
+        textAlign:'center',
+
     },
     ImageStyle: {
         resizeMode: 'contain',

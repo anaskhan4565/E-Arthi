@@ -7,7 +7,7 @@ export default [
     },
     {
         screen: ScreensName.ELoanNewLoan,
-        title: "Women Satisfied Program",
+        title: "Women Special Loan Program",
         img: require('../src/assets/MainApp/E-Inventory/women.webp')
     },
     {

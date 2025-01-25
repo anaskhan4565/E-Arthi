@@ -19,63 +19,88 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
+import { PieChart } from "react-native-chart-kit";
+import MyPieChart from "./CustomComponents/PiChart";
 
 function CurrentLoan(): React.JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
-      </View>      
+      </View>
       <View style={{ flex: 7 }}>
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={"Search in here"} />
         </View>
-        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
+        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5) }}>
+          <Text style={{ fontFamily: fonts.bold, fontSize: hp(3) }}>
             {t('Current Loan')}
           </Text>
+ 
         </View>
+        <View style={{flex:1,flexDirection:'row',alignItems:"center",justifyContent:'center'}}>
+        <MyPieChart
+            legend1Name = {'Total Loan Amount'}
+             legend1Population = {100000}
+             legend2Name = {'Remaining Loan'}
+             legend2Population = {25000}
+             legend1_color={'#FF6F61'}
+             legend2_color={'#6B8E23'}
+         />         
+         <MyPieChart
+            legend1Name = {'Unutilized Cash Line'}
+             legend1Population = {40000}
+             legend2Name = {'Unutilized Line of Credit'}
+             legend2Population = {25000}
+             legend1_color={'#7ED321'}
+             legend2_color={'#4A90E2'}
+         />
+
+         </View>
         <View style={styles.MainHeader}>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Requested amount')}</Text>
-          <Text style={styles.SectionBody}>PKR 100,000</Text>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Requested amount')}</Text>
+            <Text style={styles.SectionBody}>PKR 100,000</Text>
+          </View>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Amount Left')}</Text>
+            <Text style={styles.SectionBody}>PKR 25,000</Text>
+          </View>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Line of Credit')}</Text>
+            <Text style={styles.SectionBody}>PKR 70,000</Text>
+          </View>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Cash')}</Text>
+            <Text style={styles.SectionBody}>PKR 30,000</Text>
+          </View>
         </View>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Amount Left')}</Text>
-          <Text style={styles.SectionBody}>PKR 25,000</Text>
-        </View>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Line of Credit')}</Text>
-          <Text style={styles.SectionBody}>PKR 70,000</Text>
-        </View>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Cash')}</Text>
-          <Text style={styles.SectionBody}>PKR 30,000</Text>
+        <View >
+          <Text style={[styles.HeaderCol, { width: hp(30), fontSize: hp(3),marginHorizontal:hp(2),marginTop:hp(2),fontFamily:fonts.bold}]}>{t('Payment Details')}</Text>
+          <View style={[styles.Header]}>
+            <Text style={styles.HeaderCol}>{t('Category')}</Text>
+
+            <Text style={styles.HeaderCol}>{t('Amount')}</Text>
+          </View>
+          {LoanCategoryDetails.map(
+            (data, index) =>
+              data.category.trim() !== "" && (
+                <View style={styles.row} key={index}>
+                  <View style={styles.decsAndQty}>
+                    <Text style={styles.date}>{t(data.category)}</Text>
+                  </View>
+                  <Text style={styles.cost}>{t(data.cost)}</Text>
+                </View>
+              )
+          )}
+          
         </View>
       </View>
 
-      <View style={[styles.Header]}>
-                <Text style={styles.HeaderCol}>{t('Category')}</Text>
-                
-                <Text style={styles.HeaderCol}>{t('Amount')}</Text>
-              </View>
-              {LoanCategoryDetails.map(
-                (data, index) =>
-                  data.category.trim() !== "" && (
-                    <View style={styles.row} key={index}>
-                      <View style={styles.decsAndQty}>
-                        <Text style={styles.date}>{t(data.category)}</Text>
-                      </View>
-                      <Text style={styles.cost}>{t(data.cost)}</Text>
-                    </View>
-                  )
-              )}
-      </View>
-      
-              
-    </SafeAreaView>
+
+    </ScrollView>
   );
 }
 
@@ -138,7 +163,7 @@ const styles = StyleSheet.create({
     width: '41%',
     aspectRatio: 1,
     justifyContent: 'center',
-    margin: '1%', 
+    margin: '1%',
     textAlign: "left",
   },
   SectionHead: {
@@ -146,7 +171,7 @@ const styles = StyleSheet.create({
     color: colors.GREEN,
     fontSize: hp(1.3)
   },
-  SectionBody : {
+  SectionBody: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2.2)
   },

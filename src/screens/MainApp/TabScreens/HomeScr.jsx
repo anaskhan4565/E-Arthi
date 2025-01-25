@@ -33,7 +33,7 @@ const Home = () => {
 
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>{t('E-Agri-Offerings')}</Text>
+              <Text style={styles.titleText}>{t('Welcome !')}</Text>
             </View>
 
             <View style={styles.scrollContainer}>
@@ -96,7 +96,7 @@ searchContainer: {
   },
   titleText: {
     fontFamily:fonts.SemiBold,
-    fontSize: hp('3%'),
+    fontSize: hp('4%'),
   },
   scrollContainer: {
     flexDirection: 'row',

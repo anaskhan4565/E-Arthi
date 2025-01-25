@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
   cost: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    textAlign: "center",
+    textAlign: "left",
+    marginRight:hp(1),
     width: wp(33),
   },
   date: {
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     width: wp(30)
   },
   decs: {
-    fontFamily: fonts.Regular,
+    fontFamily: fonts.bold,
     fontSize: hp(1.8),
   },
   decsAndQty: {

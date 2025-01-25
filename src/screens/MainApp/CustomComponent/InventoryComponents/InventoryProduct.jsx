@@ -13,7 +13,6 @@ const InventoryProduct = ({ name, price, SourceGiven, isNavigation, w = wp('80%'
     
     const handleNavigation = () => {
         if (isNavigation) {
-            console.log('Navigating to:', name);
             navigation.navigate(navigateTo)
         }
     };

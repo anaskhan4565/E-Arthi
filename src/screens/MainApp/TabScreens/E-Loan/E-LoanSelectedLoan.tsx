@@ -19,18 +19,38 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
+import MyPieChart from "./CustomComponents/PiChart";
 
-function CurrentLoan(): React.JSX.Element {
+function CurrentLoan({val1=10241,val2=5990}): React.JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
-      </View>      
+      </View>
       <View style={{ flex: 7 }}>
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={"Search in here"} />
+        </View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ fontFamily: fonts.bold, fontSize: hp(2.4) }}>
+            Loan Report 2024</Text>
+
+          <MyPieChart
+            legend1Name={"Total Loan Amount"}
+            legend1Population={val1}
+            legend2Name={"Remaining Loan"}
+            legend2Population={val2}
+            legend1_color={"#FF6F61"}
+            legend2_color={"#6B8E23"}
+          />
         </View>
         <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
@@ -38,44 +58,44 @@ function CurrentLoan(): React.JSX.Element {
           </Text>
         </View>
         <View style={styles.MainHeader}>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Loan Amount')}</Text>
-          <Text style={styles.SectionBody}>PKR 100,000</Text>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Loan Amount')}</Text>
+            <Text style={styles.SectionBody}>PKR 110,000</Text>
+          </View>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Amount Left')}</Text>
+            <Text style={styles.SectionBody}>PKR 85,000</Text>
+          </View>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Line of Credit')}</Text>
+            <Text style={styles.SectionBody}>PKR 70,000</Text>
+          </View>
+          <View style={styles.HeaderSection}>
+            <Text style={styles.SectionHead}>{t('Cash')}</Text>
+            <Text style={styles.SectionBody}>PKR 52,130</Text>
+          </View>
         </View>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Amount Left')}</Text>
-          <Text style={styles.SectionBody}>PKR 25,000</Text>
+
+        <View style={styles.Header}>
+          <Text style={styles.HeaderCol}>{t('Category')}</Text>
+
+          <Text style={styles.HeaderCol}>{t('Amount')}</Text>
         </View>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Line of Credit')}</Text>
-          <Text style={styles.SectionBody}>PKR 70,000</Text>
-        </View>
-        <View style={styles.HeaderSection}>
-          <Text style={styles.SectionHead}>{t('Cash')}</Text>
-          <Text style={styles.SectionBody}>PKR 30,000</Text>
-        </View>
+        {LoanCategoryDetails.map(
+          (data, index) =>
+            data.category.trim() !== "" && (
+              <View style={styles.row} key={index}>
+                <View style={styles.decsAndQty}>
+                  <Text style={styles.date}>{t(data.category)}</Text>
+                </View>
+                <Text style={styles.cost}>PKR: {data.cost}</Text>
+              </View>
+            )
+        )}
       </View>
 
-      <View style={styles.Header}>
-                <Text style={styles.HeaderCol}>{t('Category')}</Text>
-                
-                <Text style={styles.HeaderCol}>{t('Amount')}</Text>
-              </View>
-              {LoanCategoryDetails.map(
-                (data, index) =>
-                  data.category.trim() !== "" && (
-                    <View style={styles.row} key={index}>
-                      <View style={styles.decsAndQty}>
-                        <Text style={styles.date}>{t(data.category)}</Text>
-                      </View>
-                      <Text style={styles.cost}>{data.cost}</Text>
-                    </View>
-                  )
-              )}
-      </View>
-      
-              
-    </SafeAreaView>
+
+    </ScrollView>
   );
 }
 
@@ -138,7 +158,7 @@ const styles = StyleSheet.create({
     width: '41%',
     aspectRatio: 1,
     justifyContent: 'center',
-    margin: '1%', 
+    margin: '1%',
     textAlign: "left",
   },
   SectionHead: {
@@ -146,7 +166,7 @@ const styles = StyleSheet.create({
     color: colors.GREEN,
     fontSize: hp(1.3)
   },
-  SectionBody : {
+  SectionBody: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2.2)
   },

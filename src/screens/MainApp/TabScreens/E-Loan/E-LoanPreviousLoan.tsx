@@ -26,7 +26,7 @@ function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
@@ -41,7 +41,7 @@ function PurchaseHisotry(): React.JSX.Element {
             marginHorizontal: wp(5),
           }}
         >
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
+          <Text style={{ fontFamily: fonts.bold, fontSize: hp(3.4) }}>
             {t("Loan History")}
           </Text>
         </View>
@@ -67,7 +67,7 @@ function PurchaseHisotry(): React.JSX.Element {
             )
         )}
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-
+    gap:hp(3),
     backgroundColor: colors.WHITE,
   },
   searchbar: {
@@ -96,7 +96,10 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SemiBold,
     fontSize: hp(2),
     width: wp(29),
-    textAlign: "left",
+    textAlign: "center",
+    borderWidth:hp(0.1),
+    flex:1,
+
   },
   date: {
     fontFamily: fonts.Regular,
@@ -120,6 +123,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: wp(4),
     marginVertical: hp(1),
+    borderWidth:hp(0.1),
+    flex:1
+
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,20 +21,46 @@ const { height, width } = Dimensions.get("window");
 
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../util/FontName";
+import CustomPicker from "../MainApp/EMandi/CustomComp/CustomPicker";
 
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
-  const {t}=useTranslation();
+  const { t } = useTranslation();
 
+  const [SwitchedButton, SetSwitchedButton] = useState(false)
+  useEffect(() => {
+    console.log(SwitchedButton)
+  }, [SwitchedButton])
   return (
     <SafeAreaView style={styles.container}>
+
       <View style={styles.Header}>
         <Text style={styles.Heading}>{t('Sign-in')}</Text>
         <Text style={styles.SubHeading}>{t('Welcome back, please login again')}</Text>
       </View>
+
       <View style={styles.inputs}>
-        <CustomInput placeholder={t('Username')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} />
+        <View style={{ flexDirection: 'row', gap: hp(3) }}>
+          <CustomButton MainText={'Login By Email'} hgiven={hp(4)} wgiven={wp(40)} b_width={0} b_end_only={SwitchedButton ? 4 : 0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
+          <CustomButton MainText={'Login By Phone'} hgiven={hp(4)} wgiven={wp(40)} b_end_only={!SwitchedButton ? 4 : 0} b_width={0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
+        </View>
+        <View style={{ flexDirection: 'row', width: wp(85), justifyContent: 'center', alignItems: 'center' }}>
+          {!SwitchedButton ?
+            <View style={{ width: hp(8.5) }}>
+              <CustomPicker
+                items={[
+                  { label: "+92", value: "+92" },
+                  { label: "+91", value: "+91" },
+                  { label: "+86", value: "+86" },
+                ]}
+                isheader={true}
+                padding_f={true}
+              />
+            </View>
+            : null}
+          <CustomInput placeholder={SwitchedButton ? t('Username') : t('Phone Number')} h={hp('5.5%')} w={!SwitchedButton?wp('65%'):wp(84)} b_radius={10} bg_give={colors.WHITE} />
+        </View>
         <View style={styles.passInputBox}>
           <TextInput
             style={styles.passInput}
@@ -84,19 +110,26 @@ function SignIn() {
         <View style={styles.line} />
       </View>
       <View style={styles.altSignin}>
+      <TouchableOpacity style={styles.altSigninButton}>
+          <Image
+            source={require("../../assets/whatsapp.png")}
+            style={styles.altSigninButtonIcon}
+          />
+          <Text style={{ fontSize: hp('1.7%'), fontFamily: fonts.Regular }}>{t('login with Whatsapp')}  </Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../../assets/google.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with google')} </Text>
+          <Text style={{ fontSize: hp('1.7%'), fontFamily: fonts.Regular }}>{t('Login with google')} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../../assets/apple.png")}
             style={styles.altSigninButtonIcon}
           />
-          <Text style={{ fontSize: hp('1.7%'),fontFamily:fonts.Regular }}>{t('Login with Apple')}  </Text>
+          <Text style={{ fontSize: hp('1.7%'), fontFamily: fonts.Regular }}>{t('Login with Apple')}  </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -104,6 +137,19 @@ function SignIn() {
 }
 
 const styles = StyleSheet.create({
+
+  navButtonsContainer: {
+    flex: 0.1,
+  },
+  navButtons: {
+    flex: 0.1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: hp(10),
+  },
+
+
+
   container: {
     flex: 1,
     backgroundColor: colors.WHITE,
@@ -115,13 +161,13 @@ const styles = StyleSheet.create({
   },
   Heading: {
     fontSize: height / 25,
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
     marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
     fontSize: height / 45,
-    fontFamily:fonts.Regular,
+    fontFamily: fonts.Regular,
     marginTop: height / 100,
     marginLeft: wp('1.5%'),
   },
@@ -148,7 +194,7 @@ const styles = StyleSheet.create({
   RememberMeText: {
     fontSize: height / 58,
     marginLeft: 5,
-    fontFamily:fonts.Regular,
+    fontFamily: fonts.Regular,
   },
   checkbox: {
     marginLeft: wp('3%'),
@@ -158,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     color: colors.GREEN,
     fontSize: height / 58,
-    fontFamily:fonts.Regular,
+    fontFamily: fonts.Regular,
     marginRight: wp('3%'),
   },
   break: {
@@ -175,7 +221,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: height / 55,
     color: colors.GREEN,
-    fontFamily:fonts.Medium,
+    fontFamily: fonts.Medium,
   },
   altSignin: {
     gap: height / 80,
@@ -208,7 +254,7 @@ const styles = StyleSheet.create({
     height: hp('5.7%'),
     width: wp('85%'),
     fontSize: 18,
-    fontFamily:fonts.Medium,
+    fontFamily: fonts.Medium,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
@@ -220,7 +266,7 @@ const styles = StyleSheet.create({
   passInput: {
     flex: 3,
     fontSize: hp('1.7%'),
-    fontFamily:fonts.Regular,
+    fontFamily: fonts.Regular,
     color: colors.BLACK
   },
 });

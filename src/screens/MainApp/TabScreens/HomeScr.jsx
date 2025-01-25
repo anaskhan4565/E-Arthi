@@ -4,7 +4,7 @@ import Navbar from '../Navbar/Navbar.jsx';
 import CustomSearchApp from '../CustomComponent/CustomSearchApp.jsx';
 import colors from '../../../../util/colors.js';
 import ItemBox from '../CustomComponent/ItemBox.jsx';
-import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
+// import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
 import allNames from '../../../../util/E-Offerings.js';
 import ProductBox from '../CustomComponent/ProductBox.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -33,14 +33,14 @@ const Home = () => {
 
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>{t('E-Agri-Offerings')}</Text>
+              <Text style={styles.titleText}>{t('Welcome !')}</Text>
             </View>
 
             <View style={styles.scrollContainer}>
               {allNames.map((data, index) => (
                 data.name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
-                    <ItemBox name={t(data.name)} SourceGiven={Heart} isNavigation={true} screen={data.screen} />
+                    <ItemBox name={t(data.name)} SourceGiven={data.source} isNavigation={true} screen={data.screen} />
                   </View>
                 )
               ))}
@@ -96,7 +96,7 @@ searchContainer: {
   },
   titleText: {
     fontFamily:fonts.SemiBold,
-    fontSize: hp('3%'),
+    fontSize: hp('4%'),
   },
   scrollContainer: {
     flexDirection: 'row',

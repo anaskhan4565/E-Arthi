@@ -1,6 +1,7 @@
 import React from "react";
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,12 +20,22 @@ import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/ScreensName";
 import CustomButton from "../../../../components/CustomButton";
+import CustomBarChart from "./CustomStylesComp/Chart";
 
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const barChartData = {
+    labels: ["PASSCO", "Cargill", "Kissan", "PASSCO", "Cargill"],
+    datasets: [
+      {
+        data: [5000, 10000, 7500, 12500, 9000],
+      },
+    ],
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
@@ -59,12 +70,21 @@ function PurchaseHisotry(): React.JSX.Element {
                 }}
               >
                 <Text style={styles.tableRowText}>{data.name}</Text>
-                <Text style={styles.tableRowText}>{data.date}</Text>
+                <Text style={styles.tableRowText}>{data.date} </Text>
               </TouchableOpacity>
             )
         )}
       </View>
-    </SafeAreaView>
+      <View style={{ flex: 0.5,marginTop:hp(5),}}>
+        <CustomBarChart
+          data={barChartData}
+          legendTitle="Warehouse Space Stats"
+          barColor="#FF6F61"
+          bgColor={colors.WHITE}
+        />
+      </View>
+
+    </ScrollView>
   );
 }
 
@@ -78,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
   mainContent: {
-    flex: 1,
+    flex: 0.5,
     paddingHorizontal: wp(4),
   },
   searchbar: {

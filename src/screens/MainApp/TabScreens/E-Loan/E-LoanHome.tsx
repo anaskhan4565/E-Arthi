@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
         marginBottom: hp('2%'),
         marginHorizontal: wp('-3%'),
         alignItems: 'center',
-
+        justifyContent:"center",
+        alignContent:'center'
     },
     recommendedProducts: {
         marginTop: 20,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image, ScrollView} from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import colors from '../../../util/colors';
@@ -15,7 +15,7 @@ function SignUp(): React.JSX.Element {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const {t} = useTranslation();
     return (
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.Header}>
                 <Text style={styles.Heading}>{t('Register')}</Text>
                 <Text style={styles.SubHeading}>{t('Welcome, please Register')}</Text>
@@ -88,6 +88,13 @@ function SignUp(): React.JSX.Element {
             </View>
 
             <View style={styles.altSignin}>
+            <TouchableOpacity style={styles.altSigninButton}>
+                    <Image
+                        source={require("../../assets/whatsapp.png")}
+                        style={styles.altSigninButtonIcon}
+                    />
+                    <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Whatsapp ')}</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
                         source={require("../../assets/google.png")}
@@ -103,7 +110,7 @@ function SignUp(): React.JSX.Element {
                     <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Apple ')}</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </ScrollView>
     );
 }
 

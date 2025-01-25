@@ -1,17 +1,19 @@
 import ScreensName from "./ScreensName";
 
 const allNames = [
-  { name: "E-Market", screen: "" },
-  { name: "E-Munshi", screen: "" },
-  { name: "E-Inventory", screen: "" },
-  { name: "E-Loan", screen: ScreensName.ELoanMainStack },
-  { name: "E-Collateral", screen: "" },
-  { name: "E-Orders", screen: "" },
-  { name: "E-Vendors", screen: "" },
-  { name: "E-WareHouse", screen: ScreensName.EWarehouseMainStack },
-  { name: "E-Mandi", screen: ScreensName.EMandi },
-  { name: "E-Transport", screen: ScreensName.ETransportStack },
-  { name: "Others", screen: "" },
+  { name: "E-Loan", screen: ScreensName.ELoanMainStack ,source: require("../src/assets/MainApp/HomeScreen/loan.png"),},
+  { name: "E-Register", screen: "",source: require("../src/assets/MainApp/HomeScreen/munshi.png"), },
+  { name: "E-MarketPlace", screen: "",source: require("../src/assets/MainApp/HomeScreen/market.png"), },
+  { name: "E-Inventory", screen: "",source: require("../src/assets/MainApp/HomeScreen/inventory.png"), },
+  { name: "E-Arthi", screen: "" ,source: require("../src/assets/MainApp/HomeScreen/munshi.png"),},
+  { name: "E-Vendors", screen: "" ,source: require("../src/assets/MainApp/HomeScreen/vendor.png"),},
+  { name: "E-Orders", screen: "" ,source: require("../src/assets/MainApp/HomeScreen/orders.png"),},
+  { name: "E-WareHouse", screen: ScreensName.EWarehouseMainStack,source: require("../src/assets/MainApp/HomeScreen/warehouse.png"),},
+  { name: "E-Mandi", screen: ScreensName.EMandi,source: require("../src/assets/MainApp/HomeScreen/market.png"), },
+  { name: "E-Transport", screen: ScreensName.ETransportStack,source: require("../src/assets/MainApp/HomeScreen/market.png"),},
+  { name: "Others", screen: "" ,source: require("../src/assets/MainApp/HomeScreen/market.png"),},
+  
+
 ];
 
 export default allNames;

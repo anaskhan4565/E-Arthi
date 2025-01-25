@@ -51,7 +51,7 @@ function App(): React.JSX.Element {
   return (
     <I18nextProvider i18n={i18next}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreensName.MainTabNavigation} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
           <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
           <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
           <Stack.Screen name={ScreensName.Connect} component={Connect} />

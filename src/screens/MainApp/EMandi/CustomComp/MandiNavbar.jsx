@@ -21,9 +21,11 @@ const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) 
                         { label: "Cotton/MOK", value: "COTTON/MOK" },
                         { label: "WHEAT/MOK", value: "WHEAT/MOK" },
                         { label: "APPLES/MOK", value: "APPLES/MOK" },
-
-
+                       
                     ]} key={0} isheader={true}
+                    w_given={hp(20)}
+                    hp_given={hp(2)}
+                    min_given = {hp(20)}
                     />
                     </View>
                     <CustomImageButton SourceGiven={require("../../../../assets/MainApp/HomeScreen/Bell.png")} h={hp("4%")} w={hp("4%")} />

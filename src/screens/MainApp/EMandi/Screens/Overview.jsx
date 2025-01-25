@@ -46,7 +46,7 @@ const Overview = () => {
         labels: ["Jan", "Jun", "Dec"],
         datasets: [
             {
-                data: [120, 135, 150, 180, 200, 170],
+                data: [4, 5.5, 6, 8, 11, 5],
             },
         ],
     };

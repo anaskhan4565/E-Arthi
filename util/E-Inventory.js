@@ -41,7 +41,7 @@ const InventorySupplierDet = [
     {
         screen: ScreensName.EInventorySupplierReports,
         title: "Download Report",
-        img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
+        img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/pdfs.png')
     },
     
 ];

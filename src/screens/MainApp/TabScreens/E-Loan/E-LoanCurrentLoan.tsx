@@ -56,7 +56,7 @@ function CurrentLoan(): React.JSX.Element {
         </View>
       </View>
 
-      <View style={styles.Header}>
+      <View style={[styles.Header]}>
                 <Text style={styles.HeaderCol}>{t('Category')}</Text>
                 
                 <Text style={styles.HeaderCol}>{t('Amount')}</Text>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: wp(4),
     height: hp(5),
-    marginTop: hp(2)
+    marginTop: hp(2),
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,

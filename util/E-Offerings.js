@@ -1,7 +1,7 @@
 import ScreensName from "./ScreensName";
 
 const allNames = [
-  { name: "E-Loan", screen: ScreensName.ELoanMainStack ,source: require("../src/assets/MainApp/HomeScreen/market.png"),},
+  { name: "E-Loan", screen: ScreensName.ELoanMainStack ,source: require("../src/assets/MainApp/HomeScreen/loan.png"),},
   { name: "E-Register", screen: "",source: require("../src/assets/MainApp/HomeScreen/munshi.png"), },
   { name: "E-MarketPlace", screen: "",source: require("../src/assets/MainApp/HomeScreen/market.png"), },
   { name: "E-Inventory", screen: "",source: require("../src/assets/MainApp/HomeScreen/inventory.png"), },

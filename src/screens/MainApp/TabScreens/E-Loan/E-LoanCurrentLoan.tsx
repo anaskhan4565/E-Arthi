@@ -25,10 +25,11 @@ import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import MyPieChart from "./CustomComponents/PiChart";
 import CustomPicker from "../../EMandi/CustomComp/CustomPicker";
 import CustomBoxSort from "./CustomComponents/CustomBoxSort";
-import FilterPic from './CustomPictures/try/filter.png'
+import FilterPic from "./CustomPictures/try/filter.png";
 
 function CurrentLoan(): React.JSX.Element {
   const { t } = useTranslation();
+  const currency = "$"; // Currency header
   const selectionBoth = [LoanCategoryDetails, LoanVendorDetails];
   const [currentState, setCurrentState] = useState(0);
 
@@ -36,11 +37,14 @@ function CurrentLoan(): React.JSX.Element {
   const [ByPrice, SetByPrice] = useState(0);
   const [ByCategory, SetByCategory] = useState(0);
 
-
-  const [activeState, setActiveState] = useState(false)
+  const [activeState, setActiveState] = useState(false);
   useEffect(() => {
     console.log(currentState);
   }, [currentState]);
+
+  // Function to format numbers with commas
+  const formatNumber = (num) =>
+    new Intl.NumberFormat("en-US").format(num ?? 0);
 
   // Function to sort the data based on state
   const sortData = (data, byName, byPrice, byCategory) => {
@@ -69,7 +73,6 @@ function CurrentLoan(): React.JSX.Element {
 
     return sortedData;
   };
-
 
   return (
     <ScrollView style={styles.container}>
@@ -119,19 +122,27 @@ function CurrentLoan(): React.JSX.Element {
         <View style={styles.MainHeader}>
           <View style={styles.HeaderSection}>
             <Text style={styles.SectionHead}>{t("Requested amount")}</Text>
-            <Text style={styles.SectionBody}>PKR 100,000</Text>
+            <Text style={styles.SectionBody}>
+              {currency} {formatNumber(100000)}
+            </Text>
           </View>
           <View style={styles.HeaderSection}>
             <Text style={styles.SectionHead}>{t("Amount Left")}</Text>
-            <Text style={styles.SectionBody}>PKR 25,000</Text>
+            <Text style={styles.SectionBody}>
+              {currency} {formatNumber(25000)}
+            </Text>
           </View>
           <View style={styles.HeaderSection}>
             <Text style={styles.SectionHead}>{t("Line of Credit")}</Text>
-            <Text style={styles.SectionBody}>PKR 70,000</Text>
+            <Text style={styles.SectionBody}>
+              {currency} {formatNumber(70000)}
+            </Text>
           </View>
           <View style={styles.HeaderSection}>
             <Text style={styles.SectionHead}>{t("Cash")}</Text>
-            <Text style={styles.SectionBody}>PKR 30,000</Text>
+            <Text style={styles.SectionBody}>
+              {currency} {formatNumber(30000)}
+            </Text>
           </View>
         </View>
         <View>
@@ -149,8 +160,25 @@ function CurrentLoan(): React.JSX.Element {
           >
             {t("Payment Details")}
           </Text>
-          <View style={{ flex: 1, flexDirection: "row",borderWidth:hp(0.3), margin: hp(1), borderRadius: hp(1), gap: hp(1),borderColor:colors.GREAT_WHITE}} >
-            <View style={{ justifyContent: 'center', alignItems: 'center', margin: hp(1), marginRight: hp(1) }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              borderWidth: hp(0.3),
+              margin: hp(1),
+              borderRadius: hp(1),
+              gap: hp(1),
+              borderColor: colors.GREAT_WHITE,
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                margin: hp(1),
+                marginRight: hp(1),
+              }}
+            >
               <Image
                 source={FilterPic} // Toggle between active and default image
                 style={{ width: hp(4), height: hp(3.5) }}
@@ -178,7 +206,6 @@ function CurrentLoan(): React.JSX.Element {
                 { label: "Type", value: "Type" },
                 { label: "Vendor", value: "Vendor" },
                 { label: "Price", value: "Price" },
-
               ]}
               isheader={true}
               bg_color_on={false}
@@ -203,15 +230,19 @@ function CurrentLoan(): React.JSX.Element {
               <View style={styles.decsAndQty}>
                 <Text style={styles.date}>{t(data.category)}</Text>
               </View>
-              <Text style={styles.cost}>PKR:{t(data.cost)}</Text>
+              <Text style={styles.cost}>
+                {currency}: {formatNumber(data.cost)}
+              </Text>
             </View>
           ))}
-
         </View>
       </View>
     </ScrollView>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   navbarContainer: {

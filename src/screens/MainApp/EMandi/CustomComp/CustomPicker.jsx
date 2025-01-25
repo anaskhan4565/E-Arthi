@@ -8,7 +8,7 @@ import { fonts } from "../../../../../util/FontName";
 const CustomPicker = ({ w_given = hp(8),
   allow_shadow = false, tx_color = colors.WHITE,
   items, currentState, bg_color_on = true, setCurrentState,
-  stateName="BuyScreen",
+  stateName,
   isheader, hp_given = hp(5), min_given = wp(50), padding_f = false }) => {
   const { t } = useTranslation();
 

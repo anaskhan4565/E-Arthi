@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     scrollContainer: {
-        flexWrap: 'wrap',
+        //flexWrap: 'wrap',
         justifyContent: 'center',
         paddingVertical: hp('2%'),
         // backgroundColor: 'red',

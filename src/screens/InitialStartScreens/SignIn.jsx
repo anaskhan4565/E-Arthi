@@ -42,8 +42,8 @@ function SignIn() {
 
       <View style={styles.inputs}>
         <View style={{ flexDirection: 'row', gap: hp(3) }}>
-          <CustomButton MainText={'Login By Email'} hgiven={hp(4)} wgiven={wp(30)} b_width={0} b_end_only={SwitchedButton ? 4 : 0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
-          <CustomButton MainText={'Login By Phone'} hgiven={hp(4)} wgiven={wp(30)} b_end_only={!SwitchedButton ? 4 : 0} b_width={0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
+          <CustomButton MainText={'Login By Email'} hgiven={hp(4)} wgiven={wp(40)} b_width={0} b_end_only={SwitchedButton ? 4 : 0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
+          <CustomButton MainText={'Login By Phone'} hgiven={hp(4)} wgiven={wp(40)} b_end_only={!SwitchedButton ? 4 : 0} b_width={0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
         </View>
         <View style={{ flexDirection: 'row', width: wp(85), justifyContent: 'center', alignItems: 'center' }}>
           {!SwitchedButton ?
@@ -110,6 +110,13 @@ function SignIn() {
         <View style={styles.line} />
       </View>
       <View style={styles.altSignin}>
+      <TouchableOpacity style={styles.altSigninButton}>
+          <Image
+            source={require("../../assets/whatsapp.png")}
+            style={styles.altSigninButtonIcon}
+          />
+          <Text style={{ fontSize: hp('1.7%'), fontFamily: fonts.Regular }}>{t('login with Whatsapp')}  </Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../../assets/google.png")}

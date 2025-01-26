@@ -22,6 +22,7 @@ import EInventorySupplier from "./src/screens/MainApp/TabScreens/E-InventoryScre
 import EInventorySuppliersList from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InvetorySuppliersList.tsx";
 import EInventoryAddSuppliers from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryAddSuppliers.tsx";
 import EInventorySupplierReports from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventorySupplierReports.tsx";
+import LanguageSelect from './src/screens/InitialStartScreens/LanguageSelect.tsx';
 
 import EWarehouseMainStack from "./src/screens/MainApp/TabScreens/E-Warehouse/E-WarehouseMainStack.tsx";
 //for i18-next
@@ -38,6 +39,7 @@ import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
 import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
 import EInventory from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-Inventory.tsx";
 import ETransportStack from "./src/screens/MainApp/TabScreens/E-Transport/E-TransportStack.tsx";
+import SelectLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -55,10 +57,8 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
           <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
           <Stack.Screen name={ScreensName.Connect} component={Connect} />
-          <Stack.Screen
-            name={ScreensName.ForgotPassword}
-            component={ForgotPassword}
-          />
+          <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
+          <Stack.Screen name={ScreensName.LanguageSelect} component={LanguageSelect} />
 
           <Stack.Screen name={ScreensName.OTP} component={OTP} />
           <Stack.Screen name={ScreensName.SignIn} component={SignIn} />

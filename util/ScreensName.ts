@@ -1,3 +1,4 @@
+import SelectLanguage from "../src/screens/SelectLanguage/SelectLanguage";
 
 export default {
     SplashScreen: "SplashScreen",
@@ -16,6 +17,7 @@ export default {
     Cnic_page_2: 'Cnic_page_2',
     BiometricVerification: "BiometricVerification",
     BiometricSuccess: "BiometricSuccess",
+    LanguageSelect: "LanguageSelect",
 
     Sidebar: "Sidebar",
     //specific to Internet

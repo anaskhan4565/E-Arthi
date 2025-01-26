@@ -10,11 +10,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../../util/FontName';
+import { useNavigation } from '@react-navigation/native';
 
 function Connect(): React.JSX.Element {
   const { i18n } = useTranslation(); // To access the i18n instance for language change
   const [modalVisible, setModalVisible] = useState(false); // To manage dropdown visibility
   const { t } = useTranslation()
+  const navigation = useNavigation();
   const handleLanguageChange = (language: string) => {
     i18n.changeLanguage(language); 
     setModalVisible(false); 
@@ -22,56 +24,14 @@ function Connect(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.WHITE }}>
-      <View style={{ padding: 10 }}>
-        <TouchableOpacity
-          onPress={() => setModalVisible(true)}
-          style={{
-            padding: 10,
-            backgroundColor: colors.GREEN,
-            borderRadius: 5,
-            alignItems: 'center',
-          }}
-        >
-          <Text style={{ color: colors.WHITE, fontSize: hp(2), fontFamily: fonts.Medium }}>Select Language</Text>
-        </TouchableOpacity>
-
-        {/* Modal for Language Options */}
-        <Modal
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Transparent background
-            }}
-          >
-            <View
-              style={{
-                // width: 200,
-                // height:200,
-                backgroundColor: colors.WHITE,
-                paddingHorizontal: 40,
-                borderRadius: 10,
-                flex: 0.2,
-                justifyContent: 'space-evenly'
-              }}
-            >
-              <TouchableOpacity onPress={() => handleLanguageChange('en')}>
-                <Text style={{ fontSize: hp(2), marginBottom: 10, fontFamily: fonts.Medium }}>English</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleLanguageChange('ur')}>
-                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>اردو</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleLanguageChange('sin')}>
-                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>سنڌي</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+      <View style={{ padding: 10, alignItems:'center', justifyContent:'center' }}>
+        <CustomButton
+          MainText={t('Select Language')}
+          BgGiven={colors.GREEN}
+          txColor={colors.WHITE}
+          isNavigation={true}
+          name={ScreensName.LanguageSelect}
+        />
       </View>
 
       <View style={{ flex: 0.75, justifyContent: 'center', marginTop: hp(16), alignItems: 'center' }}>

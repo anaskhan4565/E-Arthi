@@ -6,15 +6,43 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
-const CustomInput = ({ placeholder, hide, w = wp('85%'), h = hp('5.5%'), bg_give = colors.GREAT_WHITE, b_radius = 3,editable = true, value = "" }) => {
+
+const CustomInput = ({
+  placeholder,
+  hide,
+  w = wp('85%'),
+  h = hp('5.5%'),
+  bg_give = colors.GREAT_WHITE,
+  b_radius = 3,
+  editable = true,
+  value,
+  want=true,
+  onChangeText,
+  numericOnly = false, // New prop to enable numeric input
+}) => {
+  const handleTextChange = (text) => {
+    if(want){
+    if (numericOnly) {
+      const numericText = text.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+      onChangeText(numericText);
+    } else {
+      onChangeText(text);
+    }
+  }};
+
   return (
     <TextInput
-      style={[styles.textInputStyle, { width: w, height: h, backgroundColor: bg_give, borderRadius: b_radius }]}
+      style={[
+        styles.textInputStyle,
+        { width: w, height: h, backgroundColor: bg_give, borderRadius: b_radius },
+      ]}
       placeholder={placeholder}
       placeholderTextColor={colors.LIGHT_GRAY}
-      secureTextEntry={hide == 1 ? true : false}
-      editable ={editable}
+      secureTextEntry={hide === 1}
+      editable={editable}
       value={value}
+      onChangeText={handleTextChange} // Updated handler
+      keyboardType={numericOnly ? 'numeric' : 'default'} // Numeric keyboard for numbers
     />
   );
 };
@@ -28,8 +56,6 @@ const styles = StyleSheet.create({
     borderColor: colors.GREAT_WHITE,
     borderWidth: 1,
     fontFamily: fonts.Regular,
-    //backgroundColor: colors.GREAT_WHITE,
-    // borderRadius: 3,
     color: colors.BLACK,
     borderColor: colors.LIGHT_GRAY,
   },

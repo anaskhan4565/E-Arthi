@@ -3,7 +3,7 @@ import { StyleSheet, View, Image } from 'react-native';
 import { CommonActions, NavigationProp } from '@react-navigation/native';
 import ScreensName from '../../util/ScreensName';
 import colors from '../../util/colors';
-import ArthiLogo from '../assets/Icon/Logo.png';
+import ArthiLogo from '../assets/Icon/E-Agri.png';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 type RootStackParamList = {
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: wp('50%'),
-    height: hp('40%'),
+    width: hp('55%'),
+    height: hp('89%'),
     resizeMode: 'contain',
   },
 });

@@ -73,7 +73,7 @@ const OTP = () => {
             <Text style={styles.title}>{t('OTP Verification')}</Text>
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
-                    {t('Please enter the verification code we’ve sent you on 9999999999')}
+                    {t('Please enter the verification code we’ve sent you on +92-3212684192')}
                 </Text>
             </View>
 
@@ -97,7 +97,7 @@ const OTP = () => {
 
             <CustomButton
                 MainText={t('Verify')}
-                BgGiven={colors.GREEN} name={ScreensName.ELoan} txColor={colors.WHITE} isNavigation={1} />
+                BgGiven={colors.GREEN} name={ScreensName.ELoanSuccessScr} txColor={colors.WHITE} isNavigation={1} />
         </View>
     );
 };
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         // marginRight: wp("43%"),
         marginBottom: hp('3%'),
+        marginHorizontal:hp(2)
 
     },
     autocapturetext: {

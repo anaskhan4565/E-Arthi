@@ -12,7 +12,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../../util/FontName';
+import { fonts } from '../../../util/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 
 const AboutMore = () => {

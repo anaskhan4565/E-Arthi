@@ -46,7 +46,7 @@ function ETransportMain(): React.JSX.Element {
                             )
                         ))}
                     </View>
-                    <CustomButton MainText={'Add New Transport'} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.ETransportNewTransport} />
+                    <CustomButton MainText={t('Add New Transport')} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.ETransportNewTransport} />
                 </View>
             </ScrollView>
         </SafeAreaView >

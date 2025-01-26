@@ -81,7 +81,7 @@ function CurrentLoan(): React.JSX.Element {
       </View>
       <View style={{ flex: 7 }}>
         <View style={styles.searchbar}>
-          <CustomSearchApp placeholder={"Search in here"} />
+          <CustomSearchApp placeholder={t("Search in here")} />
         </View>
         <View
           style={{
@@ -103,17 +103,17 @@ function CurrentLoan(): React.JSX.Element {
           }}
         >
           <MyPieChart
-            legend1Name={"Total Loan Amount"}
+            legend1Name={t("Total Loan Amount")}
             legend1Population={100000}
-            legend2Name={"Remaining Loan"}
+            legend2Name={t("Remaining Loan")}
             legend2Population={25000}
             legend1_color={"#FF6F61"}
             legend2_color={"#6B8E23"}
           />
           <MyPieChart
-            legend1Name={"Unutilized Cash Line"}
+            legend1Name={t("Unutilized Cash Line")}
             legend1Population={40000}
-            legend2Name={"Unutilized Line of Credit"}
+            legend2Name={t("Unutilized Line of Credit")}
             legend2Population={25000}
             legend1_color={"#7ED321"}
             legend2_color={"#4A90E2"}
@@ -185,17 +185,17 @@ function CurrentLoan(): React.JSX.Element {
               />
             </View>
             <CustomBoxSort
-              title={"Name"}
+              title={t("Name")}
               activeState={ByName}
               setActiveState={SetByName}
             />
             <CustomBoxSort
-              title={"Category"}
+              title={t("Category")}
               activeState={ByCategory}
               setActiveState={SetByCategory}
             />
             <CustomBoxSort
-              title={"Price"}
+              title={t("Price")}
               activeState={ByPrice}
               setActiveState={SetByPrice}
             />

@@ -53,7 +53,7 @@ function SignUp(): React.JSX.Element {
                         innerIconStyle={{ borderRadius: 7 }}
                         textComponent={
                             <Text style={styles.RememberMeText}>
-                                {t('Sign up for e-mails to get updates from E-Arthi tips and offers')}
+                                {t('Sign up for e-mails to get updates from E-Agri tips and offers')}
                             </Text>
                         }
                     />

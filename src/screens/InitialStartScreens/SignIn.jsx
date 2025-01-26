@@ -24,14 +24,19 @@ import { fonts } from "../../../util/FontName";
 import CustomPicker from "../MainApp/EMandi/CustomComp/CustomPicker";
 
 function SignIn() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigation = useNavigation();
   const { t } = useTranslation();
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigation = useNavigation();
+  const [number, setNumber] = useState('');
   const [SwitchedButton, SetSwitchedButton] = useState(false)
-  useEffect(() => {
-    console.log(SwitchedButton)
-  }, [SwitchedButton])
+  useEffect(()=>{
+    setNumber('')
+  },[SwitchedButton])
+
+
+
+  
   return (
     <SafeAreaView style={styles.container}>
 
@@ -42,8 +47,8 @@ function SignIn() {
 
       <View style={styles.inputs}>
         <View style={{ flexDirection: 'row', gap: hp(3) }}>
-          <CustomButton MainText={'Login By Email'} hgiven={hp(4)} wgiven={wp(40)} b_width={0} b_end_only={SwitchedButton ? 4 : 0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
-          <CustomButton MainText={'Login By Phone'} hgiven={hp(4)} wgiven={wp(40)} b_end_only={!SwitchedButton ? 4 : 0} b_width={0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
+          <CustomButton MainText={t('Login By Email')} hgiven={hp(4)} wgiven={wp(40)} b_width={0} b_end_only={SwitchedButton ? 4 : 0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
+          <CustomButton MainText={t('Login By Phone')} hgiven={hp(4)} wgiven={wp(40)} b_end_only={!SwitchedButton ? 4 : 0} b_width={0} onPressG={() => SetSwitchedButton(!SwitchedButton)} />
         </View>
         <View style={{ flexDirection: 'row', width: wp(85), justifyContent: 'center', alignItems: 'center' }}>
           {!SwitchedButton ?
@@ -59,7 +64,7 @@ function SignIn() {
               />
             </View>
             : null}
-          <CustomInput placeholder={SwitchedButton ? t('Username') : t('Phone Number')} h={hp('5.5%')} w={!SwitchedButton?wp('65%'):wp(84)} b_radius={10} bg_give={colors.WHITE} />
+          <CustomInput placeholder={SwitchedButton ? t('Username') : t('Phone Number')} h={hp('5.5%')} w={!SwitchedButton?wp('65%'):wp(84)} b_radius={10} bg_give={colors.WHITE} numericOnly={!SwitchedButton?true:false}     value={number} onChangeText={setNumber} />
         </View>
         <View style={styles.passInputBox}>
           <TextInput

@@ -1,3 +1,4 @@
+import EVendorsMainStack from "../src/screens/MainApp/TabScreens/E-Vendors/E-VendorsMainStack";
 
 export default {
     SplashScreen: "SplashScreen",
@@ -46,6 +47,10 @@ export default {
     EWarehouseNewSpaceConfirmWarehouse: "EWarehouseNewSpaceConfirmWarehouse",
     EWarehousePreviousWarehouses: "EWarehousePreviousWarehouses",
     EWarehousePreviousWarehouseDetails: "EWarehousePreviousWarehouseDetails",
+
+    EVendorsMainStack: "EVendorsMainStack",
+    EVendors: "EVendors",
+    EVendorsDetails: "EVendorsDetails",
 
     EInventory: "E-Inventory",
     EMarket: "E-Market",

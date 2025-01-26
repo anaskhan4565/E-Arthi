@@ -120,30 +120,35 @@ function CurrentLoan(): React.JSX.Element {
           />
         </View>
         <View style={styles.MainHeader}>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Requested amount")}</Text>
-            <Text style={styles.SectionBody}>
-              {currency} {formatNumber(100000)}
-            </Text>
+          <View style={styles.mainboxrow}>
+            <View style={styles.HeaderSection}>
+              <Text style={styles.SectionHead}>{t("Requested amount")}</Text>
+              <Text style={styles.SectionBody}>
+                {currency} {formatNumber(100000)}
+              </Text>
+            </View>
+            <View style={styles.HeaderSection}>
+              <Text style={styles.SectionHead}>{t("Amount Left")}</Text>
+              <Text style={styles.SectionBody}>
+                {currency} {formatNumber(25000)}
+              </Text>
+            </View>
           </View>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Amount Left")}</Text>
-            <Text style={styles.SectionBody}>
-              {currency} {formatNumber(25000)}
-            </Text>
+          <View style={styles.mainboxrow}>
+            <View style={styles.HeaderSection}>
+              <Text style={styles.SectionHead}>{t("Line of Credit")}</Text>
+              <Text style={styles.SectionBody}>
+                {currency} {formatNumber(70000)}
+              </Text>
+            </View>
+            <View style={styles.HeaderSection}>
+              <Text style={styles.SectionHead}>{t("Cash")}</Text>
+              <Text style={styles.SectionBody}>
+                {currency} {formatNumber(30000)}
+              </Text>
+            </View>
           </View>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Line of Credit")}</Text>
-            <Text style={styles.SectionBody}>
-              {currency} {formatNumber(70000)}
-            </Text>
-          </View>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Cash")}</Text>
-            <Text style={styles.SectionBody}>
-              {currency} {formatNumber(30000)}
-            </Text>
-          </View>
+
         </View>
         <View>
           <Text
@@ -168,7 +173,9 @@ function CurrentLoan(): React.JSX.Element {
               margin: hp(1),
               borderRadius: hp(1),
               gap: hp(1),
+              justifyContent: 'space-evenly',
               borderColor: colors.GREAT_WHITE,
+
             }}
           >
             <View
@@ -177,6 +184,7 @@ function CurrentLoan(): React.JSX.Element {
                 alignItems: "center",
                 margin: hp(1),
                 marginRight: hp(1),
+
               }}
             >
               <Image
@@ -264,6 +272,7 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(4),
     height: hp(5),
     marginTop: hp(2),
+
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,
@@ -275,11 +284,14 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
     fontSize: hp(2),
     width: wp(30),
+
   },
   cost: {
     fontFamily: fonts.Regular,
     fontSize: hp(2),
     width: wp(40),
+    marginLeft: wp(5),
+
   },
   decsAndQty: {
     alignContent: "center",
@@ -295,11 +307,13 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
   },
   HeaderSection: {
-    width: "41%",
-    aspectRatio: 1,
+    width: wp(35),
+    height: hp(10),
+    //aspectRatio: 1,
     justifyContent: "center",
     margin: "1%",
     textAlign: "left",
+
   },
   SectionHead: {
     fontFamily: fonts.Medium,
@@ -322,6 +336,15 @@ const styles = StyleSheet.create({
     alignContent: "space-between",
     padding: 10,
     elevation: 5,
+  },
+  mainboxrow: {
+    flexDirection: 'row',
+    width: wp(100),
+    height: hp(9),
+    justifyContent: "space-between",
+    flexWrap: 'wrap',
+    alignItems: 'center',
+
   },
 });
 

@@ -8,7 +8,7 @@ const EInventoryDet = [
     },
     {
         screen: ScreensName.Sales,
-        title: "Sales",
+        title: "Sales & Purchase Orders",
         img: require('../src/assets/MainApp/E-Inventory/Sales.png')
     },
     {
@@ -48,103 +48,68 @@ const InventorySupplierDet = [
 
 const InventorySuppliersListDet = [
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S101",
+        name: "ABC Electronics",
+        item: "Microprocessors"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S102",
+        name: "Global Parts Co.",
+        item: "Circuit Boards"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S103",
+        name: "Tech Solutions Inc.",
+        item: "Power Supplies"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S104",
+        name: "Digital Components Ltd.",
+        item: "LED Displays"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S105",
+        name: "Precision Hardware",
+        item: "Memory Modules"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S106",
+        name: "Silicon Valley Parts",
+        item: "Semiconductors"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S107",
+        name: "Eastern Electronics",
+        item: "Capacitors"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S108",
+        name: "Quality Components",
+        item: "Resistors"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
+        id: "S109",
+        name: "Smart Systems",
+        item: "Sensors"
     },
     {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
-    {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
-    {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
-    {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
-    {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
-    {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
-    {
-        id: "A12",
-        name: "name",
-        item: "item name"
-    },
+        id: "S110",
+        name: "Future Tech",
+        item: "Display Panels"
+    }
 ];
 
 const SupplierReports = [
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
-    'Report 2/13/2024',
+    'Inventory Summary - Feb 28, 2024',
+    'Purchase Orders - Feb 21, 2024',
+    'Supplier Performance - Feb 14, 2024',
+    'Stock Analysis - Feb 07, 2024',
+    'Delivery Times - Jan 31, 2024',
+    'Cost Analysis - Jan 24, 2024',
+    'Quality Metrics - Jan 17, 2024',
+    'Returns Report - Jan 10, 2024',
+    'Supplier Ratings - Jan 03, 2024',
+    'Year-End Summary - Dec 31, 2023'
 ];
 
 export { InventoryDet, EInventoryDet, InventorySupplierDet, InventorySuppliersListDet, SupplierReports };

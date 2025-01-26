@@ -28,10 +28,13 @@ import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName';
 import CustomInput from '../../../../components/CustomInput.jsx';
 import { TextInput } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
 
 function EInventoryDetails(): React.JSX.Element {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const [selectedPaymentCycle, setSelectedPaymentCycle] = React.useState('');
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -57,16 +60,9 @@ function EInventoryDetails(): React.JSX.Element {
                             />
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.label}>{t('Item Amount')}</Text>
+                            <Text style={styles.label}>{t('Category')}</Text>
                             <TextInput 
                             placeholder={t('Enter Here')} 
-                            style={styles.value}
-                            />
-                        </View>
-                        <View style={styles.detailRow}>
-                            <Text style={styles.label}>{t('Delivery Address')}</Text>
-                            <TextInput 
-                            placeholder={t('Enter Here')}
                             style={styles.value}
                             />
                         </View>
@@ -78,11 +74,35 @@ function EInventoryDetails(): React.JSX.Element {
                             />
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.label}>{t('Delivery Time')}</Text>
+                            <Text style={styles.label}>{t('Delivery Address')}</Text>
                             <TextInput 
                             placeholder={t('Enter Here')}
                             style={styles.value}
                             />
+                        </View>
+                        <View style={styles.detailRow}>
+                            <Text style={styles.label}>{t('Payment Cycle')}</Text>
+                            <View style={[styles.value, {
+                                // padding: 0,
+                                margin: 0,
+                            }]}>
+                                <Picker
+                                    selectedValue={selectedPaymentCycle}
+                                    onValueChange={(itemValue) => setSelectedPaymentCycle(itemValue)}
+                                    style={{ 
+                                        height: hp(3.5),
+                                        backgroundColor: colors.WHITE,
+                                        margin: 0,
+                                        padding: 0,
+                                    }}
+                                >
+                                    <Picker.Item label={t('Select Payment Cycle')} value="" />
+                                    <Picker.Item label={t('Weekly')} value="weekly" />
+                                    <Picker.Item label={t('Bi-weekly')} value="biweekly" />
+                                    <Picker.Item label={t('Monthly')} value="monthly" />
+                                    <Picker.Item label={t('Quarterly')} value="quarterly" />
+                                </Picker>
+                            </View>
                         </View>
                     </View>
 

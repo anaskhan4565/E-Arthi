@@ -16,17 +16,19 @@ const CustomInput = ({
   b_radius = 3,
   editable = true,
   value,
+  want=true,
   onChangeText,
   numericOnly = false, // New prop to enable numeric input
 }) => {
   const handleTextChange = (text) => {
+    if(want){
     if (numericOnly) {
       const numericText = text.replace(/[^0-9]/g, ''); // Remove non-numeric characters
       onChangeText(numericText);
     } else {
       onChangeText(text);
     }
-  };
+  }};
 
   return (
     <TextInput

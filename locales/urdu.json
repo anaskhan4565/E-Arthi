@@ -251,13 +251,13 @@
   "salesAndPurchaseOrders": "فروخت اور خریداری کے آرڈرز",
   "loanAmount": "قرض کی رقم",
   "Welcome!": "خوش آمدید!",
-
+  "E-AGRI": "ای زراعت",
   "Login By Email": "ای میل کے ذریعے لاگ ان کریں",
   "Login By Phone": "فون کے ذریعے لاگ ان کریں",
   "login with Whatsapp": "واٹس ایپ کے ذریعے لاگ ان کریں",
   "Phone Number": "فون نمبر",
-  "E-Warehouse": "ای گودام",
-   "Other": "دیگر",
+  "E-WareHouse": "ای گودام",
+  "Other": "دیگر",
   "E-Transport": "ای ٹرانسپورٹ",
   "E-MarketPlace": "ای مارکیٹ پلیس",
   "E-Register": "ای رجسٹر",
@@ -270,5 +270,14 @@
   "Remaining Loan": "بقیہ قرض",
   "Unutilized Cash Line": "غیر استعمال شدہ کیش لائن",
   "Unutilized Line of Credit": "غیر استعمال شدہ کریڈٹ لائن",
-  "E-Agri Products": "ای زرعی مصنوعات"
+  "E-Agri Products": "ای زرعی مصنوعات",
+  "E-Mandi": "ای منڈی",
+  "You have Applied for a new Loan!": "آپ نے ایک نیا قرض حاصل کرنے کے لیے درخواست دی ہے!",
+  "We will notify you when your loan application is Approved!. Till then stay connected with us.": "ہم آپ کو مطلع کریں گے جب آپ کی قرض کی درخواست منظور ہو جائے گی! تب تک ہمارے ساتھ جڑے رہیں۔",
+  "Loan Amount (in PKR)": "قرض کی رقم (PKR میں)",
+  "Past Performance": "ماضی کی کارکردگی",
+  "Current": "موجودہ",
+  "Yield": "پیداوار",
+  "Revenue": "آمدنی",
+  "Apply": "درخواست دیں"
 }

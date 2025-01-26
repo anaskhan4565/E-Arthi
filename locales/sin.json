@@ -154,6 +154,7 @@
   "Address": "پتو",
   "BOP Tower,10-B Block-4 Main Mandi Khairpur": "بي او پي ٽاور، 10-بي بلاڪ-4 مين منڊي خيرپور",
   "Phone": "فون",
+  "E-Mandi": "اي منڊي",
   "Web": "ويب",
   "Authorized Capital": "اجازت ٿيل سرمايو",
   "Paid Up Capital": "ادا ڪيل سرمايو",
@@ -247,7 +248,7 @@
   "Login By Phone": "فون سان لاگ ان ڪريو",
   "login with Whatsapp": "واٽس ايپ سان لاگ ان ڪريو",
   "Phone Number": "فون نمبر",
-  "E-Warehouse": "اي-ويئر هائوس",
+  "E-WareHouse": "اي-ويئر هائوس",
   "Other": "ٻيو",
   "E-Transport": "اي-ٽرانسپورٽ",
   "E-MarketPlace": "اي-مارڪيٽپليس",
@@ -261,5 +262,13 @@
   "Remaining Loan": "رهيل قرض",
   "Unutilized Cash Line": "غير استعمال ٿيل نقد رقم",
   "Unutilized Line of Credit": "غير استعمال ٿيل ڪريڊٽ لائن",
-  "E-Agri Products": "اي-زراعت جون شيون"
+  "E-Agri Products": "اي-زراعت جون شيون",
+  "You have Applied for a new Loan!": "توهان هڪ نئون قرض حاصل ڪرڻ لاءِ درخواست ڏني آهي!",
+  "We will notify you when your loan application is Approved!. Till then stay connected with us.": "اسان توهان کي اطلاع ڏينداسين جڏهن توهان جو قرض درخواست منظور ٿي ويندو! ان وقت تائين اسان سان جڙيل رهو.",
+  "Loan Amount (in PKR)": "قرض جي رقم (PKR ۾)",
+  "Past Performance": "ماضي جو ڪارڪردگي",
+  "Current": "موجوده",
+  "Yield": "پيداوار",
+  "Revenue": "آمدني",
+  "Apply": "درخواست ڏيو"
 }

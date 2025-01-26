@@ -42,36 +42,42 @@ function ELoanNewLoan() {
             <Text style={styles.heading}>{t("Requested amount")}</Text>
           </View>
           <View style={styles.inputContainer}>
-            <Text style={[styles.inputLabel,{marginBottom: hp(1)}]}>Loan Amount (in PKR)</Text>
+            <Text style={[styles.inputLabel,{marginBottom: hp(1)}]}>{t("Loan Amount (in PKR)")}</Text>
             <CustomInput
               placeholder={t("Amount")}
               h={hp("5.5%")}
               w={wp("85%")}
               b_radius={10}
+              
               bg_give={colors.WHITE}
+              want={false}
+
             />
           </View>
-          <Text style={styles.subHeading}>Past Performance</Text>
+          <Text style={styles.subHeading}>{t("Past Performance")}</Text>
           {currentYear &&
             ["Current", currentYear - 1, currentYear - 2, currentYear - 3].map((year) => (
               <View key={year} style={styles.inputContainer}>
                 <Text style={styles.label}>{t(year)}</Text>
                 <View style={styles.inputRow}>
-                  <Text style={styles.inputLabel}>Yield</Text>
+                  <Text style={styles.inputLabel}>{t("Yield")}</Text>
                   <CustomInput
                     h={hp("5.5%")}
                     w={wp("67%")}
                     b_radius={10}
+                    want={false}
+
                     bg_give={colors.WHITE}
                   />
                 </View>
                 <View style={styles.inputRow}>
-                  <Text style={styles.inputLabel}>Revenue</Text>
+                  <Text style={styles.inputLabel}>{t("Revenue")}</Text>
                   <CustomInput
                     h={hp("5.5%")}
                     w={wp("67%")}
                     b_radius={10}
                     bg_give={colors.WHITE}
+                    want={false}
                   />
                 </View>
               </View>
@@ -84,6 +90,7 @@ function ELoanNewLoan() {
             name={ScreensName.EloanOTP}
             txColor={colors.WHITE}
             isNavigation={1}
+            
           />
         </View>
       </ScrollView>

@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     height: hp('7%'),
     borderRadius: hp('1%'),
     resizeMode: 'contain',
+    marginLeft:hp(2)
   },
   BackIMG:{
     width: wp('10%'),

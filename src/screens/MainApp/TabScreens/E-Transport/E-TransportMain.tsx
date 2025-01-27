@@ -35,7 +35,7 @@ function ETransportMain(): React.JSX.Element {
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
-                <View style={{ marginHorizontal: hp(3) }} >
+                <View style={{ marginHorizontal: hp(1) }} >
                     <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>E-Transport</Text>
                 </View>
                 <View style={styles.bodyContainer}>
@@ -44,7 +44,7 @@ function ETransportMain(): React.JSX.Element {
                         {ETransportMaindet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.ETransportStack)} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.ETransportStack)} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}
@@ -73,9 +73,12 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginTop: hp('3.2%'),
         height: hp('7%'),
+        alignSelf:'flex-start',
+        marginLeft:hp(1)
     },
     bodyContainer: {
-        alignItems: 'center',
+        alignItems: 'flex-start',
+        marginHorizontal:hp(3)
 
     },
     titleContainer: {

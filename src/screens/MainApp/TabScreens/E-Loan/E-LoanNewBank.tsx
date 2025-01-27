@@ -22,6 +22,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
+import SwitchButtonCustom from './NewLoanComponents/SwitchButton.jsx';
 
 
 
@@ -39,8 +40,11 @@ function ELoanNewBank(): React.JSX.Element {
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
-                <View style={styles.bodyContainer}>
-
+                <View style={{ marginHorizontal: hp(2) }} >
+                    <Text style={{ fontSize: hp(2.5), fontFamily: fonts.ExtraBold, letterSpacing: hp(0.6) }}>Request A New Loan</Text>
+                </View>
+                <View style={[styles.bodyContainer, { borderWidth: 1, margin: 2 }]}>
+                        <SwitchButtonCustom/>
                     <View style={styles.scrollContainer}>
                         {ELoanBank.map((Category, index) => (
                             Category.title.trim() !== '' && (

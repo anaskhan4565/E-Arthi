@@ -43,7 +43,7 @@ function PurchaseHisotry(): React.JSX.Element {
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={t("Search in here")} />
         </View>
-        <View style={{ marginHorizontal: hp(2),marginBottom:hp(1) }} >
+        <View style={{marginBottom:hp(1) }} >
           <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, letterSpacing: hp(0.6) }}>E-Warehouses</Text>
         </View>
         <View style={styles.headerRow}>
@@ -107,6 +107,8 @@ const styles = StyleSheet.create({
   searchbar: {
     marginVertical: hp(1.3),
     height: hp(7),
+    alignSelf:'flex-start',
+    width:wp(85)
   },
   headerRow: {
     flexDirection: "row",

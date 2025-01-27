@@ -38,7 +38,7 @@ function EInventory(): React.JSX.Element {
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
-                <View style={{marginHorizontal:hp(3)}} >
+                <View style={{marginHorizontal:hp(1)}} >
                     <Text style={{fontSize:hp(3.5),fontFamily:fonts.ExtraBold,marginLeft:hp(2),letterSpacing:hp(0.6)}}>E-Loan</Text>
                 </View>
                 <View style={styles.bodyContainer}>
@@ -47,7 +47,7 @@ function EInventory(): React.JSX.Element {
                         {EloanDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={Category.title} screenName={Category.screen} navigationName={ScreensName.ELoanMainStack} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={Category.title} screenName={Category.screen} navigationName={ScreensName.ELoanMainStack} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}
@@ -73,10 +73,13 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginTop: hp('3.2%'),
         height: hp('7%'),
+        marginLeft:hp(1),
+        alignSelf:'flex-start'
+        
     },
     bodyContainer: {
-        alignItems: 'center',
-
+        marginHorizontal:hp(4),
+        
     },
     titleContainer: {
         padding: 10,
@@ -87,10 +90,10 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         //flexWrap: 'wrap',
-        justifyContent: 'center',
-        paddingVertical: hp('2%'),
+        paddingVertical: hp('1%'),
         // backgroundColor: 'red',
         alignItems: 'center',
+        
 
     },
     itemBoxWrapper: {

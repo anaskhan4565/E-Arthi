@@ -5,8 +5,9 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import { EloanDet } from '../../../../../util/E-Loan.js';
+import { EInventoryDet } from '../../../../../util/E-Inventory.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
+import { ELoanBank } from '../../../../../util/E-Loan.js';
 
 
 import {
@@ -24,7 +25,7 @@ import ScreensName from '../../../../../util/ScreensName.ts';
 
 
 
-function EInventory(): React.JSX.Element {
+function ELoanNewBank(): React.JSX.Element {
     const { t } = useTranslation();
 
     return (
@@ -41,10 +42,10 @@ function EInventory(): React.JSX.Element {
                 <View style={styles.bodyContainer}>
 
                     <View style={styles.scrollContainer}>
-                        {EloanDet.map((Category, index) => (
+                        {ELoanBank.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={Category.title} screenName={Category.screen} navigationName={ScreensName.ELoanMainStack} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.ELoanMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}
@@ -95,8 +96,7 @@ const styles = StyleSheet.create({
         marginBottom: hp('2%'),
         marginHorizontal: wp('-3%'),
         alignItems: 'center',
-        justifyContent: "center",
-        alignContent: 'center'
+
     },
     recommendedProducts: {
         marginTop: 20,
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
 
 
 
-export default EInventory;
+export default ELoanNewBank;

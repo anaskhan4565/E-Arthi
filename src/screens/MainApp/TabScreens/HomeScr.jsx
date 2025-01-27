@@ -101,7 +101,8 @@ searchContainer: {
   scrollContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start', // Align items to the start
+    alignItems: 'flex-start',     // Ensure items align under each other
     paddingVertical: hp('3%'),
   },
   itemBoxWrapper: {

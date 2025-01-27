@@ -7,6 +7,7 @@ import MandiNavbar from '../CustomComp/MandiNavbar';
 import CustomBottomSheetExport from '../CustomComp/CustomBottomSheet';
 import CustomNavigationMandi from '../CustomComp/CustomNavigation';
 import { useTranslation } from 'react-i18next';
+import { fonts } from '../../../../../util/FontName';
 const MarketDept = () => {
   const [marketData, setMarketData] = useState([]);
   const { t } = useTranslation();
@@ -48,7 +49,11 @@ const MarketDept = () => {
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <MandiNavbar />
+
         <CustomNavigationMandi />
+        <View style={{ marginHorizontal: hp(2) }} >
+          <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6),textAlign:'center' }}>E-Mandi Market Depth</Text>
+        </View>
 
         <View style={styles.marketDeptContainer}>
           <View style={styles.headerContainer}>

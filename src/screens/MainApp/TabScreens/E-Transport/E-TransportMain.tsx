@@ -35,6 +35,9 @@ function ETransportMain(): React.JSX.Element {
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
+                <View style={{ marginHorizontal: hp(3) }} >
+                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>E-Transport</Text>
+                </View>
                 <View style={styles.bodyContainer}>
 
                     <View style={styles.scrollContainer}>
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
         marginTop: hp('0.14%'),
     },
     searchContainer: {
-        marginVertical: hp('3.2%'),
+        marginTop: hp('3.2%'),
         height: hp('7%'),
     },
     bodyContainer: {

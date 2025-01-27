@@ -16,7 +16,8 @@ const CustomButton = ({
   b_width = 1,
   b_radius = 8,
   onPressG, // Custom onPress event
-  b_end_only
+  b_end_only,
+  isSelected = false
 }) => {
   const navigation = useNavigation();
 
@@ -52,7 +53,7 @@ const CustomButton = ({
       ]}
       onPress={handlePress} // Attach the decided handler
     >
-      <Text style={{ color: txColor, fontSize: hp('2%') }}>{MainText}</Text>
+      <Text style={{ color: txColor, fontSize: !isSelected ? hp('2%') : hp('2.2%'), fontWeight: isSelected ? 'bold' : 'normal' }}>{MainText}</Text>
     </TouchableOpacity>
   );
 };

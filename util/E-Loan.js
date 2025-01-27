@@ -1,7 +1,7 @@
 import ScreensName from './ScreensName.ts';
-export default [
+const EloanDet = [
     {
-        screen: ScreensName.ELoanNewLoan,
+        screen: ScreensName.ELoanNewBank,
         title: "New Loan",
         img: require('../src/assets/MainApp/E-Loan/loan.png')
     },
@@ -21,3 +21,26 @@ export default [
         img: require('../src/assets/MainApp/E-Loan/loans.png')
     },
 ];
+const ELoanBank = [
+    {
+        screen: ScreensName.EloanHBL,
+        title: "Habib Bank Limited",
+        img: require('../src/assets/MainApp/E-Loan/HBL.png')
+    },
+    {
+        screen: ScreensName.EloanBOP,
+        title: "Bank Of Punjab",
+        img: require('../src/assets/MainApp/E-Loan/BOP.png')
+    },
+    {
+        screen: ScreensName.EloanZTBL,
+        title: "Zari Tarakiyati Bank",
+        img: require('../src/assets/MainApp/E-Loan/ZTBL.png')
+    },
+    {
+        screen: ScreensName.EloanMeezan,
+        title: "Meezan Bank",
+        img: require('../src/assets/MainApp/E-Loan/Meezan.png')
+    },
+];
+export { EloanDet, ELoanBank };

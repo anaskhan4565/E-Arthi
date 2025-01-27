@@ -21,12 +21,12 @@ const ETransportNewTrans = [
         img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },
     {
-        screen: ScreensName.ETransportAir,
+        screen: ScreensName.ETransportAddDetails,
         title: "Air",
         img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },
     {
-        screen: ScreensName.ETransportShip,
+        screen: ScreensName.ETransportAddDetails,
         title: "Ship",
         img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },

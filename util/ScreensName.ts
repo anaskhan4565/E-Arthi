@@ -1,3 +1,4 @@
+import EVendorsMainStack from "../src/screens/MainApp/TabScreens/E-Vendors/E-VendorsMainStack";
 import SelectLanguage from "../src/screens/SelectLanguage/SelectLanguage";
 
 export default {
@@ -39,8 +40,13 @@ export default {
     EloanCurrentLoan: "EloanCurrentLoan",
     EloanSelectedLoan: "EloanSelectedLoan",
     ELoanNewLoan: "ELoanNewLoan",
-    ELoanSetAside:"ELoanSetAside",
-    ELoanSuccessScr:"ELoanSuccessScr",
+    ELoanSetAside: "ELoanSetAside",
+    ELoanSuccessScr: "ELoanSuccessScr",
+    ELoanNewBank: "ELoanNewBank",
+    EloanHBL: "EloanHBL",
+    EloanMeezan: "EloanMeezan",
+    EloanBOP: "EloanBOP",
+    EloanZTBL: "EloanZTBL",
 
     EWarehouseMainStack: "EWarehouseMainStack",
     EWarehouse: "EWarehouse",
@@ -49,6 +55,10 @@ export default {
     EWarehouseNewSpaceConfirmWarehouse: "EWarehouseNewSpaceConfirmWarehouse",
     EWarehousePreviousWarehouses: "EWarehousePreviousWarehouses",
     EWarehousePreviousWarehouseDetails: "EWarehousePreviousWarehouseDetails",
+
+    EVendorsMainStack: "EVendorsMainStack",
+    EVendors: "EVendors",
+    EVendorsDetails: "EVendorsDetails",
 
     EInventory: "E-Inventory",
     EMarket: "E-Market",

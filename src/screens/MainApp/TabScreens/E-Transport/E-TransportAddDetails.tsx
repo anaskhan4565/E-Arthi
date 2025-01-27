@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         width: wp(60),
         fontSize: hp(1.5),
         fontFamily: fonts.Regular,
-        marginRight: wp(3),
+        marginRight: wp(5),
         height: hp(5),
         borderWidth: 1,
         borderRadius: 4,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         marginTop: hp(2),
         justifyContent: 'flex-start',
         width: wp(100),
-        marginLeft: wp(8),
+        marginLeft: wp(6),
     },
     locationdetailstext: {
         color: colors.GREEN,

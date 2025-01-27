@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import {
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 import upImage from '../CustomPictures/try/upnormal.png'
 import upImageActive from '../CustomPictures/try/upActive.png'
 import downImage from '../CustomPictures/try/downnormal.png'
 import downImageActive from '../CustomPictures/try/downActive.png'
 
-const CustomBoxSort = ({ title,activeState,setActiveState }) => {
+const CustomBoxSort = ({ title, activeState, setActiveState }) => {
   //const [activeState, setActiveState] = useState(null); // Track which button is active
 
   const handleButtonClick = (button) => {
@@ -59,6 +61,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
+    width: wp(24),
+    height: hp(6),
     elevation: 5, // For Android shadow
     margin: hp(0.5),
     flexDirection: 'row',
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    fontSize: 14,
+    fontSize: hp(1.9),
     fontWeight: 'bold',
     marginLeft: hp(1),
   },

@@ -39,6 +39,8 @@ import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
 import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
 import EInventory from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-Inventory.tsx";
 import ETransportStack from "./src/screens/MainApp/TabScreens/E-Transport/E-TransportStack.tsx";
+import EVendorsMainStack from "./src/screens/MainApp/TabScreens/E-Vendors/E-VendorsMainStack.tsx";
+import SelectLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -79,6 +81,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
 
           <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
+          <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
 
           <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />

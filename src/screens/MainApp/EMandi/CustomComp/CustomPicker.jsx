@@ -13,14 +13,14 @@ const CustomPicker = ({ w_given = hp(8),
   const { t } = useTranslation();
 
   const checkVal = (e) => {
-    if (stateName=='BuyScreen') {
+    if (stateName == 'BuyScreen') {
       if (e === 0) {
         setCurrentState('Buy');
       } else {
         setCurrentState('Sell');
       }
     }
-    else if(stateName=='CategoryVendor'){
+    else if (stateName == 'CategoryVendor') {
       if (e === 0) {
         setCurrentState(0);
       } else {
@@ -56,7 +56,7 @@ const CustomPicker = ({ w_given = hp(8),
           mode="dropdown"
           itemStyle={[
             styles.pickerItem,
-            { fontFamily: fonts.SemiBold, fontWeight: 'bold' },
+            { fontFamily: fonts.SemiBold, fontWeight: 'bold', fontSize: hp(2), },
           ]}
           onValueChange={(e) => checkVal(e)}
           style={{
@@ -69,7 +69,7 @@ const CustomPicker = ({ w_given = hp(8),
               key={item.value || index} // Add a unique key for each item
               label={item.value}
               value={index}
-              style={[styles.pickerItem, { color: colors.WHITE }]}
+              style={[styles.pickerItem, { color: colors.WHITE, }]}
             />
           ))}
         </Picker>
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pickerItem: {
-    height: hp('10%'),
+    height: hp('13%'),
+    
   },
 });
 

@@ -8,7 +8,7 @@ const CustomButton = ({
   MainText,
   BgGiven,
   name,
-  txColor,
+  txColor=colors.BLACK,
   isNavigation,
   wgiven = wp(85),
   hgiven = hp(5.7),
@@ -17,7 +17,9 @@ const CustomButton = ({
   b_radius = 8,
   onPressG, // Custom onPress event
   b_end_only,
-  isSelected = false
+  isSelected = false,
+  tx_size=hp('2.2%'),
+  tx_center=false
 }) => {
   const navigation = useNavigation();
 
@@ -53,7 +55,7 @@ const CustomButton = ({
       ]}
       onPress={handlePress} // Attach the decided handler
     >
-      <Text style={{ color: txColor, fontSize: !isSelected ? hp('2%') : hp('2.2%'), fontWeight: isSelected ? 'bold' : 'normal' }}>{MainText}</Text>
+      <Text style={{ color: txColor, fontSize: !isSelected ? hp('2%') : tx_size, fontWeight: isSelected ? 'bold' : 'normal',textAlign:tx_center?'center':null }}>{MainText}</Text>
     </TouchableOpacity>
   );
 };
@@ -66,5 +68,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     borderColor: colors.GREEN,
+    
   },
 });

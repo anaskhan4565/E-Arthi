@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
 searchContainer: {
     marginVertical: hp('3%'),
     height: hp('7%'),
+    alignSelf:"flex-start"
 },
   contentContainer: {
     flex: 1,

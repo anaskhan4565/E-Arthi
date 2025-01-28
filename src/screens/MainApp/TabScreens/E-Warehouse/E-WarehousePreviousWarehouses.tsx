@@ -43,21 +43,31 @@ function PurchaseHisotry(): React.JSX.Element {
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={t("Search in here")} />
         </View>
-        <View style={{marginBottom:hp(1) }} >
-          <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, letterSpacing: hp(0.6) }}>E-Warehouses</Text>
-        </View>
-        <View style={styles.headerRow}>
-          <Text style={styles.headerText}>{t("Your Warehouses")}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'baseline',alignSelf:'baseline' }}>
+          <Text
+            style={{
+              fontSize: hp(3),
+              paddingTop:hp(0.2),
+              fontFamily: fonts.SemiBold,
+              marginRight: wp(10) // Add minimal spacing only if needed for readability
+            }}
+          >
+            E-Warehouse
+          </Text>
           <CustomButton
             MainText={t("New Warehouse")}
             BgGiven={colors.GREEN}
             name={ScreensName.EWarehouseNewSpaceCropSelect}
             txColor={colors.WHITE}
             isNavigation={1}
-            wgiven={wp(40)}
-            hgiven={hp(4)}
+            wgiven={wp(36)}
+            tx_size={hp(0.3)}
+            hgiven={hp(3.7)}
+            tx_center={true}
           />
         </View>
+
+
         <View style={styles.tableHeader}>
           <Text style={styles.tableHeaderText}>{t("Warehouse")}</Text>
           <Text style={styles.tableHeaderText}>{t("Date Reserved")}</Text>
@@ -78,7 +88,7 @@ function PurchaseHisotry(): React.JSX.Element {
             )
         )}
       </View>
-      <View style={{ flex: 0.5,marginTop:hp(5),}}>
+      <View style={{ flex: 0.5, marginTop: hp(5), }}>
         <CustomBarChart
           data={barChartData}
           legendTitle="Warehouse Space Stats"
@@ -107,8 +117,8 @@ const styles = StyleSheet.create({
   searchbar: {
     marginVertical: hp(1.3),
     height: hp(7),
-    alignSelf:'flex-start',
-    width:wp(85)
+    alignSelf: 'flex-start',
+    width: wp(85)
   },
   headerRow: {
     flexDirection: "row",

@@ -17,6 +17,7 @@ const CustomInput = ({
   editable = true,
   value,
   want=true,
+  placeholder_color=colors.LIGHT_GRAY,
   onChangeText,
   numericOnly = false, // New prop to enable numeric input
 }) => {
@@ -34,10 +35,10 @@ const CustomInput = ({
     <TextInput
       style={[
         styles.textInputStyle,
-        { width: w, height: h, backgroundColor: bg_give, borderRadius: b_radius },
+        {paddingLeft:hp(1), width: w, height: h, backgroundColor: bg_give, borderRadius: b_radius },
       ]}
       placeholder={placeholder}
-      placeholderTextColor={colors.LIGHT_GRAY}
+      placeholderTextColor={placeholder_color}
       secureTextEntry={hide === 1}
       editable={editable}
       value={value}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import ECategories from '../../../../../util/E-Categories.js';
 import Navbar from '../../Navbar/Navbar.jsx';
@@ -23,11 +23,15 @@ import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import SwitchButtonCustom from './NewLoanComponents/SwitchButton.jsx';
+import GenericSelection from './NewLoanComponents/GenericComp/GenericSelection.jsx';
+import CustomInputAndText from './NewLoanComponents/CustomInputAndText.jsx';
+import MainNewLoan from './NewLoanMainScreen/MainNewLoan.jsx';
 
 
 
 function ELoanNewBank(): React.JSX.Element {
     const { t } = useTranslation();
+    const [selectedOption, setSelectedOption] = useState("Generic");
 
     return (
         <SafeAreaView style={styles.container}>
@@ -40,20 +44,16 @@ function ELoanNewBank(): React.JSX.Element {
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
-                <View style={{ marginHorizontal: hp(2) }} >
-                    <Text style={{ fontSize: hp(2.5), fontFamily: fonts.ExtraBold, letterSpacing: hp(0.6) }}>Request A New Loan</Text>
+                <View style={{ marginHorizontal: hp(2.5) }} >
+                    <Text style={{ fontSize: hp(2.5), fontFamily: fonts.SemiBold, letterSpacing: hp(0.1),marginLeft:hp(1) }}>Request A New Loan</Text>
                 </View>
-                <View style={[styles.bodyContainer, { borderWidth: 1, margin: 2 }]}>
-                        <SwitchButtonCustom/>
-                    <View style={styles.scrollContainer}>
-                        {ELoanBank.map((Category, index) => (
-                            Category.title.trim() !== '' && (
-                                <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.ELoanMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
-                                </View>
-                            )
-                        ))}
-                    </View>
+                <View style={[styles.bodyContainer]}>
+                    <SwitchButtonCustom selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+                    {
+                        selectedOption !== "Generic" ? <GenericSelection />
+                            :
+                        <MainNewLoan />
+                    }
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -86,21 +86,6 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: 'bold',
         fontSize: 25,
-    },
-    scrollContainer: {
-        //flexWrap: 'wrap',
-        justifyContent: 'center',
-        paddingVertical: hp('2%'),
-        // backgroundColor: 'red',
-        alignItems: 'center',
-
-    },
-    itemBoxWrapper: {
-        width: '30%',
-        marginBottom: hp('2%'),
-        marginHorizontal: wp('-3%'),
-        alignItems: 'center',
-
     },
     recommendedProducts: {
         marginTop: 20,

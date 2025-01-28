@@ -24,7 +24,7 @@ const EloanDet = [
 const ELoanBank = [
     {
         screen: ScreensName.EloanHBL,
-        title: "Habib Bank Limited",
+        title: "Habib Bank",
         img: require('../src/assets/MainApp/E-Loan/HBL.png')
     },
     {

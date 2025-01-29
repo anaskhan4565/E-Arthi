@@ -61,6 +61,9 @@ function SignIn() {
                 ]}
                 isheader={true}
                 padding_f={true}
+                placeholder={"+92"}
+                
+                min_given={hp(20)}
               />
             </View>
             : null}

@@ -8,47 +8,50 @@ import colors from '../../../../../../util/colors';
 import CustomUploadButton from '../NewLoanComponents/CustomUploadButton';
 import TickBox from '../NewLoanComponents/TickBox';
 import CustomButton from '../../../../../components/CustomButton';
+import { fonts } from '../../../../../../util/FontName';
 
 const MainNewLoan = () => {
     return (
-        <View style={{ flex: 1, gap: hp(2),marginBottom:hp(5) }}>
-            <CustomTxtAndPicker PlaceHolderGiven={"Employeement Type"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select Employeement Type"} />
+        <View style={{ flex: 1, gap: hp(2), marginBottom: hp(5) }}>
+            <CustomTxtAndPicker PlaceHolderGiven={"Employeement Type"} itemPackage={[{ label: "Value2", value: "Value2" }]} Picker_Txt={"Select Employeement Type"} />
             <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select Loan Type"} />
             <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
             <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
-            <CustomInputAndText PlaceHolderGiven={"Last Name"}  InputHolder={"Enter Last Name"}/>
-            <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"}/>
-            <CustomInputAndText PlaceHolderGiven={"Date of birth"} InputHolder={"MM-DD-YYYYY"}/>
-            <CustomInputAndText PlaceHolderGiven={"Phone number"} InputHolder={"+92-012345678"}/>
-            <CustomInputAndText PlaceHolderGiven={"Alternative Phone Number"} InputHolder={"+92-012345678"}/>
+            <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
+            <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"} />
+            <CustomInputAndText PlaceHolderGiven={"Date of birth"} InputHolder={"MM-DD-YYYYY"} />
+            <CustomInputAndText PlaceHolderGiven={"Phone number"} InputHolder={"+92-012345678"} />
+            <CustomInputAndText PlaceHolderGiven={"Alternative Phone Number"} InputHolder={"+92-012345678"} />
 
-            <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"enter here"}/>
-            <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"enter here"}/>
-            <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"enter here"}/>
-            <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"enter here"}/>
-            <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"enter here"}/>
-            <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"}/>
-            <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"}/>
+            <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"enter here"} />
+            <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"enter here"} />
+            <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"enter here"} />
+            <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"enter here"} />
+            <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"enter here"} />
+            <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"} />
+            <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"} />
             <CustomTxtAndPicker PlaceHolderGiven={"Desired Loan Repayment Period"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
-            <CustomUploadButton PlaceHolderGiven={"Recent Photograph"} InputHolder={'Upload'} isCamera={true}/>
-            <CustomUploadButton PlaceHolderGiven={"Salary Certificate"} InputHolder={'Upload'}/>
-            <CustomUploadButton PlaceHolderGiven={"Bank Statement"} InputHolder={'Upload'}/>
-            <CustomUploadButton PlaceHolderGiven={"Charge of Agri Land"} InputHolder={'Upload'}/>
-            <CustomUploadButton PlaceHolderGiven={"Mortgage of Property"} InputHolder={'Upload'}/>
+            <Text style={{ fontSize: hp(3), fontFamily: fonts.bold, fontStyle: 'normal', borderTopWidth: hp(0.2),textAlign:'center' }}>--Documents--</Text>
 
-            <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'}/>
-            <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true}/>
-            <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true}/>
-         
-            <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'}/>
-            <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'}/>
+            <CustomUploadButton PlaceHolderGiven={"Recent Photograph"} InputHolder={'Upload'} isCamera={true} />
+            <CustomUploadButton PlaceHolderGiven={"Salary Certificate"} InputHolder={'Upload'} />
+            <CustomUploadButton PlaceHolderGiven={"Bank Statement"} InputHolder={'Upload'} />
+            <CustomUploadButton PlaceHolderGiven={"Charge of Agri Land"} InputHolder={'Upload'} />
+            <CustomUploadButton PlaceHolderGiven={"Mortgage of Property"} InputHolder={'Upload'} />
 
-            <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={true}/>
-            <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={true}/>
-            <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true}/>
-            <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true}/>
+            <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} />
+            <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} />
+            <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} />
 
-            <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE}/>
+            <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} />
+            <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} />
+
+            <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={true} />
+            <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={true} />
+            <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
+            <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
+
+            <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} />
         </View>
     )
 }

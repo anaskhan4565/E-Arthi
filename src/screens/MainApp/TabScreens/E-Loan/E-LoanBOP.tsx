@@ -1,86 +1,110 @@
-import React from 'react';
-import type { PropsWithChildren } from 'react';
-import { fonts } from '../../../../../util/FontName';
+import React, { useState } from 'react';
+import Navbar from '../../Navbar/Navbar.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import colors from '../../../../../util/colors.js';
 import {
     SafeAreaView,
-    TextInput,
+    ScrollView,
     StyleSheet,
     Text,
-    Image,
     View,
+    Image
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import colors from '../../../../../util/colors';
+import { fonts } from '../../../../../util/FontName.js';
+import CustomInputAndText from './NewLoanComponents/CustomInputAndText.jsx';
+import CustomTxtAndPicker from './NewLoanComponents/CustomTxtAndPicker';
+import CustomUploadButton from './NewLoanComponents/CustomUploadButton';
+import TickBox from './NewLoanComponents/TickBox';
+import CustomButton from '../../../../components/CustomButton';
 
 
 
-
-function EloanBOP(): React.JSX.Element {
+function ELoanBOP(): React.JSX.Element {
     const { t } = useTranslation();
+    const [selectedOption, setSelectedOption] = useState("Generic");
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                      <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/BOP.png')} />
-                      <Text style={styles.titletext}>Habib Bank</Text>
-                  </View>
-                  <View style={styles.inputcontainer}>
-                      <View style={styles.detailRow}>
-                          <Text style={styles.label}>{t('Supplier name')}</Text>
-                          <TextInput
-                              placeholder={t('Enter Here')}
-                              style={styles.value}
-                          />
-                      </View>
-                      <View style={styles.detailRow}>
-                          <Text style={styles.label}>{t('Item account')}</Text>
-                          <TextInput
-                              placeholder={t('Enter Here')}
-                              style={styles.value}
-                          />
-                      </View>
-                      <View style={styles.detailRow}>
-                          <Text style={styles.label}>{t('Delivery address')}</Text>
-                          <TextInput
-                              placeholder={t('Enter Here')}
-                              style={styles.value}
-                          />
-                      </View>
-                      <View style={styles.detailRow}>
-                          <Text style={styles.label}>{t('Seller information')}</Text>
-                          <TextInput
-                              placeholder={t('Enter Here')}
-                              style={styles.value}
-                          />
-                      </View>
-                      <View style={styles.detailRow}>
-                          <Text style={styles.label}>{t('Delivery time')}</Text>
-                          <TextInput
-                              placeholder={t('Enter Here')}
-                              style={styles.value}
-                          />
-                      </View>
-                      <View style={styles.detailRow}>
-                          <Text style={styles.label}>{t('Supplier name')}</Text>
-                          <TextInput
-                              placeholder={t('Enter Here')}
-                              style={styles.value}
-                          />
-                      </View>
-      
-                  </View>
-      
-        </SafeAreaView>
+
+            <View style={styles.navbarContainer}>
+                <Navbar gobackOnly={true} isbackSet={true} />
+            </View>
+            <ScrollView style={styles.container}>
+                <View style={[styles.header, { alignSelf: 'center' }]}>
+                    <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/BOP.png')} />
+                    <Text style={styles.titletext}>Habib Bank</Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
+                    <CustomTxtAndPicker PlaceHolderGiven={"Employeement Type"} itemPackage={[{ label: "Value2", value: "Value2" }]} Picker_Txt={"Select Employeement Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select Loan Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
+                    <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
+                    <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
+                    <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"} />
+                    <CustomInputAndText PlaceHolderGiven={"Date of birth"} InputHolder={"MM-DD-YYYYY"} />
+                    <CustomInputAndText PlaceHolderGiven={"Phone number"} InputHolder={"+92-012345678"} />
+                    <CustomInputAndText PlaceHolderGiven={"Alternative Phone Number"} InputHolder={"+92-012345678"} />
+                    <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"} />
+                    <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Desired Loan Repayment Period"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
+                    <Text style={{ fontSize: hp(3), fontFamily: fonts.bold, fontStyle: 'normal', borderTopWidth: hp(0.2) }}>--Documents--</Text>
+
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true}  />
+
+                    <CustomUploadButton PlaceHolderGiven={"Mortgage of Property"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true}  />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true} />
+
+                    <View style={{ flex: 1, gap: hp(3) }}>
+                        <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={false} />
+                        <TickBox TextGiven={'Do you agree with BOP Terms & Conditions'} givePadding={false} />
+                        <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={false} />
+                        <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
+                        <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
+                    </View>
+                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} />
+
+                </View>
+            </ScrollView>
+        </SafeAreaView >
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: "center",
-        alignItems: 'center',
+
         backgroundColor: colors.WHITE,
+
+    },
+    navbarContainer: {
+        height: hp('8.5%'),
+        backgroundColor: colors.WHITE,
+    },
+    searchContainer: {
+        marginVertical: hp('3.2%'),
+        height: hp('7%'),
+    },
+    bodyContainer: {
+        alignItems: 'center',
+
+    },
+    titleContainer: {
+        padding: 10,
+    },
+    titleText: {
+        fontWeight: 'bold',
+        fontSize: 25,
     },
     titletext: {
         fontSize: hp(3),
@@ -102,34 +126,9 @@ const styles = StyleSheet.create({
         width: wp(35),
         height: hp(12),
     },
-    inputcontainer: {
-        width: wp(100),
-        height: hp(40),
-        // backgroundColor: "blue",
-        marginTop: hp(3),
 
-    },
-    detailRow: {
-        flexDirection: 'row',
-        marginTop: hp(2),
-        flex: 1,
-        alignItems: 'center',
-    },
-    label: {
-        width: wp(30),
-        marginLeft: wp(6),
-        fontSize: hp(1.75),
-    },
-    value: {
-        width: wp(60),
-        fontSize: hp(1.5),
-        fontFamily: fonts.Regular,
-        marginRight: wp(5),
-        height: hp(5),
-        borderWidth: 1,
-        borderRadius: 4,
-        borderLeftColor: '#D3D3D3',
-    },
 });
 
-export default EloanBOP;
+
+
+export default ELoanBOP;

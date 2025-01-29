@@ -89,7 +89,7 @@ const ProductScr = () => {
                     </View>
                     <View style={styles.radioContainer}>
                         {["first", "second", "third"].map((value, third) => (
-                            <View style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
+                            <View key={third} style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: hp(1.6), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
                                 <RadioButton
                                     key={`radio-${third}`}

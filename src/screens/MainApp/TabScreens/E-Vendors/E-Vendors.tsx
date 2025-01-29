@@ -41,7 +41,7 @@ function EVendors(): React.JSX.Element {
         <Navbar
           isbackSet={true}
           isBackTo={ScreensName.EInventorySupplier}
-          gobackOnly={undefined}
+          gobackOnly={true}
         />
       </View>
       <ScrollView style={styles.scrollView}>

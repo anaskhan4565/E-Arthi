@@ -22,7 +22,7 @@ function EloanMeezan(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
              <View style={styles.header}>
                        <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/Meezan.png')} />
-                       <Text style={styles.titletext}>Habib Bank</Text>
+                       <Text style={styles.titletext}>Meezan Bank</Text>
                    </View>
                    <View style={styles.inputcontainer}>
                        <View style={styles.detailRow}>

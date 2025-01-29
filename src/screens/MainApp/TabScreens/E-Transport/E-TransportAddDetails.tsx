@@ -72,28 +72,28 @@ function ETransportAddDetails(): React.JSX.Element {
                             <Text style={styles.label}>{t('Weight')}</Text>
                             <TextInput
                                 placeholder='Enter Here'
-                                style={styles.value}
+                                style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Volume')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={styles.value}
+                                style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('No of items')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={styles.value}
+                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Amount')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={styles.value}
+                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                     </View>
@@ -106,28 +106,28 @@ function ETransportAddDetails(): React.JSX.Element {
                             <Text style={styles.label}>{t('City')}</Text>
                             <TextInput
                                 placeholder='Enter Here'
-                                style={styles.value}
+                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Area')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={styles.value}
+                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Pickup')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={styles.value}
+                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('DropOff')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={styles.value}
+                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                     </View>

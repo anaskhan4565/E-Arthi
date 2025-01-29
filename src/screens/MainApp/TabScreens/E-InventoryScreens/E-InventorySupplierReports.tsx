@@ -16,16 +16,16 @@ import ScreensName from '../../../../../util/ScreensName.ts';
 import { fonts } from '../../../../../util/FontName.js';
 
 const SuppliersReport = () => {
-    const {t}=useTranslation()
-    const navigation = useNavigation();
-  
+  const { t } = useTranslation()
+  const navigation = useNavigation();
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}> 
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}>
         <View style={styles.contentContainer}>
           <View style={styles.searchContainer}>
             <CustomSearchApp placeholder={t('Search in here')} />
@@ -34,19 +34,19 @@ const SuppliersReport = () => {
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>{t('Supplier Reports')}</Text>
-              <TouchableOpacity 
-                style={styles.reorderButton} 
+              <TouchableOpacity
+                style={styles.reorderButton}
                 onPress={() => { navigation.navigate(ScreensName.EInventorySuppliersList) }}>
                 <Text style={styles.reorderButtonText}>{t('Download All')}</Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
             </View>
 
             <View style={styles.scrollContainer}>
               {SupplierReports.map((name, index) => (
                 name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
-                    <Image source={pdf} resizeMode="contain" />
-                    <Text style={{ fontSize: hp(1.4), textAlign: 'center' }}>{t(name)}</Text>
+                    <Image source={pdf} style={styles.image} />
+                    <Text style={{ fontSize: hp(1.6), textAlign: 'center' }}>{t(name)}</Text>
                   </View>
                 )
               ))}
@@ -64,17 +64,17 @@ const styles = StyleSheet.create({
   navbarContainer: {
     height: hp('8.5%'),
     backgroundColor: 'white',
-    position: 'absolute', 
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 1, 
+    zIndex: 1,
   },
 
-searchContainer: {
+  searchContainer: {
     marginVertical: hp('3%'),
     height: hp('7%'),
-},
+  },
   contentContainer: {
     flex: 1,
     //marginTop: 10,
@@ -87,14 +87,20 @@ searchContainer: {
   titleContainer: {
     padding: hp('1%'),
     marginTop: hp(-2),
-    flexDirection:'row',
-    margin:wp(1),
-    alignItems:'center',
-    justifyContent:'center',
-    gap:wp(4)
+    flexDirection: 'row',
+    margin: wp(1),
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: wp(4)
+  },
+  image: {
+    width: wp(15),
+    height: hp(5.5),
+    resizeMode: 'contain',
+    marginBottom: hp(1),
   },
   titleText: {
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
     fontSize: hp('3%'),
   },
   scrollContainer: {
@@ -104,16 +110,19 @@ searchContainer: {
     paddingVertical: hp('3%'),
   },
   itemBoxWrapper: {
-    width: wp('30%'), 
+    width: wp('30%'),
     marginBottom: hp('2%'),
     alignItems: 'center',
+    flexWrap: 'wrap',
+    marginHorizontal: wp(1),
+    marginVertical: hp(0.5),
   },
   recommendedProducts: {
     marginTop: hp('2%'),
   },
   recommendedTitle: {
     fontSize: hp('2.5%'),
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
     marginBottom: hp('2%'),
   },
   productRow: {
@@ -122,18 +131,18 @@ searchContainer: {
     marginBottom: hp('3%'),
   },
   reorderButton: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 5,
-      borderColor: colors.GREEN,
-      width: wp("29%"),
-      height: hp("3%"),
-      backgroundColor: colors.GREEN,
-      borderWidth: 1,
-    },
-      reorderButtonText: {
-        color: colors.WHITE,
-        fontSize: hp('1.6%'),
-        textAlign: 'center',
-      },
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    borderColor: colors.GREEN,
+    width: wp("29%"),
+    height: hp("3%"),
+    backgroundColor: colors.GREEN,
+    borderWidth: 1,
+  },
+  reorderButtonText: {
+    color: colors.WHITE,
+    fontSize: hp('1.6%'),
+    textAlign: 'center',
+  },
 });

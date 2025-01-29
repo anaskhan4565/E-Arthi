@@ -59,7 +59,7 @@ function Cnic_page_2() {
           <Text style={styles.inputText}>Your CNIC number </Text>
         </View>
 
-        <CustomInput placeholder={t('CNIC')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} hide={0} />
+        <CustomInput placeholder={t('42101-467672-3')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} hide={0} />
 
         <View style={styles.textcontainer}>
           <Text style={styles.inputText}>Your CNIC date of issue</Text>

@@ -18,11 +18,12 @@ const CustomPicker = ({
   color_bd,
   isThatColor = false,
   bd_give,
-  placeholder = "Select", // Added placeholder prop
+  placeholder = "Select", 
   isheader,
   hp_given = hp(5),
   min_given = wp(50),
-  padding_f = false
+  padding_f = false,
+  placeholderFontSize = hp(2), 
 }) => {
   const { t } = useTranslation();
   const [selectedValue, setSelectedValue] = useState(null); // Track the selected value
@@ -50,8 +51,6 @@ const CustomPicker = ({
               : colors.LIGHT_GRAY,
           padding: !padding_f ? hp(1) : 0,
           width: w_given,
-
-
         },
         allow_shadow ? styles.shadowStyle : null, // Apply shadow conditionally
       ]}
@@ -72,16 +71,20 @@ const CustomPicker = ({
             color:isThatColor?colors.tx_color: isheader ? tx_color : colors.BLACK,
             fontSize: hp(2.5),
           }}
+          itemStyle={[
+            styles.pickerItem,
+            { fontSize: placeholderFontSize }, // Affects all items
+          ]}
         >
           <Picker.Item
             label={placeholder}
             value={null}
-            enabled={false} // Disable placeholder selection
-            style={[styles.pickerItem, { color: colors.GRAY }]}
+            enabled={false} 
+            style={[styles.pickerItem, { color: colors.GRAY, fontSize: placeholderFontSize }]} // Dynamic font size for placeholder
           />
           {items.map((item, index) => (
             <Picker.Item
-              key={item.value || index} // Add a unique key for each item
+              key={item.value || index} 
               label={item.value}
               value={index}
               style={[styles.pickerItem, { color: colors.BLACK }]} // Set item color
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
     borderRadius: hp(0.4),
-    elevation: hp(0.3), // Android shadow
+    elevation: hp(0.3), 
   },
   pickerContainer: {
     borderColor: colors.LIGHT_GRAY,
@@ -117,8 +120,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pickerItem: {
-    height: hp(7), // Increased height for better usability
-    fontSize: hp(2.5), // Increased font size for readability
-    paddingVertical: hp(1), // Added padding
+    height: hp(7), 
+    fontSize: hp(2.5), 
+    paddingVertical: hp(1), 
   },
 });

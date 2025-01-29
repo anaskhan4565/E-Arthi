@@ -4,6 +4,7 @@ import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
 import CustomButton from '../../../../components/CustomButton.jsx';
+import SwitchToggle from "react-native-switch-toggle";
 import {
     SafeAreaView,
     ScrollView,
@@ -12,7 +13,9 @@ import {
     View,
     Image,
     TextInput,
+    Dimensions
 } from 'react-native';
+const { height, width } = Dimensions.get("window");
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -37,7 +40,7 @@ function EInventoryAddNew(): React.JSX.Element {
 
                 <View style={styles.itemDetailsContainer}>
                     <View style={styles.imageContainer}>
-                        <Image 
+                        <Image
                             source={require('../../../../assets/MainApp/E-Inventory/placeholder.jpg')}
                             style={styles.itemImage}
                         />
@@ -45,7 +48,7 @@ function EInventoryAddNew(): React.JSX.Element {
                     <View style={styles.detailsContainer}>
                         <View style={styles.detailRow}>
                             <Text style={styles.labelText}>{t('Item Name')}</Text>
-                            <TextInput 
+                            <TextInput
                                 style={styles.input}
                                 placeholder={t('Enter item name')}
                             />
@@ -57,19 +60,19 @@ function EInventoryAddNew(): React.JSX.Element {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item 
-                                        label={t('Select place')} 
-                                        value="" 
+                                    <Picker.Item
+                                        label={t('Select place')}
+                                        value=""
                                         style={styles.pickerItem}
                                     />
-                                    <Picker.Item 
-                                        label={t('Place 1')} 
-                                        value="1" 
+                                    <Picker.Item
+                                        label={t('Place 1')}
+                                        value="1"
                                         style={styles.pickerItem}
                                     />
-                                    <Picker.Item 
-                                        label={t('Place 2')} 
-                                        value="2" 
+                                    <Picker.Item
+                                        label={t('Place 2')}
+                                        value="2"
                                         style={styles.pickerItem}
                                     />
                                 </Picker>
@@ -82,19 +85,19 @@ function EInventoryAddNew(): React.JSX.Element {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item 
-                                        label={t('Select group')} 
-                                        value="" 
+                                    <Picker.Item
+                                        label={t('Select group')}
+                                        value=""
                                         style={styles.pickerItem}
                                     />
-                                    <Picker.Item 
-                                        label={t('Group 1')} 
-                                        value="1" 
+                                    <Picker.Item
+                                        label={t('Group 1')}
+                                        value="1"
                                         style={styles.pickerItem}
                                     />
-                                    <Picker.Item 
+                                    <Picker.Item
                                         label={t('Group 2')}
-                                        value="2" 
+                                        value="2"
                                         style={styles.pickerItem}
                                     />
                                 </Picker>
@@ -102,13 +105,6 @@ function EInventoryAddNew(): React.JSX.Element {
                         </View>
                         <View style={[styles.detailRow, styles.alertRow]}>
                             <Text style={styles.alertText}>{t('Low Quantity Alert')}</Text>
-                            <ToggleSwitch
-                                isOn={isToggled}
-                                onColor={colors.GREEN}
-                                offColor={colors.LIGHT_GRAY}
-                                size="medium"
-                                onToggle={isOn => setIsToggled(isOn)}
-                            />
                         </View>
                     </View>
                 </View>
@@ -128,7 +124,7 @@ function EInventoryAddNew(): React.JSX.Element {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <CustomButton 
+                    <CustomButton
                         MainText={t('Save')}
                         BgGiven={colors.GREEN}
                         name={ScreensName.InventoryMonitoring}
@@ -245,7 +241,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         overflow: 'hidden',
         flex: 0.6,
-        
+
     },
     pickerItem: {
         fontSize: wp('3%'),

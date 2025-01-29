@@ -30,13 +30,13 @@ function SignIn() {
   const navigation = useNavigation();
   const [number, setNumber] = useState('');
   const [SwitchedButton, SetSwitchedButton] = useState(false)
-  useEffect(()=>{
+  useEffect(() => {
     setNumber('')
-  },[SwitchedButton])
+  }, [SwitchedButton])
 
 
 
-  
+
   return (
     <SafeAreaView style={styles.container}>
 
@@ -52,7 +52,7 @@ function SignIn() {
         </View>
         <View style={{ flexDirection: 'row', width: wp(85), justifyContent: 'center', alignItems: 'center' }}>
           {!SwitchedButton ?
-            <View style={{ width: hp(8.5) }}>
+            <View style={{ width: hp(9.5) }}>
               <CustomPicker
                 items={[
                   { label: "+92", value: "+92" },
@@ -67,11 +67,14 @@ function SignIn() {
               />
             </View>
             : null}
-          <CustomInput placeholder={SwitchedButton ? t('Username') : t('Phone Number')} h={hp('5.5%')} w={!SwitchedButton?wp('65%'):wp(84)} b_radius={10} bg_give={colors.WHITE} numericOnly={!SwitchedButton?true:false}     value={number} onChangeText={setNumber} />
+          <CustomInput placeholder={SwitchedButton ? t('Username') : t('Phone Number')} h={hp('5.5%')} w={!SwitchedButton ? wp('65%') : wp(84)} b_radius={10} bg_give={colors.WHITE} numericOnly={!SwitchedButton ? true : false} value={number} onChangeText={setNumber} />
         </View>
         <View style={styles.passInputBox}>
           <TextInput
-            style={styles.passInput}
+            style={[styles.passInput, {
+              paddingLeft: wp(2),
+              paddingVertical: 8,
+            }]}
             placeholder={t('Password')}
             placeholderTextColor={colors.LIGHT_GRAY}
             secureTextEntry={passwordVisible}
@@ -83,7 +86,7 @@ function SignIn() {
             <Image
               source={require("../../assets/EyeHide.png")}
               style={styles.showPassIcon}
-            ></Image>
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -99,12 +102,12 @@ function SignIn() {
       <View style={styles.options}>
         <View style={styles.RememberMe}>
           <BouncyCheckbox
-            size={20}
+            size={hp(2)}
             fillColor={colors.GREEN}
             iconStyle={{ borderColor: colors.LIGHT_GRAY }}
             style={styles.checkbox}
             textComponent={true}
-            innerIconStyle={{ borderRadius: 7 }}
+            innerIconStyle={{ borderRadius: 5 }}
           />
           <Text style={styles.RememberMeText}>{t('Remember me')}</Text>
         </View>
@@ -118,10 +121,15 @@ function SignIn() {
         <View style={styles.line} />
       </View>
       <View style={styles.altSignin}>
-      <TouchableOpacity style={styles.altSigninButton}>
+        <TouchableOpacity style={styles.altSigninButton}>
           <Image
             source={require("../../assets/whatsapp.png")}
-            style={styles.altSigninButtonIcon}
+            style={{
+              width: wp('5%'),
+              height: hp('4%'),
+              marginRight: 10,
+              resizeMode: 'contain',
+            }}
           />
           <Text style={{ fontSize: hp('1.7%'), fontFamily: fonts.Regular }}>{t('login with Whatsapp')}  </Text>
         </TouchableOpacity>
@@ -197,11 +205,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "flex-start",
+
     flex: 1,
   },
   RememberMeText: {
     fontSize: height / 58,
-    marginLeft: 5,
+    marginLeft: wp(2),
     fontFamily: fonts.Regular,
   },
   checkbox: {
@@ -247,35 +256,38 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   altSigninButtonIcon: {
-    width: wp('7%'),
+    width: wp('6%'),
     height: hp('4%'),
     marginRight: 10,
     resizeMode: 'contain',
   },
-  passToggleButton: {},
   showPassIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
+    width: wp(5),
+    height: hp(2.5),
+    marginRight: wp(2),
+    resizeMode: 'contain',
   },
   passInputBox: {
-    height: hp('5.7%'),
-    width: wp('85%'),
-    fontSize: 18,
-    fontFamily: fonts.Medium,
+    height: hp('5.5%'),
+    width: wp('84%'),
     justifyContent: "center",
-    alignSelf: "center",
     alignItems: "center",
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: hp('1%'),
+    borderRadius: 10,
     borderColor: colors.LIGHT_GRAY,
+    paddingRight: 10,
   },
   passInput: {
-    flex: 3,
+    flex: 1,
     fontSize: hp('1.7%'),
     fontFamily: fonts.Regular,
-    color: colors.BLACK
+    color: colors.BLACK,
+    paddingHorizontal: wp(2),
+    height: '100%',
+  },
+  passToggleButton: {
+    padding: 8,
   },
 });
 

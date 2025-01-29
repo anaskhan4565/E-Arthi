@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: hp(3),
     },
     reorderButtonWrapper: {
         flex: 0.3,
@@ -152,12 +152,14 @@ const styles = StyleSheet.create({
     },
     label: {
         flex: 0.35,
+        fontSize: hp(1.8),
         marginLeft: wp(6),
         color: colors.GREEN,
     },
     value: {
         flex: 0.65,
         marginRight: wp(6),
+        fontSize: hp(1.8),
     },
     buttonContainer: {
         flex: 0.2,

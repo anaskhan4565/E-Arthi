@@ -21,7 +21,7 @@ const OTP = () => {
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 
     };
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (isFocused) {
@@ -70,7 +70,10 @@ const OTP = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t('OTP Verification')}</Text>
+            <View style={styles.titlecontainer}>
+                <Text style={styles.title}>{t('OTP Verification')}</Text>
+            </View>
+
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
                     {t('Please enter the verification code we’ve sent you on +92-0332521550')}
@@ -90,7 +93,7 @@ const OTP = () => {
                 ))}
             </View>
             <View style={styles.bottomContainer}>
-                < ActivityIndicator size={23} color={colors.GREEN} style={styles.activityindicator} />
+                < ActivityIndicator size={hp(2.5)} color={colors.GREEN} style={styles.activityindicator} />
                 <Text style={styles.autocapturetext}>{t('Trying to Auto Capture')}</Text>
                 <Text style={styles.timetext}> {formatTime(timeLeft)}</Text>
             </View>
@@ -109,16 +112,19 @@ const styles = StyleSheet.create({
         padding: hp('1.5%'),
         backgroundColor: "white",
     },
+    titlecontainer: {
+        width: wp(100),
+    },
     title: {
         marginTop: hp('10%'),
         fontSize: hp('3%'),
-        fontFamily:fonts.SemiBold,
+        fontFamily: fonts.SemiBold,
         marginBottom: hp('1.5%'),
-        marginRight: wp('36%'),
+        marginLeft: wp(7),
     },
     subtitle: {
         fontSize: hp('1.8%'),
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         marginBottom: hp('1.9%'),
         alignSelf: "flex-start",
         marginTop: hp('1%'),
@@ -140,7 +146,7 @@ const styles = StyleSheet.create({
         borderRadius: hp('1.5%'),
         textAlign: "center",
         fontSize: hp('2.5%'),
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         backgroundColor: "#FFF",
         marginHorizontal: hp('0.5%'),
         color: colors.BLACK
@@ -148,22 +154,24 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flexDirection: "row",
         // marginRight: wp("43%"),
+        alignItems: 'center',
         marginBottom: hp('3%'),
+        width: wp(100),
 
     },
     autocapturetext: {
         fontSize: hp('1.5%'),
-        fontFamily:fonts.Light,
+        fontFamily: fonts.Light,
         fontWeight: '300',
         marginLeft: wp('3%'),
         marginRight: wp('33%'),
     },
     activityindicator: {
-
+        marginLeft: wp(7),
     },
     timetext: {
-        fontSize:hp('2%'),
-        fontFamily:fonts.Regular,
+        fontSize: hp('2%'),
+        fontFamily: fonts.Regular,
     },
 });
 

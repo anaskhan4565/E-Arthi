@@ -35,7 +35,7 @@ const InventoryMonitoring = () => {
                         <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Manage Inventory')}  navigateName={ScreensName.EInventoryManageGroup}/>
                     </View>
 
-                    {/* Section for Recommended Products */}
+                 
                     <View style={styles.recommendedProducts}>
                         <Text style={styles.recommendedTitle}>{t('Inventory')}</Text>
                         <View style={styles.productRow}>

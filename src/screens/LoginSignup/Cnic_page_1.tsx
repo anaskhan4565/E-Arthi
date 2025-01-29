@@ -7,6 +7,7 @@ import ScreensName from '../../../util/ScreensName';
 import { fonts } from '../../../util/FontName';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const { height, width } = Dimensions.get("window");
 
@@ -48,12 +49,13 @@ const Cnic_page_1 = () => {
             </View>
 
             <View style={styles.buttonContainer}>
-                {/* Display selected image with a close button */}
+
                 {selectedImage ? (
                     <View style={styles.imageWrapper}>
                         <Image source={{ uri: selectedImage }} style={styles.image} />
                         <TouchableOpacity style={styles.closeButton} onPress={handleRemoveImage}>
-                            <Text style={styles.closeButtonText}>x</Text>
+                            <Image source={require('../../../src/assets/Icon/remove.png')} style={styles.icon} />
+
                         </TouchableOpacity>
                     </View>
                 ) : (
@@ -152,21 +154,21 @@ const styles = StyleSheet.create({
         marginBottom: hp(6),
         resizeMode: 'contain',
     },
+    icon: {
+        width: wp(5),
+        height: hp(5),
+        resizeMode: 'contain',
+    },
     closeButton: {
         position: 'absolute',
         top: -hp(5),
         right: -hp(-2),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.BLACK,
-        width: wp(4),
-        height: wp(4),
-        borderRadius: wp(4),
-    },
-    closeButtonText: {
-        color: colors.WHITE,
-        fontSize: wp(3),
-        fontWeight: 'bold',
+        // backgroundColor: colors.BLACK,
+        width: wp(5),
+        height: wp(5),
+        // borderRadius: wp(4),
     },
     Wrapper: {
         justifyContent: 'center',

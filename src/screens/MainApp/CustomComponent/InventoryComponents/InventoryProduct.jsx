@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         marginTop: hp(0.9),
     },
     descriptionText: {
-        fontSize: 10,
+        fontSize: hp(1.4),
     },
     ImageStyle: {
         resizeMode: 'contain',
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.DARK_GREEN,
         fontWeight: 'bold',
-        fontFamily:fonts.bold
+        fontFamily:fonts.bold,
+        fontSize: hp(1.6),
     },
 });

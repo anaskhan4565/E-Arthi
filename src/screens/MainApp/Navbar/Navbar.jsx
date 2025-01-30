@@ -27,7 +27,7 @@ const Navbar = ({isbackSet=false,isBackTo=ScreensName.MainTabNavigation,gobackOn
         backgroundColor: colors.LIGHT_GREEN,
       }}
     >
-      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={()=>gobackOnly?navigation.goBack():isbackSet?navigation.navigate(isBackTo):null}>
+      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={()=>navigation.navigate(ScreensName.MyProfileMainStack)}>
         <Image source={isbackSet?backImg:ProfilePic} style={isbackSet?styles.BackIMG:styles.Profile} />
       </TouchableOpacity>
       <View

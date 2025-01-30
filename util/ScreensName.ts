@@ -1,6 +1,3 @@
-import EVendorsMainStack from "../src/screens/MainApp/TabScreens/E-Vendors/E-VendorsMainStack";
-import SelectLanguage from "../src/screens/SelectLanguage/SelectLanguage";
-
 export default {
     SplashScreen: "SplashScreen",
 
@@ -103,4 +100,10 @@ export default {
     ETransportTruck: "ETransportTruck",
     ETransportMain: "ETransportMain",
 
+    MyProfileMainStack: "MyProfileMainStack",
+    MyProfile: "MyProfile",
+    ProfileChangeLanguage: "ProfileChangeLanguage",
+    BankRecieving: "BankRecieving",
+    RaastRecieving: "RaastRecieving",
+    Recieving: "Recieving",
 }

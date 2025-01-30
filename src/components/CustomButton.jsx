@@ -3,6 +3,7 @@ import React from 'react';
 import colors from '../../util/colors';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { fonts } from '../../util/FontName';
 
 const CustomButton = ({
   MainText,
@@ -55,7 +56,7 @@ const CustomButton = ({
       ]}
       onPress={handlePress} // Attach the decided handler
     >
-      <Text style={{ color: txColor, fontSize: !isSelected ? hp('2%') : tx_size, fontWeight: isSelected ? 'bold' : 'normal',textAlign:tx_center?'center':null }}>{MainText}</Text>
+      <Text style={{ color: txColor,fontFamily: fonts.Medium, fontSize: !isSelected ? hp('2%') : tx_size, fontWeight: isSelected ? 'bold' : 'normal',textAlign:tx_center?'center':null }}>{MainText}</Text>
     </TouchableOpacity>
   );
 };

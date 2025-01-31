@@ -26,7 +26,6 @@ export default {
     //Specific After logging in::
     MainTabNavigation: "MainTabNavigation",
     HomeScreen: "Home",
-    EMunshi: "E-Munshi",
 
     ELoanMainStack: "ELoanMainStack",
     ELoan: "E-Loan",
@@ -106,4 +105,9 @@ export default {
     BankRecieving: "BankRecieving",
     RaastRecieving: "RaastRecieving",
     Recieving: "Recieving",
+
+    EMunshiMainStack : "EMunshiMainStack",
+    EMunshi: "EMunshi",
+    EMunshiItemName: "EMunshiItemName",
+    EMunshiCashFlow: "EMunshiCashFlow"
 }

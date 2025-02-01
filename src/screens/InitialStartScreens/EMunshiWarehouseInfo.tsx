@@ -32,9 +32,18 @@ import ScreensName from '../../../util/ScreensName.ts';
 function EInventory(): React.JSX.Element {
     const { t } = useTranslation();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedSubcategories, setSelectedSubcategories] = useState<any[]>([]);
 
     // Find the selected category from ECategories
     const selectedCategoryData = ECategories.find(cat => cat.title === selectedCategory);
+
+    // Update the onPress function to set subcategories
+    const handleCategoryPress = (category: any) => {
+        console.log('Category Pressed:', category.title); // Debugging log
+        setSelectedCategory(category.title);
+        setSelectedSubcategories(category.subcategories); // Set subcategories based on selected category
+        console.log('Selected Subcategories:', category.subcategories); // Log the subcategories being set
+    };
 
     console.log("Selected Category:", selectedCategory);
     console.log("Selected Category Data:", selectedCategoryData);
@@ -49,7 +58,16 @@ function EInventory(): React.JSX.Element {
                 <View style={styles.bodyContainer}>
                     <View style={styles.scrollContainer}>
                         <View style={styles.itemBoxWrapper}>
-                            <EInventoryBoxes name={t('Warehouse A')} screenName={'Connect'} navigationName={t(ScreensName.EInventoryMainStack)} SourceGiven={warehouse} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                            <EInventoryBoxes 
+                                name={t('Warehouse A')} 
+                                screenName={'Connect'} 
+                                navigationName={t(ScreensName.EInventoryMainStack)} 
+                                SourceGiven={warehouse} 
+                                isNavigation={1} 
+                                w={wp('80%')} 
+                                h={hp('18%')} 
+                                onPress={() => handleCategoryPress({ title: 'Warehouse A', subcategories: [] })}
+                            />
                             <Image source={linegraph} style={styles.infoGraphStyle} />
                         </View>
                     </View>
@@ -68,14 +86,15 @@ function EInventory(): React.JSX.Element {
                                 key={index}
                                 style={[
                                     styles.itemBoxWrapper,
-                                    selectedCategory === Category.title && styles.selectedCategory
+                                    selectedCategory === Category.title && styles.selectedCategory,
+                                    { padding: hp(2) }
                                 ]}
-                                onPress={() => {
-                                    console.log('Category Pressed:', Category.title); // Debugging log
-                                    setSelectedCategory(Category.title);
-                                }}
+                                onPress={() => handleCategoryPress(Category)}
+                                activeOpacity={0.7}
                             >
-                                <Wbox name={t(Category.title)} SourceGiven={Category.img} />
+                                <Image source={Category.img} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
+                                <Text style={styles.TextStyle}>{t(Category.title)}</Text>
+
                             </TouchableOpacity>
                         )
                     ))}
@@ -83,20 +102,19 @@ function EInventory(): React.JSX.Element {
                 <View style={styles.recommendedProducts}>
                     {/* Display Subcategories */}
                     <Text style={styles.recommendedTitle}>{t('Item Details')}</Text>
-                    {selectedCategoryData && selectedCategoryData.subcategories.length > 0 ? (
-                        <View style={styles.recommendedProducts}>
-                            <View style={styles.subcategoryList}>
-                                {selectedCategoryData.subcategories.map((subcategory, index) => (
-                                    <Text key={index} style={styles.subcategoryText}>
-                                        {subcategory.name}
-                                    </Text>
-                                ))}
-                            </View>
+                    {selectedSubcategories.length > 0 ? (
+                        <View style={styles.subcategoryList}>
+                            {selectedSubcategories.map((subcategory, index) => (
+                                <Text key={index} style={styles.subcategoryText}>
+                                    {subcategory.name}
+                                </Text>
+                            ))}
                         </View>
                     ) : selectedCategory ? (
                         <Text style={styles.noSubcategoriesText}>{t('No subcategories available')}</Text>
-                    ) : null}
-
+                    ) : (
+                        <Text style={styles.noSubcategoriesText}>{t('Select a category to see details')}</Text>
+                    )}
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -185,7 +203,14 @@ const styles = StyleSheet.create({
         fontSize: hp('2.2%'),
         paddingVertical: hp(0.5),
         color: colors.BLACK,
-    }
+    },
+    TextStyle: {
+        fontFamily: fonts.Regular,
+        fontSize: 12,
+    },
+    ImageStyle: {
+        resizeMode: 'contain',
+    },
 });
 
 

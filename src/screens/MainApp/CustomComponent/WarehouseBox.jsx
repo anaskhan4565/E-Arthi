@@ -7,13 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { fonts } from '../../../../util/FontName.js';
 import { useTranslation } from 'react-i18next';
 
-const Categorybox = ({ name, SourceGiven, w = wp('18%'), h = hp('9%') }) => {
+const Categorybox = ({ name, SourceGiven, w = wp('18%'), h = hp('9%'), onPress }) => {
     const { t } = useTranslation();
     const handleSubmit = () => {
         console.log('just a submit demo');
     };
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} >
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={onPress}>
             <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
             <Text style={styles.TextStyle}>{t(name)}</Text>
         </TouchableOpacity>

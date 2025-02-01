@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import ScreensName from '../../../../util/ScreensName';
 import Home from './HomeScr';
 import EMarket from './E-Market';
-import EMunshi from './E-Munshi';
+import EMunshi from './E-Munshi/E-Munshi';
 import colors from '../../../../util/colors';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../util/FontName';

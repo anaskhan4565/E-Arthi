@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
         // marginHorizontal: wp('%'),
     },
     TextStyle: {
-        fontFamily: fonts.Regular,
-        fontSize: 12,
+        fontFamily: fonts.Light,
+        fontSize: wp(2),
     },
     ImageStyle: {
         resizeMode: 'contain',

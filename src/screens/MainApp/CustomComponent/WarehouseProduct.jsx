@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import arrow from '../../../assets/rightarrowhead.png'
 
-const InventoryProduct = ({ name, price, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
+const InventoryProduct = ({ name, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
       const navigation = useNavigation();
         const { t } = useTranslation()
     

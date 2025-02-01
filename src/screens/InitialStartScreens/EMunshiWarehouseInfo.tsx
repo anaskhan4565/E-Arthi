@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { PropsWithChildren } from 'react';
-import ECategories from '../../../util/E-Categories.js';
+import EWarehouse from '../../../util/E-WarehouseProducts.js';
 import Navbar from '../MainApp/Navbar/Navbar.jsx';
 import CustomSearchApp from '../MainApp/CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -10,7 +10,7 @@ import EInventoryBoxes from '../MainApp/CustomComponent/EInventoryBoxes.jsx'
 import warehouse from '../../assets/warehouse.png'
 import linegraph from '../../assets/warehouseinfograph.png'
 import Wbox from '../MainApp/CustomComponent/WarehouseBox.jsx';
-import InventoryProduct from '../MainApp/CustomComponent/WarehouseProduct.jsx';
+import WarehouseProduct from '../MainApp/CustomComponent/WarehouseProduct.jsx';
 
 import {
     SafeAreaView,
@@ -35,7 +35,7 @@ function EInventory(): React.JSX.Element {
     const [selectedSubcategories, setSelectedSubcategories] = useState<any[]>([]);
 
     // Find the selected category from ECategories
-    const selectedCategoryData = ECategories.find(cat => cat.title === selectedCategory);
+    const selectedCategoryData = EWarehouse.find(cat => cat.title === selectedCategory);
 
     // Update the onPress function to set subcategories
     const handleCategoryPress = (category: any) => {
@@ -80,20 +80,20 @@ function EInventory(): React.JSX.Element {
                 </View>
                 {/* Category Selection */}
                 <View style={styles.catScrollContainer}>
-                    {ECategories.map((Category, index) => (
-                        Category.title.trim() !== '' && (
+                    {EWarehouse.map((Warehouse, index) => (
+                        Warehouse.title.trim() !== '' && (
                             <TouchableOpacity
                                 key={index}
                                 style={[
-                                    styles.itemBoxWrapper,
-                                    selectedCategory === Category.title && styles.selectedCategory,
+                                    styles.smallBoxWrapper,
+                                    selectedCategory === Warehouse.title && styles.selectedCategory,
                                     { padding: hp(2) }
                                 ]}
-                                onPress={() => handleCategoryPress(Category)}
+                                onPress={() => handleCategoryPress(Warehouse)}
                                 activeOpacity={0.7}
                             >
-                                <Image source={Category.img} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
-                                <Text style={styles.TextStyle}>{t(Category.title)}</Text>
+                                <Image source={Warehouse.img} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
+                                <Text style={styles.TextStyle}>{t(Warehouse.title)}</Text>
 
                             </TouchableOpacity>
                         )
@@ -105,9 +105,7 @@ function EInventory(): React.JSX.Element {
                     {selectedSubcategories.length > 0 ? (
                         <View style={styles.subcategoryList}>
                             {selectedSubcategories.map((subcategory, index) => (
-                                <Text key={index} style={styles.subcategoryText}>
-                                    {subcategory.name}
-                                </Text>
+                                <WarehouseProduct name={subcategory.name} isNavigation={0} navigateTo={ScreensName.EInventoryDetails}/>
                             ))}
                         </View>
                     ) : selectedCategory ? (
@@ -147,6 +145,7 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: 'bold',
         fontSize: hp('3%'),
+        marginLeft: wp(5)
     },
     scrollContainer: {
         //flexWrap: 'wrap',
@@ -168,13 +167,15 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.GREEN,
     },
     recommendedProducts: {
-        marginTop: hp('2%'),
         marginLeft: wp(2)
     },
     recommendedTitle: {
         fontSize: hp('3%'),
-        marginBottom: hp('2%'),
-        color:colors.GREEN
+        marginTop: hp(2),
+        marginBottom: hp('1%'),
+        color:colors.GREEN,
+        fontFamily: fonts.SemiBold,
+        marginLeft: wp(5)
     },
     productRow: {
         flexDirection: 'column',
@@ -191,13 +192,12 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         width: wp('95'),
         justifyContent:'center',
-        marginLeft: wp(2)
+        marginLeft: wp(2),
+        gap: wp(2)
     },
     subcategoryList: {
-        marginTop: hp(1),
+        marginTop: hp(-4),
         padding: hp(1),
-        backgroundColor: colors.LIGHT_GRAY,
-        borderRadius: 8,
     },
     subcategoryText: {
         fontSize: hp('2.2%'),
@@ -206,11 +206,21 @@ const styles = StyleSheet.create({
     },
     TextStyle: {
         fontFamily: fonts.Regular,
-        fontSize: 12,
+        fontSize: hp(1.05),
     },
     ImageStyle: {
         resizeMode: 'contain',
     },
+    smallBoxWrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 1,
+        backgroundColor: colors.WHITE,
+        borderColor: colors.GREEN,
+        width: wp(22),
+        height: hp(9)
+    }
 });
 
 

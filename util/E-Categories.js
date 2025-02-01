@@ -4,8 +4,8 @@ export default [
         img:require('../src/assets/MainApp/E-Market/Seeds.png'),
         subcategories: [
             { name: "Rice Seeds" },
-            { name: "A Seeds" },
-            { name: "B Seeds" },
+            { name: "Wheat Seeds" },
+            { name: "Grain Seeds" },
             { name: "Hybrid Seeds" },
         ]
     },
@@ -13,8 +13,8 @@ export default [
         title: "Fertilizer",
         img:require('../src/assets/MainApp/E-Market/Fertilizer.png'),
         subcategories: [
-            { name: "Organic Fertilizer" },
-            { name: "Chemical Fertilizer" },
+            { name: "ENGRO-400 Fertilizer" },
+            { name: "Potash-5800 Fertilizer" },
         ]
     },
   
@@ -23,8 +23,8 @@ export default [
         img:require('../src/assets/MainApp/E-Market/Seeds2.png'),
         subcategories: [
             { name: "Rice Seeds" },
-            { name: "A Seeds" },
-            { name: "B Seeds" },
+            { name: "Wheat Seeds" },
+            { name: "Grain Seeds" },
             { name: "Hybrid Seeds" },
         ]
     },
@@ -32,8 +32,8 @@ export default [
         title: "Fertilizer",
         img:require('../src/assets/MainApp/E-Market/Fertilizer2.png'),
         subcategories: [
-            { name: "Organic Fertilizer" },
-            { name: "Chemical Fertilizer" },
+            { name: "ENGRO-400 Fertilizer" },
+            { name: "Potash-5800 Fertilizer" },
         ]
     },
     {
@@ -48,8 +48,8 @@ export default [
         title: "Fertilizer",
         img:require('../src/assets/MainApp/E-Market/Fertilizer3.png'),
         subcategories: [
-            { name: "Organic Fertilizer" },
-            { name: "Chemical Fertilizer" },
+            { name: "ENGRO-400 Fertilizer" },
+            { name: "Potash-5800 Fertilizer" },
         ]
     },
     {

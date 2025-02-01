@@ -24,6 +24,7 @@ import EWarehouseNewSpaceWarehouseSelect from "./E-WarehouseNewSpaceWarehouseSel
 import EWarehouseNewSpaceConfirmWarehouse from "./E-WarehouseNewSpaceConfirmWarehouse"
 import EWarehousePreviousWarehouses from "./E-WarehousePreviousWarehouses"
 import EWarehousePreviousWarehouseDetails from "./E-WarehousePreviousWarehouseDetails"
+import ConfrimWarehouse from "./E-WarehouseNewSpaceConfirmWarehouse";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +38,7 @@ function EWarehouseMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EWarehouseNewSpaceWarehouseSelect} component={EWarehouseNewSpaceWarehouseSelect} />
                     <Stack.Screen name={ScreensName.EWarehouseNewSpaceConfirmWarehouse} component={EWarehouseNewSpaceConfirmWarehouse} />
                     <Stack.Screen name={ScreensName.EWarehousePreviousWarehouses} component={EWarehousePreviousWarehouses} />
-                    <Stack.Screen name={ScreensName.EWarehousePreviousWarehouseDetails} component={EWarehousePreviousWarehouseDetails} />
+                    <Stack.Screen name={ScreensName.EWarehousePreviousWarehouseDetails} component={ConfrimWarehouse} />
                 </Stack.Navigator>
         // </I18nextProvider>
     );

@@ -53,7 +53,7 @@ function Sidebar() {
       {links.map(
         (link, index) =>
           link.name.trim() !== "" && (
-            <TouchableOpacity style={styles.linkWrapper} key={index}>
+            <TouchableOpacity style={styles.linkWrapper} key={index} onPress={()=>navigation.navigate(link.screenName)}>
               <Image source={link.icon} style={styles.Icons} />
               <Text style={styles.link}>{t(link.name)}</Text>
             </TouchableOpacity>

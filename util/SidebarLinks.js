@@ -1,12 +1,52 @@
 export default [
-    {name: "My Profile",icon: require("../src/assets/MainApp/Sidebar/Profile.png")},
-    {name: "My Orders",icon: require('../src/assets/MainApp/Sidebar/Document.png')},
-    {name: "E-Arthi Khata",icon: require("../src/assets/MainApp/Sidebar/Profile.png")},
-    {name: "Language",icon: require('../src/assets/MainApp/Sidebar/Message.png')},
-    {name: "Loan Request",icon: require("../src/assets/MainApp/Sidebar/Profile.png")},
-    {name: "Transaction History",icon: require("../src/assets/MainApp/Sidebar/Profile.png")},
-    {name: "Delivery Address",icon: require('../src/assets/MainApp/Sidebar/Location.png')},
-    {name: "Payment Method",icon: require('../src/assets/MainApp/Sidebar/Wallet.png')},
-    {name: "Terms & Conditions",icon: require("../src/assets/MainApp/Sidebar/Profile.png")},
-    {name: "Contact Us",icon: require('../src/assets/MainApp/Sidebar/Message.png')},
+    { 
+        name: "My Profile", 
+        icon: require("../src/assets/MainApp/Sidebar/Profile.png"),
+        screenName: "MyProfileScreen"
+    },
+    { 
+        name: "My Orders", 
+        icon: require('../src/assets/MainApp/Sidebar/Document.png'),
+        screenName: "MyOrdersScreen"
+    },
+    { 
+        name: "E-Arthi Khata", 
+        icon: require("../src/assets/MainApp/Sidebar/Profile.png"),
+        screenName: "EArthiKhataScreen"
+    },
+    { 
+        name: "Language", 
+        icon: require('../src/assets/MainApp/Sidebar/Message.png'),
+        screenName: "LanguageScreen"
+    },
+    { 
+        name: "Loan Request", 
+        icon: require("../src/assets/MainApp/Sidebar/Profile.png"),
+        screenName: "LoanRequestScreen"
+    },
+    { 
+        name: "Transaction History", 
+        icon: require("../src/assets/MainApp/Sidebar/Profile.png"),
+        screenName: "TransactionHistoryScreen"
+    },
+    { 
+        name: "Delivery Address", 
+        icon: require('../src/assets/MainApp/Sidebar/Location.png'),
+        screenName: "DeliveryAddressScreen"
+    },
+    { 
+        name: "Payment Method", 
+        icon: require('../src/assets/MainApp/Sidebar/Wallet.png'),
+        screenName: "MyProfile"
+    },
+    { 
+        name: "Terms & Conditions", 
+        icon: require("../src/assets/MainApp/Sidebar/Profile.png"),
+        screenName: "TermsAndConditionsScreen"
+    },
+    { 
+        name: "Contact Us", 
+        icon: require('../src/assets/MainApp/Sidebar/Message.png'),
+        screenName: "ContactUsScreen"
+    },
 ];

@@ -33,7 +33,7 @@ function ELoanBOP(): React.JSX.Element {
             <ScrollView style={styles.container}>
                 <View style={[styles.header, { alignSelf: 'center' }]}>
                     <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/BOP.png')} />
-                    <Text style={styles.titletext}>Habib Bank</Text>
+                    <Text style={styles.titletext}>Bank Of Punjab</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
                     <CustomTxtAndPicker PlaceHolderGiven={"Employeement Type"} itemPackage={[{ label: "Value2", value: "Value2" }]} Picker_Txt={"Select Employeement Type"} />
@@ -59,13 +59,13 @@ function ELoanBOP(): React.JSX.Element {
                     <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
                     <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true}  />
 
-                    <CustomUploadButton PlaceHolderGiven={"Mortgage of Property"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security in shape of Bank's FIxed Deposit Receipts"} InputHolder={'Upload'} givePad={true} />
                     <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true}  />
                     <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true}  />
 
                     <View style={{ flex: 1, gap: hp(3) }}>
+                    <TickBox TextGiven={'Are you older than 18'} givePadding={false} />
                         <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={false} />
                         <TickBox TextGiven={'Do you agree with BOP Terms & Conditions'} givePadding={false} />
                         <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={false} />

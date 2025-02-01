@@ -42,6 +42,10 @@ import ETransportStack from "./src/screens/MainApp/TabScreens/E-Transport/E-Tran
 import EVendorsMainStack from "./src/screens/MainApp/TabScreens/E-Vendors/E-VendorsMainStack.tsx";
 import SelectLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
 import MyProfileMainStack from "./src/screens/MainApp/TabScreens/MyProfile/MyProfileMainStack.tsx";
+import BankRecieving from "./src/screens/MainApp/TabScreens/MyProfile/BankRecieving.tsx";
+import RaastRecieving from "./src/screens/MainApp/TabScreens/MyProfile/Raastrecieving.tsx";
+import Recieving from "./src/screens/MainApp/TabScreens/MyProfile/Recieving.tsx";
+import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -92,6 +96,13 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.EInventorySupplierReports} component={EInventorySupplierReports} />
 
           <Stack.Screen name={ScreensName.MyProfileMainStack} component={MyProfileMainStack} />
+
+
+          <Stack.Screen name={ScreensName.BankRecieving} component={BankRecieving} />
+          <Stack.Screen name={ScreensName.RaastRecieving} component={RaastRecieving} />
+          <Stack.Screen name={ScreensName.Recieving} component={Recieving} />
+          <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
+
 
 
           <Stack.Screen name={ScreensName.EMandi} component={Overview} />

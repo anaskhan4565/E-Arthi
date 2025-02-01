@@ -52,7 +52,7 @@ function SignIn() {
         </View>
         <View style={{ flexDirection: 'row', width: wp(85), justifyContent: 'center', alignItems: 'center' }}>
           {!SwitchedButton ?
-            <View style={{ width: hp(9.5) }}>
+            <View style={{ width: hp(10) }}>
               <CustomPicker
                 items={[
                   { label: "+92", value: "+92" },
@@ -62,8 +62,8 @@ function SignIn() {
                 isheader={true}
                 padding_f={true}
                 placeholder={"+92"}
-                
-                min_given={hp(20)}
+                w_given={hp(10)}
+                min_given={hp(11)}
               />
             </View>
             : null}

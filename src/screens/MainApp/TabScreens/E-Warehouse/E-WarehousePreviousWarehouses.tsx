@@ -18,13 +18,14 @@ import {
 import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton";
 import CustomBarChart from "./CustomStylesComp/Chart";
 
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const screenName = ScreensName.EWarehousePreviousWarehouseDetails;
   const barChartData = {
     labels: ["PASSCO", "Cargill", "Kissan", "PASSCO", "Cargill"],
     datasets: [
@@ -61,7 +62,7 @@ function PurchaseHisotry(): React.JSX.Element {
             txColor={colors.WHITE}
             isNavigation={1}
             wgiven={wp(36)}
-            tx_size={hp(0.3)}
+            tx_size={hp(0.1)}
             hgiven={hp(3.7)}
             tx_center={true}
           />
@@ -78,8 +79,8 @@ function PurchaseHisotry(): React.JSX.Element {
               <TouchableOpacity
                 style={styles.tableRow}
                 key={index}
-                onPress={() => {
-                  navigation.navigate(ScreensName.EWarehousePreviousWarehouseDetails);
+                onPress={() => {0
+                  navigation.navigate(screenName);
                 }}
               >
                 <Text style={styles.tableRowText}>{data.name}</Text>

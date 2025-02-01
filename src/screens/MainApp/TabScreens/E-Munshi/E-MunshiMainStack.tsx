@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 function EMunshiMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.EMunshiFarmName} screenOptions={{ headerShown: false }}>
+                <Stack.Navigator initialRouteName={ScreensName.EMunshi} screenOptions={{ headerShown: false }}>
                     <Stack.Screen name={ScreensName.EMunshi} component={EMunshi} />
                     <Stack.Screen name={ScreensName.EMunshiItemName} component={EMunshiItemName} />
                     <Stack.Screen name={ScreensName.EMunshiCashFlow} component={EMunshiCashFlow} />

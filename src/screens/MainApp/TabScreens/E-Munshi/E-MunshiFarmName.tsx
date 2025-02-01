@@ -181,15 +181,14 @@ const EMunshiFarmName = () => {
 
                 <View style={styles.piechatcontainer}>
                     <MyPieChart
-                        legend1Name={t("Pending Cash: PKR 12500")}
-                        legend1Population={100000}
-                        legend2Name={t("Cash Paid PKR 150000")}
-                        legend2Population={25000}
-                        legend1_color={"blue"}
-                        legend2_color={"brown"}
+                    data={[
+                        { name: t("Pending Cash: PKR 12500"), value: 100000, color: "blue" },
+                        { name: t("Cash Paid PKR 150000"), value: 25000, color: "brown"}
+                    ]}
+                        
                         chartWidth={wp(75)}
                         chartHeight={hp(20)}
-                        containerWidth={wp(55)}
+                        containerWidth={wp(80)}
                         containerHeight={hp(32)}
                     />
                 </View>

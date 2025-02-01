@@ -68,7 +68,7 @@ function EMunshiItem(): React.JSX.Element {
                         </TouchableOpacity>
                     ))}
                 </View>
-                <CustomButton MainText={t('Check Cash Flow')} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.ETransportNewTransport} />
+                <CustomButton MainText={t('Check Cash Flow')} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EMunshiFarmName} />
             </ScrollView>
         </SafeAreaView >
     );

@@ -12,7 +12,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../../util/FontName';
+import { fonts } from '../../../util/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 
 const AboutMore = () => {
@@ -33,7 +33,7 @@ const AboutMore = () => {
             <View style={{ flex: 0.74, backgroundColor: colors.WHITE }}>
                 <View style={{ flex: 1.3, justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={Logo} resizeMode="contain" style={{ height: hp(20), width: wp(200), marginLeft: hp(2.2) }} />
-                    <Text style={{ fontSize: hp(4.5), textAlign: 'center', fontWeight: 'bold', fontFamily: fonts.Medium, letterSpacing: 4 }}>{t('E-Arthi').toUpperCase()}</Text>
+                    <Text style={{ fontSize: hp(5), textAlign: 'center', letterSpacing: hp(0.9), fontFamily: fonts.bold }}>{t('E-AGRI')}</Text>
                     <Text style={styles.headerText}>{t('Select Your Preferred Language')}</Text>
                 </View>
                 <View style={styles.contentContainer}>

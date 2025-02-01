@@ -3,12 +3,13 @@ import React from 'react';
 import colors from '../../util/colors';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { fonts } from '../../util/FontName';
 
 const CustomButton = ({
   MainText,
   BgGiven,
   name,
-  txColor,
+  txColor=colors.BLACK,
   isNavigation,
   wgiven = wp(85),
   hgiven = hp(5.7),
@@ -16,7 +17,10 @@ const CustomButton = ({
   b_width = 1,
   b_radius = 8,
   onPressG, // Custom onPress event
-  b_end_only
+  b_end_only,
+  isSelected = false,
+  tx_size=hp('2.2%'),
+  tx_center=false
 }) => {
   const navigation = useNavigation();
 
@@ -52,7 +56,7 @@ const CustomButton = ({
       ]}
       onPress={handlePress} // Attach the decided handler
     >
-      <Text style={{ color: txColor, fontSize: hp('2%') }}>{MainText}</Text>
+      <Text style={{ color: txColor,fontFamily: fonts.Medium, fontSize: !isSelected ? hp('2%') : tx_size, fontWeight: isSelected ? 'bold' : 'normal',textAlign:tx_center?'center':null }}>{MainText}</Text>
     </TouchableOpacity>
   );
 };
@@ -65,5 +69,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     borderColor: colors.GREEN,
+    
   },
 });

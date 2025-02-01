@@ -8,7 +8,20 @@ import { fonts } from '../../../../util/FontName.js';
 import ScreensName from '../../../../util/ScreensName.ts';
 // import ScreensName from '../../../../util/ScreensName.js';
 
-const EInventoryBoxes = ({ name, SourceGiven, screenName, navigationName, isNavigation, w = wp('80%'), h = hp('30%') }) => {
+const EInventoryBoxes = ({ 
+    name, SourceGiven, screenName, 
+    navigationName, isNavigation, 
+    w = wp('80%'), 
+    h = hp('30%'),
+    isBold=false,  
+    img_size_h=hp(5),
+    img_size_w=hp(20),
+    font_Size=hp('2.5%'),
+    isLightBold=false,
+    give_top_margin= 0
+
+
+}) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
     const handleNavigation = () => {
@@ -23,14 +36,19 @@ const EInventoryBoxes = ({ name, SourceGiven, screenName, navigationName, isNavi
 
     return (
         <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
-            <Image source={SourceGiven} style={styles.ImageStyle} />
-            <Text style={styles.TextStyle}>{t(name)}</Text>
+            <Image source={SourceGiven} style={[styles.ImageStyle,{width:img_size_w,height:img_size_h}]} />
+            <Text style={[styles.TextStyle,{fontSize:font_Size,
+                fontFamily:isBold?fonts.bold:isLightBold?fonts.SemiBold:fonts.Medium,
+                marginTop:give_top_margin, 
+
+                
+                
+                }]}>{t(name)}</Text>
         </TouchableOpacity>
     );
 };
 
 export default EInventoryBoxes;
-
 const styles = StyleSheet.create({
     Wrapper: {
         justifyContent: 'center',
@@ -46,13 +64,10 @@ const styles = StyleSheet.create({
         marginTop: hp(1),
     },
     TextStyle: {
-        fontFamily: fonts.Medium,
-        fontSize: hp('2.5%'),
-        marginTop: hp(0.9),
+        textAlign: 'center',
     },
     ImageStyle: {
         resizeMode: 'contain',
-        width: wp(10),
-        height: hp(5),
+        marginBottom: hp(0.5), // Optional: Add a bottom margin to the image for consistent spacing
     },
 });

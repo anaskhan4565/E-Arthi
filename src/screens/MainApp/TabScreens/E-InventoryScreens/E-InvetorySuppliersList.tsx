@@ -41,21 +41,21 @@ function InvetorySuppliersList(): React.JSX.Element {
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
-      </View>      
-      <View style={{ flex: 7 }}>
+      </View>
+      <ScrollView style={{ flex: 7 }}>
         <View style={styles.searchbar}>
-          <CustomSearchApp 
-            placeholder={"Search Suppliers..."} 
+          <CustomSearchApp
+            placeholder={"Search Suppliers..."}
             value={searchTerm}
             onChangeText={setSearchTerm}
           />
         </View>
-        <View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(4), gap:wp(23)}}>
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(4) }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: hp(1.2), marginTop: hp(0),  gap: wp(23) }}>
+          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(4),marginRight:wp(4) }}>
             {t('Suppliers')}
           </Text>
-          <TouchableOpacity 
-            style={styles.reorderButton} 
+          <TouchableOpacity
+            style={styles.reorderButton}
             onPress={() => { navigation.navigate(ScreensName.EInventoryAddSuppliers) }}>
             <Text style={styles.reorderButtonText}>{t('Add Suppliers')}</Text>
           </TouchableOpacity>
@@ -77,7 +77,7 @@ function InvetorySuppliersList(): React.JSX.Element {
               </View>
             )
         )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: colors.GREEN,
     width: wp("29%"),
-    height: hp("3%"),
+    height: hp("3.5%"),
     backgroundColor: colors.GREEN,
     borderWidth: 1,
   },
@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
   cost: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    textAlign: "center",
+    textAlign: "left",
+    marginRight: hp(1),
     width: wp(33),
   },
   date: {
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     width: wp(30)
   },
   decs: {
-    fontFamily: fonts.Regular,
+    fontFamily: fonts.bold,
     fontSize: hp(1.8),
   },
   decsAndQty: {
@@ -154,7 +155,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: wp(4),
-
+    marginTop: hp(0.5),
+    height: hp(5),
   },
 });
 

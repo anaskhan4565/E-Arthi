@@ -26,6 +26,12 @@ import EloanLandVerify from "./E-LoanLandVerify"
 import ELoanNewLoan from "./E-LoanNewLoan"
 import ELoanCurrentLoan from "./E-LoanCurrentLoan"
 import EloanSelectedLoan from "./E-LoanSelectedLoan"
+import ELoanSuccessScr from "./E-LoanSuccess";
+import ELoanNewBank from "./E-LoanNewBank";
+import EloanHBL from "./E-LoanHBL";
+import EloanBOP from "./E-LoanBOP";
+import EloanZTBL from "./E-LoanZTBL";
+import EloanMeezan from "./E-LoanMeezan";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +46,12 @@ function ELoanMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EloanLandVerify} component={EloanLandVerify} />
                     <Stack.Screen name={ScreensName.EloanPreviousLoan} component={EloanPreviousLoan} />
                     <Stack.Screen name={ScreensName.ELoanNewLoan} component={ELoanNewLoan} />
+                    <Stack.Screen name={ScreensName.ELoanSuccessScr} component={ELoanSuccessScr} />
+                    <Stack.Screen name={ScreensName.ELoanNewBank} component={ELoanNewBank} />
+                    <Stack.Screen name={ScreensName.EloanHBL} component={EloanHBL} />
+                    <Stack.Screen name={ScreensName.EloanBOP} component={EloanBOP} />
+                    <Stack.Screen name={ScreensName.EloanZTBL} component={EloanZTBL} />
+                    <Stack.Screen name={ScreensName.EloanMeezan} component={EloanMeezan} />
                     <Stack.Screen name={ScreensName.EloanCurrentLoan} component={ELoanCurrentLoan} />
                     <Stack.Screen name={ScreensName.EloanSelectedLoan} component={EloanSelectedLoan} />
                 </Stack.Navigator>

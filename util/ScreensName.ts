@@ -1,5 +1,3 @@
-import SelectLanguage from "../src/screens/SelectLanguage/SelectLanguage";
-
 export default {
     SplashScreen: "SplashScreen",
 
@@ -28,7 +26,6 @@ export default {
     //Specific After logging in::
     MainTabNavigation: "MainTabNavigation",
     HomeScreen: "Home",
-    EMunshi: "E-Munshi",
 
     ELoanMainStack: "ELoanMainStack",
     ELoan: "E-Loan",
@@ -39,6 +36,13 @@ export default {
     EloanCurrentLoan: "EloanCurrentLoan",
     EloanSelectedLoan: "EloanSelectedLoan",
     ELoanNewLoan: "ELoanNewLoan",
+    ELoanSetAside: "ELoanSetAside",
+    ELoanSuccessScr: "ELoanSuccessScr",
+    ELoanNewBank: "ELoanNewBank",
+    EloanHBL: "EloanHBL",
+    EloanMeezan: "EloanMeezan",
+    EloanBOP: "EloanBOP",
+    EloanZTBL: "EloanZTBL",
 
     EWarehouseMainStack: "EWarehouseMainStack",
     EWarehouse: "EWarehouse",
@@ -47,6 +51,10 @@ export default {
     EWarehouseNewSpaceConfirmWarehouse: "EWarehouseNewSpaceConfirmWarehouse",
     EWarehousePreviousWarehouses: "EWarehousePreviousWarehouses",
     EWarehousePreviousWarehouseDetails: "EWarehousePreviousWarehouseDetails",
+
+    EVendorsMainStack: "EVendorsMainStack",
+    EVendors: "EVendors",
+    EVendorsDetails: "EVendorsDetails",
 
     EInventory: "E-Inventory",
     EMarket: "E-Market",
@@ -67,18 +75,40 @@ export default {
     EInventoryManageGroup: "EInventoryManageGroup",
     EInventoryDetails: 'EInventoryDetails',
 
-   
-    EInventorySupplier:'EInventorySupplier',
-    EInventorySuppliersList:'EInventorySuppliersList',
-    EInventoryAddSuppliers:'EInventoryAddSuppliers',
-    EInventorySupplierReports:'EInventorySupplierReports',
+
+    EInventorySupplier: 'EInventorySupplier',
+    EInventorySuppliersList: 'EInventorySuppliersList',
+    EInventoryAddSuppliers: 'EInventoryAddSuppliers',
+    EInventorySupplierReports: 'EInventorySupplierReports',
 
 
     //For E-Mandi
-    EMandi:'E-Mandi',
-    MarketDept:'MarketDept',
-    Profile:'Profile',
+    EMandi: 'E-Mandi',
+    MarketDept: 'MarketDept',
+    Profile: 'Profile',
 
-    // E-Munshi
-    EMunshiWarehouseInfo: 'EMunshiWarehouseInfo'
+
+    ETransportStack: "ETransportStack",
+    ETransportAddDetails: "ETransportAddDetails",
+    ETransportAir: "ETransportAir",
+    ETransportAnalytics: "ETransportAnalytics",
+    ETransportDeliveryHistory: "ETransportDeliveryHistory",
+    ETransportNewTransport: "ETransportNewTransport",
+    ETransportSelectVehicleType: "ETransportSelectVehicleType",
+    ETransportShip: "ETransportShip",
+    ETransportTruck: "ETransportTruck",
+    ETransportMain: "ETransportMain",
+
+    MyProfileMainStack: "MyProfileMainStack",
+    MyProfile: "MyProfile",
+    ProfileChangeLanguage: "ProfileChangeLanguage",
+    BankRecieving: "BankRecieving",
+    RaastRecieving: "RaastRecieving",
+    Recieving: "Recieving",
+
+    EMunshiMainStack : "EMunshiMainStack",
+    EMunshi: "EMunshi",
+    EMunshiItemName: "EMunshiItemName",
+    EMunshiCashFlow: "EMunshiCashFlow",
+    EMunshiFarmName :"EMunshiFarmName",
 }

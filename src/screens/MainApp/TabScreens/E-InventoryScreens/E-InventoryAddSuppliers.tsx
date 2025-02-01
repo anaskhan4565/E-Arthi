@@ -22,13 +22,16 @@ import {
     View,
     TouchableOpacity,
     Image,
+    TextInput
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName';
 import CustomInput from '../../../../components/CustomInput.jsx';
-import { TextInput } from 'react-native-paper';
+
 import { Picker } from '@react-native-picker/picker';
+import PickerMainLogin from '../../CustomComponent/PickerMainLogin.jsx';
+import CustomPicker from '../../EMandi/CustomComp/CustomPicker.jsx';
 
 function EInventoryDetails(): React.JSX.Element {
     const { t } = useTranslation();
@@ -54,67 +57,68 @@ function EInventoryDetails(): React.JSX.Element {
                     <View style={styles.detailsContainer}>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Supplier Name')}</Text>
-                            <TextInput 
-                            placeholder='Enter Here' 
-                            style={styles.value}
+                            <TextInput
+                           placeholder='Enter Here'
+                           style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Category')}</Text>
-                            <TextInput 
-                            placeholder={t('Enter Here')} 
-                            style={styles.value}
+                            <TextInput
+                                placeholder={t('Enter Here')}
+                                style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Seller Information')}</Text>
-                            <TextInput 
-                            placeholder={t('Enter Here')}
-                            style={styles.value}
+                            <TextInput
+                                placeholder={t('Enter Here')}
+                                style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Delivery Address')}</Text>
-                            <TextInput 
-                            placeholder={t('Enter Here')}
-                            style={styles.value}
+                            <TextInput
+                                placeholder={t('Enter Here')}
+                                style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Payment Cycle')}</Text>
                             <View style={[styles.value, {
-                                // padding: 0,
-                                margin: 0,
+                                borderWidth: 0
                             }]}>
-                                <Picker
-                                    selectedValue={selectedPaymentCycle}
-                                    onValueChange={(itemValue) => setSelectedPaymentCycle(itemValue)}
-                                    style={{ 
-                                        height: hp(3.5),
-                                        backgroundColor: colors.WHITE,
-                                        margin: 0,
-                                        padding: 0,
-                                    }}
-                                >
-                                    <Picker.Item label={t('Select Payment Cycle')} value="" />
-                                    <Picker.Item label={t('Weekly')} value="weekly" />
-                                    <Picker.Item label={t('Bi-weekly')} value="biweekly" />
-                                    <Picker.Item label={t('Monthly')} value="monthly" />
-                                    <Picker.Item label={t('Quarterly')} value="quarterly" />
-                                </Picker>
+                                <CustomPicker
+                                    items={[
+                                        { label: "Select Payment Cycle", value: "Select Payment Cycle" },
+                                        { label: "Weekly", value: "Weekly" },
+                                        { label: "Bi-weekly", value: "Bi-weekly" },
+                                        { label: "Monthly", value: "Monthly" },
+                                        { label: "Quarterly", value: "Quarterly" },
+
+                                    ]}
+                                    isheader={true}
+                                    bg_color_on={true}
+                                    allow_shadow={false}
+                                    min_given={hp(25)}
+                                    w_given={hp(27.5)}
+                                    hp_given={hp(4)}
+                                    tx_color={colors.WHITE}
+                                    padding_f={true}
+                                />
                             </View>
                         </View>
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <CustomButton 
+                        <CustomButton
                             MainText={t('Add new inventory')}
                             BgGiven={colors.GREEN}
                             txColor={colors.WHITE}
                             isNavigation={true}
                             name={ScreensName.EInventorySupplier}
                         />
-                        <CustomButton 
+                        <CustomButton
                             MainText={t('Edit')}
                             BgGiven={colors.WHITE}
                             txColor={colors.GREEN}
@@ -150,8 +154,10 @@ const styles = StyleSheet.create({
         marginTop: hp(-3),
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: wp(-39)
+        justifyContent: 'flex-start',
+        marginLeft: wp(6),
+        width: "100%",
+        // marginLeft: wp(-39)
     },
     headerTextWrapper: {
         flex: 0.7,
@@ -188,23 +194,24 @@ const styles = StyleSheet.create({
     },
     detailRow: {
         flexDirection: 'row',
-        marginTop: hp(1),
-        flex:1,
+        marginTop: hp(2),
+        flex: 1,
         alignItems: 'center',
     },
     label: {
-        width:wp(35),
+        width: wp(35),
         marginLeft: wp(6),
         fontSize: hp(1.75),
     },
     value: {
-        width:wp(60),
-        fontSize:hp(1.5),
-        marginRight:wp(3),
-        height:hp(3.5),
-        backgroundColor:colors.WHITE,
-        borderWidth:1,
-        borderRadius:2
+        width: wp(60),
+        fontSize: hp(1.5),
+        fontFamily: fonts.Regular,
+        marginRight: wp(5),
+        height: hp(5),
+        borderWidth: 1,
+        borderRadius: 4,
+        borderLeftColor: '#D3D3D3',
     },
     buttonContainer: {
         flex: 0.2,

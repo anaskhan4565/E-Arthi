@@ -22,7 +22,7 @@ const LocationSys = () => {
 
     useEffect(() => {
         if (isLocationEnabled) {
-            navigation.navigate(ScreensName.Connect);
+            navigation.navigate(ScreensName.LanguageSelect);
         }
     }, [isLocationEnabled, navigation]);
 

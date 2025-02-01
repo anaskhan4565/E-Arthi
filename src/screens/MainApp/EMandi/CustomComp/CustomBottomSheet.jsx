@@ -14,7 +14,7 @@ const CustomBottomSheetExport = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const[currentState,setCurrentState]=useState(['Buy'])
+    const [currentState, setCurrentState] = useState(['Buy'])
 
     return (
         <CustomBottomSheet expanded={isExpanded}>
@@ -26,28 +26,40 @@ const CustomBottomSheetExport = () => {
                             { label: "Option 1", value: "9.6" },
                             { label: "Option 2", value: "10" },
                             { label: "Option 3", value: "9.3" },
-                        ]}  key={2}/>
+                        ]} key={2}
+                            w_given={hp(17)}
+                            hp_given={hp(3)}
+                            min_given={hp(15)}
+                        />
 
                         <CustomPicker items={[
                             { label: "Buy", value: "Buy" },
                             { label: "Sell", value: "Sell" },
-                        ]} key={24} currentState={currentState} setCurrentState={setCurrentState}/>
+                        ]} 
+                        w_given={hp(17)}
+                        hp_given={hp(3)}
+                        min_given = {hp(15)}
+                        key={24} currentState={currentState} setCurrentState={setCurrentState} />
                         <CustomPicker items={[
                             { label: "Limit", value: "Limit" },
                             { label: "Market", value: "Market" },
-                        ]}  key={8}/>
-                        <View >
-                            <TextInput placeholder={t('100')} style={{backgroundColor:colors.LIGHT_GRAY}} />
+                        ]} key={8}
+                        w_given={hp(17)}
+                        hp_given={hp(3)}
+                        min_given = {hp(15)}
+                        />
+                        <View style={{width:hp(17)}} >
+                            <TextInput placeholder={t('100')} style={{ backgroundColor: colors.LIGHT_GRAY }} />
                         </View>
                         <View style={{ flex: 0.01, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Text style={{ fontWeight: '900', color: colors.RED }}>9.22</Text>
                             <Text style={{ fontWeight: '900', color: colors.GREEN }}>11.22</Text>
                         </View>
-                        <View style={{ flex: 0.2 }}>
+                        <View style={{ flex: 0.2,width:hp(17) }}>
                             <TextInput placeholder={t('10.15')} style={{ backgroundColor: colors.LIGHT_GRAY }} />
                         </View>
 
-                        <View style={[styles.passInputBox,{marginTop:hp(3)}]}>
+                        <View style={[styles.passInputBox, { marginTop: hp(3) }]}>
                             <TextInput
                                 style={styles.passInput}
                                 placeholder={t("Pin")}
@@ -65,7 +77,7 @@ const CustomBottomSheetExport = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <CustomButton MainText={currentState=='Buy'?t('Buy'):t('Sell')} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={currentState=='Buy'?colors.GREEN:colors.RED} txColor={colors.WHITE} />
+                            <CustomButton MainText={currentState == 'Buy' ? t('Buy') : t('Sell')} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={currentState == 'Buy' ? colors.GREEN : colors.RED} txColor={colors.WHITE} />
                         </View>
                     </View>
                     <View style={{ flex: 0.6, borderWidth: 1 }}>

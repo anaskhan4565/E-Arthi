@@ -24,15 +24,7 @@ function Connect(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.WHITE }}>
-      <View style={{ padding: 10, alignItems:'center', justifyContent:'center' }}>
-        <CustomButton
-          MainText={t('Select Language')}
-          BgGiven={colors.GREEN}
-          txColor={colors.WHITE}
-          isNavigation={true}
-          name={ScreensName.LanguageSelect}
-        />
-      </View>
+   
 
       <View style={{ flex: 0.75, justifyContent: 'center', marginTop: hp(16), alignItems: 'center' }}>
         <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>

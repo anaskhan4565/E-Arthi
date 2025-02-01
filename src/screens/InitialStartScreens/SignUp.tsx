@@ -1,32 +1,35 @@
 import React, { useState } from "react";
-import {SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, TextInput, Image, ScrollView } from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import colors from '../../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ScreensName from "../../../util/ScreensName";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { fonts } from "../../../util/FontName";
 
 const { height, width } = Dimensions.get("window");
 
 function SignUp(): React.JSX.Element {
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const {t} = useTranslation();
+    const [passwordVisible, setPasswordVisible] = useState(true);
+    const { t } = useTranslation();
     return (
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.Header}>
                 <Text style={styles.Heading}>{t('Register')}</Text>
                 <Text style={styles.SubHeading}>{t('Welcome, please Register')}</Text>
             </View>
- 
+
             <View style={styles.inputs}>
                 <CustomInput placeholder={t('Full Name')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
                 <CustomInput placeholder={t('Phone No.')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
                 <View style={styles.passInputBox}>
                     <TextInput
-                        style={styles.passInput}
+                        style={[styles.passInput, {
+                            paddingLeft: wp(2),
+                            paddingVertical: 8,
+                        }]}
                         placeholder={t('Password')}
                         placeholderTextColor={colors.LIGHT_GRAY}
                         secureTextEntry={passwordVisible}
@@ -46,14 +49,14 @@ function SignUp(): React.JSX.Element {
             <View style={styles.options}>
                 <View style={styles.RememberMe}>
                     <BouncyCheckbox
-                        size={25}
+                        size={hp(2.5)}
                         fillColor={colors.GREEN}
                         iconStyle={{ borderColor: colors.LIGHT_GRAY }}
                         style={styles.checkbox}
                         innerIconStyle={{ borderRadius: 7 }}
                         textComponent={
                             <Text style={styles.RememberMeText}>
-                                {t('Sign up for e-mails to get updates from E-Arthi tips and offers')}
+                                {t('Sign up for e-mails to get updates from E-Agri tips and offers')}
                             </Text>
                         }
                     />
@@ -90,20 +93,27 @@ function SignUp(): React.JSX.Element {
             <View style={styles.altSignin}>
                 <TouchableOpacity style={styles.altSigninButton}>
                     <Image
+                        source={require("../../assets/whatsapp.png")}
+                        style={styles.altSigninButtonIcon}
+                    />
+                    <Text style={{ fontSize: height / 65, fontFamily: fonts.Regular, }}>{t('Register with Whatsapp ')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.altSigninButton}>
+                    <Image
                         source={require("../../assets/google.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Google ')}</Text>
+                    <Text style={{ fontSize: height / 65, fontFamily: fonts.Regular, }}>{t('Register with Google ')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.altSigninButton}>
+                <TouchableOpacity style={[styles.altSigninButton, { marginBottom: hp(2) }]}>
                     <Image
                         source={require("../../assets/apple.png")}
                         style={styles.altSigninButtonIcon}
                     />
-                    <Text style={{ fontSize: height / 65,fontFamily:fonts.Regular, }}>{t('Register with Apple ')}</Text>
+                    <Text style={{ fontSize: height / 65, fontFamily: fonts.Regular, }}>{t('Register with Apple ')}</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </ScrollView >
     );
 }
 
@@ -119,17 +129,17 @@ const styles = StyleSheet.create({
     },
     Heading: {
         fontSize: height / 25,
-        fontFamily:fonts.SemiBold,
+        fontFamily: fonts.SemiBold,
         color: colors.BLACK,
     },
     SubHeading: {
         fontSize: height / 45,
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         marginTop: height / 100,
     },
     infoText: {
-        fontSize:hp('1.6%'),
-        fontFamily:fonts.Regular,
+        fontSize: hp('1.6%'),
+        fontFamily: fonts.Regular,
     },
     inputs: {
         gap: height / 40,
@@ -154,9 +164,9 @@ const styles = StyleSheet.create({
     },
     RememberMeText: {
         marginLeft: wp('2%'),
-        width:wp('70%'),
-        fontSize:hp('1.6%'),
-        fontFamily:fonts.Regular,
+        width: wp('70%'),
+        fontSize: hp('1.6%'),
+        fontFamily: fonts.Regular,
     },
     checkbox: {},
     break: {
@@ -172,7 +182,7 @@ const styles = StyleSheet.create({
     ORtext: {
         marginHorizontal: 10,
         fontSize: height / 55,
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         color: colors.GREEN,
     },
     altSignin: {
@@ -191,35 +201,38 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
     altSigninButtonIcon: {
-        width: 20,
-        height: 20,
-        marginRight: 10,
+        width: wp(8),
+        height: hp(3),
+        marginRight: wp(2),
+        resizeMode: 'contain',
     },
-    passToggleButton: {},
     showPassIcon: {
-        width: 20,
-        height: 20,
-        marginRight: 10,
+        width: wp(5),
+        height: hp(2.5),
+        marginRight: wp(2),
+        resizeMode: 'contain',
     },
     passInputBox: {
         height: hp('5.5%'),
         width: wp('85%'),
-        fontSize: hp('1.7%'),
-        fontFamily:fonts.Regular,
         justifyContent: "center",
-        alignSelf: "center",
         alignItems: "center",
         flexDirection: "row",
         borderWidth: 1,
         borderRadius: hp('1.2%'),
         borderColor: colors.LIGHT_GRAY,
+        paddingRight: 10,
     },
     passInput: {
-        flex: 3,
+        flex: 1,
         fontSize: hp('1.7%'),
-        fontFamily:fonts.Regular,
-        borderRadius:hp('1.3%'),
-        color: colors.BLACK
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
+        paddingHorizontal: wp(2),
+        height: '100%',
+    },
+    passToggleButton: {
+        padding: 8,
     },
     terms: {
         flexDirection: "row",
@@ -228,8 +241,8 @@ const styles = StyleSheet.create({
     redirectLink: {
         color: colors.GREEN,
         textDecorationLine: 'underline',
-        fontSize:hp('1.6%'),
-        fontFamily:fonts.Regular,
+        fontSize: hp('1.6%'),
+        fontFamily: fonts.Regular,
     }
 });
 

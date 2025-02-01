@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Prod2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
 import ButtonLess from '../../../assets/MainApp/EmarketPlace/Products/Buttons/LessButton.png';
 import ButtonPlus from '../../../assets/MainApp/EmarketPlace/Products/Buttons/MoreButton.png';
 import colors from '../../../../util/colors';
-import { RadioButton } from 'react-native-paper';
 import Cart from '../../../assets/MainApp/ProductScreen/Cart.png';
 import {
     widthPercentageToDP as wp,
@@ -38,6 +37,7 @@ const ProductScr = () => {
         console.log(Count);
         SetCount(newCount);
     }
+
     const products = [
         { name: "Agri Moss", image: img1 },
         { name: "Agri - Humic Granules", image: img2 },
@@ -45,9 +45,9 @@ const ProductScr = () => {
     ];
 
     return (
-        <View style={styles.container}>
-            <View style={{flex:0.13,marginBottom:hp(1)}} >
-                <Navbar isbackSet={true}/>
+        <ScrollView style={styles.container}>
+            <View style={{ flex: 0.13, marginBottom: hp(1) }} >
+                <Navbar isbackSet={true} />
             </View>
             <View style={styles.topSection}>
                 <View style={styles.imageContainer}>
@@ -80,23 +80,29 @@ const ProductScr = () => {
                 <Text style={styles.addOnTitle}>Choices of Add On</Text>
                 <View style={styles.addOnContainer}>
                     <View style={styles.addOnProducts}>
-                        {products.map((product,key) => (
+                        {products.map((product, key) => (
                             <View key={`product-${key}`} style={styles.addOnItem}>
                                 <Image source={product.image} style={styles.addOnImage} />
                                 <Text style={styles.addOnText}>{product.name}</Text>
                             </View>
                         ))}
                     </View>
-                    <View style={styles.radioContainer}>
+                    <View style={styles.checkboxContainer}>
                         {["first", "second", "third"].map((value, third) => (
-                            <View style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: hp(1.6), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
-                                <RadioButton
-                                    key={`radio-${third}`}
-                                    value={value}
-                                    status={selectedOptions.includes(value) ? 'checked' : 'unchecked'}
+                            <View key={third} style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
+                                <TouchableOpacity
+                                    style={styles.checkbox}
                                     onPress={() => toggleSelection(value)}
-                                /></View>
+                                >
+                                    <View
+                                        style={[
+                                            styles.checkboxInner,
+                                            selectedOptions.includes(value) && styles.checkboxChecked
+                                        ]}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         ))}
                     </View>
                 </View>
@@ -107,7 +113,7 @@ const ProductScr = () => {
                     <Text style={styles.cartText}>Add to Cart</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -127,12 +133,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     productImage: {
-        width: wp(40),
-        height: wp(40),
+        width: wp(35),
+        height: wp(35),
+        resizeMode: 'contain',
+        marginTop: hp(4),
     },
     productDetails: {
         flex: 0.5,
         padding: wp(5),
+        marginTop: hp(4),
     },
     productTitle: {
         fontSize: wp(6),
@@ -211,9 +220,27 @@ const styles = StyleSheet.create({
     addOnText: {
         fontSize: wp(4),
     },
-    radioContainer: {
+    checkboxContainer: {
         flex: 0.2,
         justifyContent: 'space-around',
+    },
+    checkbox: {
+        width: wp(4.5),
+        height: wp(4.5),
+        borderRadius: wp(3),
+        borderWidth: 2,
+        marginHorizontal: wp(2),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    checkboxInner: {
+        width: wp(2.5),
+        height: wp(2.5),
+        borderRadius: wp(2),
+        backgroundColor: 'transparent',
+    },
+    checkboxChecked: {
+        backgroundColor: '#34A853',
     },
     addToCartSection: {
         flex: 0.2,
@@ -229,14 +256,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: hp(2.5),
         justifyContent: 'center',
+        marginBottom: hp(2),
+        
     },
     cartIcon: {
-        width: wp(8),
-        height: wp(8),
+        width: wp(7),
+        height: wp(7),
         marginRight: wp(3),
+        tintColor: colors.WHITE,
     },
     cartText: {
-        fontSize: wp(4),
+        fontSize: wp(5),
         color: colors.WHITE,
     },
 });

@@ -16,37 +16,37 @@ const Overview = () => {
     const [tradeVolume, setTradeVolume] = useState(7261790);
     const [totalTrades, setTotalTrades] = useState(1402);
     const [lastTradeTime, setLastTradeTime] = useState(new Date().toLocaleTimeString());
-    
+
     const getColorForPriceChange = (percentage) => {
         return percentage >= 1 ? colors.GREEN : (percentage <= -1 ? colors.RED : colors.GREEN);
     };
     useEffect(() => {
         const interval = setInterval(() => {
-            const priceChangeFactor = Math.random() * 0.02; 
+            const priceChangeFactor = Math.random() * 0.02;
             const changeDirection = Math.random() > 0.5 ? 1 : -1; //
             const newPrice = price + (price * priceChangeFactor * changeDirection);
-    
+
             const newPriceChange = ((newPrice - price) / price) * 100;
-    
+
             setPrice(newPrice);
             setPriceChange(newPriceChange);
-    
-            setTradeVolume(prevVolume => prevVolume + Math.floor(Math.random() * 10) + 1); 
-            setTotalTrades(prevTrades => prevTrades + Math.floor(Math.random() * 3) + 1); 
-    
+
+            setTradeVolume(prevVolume => prevVolume + Math.floor(Math.random() * 10) + 1);
+            setTotalTrades(prevTrades => prevTrades + Math.floor(Math.random() * 3) + 1);
+
             setLastTradeTime(new Date().toLocaleTimeString());
         }, 1000);
-    
-        return () => clearInterval(interval); 
+
+        return () => clearInterval(interval);
     }, [price]);
-    
+
 
     const priceColor = getColorForPriceChange(priceChange);
     const data = {
         labels: ["Jan", "Jun", "Dec"],
         datasets: [
             {
-                data: [120, 135, 150, 180, 200, 170],
+                data: [4, 5.5, 6, 8, 11, 5],
             },
         ],
     };
@@ -56,7 +56,10 @@ const Overview = () => {
             <MandiNavbar />
             <ScrollView>
                 <CustomNavigationMandi />
-                
+                <View style={{ marginHorizontal: hp(2),marginVertical:hp(1.5) }} >
+                    <Text style={{ fontSize: hp(3), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6) }}>E-Mandi Overview</Text>
+                </View>
+
                 <View style={styles.mandiContainer}>
                     <View style={styles.mandiHeader}>
                         <Image source={FarmerHand} style={styles.farmerImage} />
@@ -68,45 +71,45 @@ const Overview = () => {
                     </View>
 
                     <View style={styles.headerDetails}>
-                    <View style={styles.leftHeader}>
-                        <Text style={[styles.price, { color: colors.BLACK,backgroundColor:priceColor }]}>{price.toFixed(2)}</Text>
-                        <Text style={[styles.priceChange, { color: priceChange >= 0 ? colors.GREEN : colors.RED }]}>
-                            {priceChange.toFixed(2)} ({priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}%)
-                        </Text>
-                        <View style={styles.minMax}>
-                            <Text style={styles.low}>{t('l:10.10')}</Text>
-                            <Text style={styles.high}>{t('h:10.35')}</Text>
+                        <View style={styles.leftHeader}>
+                            <Text style={[styles.price, { color: colors.BLACK, backgroundColor: priceColor }]}>{price.toFixed(2)}</Text>
+                            <Text style={[styles.priceChange, { color: priceChange >= 0 ? colors.GREEN : colors.RED }]}>
+                                {priceChange.toFixed(2)} ({priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}%)
+                            </Text>
+                            <View style={styles.minMax}>
+                                <Text style={styles.low}>{t('l:10.10')}</Text>
+                                <Text style={styles.high}>{t('h:10.35')}</Text>
+                            </View>
+                            <Text style={styles.avgPrice}>{t('Avg Price: 10.20')}</Text>
                         </View>
-                        <Text style={styles.avgPrice}>{t('Avg Price: 10.20')}</Text>
-                    </View>
 
-                    <View style={styles.rightHeader}>
-                        <View style={styles.row}>
-                            <Text style={styles.textBold}>{t('Last Trade Vol:')}</Text>
-                            <Text style={styles.textMuted}>{tradeVolume}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.textBold}>{t('Last Trade Time:')}</Text>
-                            <Text style={styles.textMuted}>{lastTradeTime}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.textBold}>{t('Total Volume:')}</Text>
-                            <Text style={styles.textMuted}>{tradeVolume}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.textBold}>{t('Total Trades:')}</Text>
-                            <Text style={styles.textMuted}>{totalTrades}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.textBold}>{t('Upper Cap:')}</Text>
-                            <Text style={styles.textGreen}>22.37</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.textBold}>{t('Lower Lock:')}</Text>
-                            <Text style={styles.textRed}>9.22</Text>
+                        <View style={styles.rightHeader}>
+                            <View style={styles.row}>
+                                <Text style={styles.textBold}>{t('Last Trade Vol:')}</Text>
+                                <Text style={styles.textMuted}>{tradeVolume}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.textBold}>{t('Last Trade Time:')}</Text>
+                                <Text style={styles.textMuted}>{lastTradeTime}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.textBold}>{t('Total Volume:')}</Text>
+                                <Text style={styles.textMuted}>{tradeVolume}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.textBold}>{t('Total Trades:')}</Text>
+                                <Text style={styles.textMuted}>{totalTrades}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.textBold}>{t('Upper Cap:')}</Text>
+                                <Text style={styles.textGreen}>22.37</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.textBold}>{t('Lower Lock:')}</Text>
+                                <Text style={styles.textRed}>9.22</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
                 </View>
 
                 <View style={styles.valuesContainer}>

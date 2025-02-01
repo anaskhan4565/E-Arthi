@@ -76,14 +76,10 @@ function EMarket(): React.JSX.Element {
         </SafeAreaView >
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
         backgroundColor: colors.WHITE,
-
     },
     navbarContainer: {
         height: hp('8.2%'),
@@ -93,14 +89,15 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginVertical: hp('3.2%'),
         height: hp('7%'),
+        marginLeft:hp(1),
+      alignSelf:'flex-start'
     },
     bodyContainer: {
         flex: 1,
         margin: 20,
-
     },
     titleContainer: {
-        padding: 10,
+    marginLeft:hp(0.6)
     },
     titleText: {
         fontWeight: 'bold',
@@ -109,18 +106,14 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        // justifyContent: 'space-between',
+        justifyContent: 'space-between', // Spreads items evenly in each row
         paddingVertical: hp('2%'),
-        // backgroundColor: 'red',
-        width: wp('95'),
-
+        width: '100%', // Ensures it spans the full width
     },
     itemBoxWrapper: {
-        width: '30%',
+        width: '22%', // Fits 4 items per row with proper spacing
         marginBottom: hp('2%'),
-        marginHorizontal: wp('-3%'),
         alignItems: 'center',
-
     },
     recommendedProducts: {
         marginTop: 20,
@@ -135,7 +128,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 20,
     },
-
 });
+
+
 
 export default EMarket;

@@ -12,6 +12,7 @@ import {
     View,
     Image,
     TextInput,
+    Dimensions
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
@@ -21,7 +22,8 @@ import ScreensName from '../../../../../util/ScreensName.ts';
 function EInventoryAddNewGroup(): React.JSX.Element {
     const { t } = useTranslation();
     const [isToggled, setIsToggled] = useState(false);
-
+    const { height } = Dimensions.get("window");
+    const toggleSize = height < 700 ? "small" : height < 900 ? "medium" : "large";
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -82,7 +84,7 @@ function EInventoryAddNewGroup(): React.JSX.Element {
                                 isOn={isToggled}
                                 onColor={colors.GREEN}
                                 offColor={colors.LIGHT_GRAY}
-                                size="medium"
+                                size={toggleSize} 
                                 onToggle={isOn => setIsToggled(isOn)}
                             />
                         </View>
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
         marginBottom: hp('1%'),
     },
     orderInfoText: {
-        fontSize: wp('3.8%'),
+        fontSize: wp('3.3%'),
         fontFamily: 'Poppins',
         color: colors.BLACK,
         lineHeight: hp('2.8%'),
@@ -188,7 +190,7 @@ const styles = StyleSheet.create({
         flex: 0.35,
     },
     input: {
-        height: hp('4%'),
+        height: hp('5%'),
         borderWidth: 1,
         borderColor: colors.LIGHT_GRAY,
         borderRadius: 8,

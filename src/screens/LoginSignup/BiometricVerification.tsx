@@ -25,7 +25,7 @@ const { height, width } = Dimensions.get("window");
 import { fonts } from "../../../util/FontName";
 
 const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; textColor: string }> = ({ onPress, title, bgColor, textColor }) => (
-  <TouchableOpacity style={[styles.button, { backgroundColor: bgColor, width: '100%' }]} onPress={onPress}>
+  <TouchableOpacity style={[styles.button, { backgroundColor: bgColor, width: '100%', height: hp(5.7) }]} onPress={onPress}>
     <Text style={[styles.text, { color: textColor }]}>{title}</Text>
   </TouchableOpacity>
 );
@@ -45,14 +45,6 @@ function BiometricVerification() {
           if (response.didCancel) {
             console.log('User cancelled camera');
           } else if (response.assets) {
-            Alert.alert(
-              "Verification",
-              "Please verify your hands from Nadra.",
-              [
-                { text: "Verify From Nadra", onPress: () => console.log("Verify pressed") },
-              ],
-              { cancelable: false }
-            );
           }
         });
       } else {
@@ -122,6 +114,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     width: width * 0.8,
@@ -130,7 +123,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   text: {
-    fontSize: 16,
+    fontSize: hp(2),
+    textAlign: 'center',
   },
 });
 

@@ -39,7 +39,11 @@ import Overview from "./src/screens/MainApp/EMandi/Screens/Overview.jsx";
 import Profile from "./src/screens/MainApp/EMandi/Screens/Profile.jsx";
 import MarketDept from "./src/screens/MainApp/EMandi/Screens/MarketDept.jsx";
 import EInventory from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-Inventory.tsx";
+import ETransportStack from "./src/screens/MainApp/TabScreens/E-Transport/E-TransportStack.tsx";
+import EVendorsMainStack from "./src/screens/MainApp/TabScreens/E-Vendors/E-VendorsMainStack.tsx";
 import SelectLanguage from "./src/screens/SelectLanguage/SelectLanguage.jsx";
+import MyProfileMainStack from "./src/screens/MainApp/TabScreens/MyProfile/MyProfileMainStack.tsx";
+import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -81,13 +85,17 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
 
           <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
+          <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
+
+          <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
           <Stack.Screen name={ScreensName.EInventorySupplier} component={EInventorySupplier} />
           <Stack.Screen name={ScreensName.EInventorySuppliersList} component={EInventorySuppliersList} />
           <Stack.Screen name={ScreensName.EInventoryAddSuppliers} component={EInventoryAddSuppliers} />
           <Stack.Screen name={ScreensName.EInventorySupplierReports} component={EInventorySupplierReports} />
 
-
+          <Stack.Screen name={ScreensName.MyProfileMainStack} component={MyProfileMainStack} />
+          <Stack.Screen name={ScreensName.EMunshiMainStack} component={EMunshiMainStack} />
 
           <Stack.Screen name={ScreensName.EMandi} component={Overview} />
           <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />

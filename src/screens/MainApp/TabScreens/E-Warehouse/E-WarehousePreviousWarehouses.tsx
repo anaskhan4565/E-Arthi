@@ -1,6 +1,7 @@
 import React from "react";
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,12 +20,22 @@ import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/ScreensName";
 import CustomButton from "../../../../components/CustomButton";
+import CustomBarChart from "./CustomStylesComp/Chart";
 
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const barChartData = {
+    labels: ["PASSCO", "Cargill", "Kissan", "PASSCO", "Cargill"],
+    datasets: [
+      {
+        data: [5000, 10000, 7500, 12500, 9000],
+      },
+    ],
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
@@ -32,18 +43,31 @@ function PurchaseHisotry(): React.JSX.Element {
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={t("Search in here")} />
         </View>
-        <View style={styles.headerRow}>
-          <Text style={styles.headerText}>{t("Your Warehouses")}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'baseline',alignSelf:'baseline' }}>
+          <Text
+            style={{
+              fontSize: hp(3),
+              paddingTop:hp(0.2),
+              fontFamily: fonts.SemiBold,
+              marginRight: wp(10) // Add minimal spacing only if needed for readability
+            }}
+          >
+            E-Warehouse
+          </Text>
           <CustomButton
             MainText={t("New Warehouse")}
             BgGiven={colors.GREEN}
             name={ScreensName.EWarehouseNewSpaceCropSelect}
             txColor={colors.WHITE}
             isNavigation={1}
-            wgiven={wp(40)}
-            hgiven={hp(4)}
+            wgiven={wp(36)}
+            tx_size={hp(0.3)}
+            hgiven={hp(3.7)}
+            tx_center={true}
           />
         </View>
+
+
         <View style={styles.tableHeader}>
           <Text style={styles.tableHeaderText}>{t("Warehouse")}</Text>
           <Text style={styles.tableHeaderText}>{t("Date Reserved")}</Text>
@@ -59,12 +83,21 @@ function PurchaseHisotry(): React.JSX.Element {
                 }}
               >
                 <Text style={styles.tableRowText}>{data.name}</Text>
-                <Text style={styles.tableRowText}>{data.date}</Text>
+                <Text style={styles.tableRowText}>{data.date} </Text>
               </TouchableOpacity>
             )
         )}
       </View>
-    </SafeAreaView>
+      <View style={{ flex: 0.5, marginTop: hp(5), }}>
+        <CustomBarChart
+          data={barChartData}
+          legendTitle="Warehouse Space Stats"
+          barColor="#FF6F61"
+          bgColor={colors.WHITE}
+        />
+      </View>
+
+    </ScrollView>
   );
 }
 
@@ -78,12 +111,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
   mainContent: {
-    flex: 1,
+    flex: 0.5,
     paddingHorizontal: wp(4),
   },
   searchbar: {
     marginVertical: hp(1.3),
     height: hp(7),
+    alignSelf: 'flex-start',
+    width: wp(85)
   },
   headerRow: {
     flexDirection: "row",

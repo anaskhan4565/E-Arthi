@@ -77,5 +77,8 @@ export default {
     //For E-Mandi
     EMandi:'E-Mandi',
     MarketDept:'MarketDept',
-    Profile:'Profile'
+    Profile:'Profile',
+
+    // E-Munshi
+    EMunshiWarehouseInfo: 'EMunshiWarehouseInfo'
 }

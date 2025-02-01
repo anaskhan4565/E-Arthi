@@ -21,37 +21,23 @@ import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
-import { PieChart } from 'react-native-chart-kit';
+import MyPieChart from '../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx';
 import { Dimensions } from 'react-native';
+
+
 
 const warehouseData = {
   warehouses: [
-    { name: 'Warehouse A', percentage: 25 },
-    { name: 'Warehouse B', percentage: 20 },
-    { name: 'Warehouse C', percentage: 15 },
-    { name: 'Warehouse D', percentage: 30 },
-    { name: 'Warehouse E', percentage: 10 }
+    { name: 'Khairpur Warehouse', percentage: 25, items:[{category: "", name: ""}]},
+    { name: 'Kotri Warehouse', percentage: 20 },
+    { name: 'Umerkot Warehouse', percentage: 15 },
+    { name: 'Lasbela Warehouse', percentage: 30 },
+    { name: 'Sialkot Warehouse', percentage: 10 }
   ]
 };
 
 function EMunshi(): React.JSX.Element {
     const { t } = useTranslation();
-
-    const chartData = warehouseData.warehouses.map((warehouse, index) => ({
-        name: warehouse.name,
-        population: warehouse.percentage,
-        color: [
-            '#2196F3', // Vibrant Blue
-            '#FF9800', // Vibrant Orange
-            '#4CAF50', // Vibrant Green
-            '#757575', // Strong Gray
-            '#9C27B0'  // Vibrant Purple
-        ][index],
-        legendFontColor: '#7F7F7F',
-        legendFontSize: 12,
-        strokeWidth: 20,
-        strokeColor: colors.WHITE,
-    }));
 
     const screenWidth = Dimensions.get('window').width;
 
@@ -71,27 +57,16 @@ function EMunshi(): React.JSX.Element {
                 </View>
                 <View style={styles.bodyContainer}>
                     <View style={styles.chartContainer}>
-                        <PieChart
-                            data={chartData}
-                            width={screenWidth - hp(8)}
-                            height={220}
-                            chartConfig={{
-                              backgroundColor: colors.WHITE,
-                                backgroundGradientFrom: colors.WHITE,
-                                backgroundGradientTo: colors.WHITE,
-                                decimalPlaces: 0,
-                                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                strokeWidth: 20,
-                              }}
-                            accessor="population"
-                            backgroundColor="transparent"
-                            paddingLeft="15"
-                            absolute
-                            hasLegend={false}
-                            style={{ alignSelf: 'center' }}
+                        <MyPieChart
+                            legend1Name={warehouseData.warehouses[0].name}
+                            legend1Population={warehouseData.warehouses[0].percentage}
+                            legend2Name={warehouseData.warehouses[1].name}
+                            legend2Population={warehouseData.warehouses[1].percentage}
+                            legend1_color="#2196F3"
+                            legend2_color="#FF9800"
                         />
                         <View style={styles.legendContainer}>
-                            {chartData.map((item, index) => (
+                            {warehouseData.warehouses.map((item, index) => (
                               <View key={index} style={styles.legendItem}>
                                     <View style={[styles.colorBox, { backgroundColor: item.color }]} />
                                     <Text style={styles.legendText}>{item.name}</Text>

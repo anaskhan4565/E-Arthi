@@ -21,7 +21,7 @@ import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import MyPieChart from "./CustomComponents/PiChart";
 
-function CurrentLoan({val1=10241,val2=5990}): React.JSX.Element {
+function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -41,45 +41,58 @@ function CurrentLoan({val1=10241,val2=5990}): React.JSX.Element {
           }}
         >
           <Text style={{ fontFamily: fonts.bold, fontSize: hp(2.4) }}>
-            Loan Report 2024</Text>
+            Loan Report 2024
+          </Text>
 
           <MyPieChart
-            legend1Name={"Total Loan Amount"}
-            legend1Population={val1}
-            legend2Name={"Remaining Loan"}
-            legend2Population={val2}
-            legend1_color={"#FF6F61"}
-            legend2_color={"#6B8E23"}
+            data={[
+              {
+                name: "Total Loan Amount",
+                value: val1,
+                color: "#FF6F61",
+              },
+              {
+                name: "Remaining Loan",
+                value: val2,
+                color: "#6B8E23",
+              },
+            ]}
           />
         </View>
-        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
+        <View
+          style={{
+            marginBottom: hp(1.2),
+            marginTop: hp(0),
+            marginHorizontal: wp(5),
+          }}
+        >
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-            {t('Selected Loan')}
+            {t("Selected Loan")}
           </Text>
         </View>
         <View style={styles.MainHeader}>
           <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t('Loan Amount')}</Text>
+            <Text style={styles.SectionHead}>{t("Loan Amount")}</Text>
             <Text style={styles.SectionBody}>PKR 110,000</Text>
           </View>
           <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t('Amount Left')}</Text>
+            <Text style={styles.SectionHead}>{t("Amount Left")}</Text>
             <Text style={styles.SectionBody}>PKR 85,000</Text>
           </View>
           <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t('Line of Credit')}</Text>
+            <Text style={styles.SectionHead}>{t("Line of Credit")}</Text>
             <Text style={styles.SectionBody}>PKR 70,000</Text>
           </View>
           <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t('Cash')}</Text>
+            <Text style={styles.SectionHead}>{t("Cash")}</Text>
             <Text style={styles.SectionBody}>PKR 52,130</Text>
           </View>
         </View>
 
         <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>{t('Category')}</Text>
+          <Text style={styles.HeaderCol}>{t("Category")}</Text>
 
-          <Text style={styles.HeaderCol}>{t('Amount')}</Text>
+          <Text style={styles.HeaderCol}>{t("Amount")}</Text>
         </View>
         {LoanCategoryDetails.map(
           (data, index) =>
@@ -93,8 +106,6 @@ function CurrentLoan({val1=10241,val2=5990}): React.JSX.Element {
             )
         )}
       </View>
-
-
     </ScrollView>
   );
 }
@@ -111,8 +122,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     marginTop: hp(1.3),
-    height: hp('7%'),
-
+    height: hp("7%"),
   },
   Header: {
     flexDirection: "row",
@@ -120,55 +130,52 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: wp(4),
     height: hp(5),
-    marginTop: hp(2)
+    marginTop: hp(2),
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2),
     width: wp(29),
-    textAlign: "left"
-
+    textAlign: "left",
   },
   date: {
     fontFamily: fonts.Regular,
     fontSize: hp(2),
-    width: wp(30)
+    width: wp(30),
   },
   cost: {
     fontFamily: fonts.Regular,
     fontSize: hp(2),
-    width: wp(40)
+    width: wp(40),
   },
   decsAndQty: {
     alignContent: "center",
     width: wp(30),
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: wp(4),
-    marginVertical: hp(1)
-
+    marginVertical: hp(1),
   },
   HeaderSection: {
-    width: '41%',
+    width: "41%",
     aspectRatio: 1,
-    justifyContent: 'center',
-    margin: '1%',
+    justifyContent: "center",
+    margin: "1%",
     textAlign: "left",
   },
   SectionHead: {
     fontFamily: fonts.Medium,
     color: colors.GREEN,
-    fontSize: hp(1.3)
+    fontSize: hp(1.3),
   },
   SectionBody: {
     fontFamily: fonts.SemiBold,
-    fontSize: hp(2.2)
+    fontSize: hp(2.2),
   },
   MainHeader: {
     width: wp(90),
@@ -176,13 +183,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.GREAT_WHITE,
     alignSelf: "center",
     borderRadius: hp(1),
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignContent: "space-between",
     padding: 10,
     elevation: 5,
-  }
+  },
 });
 
 export default CurrentLoan;

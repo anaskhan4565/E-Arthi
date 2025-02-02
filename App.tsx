@@ -46,6 +46,7 @@ import BankRecieving from "./src/screens/MainApp/TabScreens/MyProfile/BankReciev
 import RaastRecieving from "./src/screens/MainApp/TabScreens/MyProfile/Raastrecieving.tsx";
 import Recieving from "./src/screens/MainApp/TabScreens/MyProfile/Recieving.tsx";
 import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx";
+import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -104,6 +105,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
 
 
+          <Stack.Screen name={ScreensName.EMunshiMainStack} component={EMunshiMainStack} />
 
           <Stack.Screen name={ScreensName.EMandi} component={Overview} />
           <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />

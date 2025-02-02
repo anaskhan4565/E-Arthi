@@ -25,27 +25,26 @@ import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx";
-import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import * as AsyncStorage  from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const warehouseData = [
-  { name: "Khairpur Warehouse", value: 25, color: "#FF69B4" },
-  { name: "Kotri Warehouse", value: 20, color: "#FF6F61" },
-  { name: "Umerkot Warehouse", value: 15, color: "#6B8E23" },
-  { name: "Lasbela Warehouse", value: 30, color: "#7ED321" },
-  { name: "Sialkot Warehouse", value: 10, color: "#4A90E2" },
+  { name: "Khairpur Warehouse", value: 25, color: "#AFDC8F" },
+  { name: "Kotri Warehouse", value: 20, color: "#0066CC" },
+  { name: "Umerkot Warehouse", value: 15, color: "#5E40BE" },
+  { name: "Lasbela Warehouse", value: 30, color: "#CA6C0F" },
+  { name: "Sialkot Warehouse", value: 10, color: "#204D00" },
 ];
  
 function EMunshi(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  const screenWidth = Dimensions.get("window").width;
   const handleNavigation = async (name: string) => {
     try {
       console.log("Storing name in AsyncStorage:", name);
-     // await AsyncStorage.setItem('name', JSON.stringify({ name: name }));
+      await AsyncStorage.setItem('warehouse', name);
       console.log("Stored successfully");
       navigation.navigate(ScreensName.EMunshiWarehouseInfo);
     } catch (error) {

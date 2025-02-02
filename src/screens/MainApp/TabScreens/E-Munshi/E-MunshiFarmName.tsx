@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -19,11 +19,23 @@ import MyPieChart from '../E-Loan/CustomComponents/PiChart.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../util/ScreensName.ts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EMunshiFarmName = () => {
     const { t } = useTranslation();
     const [selectedRange, setSelectedRange] = useState("today");
     const navigation = useNavigation();
+
+    const [farm, setFarm] = useState<string | null>(null);
+
+    // Fetch warehouse name from AsyncStorage
+    useEffect(() => {
+        const fetchWarehouse = async () => {
+            const storedFarm = await AsyncStorage.getItem('farm');
+            setFarm(storedFarm);
+        };
+        fetchWarehouse();
+    }, []);
 
     const getDataForRange = (range) => {
         switch (range) {
@@ -74,7 +86,7 @@ const EMunshiFarmName = () => {
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
 
-                <Text style={styles.chartTitle}>Farm Name Stats</Text>
+                <Text style={styles.chartTitle}>{farm} Stats</Text>
 
                 {/* Range Selection */}
                 <View style={styles.rangeContainer}>

@@ -29,9 +29,9 @@ import ScreensName from '../../../util/ScreensName.ts';
 
 
 
-function EInventory(): React.JSX.Element {
+function EMunshiWarehouseInfo(): React.JSX.Element {
     const { t } = useTranslation();
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>("Seeds");
     const [selectedSubcategories, setSelectedSubcategories] = useState<any[]>([]);
 
     // Find the selected category from ECategories
@@ -100,12 +100,11 @@ function EInventory(): React.JSX.Element {
                     ))}
                 </View>
                 <View style={styles.recommendedProducts}>
-                    {/* Display Subcategories */}
                     <Text style={styles.recommendedTitle}>{t('Item Details')}</Text>
                     {selectedSubcategories.length > 0 ? (
                         <View style={styles.subcategoryList}>
                             {selectedSubcategories.map((subcategory, index) => (
-                                <WarehouseProduct name={subcategory.name} isNavigation={0} navigateTo={ScreensName.EInventoryDetails}/>
+                                <WarehouseProduct name={subcategory.name} isNavigation={1} navigateTo={ScreensName.EMunshiItemName}/>
                             ))}
                         </View>
                     ) : selectedCategory ? (
@@ -225,4 +224,4 @@ const styles = StyleSheet.create({
 
 
 
-export default EInventory;
+export default EMunshiWarehouseInfo;

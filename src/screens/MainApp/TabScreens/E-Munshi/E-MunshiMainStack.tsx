@@ -22,6 +22,7 @@ import EMunshi from "./E-Munshi"
 import EMunshiItemName from "./E-MunshiItemName"
 import EMunshiCashFlow from "./E-MunshiCashflow"
 import EMunshiFarmName from "./E-MunshiFarmName";
+import EMunshiWarehouseInfo from "../../../InitialStartScreens/EMunshiWarehouseInfo";
 const Stack = createNativeStackNavigator();
 
 
@@ -33,6 +34,8 @@ function EMunshiMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EMunshiItemName} component={EMunshiItemName} />
                     <Stack.Screen name={ScreensName.EMunshiCashFlow} component={EMunshiCashFlow} />
                     <Stack.Screen name={ScreensName.EMunshiFarmName} component={EMunshiFarmName} />
+                    <Stack.Screen name={ScreensName.EMunshiWarehouseInfo} component={EMunshiWarehouseInfo} />
+
                 </Stack.Navigator>
         // </I18nextProvider>
     );

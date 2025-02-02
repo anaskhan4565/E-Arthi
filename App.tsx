@@ -82,7 +82,6 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2} />
           <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification} />
           <Stack.Screen name={ScreensName.BiometricSuccess} component={BiometricSuccess} />
-          <Stack.Screen name={ScreensName.EMunshiWarehouseInfo} component={EMunshiWarehouseInfo} />
 
 
           {/* Specific to changing Lang */}

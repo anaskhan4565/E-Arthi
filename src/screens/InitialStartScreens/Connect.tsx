@@ -50,7 +50,7 @@ function Connect(): React.JSX.Element {
             BgGiven={colors.WHITE}
             txColor={colors.GREEN}
             isNavigation={true}
-            name={ScreensName.EMunshiWarehouseInfo}
+            name={ScreensName.SignIn}
           />
         </View>
       </View>

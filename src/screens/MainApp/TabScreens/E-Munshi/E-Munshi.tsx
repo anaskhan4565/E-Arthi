@@ -27,7 +27,7 @@ import CustomButton from "../../../../components/CustomButton.jsx";
 import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as AsyncStorage  from '@react-native-async-storage/async-storage';
 
 const warehouseData = [
   { name: "Khairpur Warehouse", value: 25, color: "#FF69B4" },
@@ -36,17 +36,23 @@ const warehouseData = [
   { name: "Lasbela Warehouse", value: 30, color: "#7ED321" },
   { name: "Sialkot Warehouse", value: 10, color: "#4A90E2" },
 ];
-
+ 
 function EMunshi(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   const screenWidth = Dimensions.get("window").width;
-  const handleNavigation = (name : string) => {
-    AsyncStorage.setItem('name', JSON.stringify({ name: name}));
-    navigation.navigate(ScreensName.EMunshiItemName);
-
+  const handleNavigation = async (name: string) => {
+    try {
+      console.log("Storing name in AsyncStorage:", name);
+     // await AsyncStorage.setItem('name', JSON.stringify({ name: name }));
+      console.log("Stored successfully");
+      navigation.navigate(ScreensName.EMunshiWarehouseInfo);
+    } catch (error) {
+      console.error("Error saving to AsyncStorage:", error);
+    }
   };
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>

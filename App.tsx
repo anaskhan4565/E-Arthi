@@ -23,7 +23,7 @@ import EInventorySuppliersList from "./src/screens/MainApp/TabScreens/E-Inventor
 import EInventoryAddSuppliers from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryAddSuppliers.tsx";
 import EInventorySupplierReports from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventorySupplierReports.tsx";
 import LanguageSelect from './src/screens/InitialStartScreens/LanguageSelect.tsx';
-import EMunshiWarehouseInfo from './src/screens/InitialStartScreens/EMunshiWarehouseInfo.tsx';
+import EMunshiWarehouseInfo from './src/screens/MainApp/TabScreens/E-Munshi/EMunshiWarehouseInfo.tsx';
 
 import EWarehouseMainStack from "./src/screens/MainApp/TabScreens/E-Warehouse/E-WarehouseMainStack.tsx";
 //for i18-next

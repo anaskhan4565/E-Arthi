@@ -43,8 +43,7 @@ function CurrentLoan(): React.JSX.Element {
   }, [currentState]);
 
   // Function to format numbers with commas
-  const formatNumber = (num) =>
-    new Intl.NumberFormat("en-US").format(num ?? 0);
+  const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
   // Function to sort the data based on state
   const sortData = (data, byName, byPrice, byCategory) => {
@@ -103,20 +102,27 @@ function CurrentLoan(): React.JSX.Element {
           }}
         >
           <MyPieChart
-            legend1Name={t("Total Loan Amount")}
-            legend1Population={100000}
-            legend2Name={t("Remaining Loan")}
-            legend2Population={25000}
-            legend1_color={"#FF6F61"}
-            legend2_color={"#6B8E23"}
+            data={[
+              { name: t("Total Loan Amount"), value: 100000, color: "#FF6F61" },
+              { name: t("Remaining Loan"), value: 25000, color: "#6B8E23" },
+            ]}
+            chartHeight={hp(15)}
           />
+
           <MyPieChart
-            legend1Name={t("Unutilized Cash Line")}
-            legend1Population={40000}
-            legend2Name={t("Unutilized Line of Credit")}
-            legend2Population={25000}
-            legend1_color={"#7ED321"}
-            legend2_color={"#4A90E2"}
+          chartHeight={hp(15)}
+            data={[
+              {
+                name: t("Unutilized Cash Line"),
+                value: 40000,
+                color: "#7ED321",
+              },
+              {
+                name: t("Unutilized Line of Credit"),
+                value: 25000,
+                color: "#4A90E2",
+              },
+            ]}
           />
         </View>
         <View style={styles.MainHeader}>
@@ -148,7 +154,6 @@ function CurrentLoan(): React.JSX.Element {
               </Text>
             </View>
           </View>
-
         </View>
         <View>
           <Text
@@ -173,9 +178,8 @@ function CurrentLoan(): React.JSX.Element {
               margin: hp(1),
               borderRadius: hp(1),
               gap: hp(1),
-              justifyContent: 'space-evenly',
+              justifyContent: "space-evenly",
               borderColor: colors.GREAT_WHITE,
-
             }}
           >
             <View
@@ -184,7 +188,6 @@ function CurrentLoan(): React.JSX.Element {
                 alignItems: "center",
                 margin: hp(1),
                 marginRight: hp(1),
-
               }}
             >
               <Image
@@ -249,9 +252,6 @@ function CurrentLoan(): React.JSX.Element {
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
   navbarContainer: {
     height: hp(8.5),
@@ -272,7 +272,6 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(4),
     height: hp(5),
     marginTop: hp(2),
-
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,
@@ -284,14 +283,12 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
     fontSize: hp(2),
     width: wp(30),
-
   },
   cost: {
     fontFamily: fonts.Regular,
     fontSize: hp(2),
     width: wp(40),
     marginLeft: wp(5),
-
   },
   decsAndQty: {
     alignContent: "center",
@@ -313,7 +310,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: "1%",
     textAlign: "left",
-
   },
   SectionHead: {
     fontFamily: fonts.Medium,
@@ -338,13 +334,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   mainboxrow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     width: wp(100),
     height: hp(9),
     justifyContent: "space-between",
-    flexWrap: 'wrap',
-    alignItems: 'center',
-
+    flexWrap: "wrap",
+    alignItems: "center",
   },
 });
 

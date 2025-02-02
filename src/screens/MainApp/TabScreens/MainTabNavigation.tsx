@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import ScreensName from '../../../../util/ScreensName';
 import Home from './HomeScr';
 import EMarket from './E-Market';
-import EMunshi from './E-Munshi';
+import EMunshi from './E-Munshi/E-Munshi';
 import colors from '../../../../util/colors';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../util/FontName';
@@ -14,6 +14,7 @@ import ELoanMainStack from "./E-Loan/E-LoanMainStack"
 import EWarehouseMainStack from "./E-Warehouse/E-WarehouseMainStack"
 import TopNavigator from '../EMandi/MainNavigator/TopNavigator';
 import EInventory from '../../../screens/MainApp/TabScreens/E-Loan/E-LoanHome'
+import EMunshiMainStack from './E-Munshi/E-MunshiMainStack';
 const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -88,8 +89,8 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={t(ScreensName.EMunshi)}
-                    component={EMunshi}
+                    name={t(ScreensName.EMunshiMainStack)}
+                    component={EMunshiMainStack}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image

@@ -109,5 +109,6 @@ export default {
     EMunshiMainStack : "EMunshiMainStack",
     EMunshi: "EMunshi",
     EMunshiItemName: "EMunshiItemName",
-    EMunshiCashFlow: "EMunshiCashFlow"
+    EMunshiCashFlow: "EMunshiCashFlow",
+    EMunshiFarmName :"EMunshiFarmName",
 }

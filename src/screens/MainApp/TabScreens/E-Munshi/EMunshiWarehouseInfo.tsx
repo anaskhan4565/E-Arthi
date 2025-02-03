@@ -130,18 +130,10 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
             <View style={styles.itemBoxWrapper}>
               <EInventoryBoxes
                 name={warehouse}
-                screenName={"Connect"}
-                navigationName={t(ScreensName.EInventoryMainStack)}
                 SourceGiven={warehouseImg}
-                isNavigation={1}
+                isNavigation={0}
                 w={wp("80%")}
                 h={hp("18%")}
-                onPress={() =>
-                  handleCategoryPress({
-                    title: "Warehouse A",
-                    subcategories: [],
-                  })
-                }
               />
 
               <View style={styles.linechartcontainer}>

@@ -12,8 +12,8 @@ const CustomTxtAndPicker = ({ PlaceHolderGiven = "demo", itemPackage,Picker_Txt=
             <Text style={{ fontSize: hp(2), fontFamily: fonts.Regular,paddingLeft:hp(0.1) }}>{PlaceHolderGiven}</Text>
             <CustomPicker items={itemPackage}
              key={0} isheader={false}
-                w_given={hp(39)}
-                hp_given={hp(3)}
+                w_given={wp(85)}
+                hp_given={hp(3.5)}
                 min_given={hp(39)}
                 bg_color_on={true}
                 bd_give={true}

@@ -27,6 +27,7 @@ import CustomButton from "../../../../components/CustomButton.jsx";
 import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MMKV } from 'react-native-mmkv';
 
 
 const warehouseData = [
@@ -40,11 +41,12 @@ const warehouseData = [
 function EMunshi(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
+     const storage = new MMKV();
 
   const handleNavigation = async (name: string) => {
     try { 
       console.log("Storing name in AsyncStorage:", name);
-      // await AsyncStorage.setItem('warehouse', name);
+      storage.set("warehouse", name);
       console.log("Stored successfully");
       navigation.navigate(ScreensName.EMunshiWarehouseInfo);
     } catch (error) {

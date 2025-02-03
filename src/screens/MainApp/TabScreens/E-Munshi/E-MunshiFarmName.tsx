@@ -19,6 +19,8 @@ import MyPieChart from '../E-Loan/CustomComponents/PiChart.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../util/ScreensName.ts';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MMKV } from 'react-native-mmkv';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyPieChartSec from './CustomComponent/MyPiChartSec.jsx';
 
@@ -26,17 +28,17 @@ const EMunshiFarmName = () => {
     const { t } = useTranslation();
     const [selectedRange, setSelectedRange] = useState("today");
     const navigation = useNavigation();
+    const storage = new MMKV();
 
     const [farm, setFarm] = useState<string | null>(null);
 
-    // Fetch warehouse name from AsyncStorage
-    // useEffect(() => {
-    //     const fetchWarehouse = async () => {
-    //         const storedFarm = await AsyncStorage.getItem('farm');
-    //         setFarm(storedFarm);
-    //     };
-    //     fetchWarehouse();
-    // }, []);
+    useEffect(() => {
+        const fetchWarehouse = async () => {
+            const storedFarm = storage.getString("farm");
+            setFarm(storedFarm);
+        };
+        fetchWarehouse();
+    }, []);
 
     const getDataForRange = (range) => {
         switch (range) {

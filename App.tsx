@@ -48,6 +48,7 @@ import RaastRecieving from "./src/screens/MainApp/TabScreens/MyProfile/Raastreci
 import Recieving from "./src/screens/MainApp/TabScreens/MyProfile/Recieving.tsx";
 import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx";
 import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
+import SelectLangSideBar from "./src/screens/MainApp/Sidebar/SomeDemoNavigations/SelectLangSidebar.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -67,6 +68,9 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.Connect} component={Connect} />
           <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
           <Stack.Screen name={ScreensName.LanguageSelect} component={LanguageSelect} />
+
+          <Stack.Screen name={ScreensName.SelectLangSideBar} component={SelectLangSideBar} />
+
 
           <Stack.Screen name={ScreensName.OTP} component={OTP} />
           <Stack.Screen name={ScreensName.SignIn} component={SignIn} />

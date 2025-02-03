@@ -98,7 +98,7 @@ export default {
     ETransportShip: "ETransportShip",
     ETransportTruck: "ETransportTruck",
     ETransportMain: "ETransportMain",
-
+    SelectLangSideBar:"SelectLangSideBar",
     MyProfileMainStack: "MyProfileMainStack",
     MyProfile: "MyProfile",
     ProfileChangeLanguage: "ProfileChangeLanguage",

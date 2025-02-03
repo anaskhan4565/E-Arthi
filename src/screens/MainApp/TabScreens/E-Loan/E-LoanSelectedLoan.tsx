@@ -45,18 +45,22 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
           </Text>
 
           <MyPieChart
-            data={[
-              {
-                name: "Total Loan Amount",
-                value: val1,
-                color: "#FF6F61",
-              },
-              {
-                name: "Remaining Loan",
-                value: val2,
-                color: "#6B8E23",
-              },
-            ]}
+            chartWidth= {wp(55)}
+          chartHeight ={ hp(19)}
+          containerHeight={hp(30)}
+          containerWidth={wp(55)}
+          data={[
+            {
+              name: "Total Loan Amount",
+              value: val1,
+              color: "#FF6F61",
+            },
+            {
+              name: "Remaining Loan",
+              value: val2,
+              color: "#6B8E23",
+            },
+          ]}
           />
         </View>
         <View

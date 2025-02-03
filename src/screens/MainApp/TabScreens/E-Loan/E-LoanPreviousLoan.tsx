@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: wp(4),
     marginVertical: hp(1),
+    borderWidth:hp(0.1),
     // borderWidth:hp(0.1),
     flex:1
 

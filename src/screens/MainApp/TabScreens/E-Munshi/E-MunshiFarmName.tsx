@@ -20,6 +20,7 @@ import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MyPieChartSec from './CustomComponent/MyPiChartSec.jsx';
 
 const EMunshiFarmName = () => {
     const { t } = useTranslation();
@@ -192,14 +193,15 @@ const EMunshiFarmName = () => {
                 </View>
 
                 <View style={styles.piechatcontainer}>
-                    <MyPieChart
+                    <MyPieChartSec
                     data={[
-                        { name: t("Pending Cash: PKR 12500"), value: 100000, color: "blue" },
-                        { name: t("Cash Paid PKR 150000"), value: 25000, color: "brown"}
+                        { name: t("Pending Cash: PKR 12500"), value: 100000, color: "#693efe" },
+                        { name: t("Cash Paid PKR 150000"), value: 25000, color: "#D3FE3E"}
                     ]}
+                    paddingLeft={hp(9)}
                         
                         chartWidth={wp(75)}
-                        chartHeight={hp(20)}
+                        chartHeight={hp(24)}
                         containerWidth={wp(80)}
                         containerHeight={hp(32)}
                     />

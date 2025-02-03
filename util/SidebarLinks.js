@@ -1,3 +1,5 @@
+import ScreensName from "./ScreensName";
+
 export default [
     { 
         name: "My Profile", 
@@ -17,12 +19,12 @@ export default [
     { 
         name: "Language", 
         icon: require('../src/assets/MainApp/Sidebar/Message.png'),
-        screenName: "LanguageScreen"
+        screenName: ScreensName.SelectLangSideBar
     },
     { 
         name: "Loan Request", 
         icon: require("../src/assets/MainApp/Sidebar/Profile.png"),
-        screenName: "LoanRequestScreen"
+        screenName: ScreensName.EloanCurrentLoan
     },
     { 
         name: "Transaction History", 
@@ -35,9 +37,9 @@ export default [
         screenName: "DeliveryAddressScreen"
     },
     { 
-        name: "Payment Method", 
+        name: "Receiving Method", 
         icon: require('../src/assets/MainApp/Sidebar/Wallet.png'),
-        screenName: "MyProfile"
+        screenName: ScreensName.Recieving
     },
     { 
         name: "Terms & Conditions", 

@@ -28,7 +28,7 @@ function ELoanBOP(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-                <Navbar gobackOnly={true} isbackSet={true} />
+                <Navbar gobackOnly={true}/>
             </View>
             <ScrollView style={styles.container}>
             <View style={[styles.header,{alignSelf:'center'}]}>

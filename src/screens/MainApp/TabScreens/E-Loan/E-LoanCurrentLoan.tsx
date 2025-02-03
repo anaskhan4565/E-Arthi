@@ -106,6 +106,7 @@ function CurrentLoan(): React.JSX.Element {
               { name: t("Total Loan Amount"), value: 100000, color: "#FF6F61" },
               { name: t("Remaining Loan"), value: 25000, color: "#6B8E23" },
             ]}
+            
             chartHeight={hp(15)}
           />
 
@@ -123,7 +124,14 @@ function CurrentLoan(): React.JSX.Element {
                 color: "#4A90E2",
               },
             ]}
-          />
+            legend1Name={"Unutilized Cash Line"}
+            legend1Population={32425}
+            legend2Name={"Unutilized Line of Credit"}
+            legend2Population={42221}  
+            legend1_color={'#F3495F'}
+            legend2_color={'#49F3DD'}
+            
+            />
         </View>
         <View style={styles.MainHeader}>
           <View style={styles.mainboxrow}>

@@ -16,7 +16,6 @@ const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) 
                 <View style={{ flex: 0.6 }}>
 
                     <CustomPicker items={[
-                        { label: "POTATO/MOK", value: "POTATO/MOK" },
                         { label: "Carrots/MOK", value: "CARROTS/MOK" },
                         { label: "Cotton/MOK", value: "COTTON/MOK" },
                         { label: "WHEAT/MOK", value: "WHEAT/MOK" },
@@ -25,6 +24,7 @@ const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) 
                     ]} key={0} isheader={true}
                     w_given={hp(20)}
                     hp_given={hp(2)}
+                    placeholder='POTATO/MOK'
                     min_given = {hp(20)}
                     />
                     </View>

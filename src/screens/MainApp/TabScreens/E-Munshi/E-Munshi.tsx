@@ -28,6 +28,7 @@ import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComp
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MMKV } from 'react-native-mmkv';
+import MyPieChartSec from "./CustomComponent/MyPiChartSec.jsx";
 
 
 const warehouseData = [
@@ -76,12 +77,13 @@ function EMunshi(): React.JSX.Element {
         </View>
         <View style={styles.bodyContainer}>
           <View style={styles.chartContainer}>
-            <MyPieChart
+            <MyPieChartSec
               data={warehouseData}
-              containerWidth={wp(85)}
-              containerHeight={hp(35)}
-            //   chartHeight={hp(20)}
-            //   chartWidth={wp(40)}
+              containerWidth={wp(90)}
+              containerHeight={hp(40)}
+              chartHeight={hp(25)}
+              paddingLeft={hp(5)}
+              chartWidth={wp(45)}
             />
             <View style={styles.legendContainer}></View>
           </View>

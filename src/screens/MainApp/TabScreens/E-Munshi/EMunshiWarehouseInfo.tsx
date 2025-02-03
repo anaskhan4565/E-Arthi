@@ -244,6 +244,10 @@ const styles = StyleSheet.create({
   bodyContainer: {
     alignItems: "center",
   },
+  selectedCategory:{
+    borderRadius: hp(2),
+    borderWidth:hp(0.5)
+  },
   titleContainer: {
     padding: 10,
     marginTop: hp(-2.5),

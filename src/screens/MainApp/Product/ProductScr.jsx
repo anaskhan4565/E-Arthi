@@ -46,8 +46,8 @@ const ProductScr = () => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={{ flex: 0.13, marginBottom: hp(1) }} >
-                <Navbar isbackSet={true} />
+            <View style={{marginBottom: hp(1),flex: 0.3 }} >
+                <Navbar  />
             </View>
             <View style={styles.topSection}>
                 <View style={styles.imageContainer}>
@@ -263,7 +263,6 @@ const styles = StyleSheet.create({
         width: wp(7),
         height: wp(7),
         marginRight: wp(3),
-        tintColor: colors.WHITE,
     },
     cartText: {
         fontSize: wp(5),

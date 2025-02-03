@@ -103,8 +103,9 @@ searchContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start', // Align items to the start
-    alignItems: 'flex-start',     // Ensure items align under each other
+    alignContent: 'center', // Ensure items align under each other
     paddingVertical: hp('3%'),
+    
   },
   itemBoxWrapper: {
     width: wp('30%'), 

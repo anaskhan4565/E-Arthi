@@ -237,11 +237,11 @@ const EMunshiFarmName = () => {
 
                 </View>
 
-                <TouchableOpacity style={styles.recievingbutton} onPress={()=>navigation.navigate(ScreensName.RaastRecieving)}>
+                <TouchableOpacity style={styles.recievingbutton} >
                     <Text style={styles.recievingmethodtext}> Receiving Method</Text>
                     <Image style={styles.raastimage} source={require('../../../../../src/assets/raast.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.recievingbutton} onPress={()=>navigation.navigate(ScreensName.BankRecieving)}>
+                <TouchableOpacity style={styles.recievingbutton} onPress={()=>navigation.navigate(ScreensName.Recieving)}>
                     <Text style={styles.recievingmethodtext}> Change Receiving Method</Text>
                     <Image style={styles.forwardimage} source={require('../../../../../src/assets/forward.png')} />
                 </TouchableOpacity> 

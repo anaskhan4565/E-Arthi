@@ -117,10 +117,11 @@ const styles = StyleSheet.create({
         width: wp(90),
         height: hp(20),
         borderRadius: 8,
-        elevation: 10,
+        elevation: 2,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.WHITE,
+        marginBottom: hp(1),
 
     },
     image: {

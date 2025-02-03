@@ -42,9 +42,9 @@ function EMunshi(): React.JSX.Element {
   const navigation = useNavigation();
 
   const handleNavigation = async (name: string) => {
-    try {
+    try { 
       console.log("Storing name in AsyncStorage:", name);
-      await AsyncStorage.setItem('warehouse', name);
+      // await AsyncStorage.setItem('warehouse', name);
       console.log("Stored successfully");
       navigation.navigate(ScreensName.EMunshiWarehouseInfo);
     } catch (error) {

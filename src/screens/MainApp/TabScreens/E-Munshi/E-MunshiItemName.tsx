@@ -29,7 +29,7 @@ import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const farmData = {
+const farmData = { 
   Item: [
     { name: "Lasbela Farm" },
     { name: "Umerkot Farm" },
@@ -46,7 +46,7 @@ function EMunshiItem(): React.JSX.Element {
 
 
   const handleNavigation = async (name : string) =>{
-    await AsyncStorage.setItem('farm', name);
+    //await AsyncStorage.setItem('farm', name);
     navigation.navigate(ScreensName.EMunshiFarmName);
   }
   return (

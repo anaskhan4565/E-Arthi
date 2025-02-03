@@ -29,13 +29,13 @@ const EMunshiFarmName = () => {
     const [farm, setFarm] = useState<string | null>(null);
 
     // Fetch warehouse name from AsyncStorage
-    useEffect(() => {
-        const fetchWarehouse = async () => {
-            const storedFarm = await AsyncStorage.getItem('farm');
-            setFarm(storedFarm);
-        };
-        fetchWarehouse();
-    }, []);
+    // useEffect(() => {
+    //     const fetchWarehouse = async () => {
+    //         const storedFarm = await AsyncStorage.getItem('farm');
+    //         setFarm(storedFarm);
+    //     };
+    //     fetchWarehouse();
+    // }, []);
 
     const getDataForRange = (range) => {
         switch (range) {
@@ -240,7 +240,7 @@ const EMunshiFarmName = () => {
                 <TouchableOpacity style={styles.recievingbutton} onPress={()=>navigation.navigate(ScreensName.BankRecieving)}>
                     <Text style={styles.recievingmethodtext}> Change Receiving Method</Text>
                     <Image style={styles.forwardimage} source={require('../../../../../src/assets/forward.png')} />
-                </TouchableOpacity>
+                </TouchableOpacity> 
 
                 <View style={styles.farmcontactcontainer}>
                     <Text style={styles.farmcontacttext}>Farm Contact Information</Text>

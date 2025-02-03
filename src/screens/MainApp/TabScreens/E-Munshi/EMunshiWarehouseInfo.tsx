@@ -11,7 +11,7 @@ import { EInventoryDet } from "../../../../../util/E-Inventory.js";
 import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
 import warehouseImg from "../../../../assets/warehouse.png";
 import WarehouseProduct from "../../CustomComponent/WarehouseProduct.jsx";
-
+ 
 import {
   SafeAreaView,
   ScrollView,
@@ -60,7 +60,7 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
   // Fetch warehouse name from AsyncStorage
   useEffect(() => {
     const fetchWarehouse = async () => {
-      const storedWarehouse = await AsyncStorage.getItem("warehouse");
+      const storedWarehouse ="Khairpur Warehouse" //await AsyncStorage.getItem("warehouse");
 
       if (storedWarehouse) {
         setWarehouse(storedWarehouse);

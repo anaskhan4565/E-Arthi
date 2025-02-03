@@ -27,7 +27,8 @@ import CustomButton from "../../../../components/CustomButton.jsx";
 import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MMKV } from 'react-native-mmkv';
 
 const farmData = { 
   Item: [
@@ -43,10 +44,11 @@ function EMunshiItem(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const screenWidth = Dimensions.get("window").width;
+  const storage = new MMKV();
 
 
   const handleNavigation = async (name : string) =>{
-    //await AsyncStorage.setItem('farm', name);
+    storage.set("farm", name);
     navigation.navigate(ScreensName.EMunshiFarmName);
   }
   return (

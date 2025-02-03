@@ -26,6 +26,7 @@ import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LineChart } from "react-native-chart-kit";
+import { MMKV } from 'react-native-mmkv';
 
 const chartConfig = {
   backgroundGradientFrom: "#fff",
@@ -42,6 +43,7 @@ const chartConfig = {
 
 function EMunshiWarehouseInfo(): React.JSX.Element {
   const { t } = useTranslation();
+     const storage = new MMKV();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "Seeds"
   );
@@ -60,7 +62,7 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
   // Fetch warehouse name from AsyncStorage
   useEffect(() => {
     const fetchWarehouse = async () => {
-      const storedWarehouse ="Khairpur Warehouse" //await AsyncStorage.getItem("warehouse");
+      const storedWarehouse =storage.getString("warehouse");
 
       if (storedWarehouse) {
         setWarehouse(storedWarehouse);

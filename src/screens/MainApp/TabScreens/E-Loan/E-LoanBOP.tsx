@@ -57,15 +57,15 @@ function ELoanBOP(): React.JSX.Element {
 
                     <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
                     <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true}  />
 
                     <CustomUploadButton PlaceHolderGiven={"Liquid security in shape of Bank's FIxed Deposit Receipts"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true}  />
                     <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true}  />
 
                     <View style={{ flex: 1, gap: hp(3) }}>
-                        <TickBox TextGiven={'Are you older than 18'} givePadding={false} />
+                    <TickBox TextGiven={'Are you older than 18'} givePadding={false} />
                         <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={false} />
                         <TickBox TextGiven={'Do you agree with BOP Terms & Conditions'} givePadding={false} />
                         <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={false} />
@@ -115,11 +115,10 @@ const styles = StyleSheet.create({
         width: wp(90),
         height: hp(20),
         borderRadius: 8,
-        elevation: 2,
+        elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.WHITE,
-        marginBottom: hp(1),
 
     },
     image: {

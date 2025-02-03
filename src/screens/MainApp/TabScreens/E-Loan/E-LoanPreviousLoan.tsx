@@ -46,7 +46,7 @@ function PurchaseHisotry(): React.JSX.Element {
           </Text>
         </View>
         <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>{t("Loan Amount")}</Text>
+          <Text style={styles.HeaderCol}>Loan Amount</Text>
           <Text style={styles.HeaderCol}>{t("Date Loan Taken")}</Text>
         </View>
         {LoanHistory.map(
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    gap: hp(3),
+    gap:hp(3),
     backgroundColor: colors.WHITE,
   },
   searchbar: {
@@ -89,21 +89,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginHorizontal: wp(4),
     height: hp(10),
-
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2),
+    width: wp(29),
     textAlign: "center",
-    flex: 1,
+    
+    flex:1,
 
   },
   date: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    width: wp(27),
-
+    width: wp(30),
   },
   cost: {
     fontFamily: fonts.Regular,
@@ -115,7 +116,6 @@ const styles = StyleSheet.create({
     width: wp(30),
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    marginLeft: wp(5),
   },
   row: {
     flexDirection: "row",
@@ -123,9 +123,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: wp(4),
     marginVertical: hp(1),
-    borderWidth: hp(0.1),
+    borderWidth:hp(0.1),
     // borderWidth:hp(0.1),
-    flex: 1
+    flex:1
 
   },
 });

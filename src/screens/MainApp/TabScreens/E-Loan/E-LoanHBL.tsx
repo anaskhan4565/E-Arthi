@@ -28,10 +28,10 @@ function ELoanHBL(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-                <Navbar gobackOnly={true} />
+                <Navbar gobackOnly={true}/>
             </View>
             <ScrollView style={styles.container}>
-                <View style={[styles.header, { alignSelf: 'center' }]}>
+                <View style={[styles.header, { alignSelf: 'center'}]}>
                     <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/HBL.png')} />
                     <Text style={styles.titletext}>Habib Bank</Text>
                 </View>
@@ -58,14 +58,14 @@ function ELoanHBL(): React.JSX.Element {
                     <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} />
                     <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} />
                     <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} />
-                    <View style={{ flex: 1, gap: hp(3) }}>
-                        <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={false} />
-                        <TickBox TextGiven={'Do you agree with HBL Terms & Conditions'} givePadding={false} />
-                        <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={false} />
-                        <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
-                        <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
+                    <View style={{flex:1,gap:hp(3)}}> 
+                    <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'}  givePadding={false}/>
+                    <TickBox TextGiven={'Do you agree with HBL Terms & Conditions'} givePadding={false}/>
+                    <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={false} />
+                    <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
+                    <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
                     </View>
-                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} />
+                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE}/>
 
                 </View>
             </ScrollView>
@@ -108,11 +108,10 @@ const styles = StyleSheet.create({
         width: wp(90),
         height: hp(20),
         borderRadius: 8,
-        elevation: 2,
+        elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.WHITE,
-        marginBottom: hp(1),
 
     },
     image: {

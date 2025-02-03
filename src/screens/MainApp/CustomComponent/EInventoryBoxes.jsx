@@ -8,29 +8,26 @@ import { fonts } from '../../../../util/FontName.js';
 import ScreensName from '../../../../util/ScreensName.ts';
 // import ScreensName from '../../../../util/ScreensName.js';
 
-const EInventoryBoxes = ({
-    name, SourceGiven, screenName,
-    navigationName, isNavigation,
-    w = wp('80%'),
+const EInventoryBoxes = ({ 
+    name, SourceGiven, screenName, 
+    navigationName, isNavigation, 
+    w = wp('80%'), 
     h = hp('30%'),
-    isBold = false,
-    img_size_h = hp(5),
-    img_size_w = hp(20),
-    font_Size = hp('2.5%'),
-    isLightBold = false,
-    give_top_margin = 0
+    isBold=false,  
+    img_size_h=hp(5),
+    img_size_w=hp(20),
+    font_Size=hp('2.5%'),
+    isLightBold=false,
+    give_top_margin= 0
 
 
 }) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
     const handleNavigation = () => {
-        if (isNavigation == 1) {
-            if (name) {
-                navigation.navigate(navigationName, { screen: (screenName) });
-            }
+        if (name) {
+            navigation.navigate(navigationName, { screen: (screenName) });
         }
-
     };
 
     const handleSubmit = () => {
@@ -39,15 +36,14 @@ const EInventoryBoxes = ({
 
     return (
         <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
-            <Image source={SourceGiven} style={[styles.ImageStyle, { width: img_size_w, height: img_size_h }]} />
-            <Text style={[styles.TextStyle, {
-                fontSize: font_Size,
-                fontFamily: isBold ? fonts.bold : isLightBold ? fonts.SemiBold : fonts.Medium,
-                marginTop: give_top_margin,
+            <Image source={SourceGiven} style={[styles.ImageStyle,{width:img_size_w,height:img_size_h}]} />
+            <Text style={[styles.TextStyle,{fontSize:font_Size,
+                fontFamily:isBold?fonts.bold:isLightBold?fonts.SemiBold:fonts.Medium,
+                marginTop:give_top_margin, 
 
-
-
-            }]}>{t(name)}</Text>
+                
+                
+                }]}>{t(name)}</Text>
         </TouchableOpacity>
     );
 };

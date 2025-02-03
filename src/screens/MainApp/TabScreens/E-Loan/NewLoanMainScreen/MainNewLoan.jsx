@@ -13,9 +13,9 @@ import { fonts } from '../../../../../../util/FontName';
 const MainNewLoan = () => {
     return (
         <View style={{ flex: 1, gap: hp(2), marginBottom: hp(5) }}>
-            <CustomTxtAndPicker PlaceHolderGiven={"Employeement Type"} itemPackage={[{ label: "Value2", value: "Value2" }]} Picker_Txt={"Select Employeement Type"} />
-            <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select Loan Type"} />
-            <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
+            <CustomTxtAndPicker PlaceHolderGiven={"Employement Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business-Owner", value: "Business Owner" }]} Picker_Txt={"Select Employement Type"} />
+            <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Personal Loan", value: "Personal Loan" },  { label: "Agriculture Loan", value: "Agriculture Loan" }]} Picker_Txt={"Select Loan Type"} />
+            <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Mr.", value: "mr" }, { label: "Ms.", value: "ms" }, { label: "Mrs.", value: "mrs" }]} Picker_Txt={"Select Title"} />
             <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
             <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
             <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"} />

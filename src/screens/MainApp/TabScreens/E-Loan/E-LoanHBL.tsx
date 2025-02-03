@@ -17,6 +17,7 @@ import CustomTxtAndPicker from './NewLoanComponents/CustomTxtAndPicker';
 import CustomUploadButton from './NewLoanComponents/CustomUploadButton';
 import TickBox from './NewLoanComponents/TickBox';
 import CustomButton from '../../../../components/CustomButton';
+import ScreensName from '../../../../../util/ScreensName.ts';
 
 
 
@@ -65,7 +66,7 @@ function ELoanHBL(): React.JSX.Element {
                     <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
                     <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
                     </View>
-                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE}/>
+                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr}/>
 
                 </View>
             </ScrollView>

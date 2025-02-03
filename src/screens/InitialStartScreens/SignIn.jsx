@@ -25,6 +25,7 @@ const { height, width } = Dimensions.get("window");
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../util/FontName";
 import CustomPicker from "../MainApp/EMandi/CustomComp/CustomPicker";
+import CustomInput from "../../components/CustomInput";
 
 function SignIn() {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ function SignIn() {
   const [SwitchedButton, SetSwitchedButton] = useState(false); // isEmail === SwitchedButton
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [number, setNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState();
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -45,32 +47,39 @@ function SignIn() {
     setErrorMessage(null);
     setUsernameError(false);
     setPasswordError(false);
-  
+
     if (!username || !password) {
       setErrorMessage(t("Please fill all fields"));
       if (!username) setUsernameError(true);
       if (!password) setPasswordError(true);
       return;
     }
-  
+
     // Check if user exists in the userData array
-    const matchedUser = userData.find(user => 
-      (SwitchedButton ? user.username === username : user.phoneNumber === username) && 
+    const matchedUser = userData.find(user =>
+      (SwitchedButton ? user.username === username : user.phoneNumber === username) &&
       user.password === password
     );
-  
+
     if (!matchedUser) {
       setErrorMessage(t("Invalid username, phone number, or password"));
       setUsernameError(true);
       setPasswordError(true);
       return;
     }
-  
+
     // Successful login
     console.log("Login successful!", matchedUser);
     navigation.navigate(ScreensName.MainTabNavigation); // Navigate to the home screen
   };
-  
+  const handleTextChange = (text) => {
+    if (!SwitchedButton) {
+      const numericText = text.replace(/[^0-9]/g, '');
+      setUsername(numericText);
+    } else {
+      setUsername(text);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -120,22 +129,23 @@ function SignIn() {
                 padding_f={true}
                 placeholder={"+92"}
                 w_given={hp(10)}
-                min_given={hp(10)}
+                min_given={hp(11)}
               />
             </View>
           ) : null}
           <View
             style={[
               styles.passInputBox,
-              { borderColor: usernameError ? colors.RED : colors.LIGHT_GRAY, width: SwitchedButton? wp(84): wp(60)},
+              { borderColor: usernameError ? colors.RED : colors.LIGHT_GRAY, width: SwitchedButton ? wp(84) : wp(60) },
             ]}
           >
+
             <TextInput
               style={[styles.passInput]}
               placeholder={SwitchedButton ? t("Username") : t("Phone Number")}
               placeholderTextColor={usernameError ? colors.RED : colors.LIGHT_GRAY}
               value={username}
-              onChangeText={(value) => setUsername(value)}
+              onChangeText={(value) =>handleTextChange(value)}
             />
           </View>
         </View>
@@ -163,7 +173,7 @@ function SignIn() {
             />
           </TouchableOpacity>
         </View>
-         { errorMessage && <View style={styles.errorBox}>
+        {errorMessage && <View style={styles.errorBox}>
           <Text style={styles.error}>{errorMessage}</Text>
         </View>}
       </View>
@@ -394,11 +404,11 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: colors.RED,
     alignSelf: "flex-start",
-    fontFamily : fonts.Medium,
+    fontFamily: fonts.Medium,
     fontSize: hp(1.5)
 
   },
-  errorBox : {
+  errorBox: {
     backgroundColor: "#FFC1C3",
     borderRadius: 10,
     textAlign: "left",

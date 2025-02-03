@@ -69,9 +69,5 @@ export default [
             { name: "Goat & Sheep Feed" },
         ]
     },
-    {
-        title: "See More",
-        img: require('../src/assets/MainApp/E-Market/Seemore.png'),
-        subcategories: []
-    },
+    
 ];

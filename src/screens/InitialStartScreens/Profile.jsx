@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from '../../assets/Icon/Logo-only.png';
 import VectorMen from '../../assets/AboutMoreicons/Vectormen.png';
 import CustomButton from '../../components/CustomButton';
-import ScreensName from '../../../util/ScreensName';
+import ScreensName from '../../../util/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
 import {
     widthPercentageToDP as wp,
@@ -50,7 +50,11 @@ const AboutMore = () => {
                 </View>
             </View>
             <View style={{ flex: 0.3, alignItems: 'center' }}>
-                <CustomButton BgGiven={colors.GREEN} MainText={t('Continue')} txColor={colors.WHITE} isNavigation={true} name={ScreensName.SignUp} />
+                <CustomButton BgGiven={colors.GREEN}
+                 MainText={t('Continue')} 
+                 txColor={colors.WHITE} 
+                 isNavigation={true} 
+                 name={ScreensName.SignUp} />
             </View>
         </SafeAreaView>
     );

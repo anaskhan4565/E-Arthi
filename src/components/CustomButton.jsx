@@ -26,6 +26,7 @@ const CustomButton = ({
 
   const handleNavigation = () => {
     if (name) {
+      console.log(name)
       navigation.navigate(name);
     }
   };

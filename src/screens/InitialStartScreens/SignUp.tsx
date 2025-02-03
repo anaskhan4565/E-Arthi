@@ -4,7 +4,7 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import colors from '../../../util/colors';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import ScreensName from "../../../util/ScreensName";
+import ScreensName from "../../../util/ScreensName.ts";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import { fonts } from "../../../util/FontName";
@@ -22,8 +22,8 @@ function SignUp(): React.JSX.Element {
             </View>
 
             <View style={styles.inputs}>
-                <CustomInput placeholder={t('Full Name')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
-                <CustomInput placeholder={t('Phone No.')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={0} />
+                <CustomInput placeholder={t('Full Name')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={true} />
+                <CustomInput placeholder={t('Phone No.')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={true} />
                 <View style={styles.passInputBox}>
                     <TextInput
                         style={[styles.passInput, {
@@ -51,6 +51,7 @@ function SignUp(): React.JSX.Element {
                     <BouncyCheckbox
                         size={hp(2.5)}
                         fillColor={colors.GREEN}
+                        isChecked={false}  // Ensure it's explicitly set to a boolean
                         iconStyle={{ borderColor: colors.LIGHT_GRAY }}
                         style={styles.checkbox}
                         innerIconStyle={{ borderRadius: 7 }}
@@ -60,6 +61,7 @@ function SignUp(): React.JSX.Element {
                             </Text>
                         }
                     />
+
                 </View>
             </View>
 

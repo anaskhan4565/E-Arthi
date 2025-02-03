@@ -13,4 +13,5 @@ export default [
   { username: "FMP", password: "eAgri123#", phoneNumber: "0332521550" },
   { username: "AMP", password: "eAgri123#", phoneNumber: "0332521550" },
   { username: "CMP", password: "eAgri123#", phoneNumber: "0332521550" },
+  { username: "admin", password: "admin", phoneNumber: "0332521550" },
 ];

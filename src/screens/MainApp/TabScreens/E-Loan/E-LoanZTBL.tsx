@@ -36,9 +36,9 @@ function ELoanBOP(): React.JSX.Element {
                 <Text style={styles.titletext}>Zarai Taraqiati Bank Limited</Text>
             </View>
                 <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
-                    <CustomTxtAndPicker PlaceHolderGiven={"Employeement Type"} itemPackage={[{ label: "Value2", value: "Value2" }]} Picker_Txt={"Select Employeement Type"} />
-                    <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Pre Harvest", value: "Pre Harvest"},{ label: "Post Harvest", value: "Post Harvest"}]} Picker_Txt={"Select Loan Type"} />
-                    <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Mr", value: "Mr" },{ label: "Mrs", value: "Mrs" },{ label: "Ms", value: "Ms" },{ label: "Sir", value: "Sir" },{ label: "Doc", value: "Doc" },]} Picker_Txt={"Select"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Employement Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business-Owner", value: "Business Owner" }]} Picker_Txt={"Select Employement Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Personal Loan", value: "Personal Loan" },  { label: "Agriculture Loan", value: "Agriculture Loan" }]} Picker_Txt={"Select Loan Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Mr.", value: "mr" }, { label: "Ms.", value: "ms" }, { label: "Mrs.", value: "mrs" }]} Picker_Txt={"Select Title"} />
                     <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
                     <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
                     <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"} />

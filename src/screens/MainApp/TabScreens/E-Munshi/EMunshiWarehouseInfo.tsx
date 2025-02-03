@@ -11,7 +11,7 @@ import { EInventoryDet } from "../../../../../util/E-Inventory.js";
 import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
 import warehouseImg from "../../../../assets/warehouse.png";
 import WarehouseProduct from "../../CustomComponent/WarehouseProduct.jsx";
- 
+
 import {
   SafeAreaView,
   ScrollView,
@@ -43,7 +43,7 @@ const chartConfig = {
 
 function EMunshiWarehouseInfo(): React.JSX.Element {
   const { t } = useTranslation();
-     const storage = new MMKV();
+  const storage = new MMKV();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "Seeds"
   );
@@ -62,7 +62,7 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
   // Fetch warehouse name from AsyncStorage
   useEffect(() => {
     const fetchWarehouse = async () => {
-      const storedWarehouse =storage.getString("warehouse");
+      const storedWarehouse = storage.getString("warehouse");
 
       if (storedWarehouse) {
         setWarehouse(storedWarehouse);
@@ -144,16 +144,18 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
                 }
               />
 
-              {/* Line Chart */}
-              <LineChart
-                data={lineData}
-                width={wp("85%")}
-                height={hp("25%")}
-                yAxisLabel="PKR"
-                chartConfig={chartConfig}
-                bezier
-                style={styles.chartStyle}
-              />
+              <View style={styles.linechartcontainer}>
+                <LineChart
+                  data={lineData}
+                  width={wp("85%")}
+                  height={hp("25%")}
+                  yAxisLabel="PKR"
+                  chartConfig={chartConfig}
+                  bezier
+                  style={styles.chartStyle}
+                />
+              </View>
+
             </View>
           </View>
         </View>
@@ -176,7 +178,7 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
                   style={[
                     styles.smallBoxWrapper,
                     selectedCategory === Warehouse.title &&
-                      styles.selectedCategory,
+                    styles.selectedCategory,
                     { padding: hp(2) },
                   ]}
                   onPress={() => handleCategoryPress(Warehouse)}
@@ -240,17 +242,18 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     height: hp("7%"),
+    marginTop: hp(1),
   },
   bodyContainer: {
     alignItems: "center",
   },
-  selectedCategory:{
+  selectedCategory: {
     borderRadius: hp(2),
-    borderWidth:hp(0.5)
+    borderWidth: hp(0.5)
   },
   titleContainer: {
     padding: 10,
-    marginTop: hp(-2.5),
+    marginTop: hp(1),
   },
   titleText: {
     fontWeight: "bold",
@@ -291,6 +294,20 @@ const styles = StyleSheet.create({
     borderColor: colors.GREEN,
     width: wp(22),
     height: hp(9),
+  },
+  itemBoxWrapper: {
+    marginTop: hp(2),
+  },
+  linechartcontainer: {
+    marginTop: hp(1),
+  },
+  subcategoryList: {
+    marginTop: hp(1),
+  },
+  recommendedProducts: {
+    marginTop: hp(1),
+    alignSelf: 'center',
+    marginBottom: hp(1),
   },
 });
 

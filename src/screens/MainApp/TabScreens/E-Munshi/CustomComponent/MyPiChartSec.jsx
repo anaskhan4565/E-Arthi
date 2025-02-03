@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     
   },
   legendText: {
-    fontSize: hp('1.8%'),
+    fontSize: hp('1.5%'),
     color: '#7F7F7F',
   },
 });

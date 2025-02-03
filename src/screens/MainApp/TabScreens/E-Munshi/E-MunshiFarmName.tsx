@@ -198,13 +198,13 @@ const EMunshiFarmName = () => {
                     <MyPieChartSec
                     data={[
                         { name: t("Pending Cash: PKR 12500"), value: 100000, color: "#693efe" },
-                        { name: t("Cash Paid PKR 150000"), value: 25000, color: "#D3FE3E"}
+                        { name: t("Cash Paid: PKR 150000"), value: 25000, color: "#D3FE3E"}
                     ]}
                     paddingLeft={hp(9)}
                         
                         chartWidth={wp(75)}
                         chartHeight={hp(24)}
-                        containerWidth={wp(80)}
+                        containerWidth={wp(90)}
                         containerHeight={hp(32)}
                     />
                 </View>

@@ -128,7 +128,7 @@ export default ProductScr;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.WHITE,
+        backgroundColor: colors.WHITE
     },
     topSection: {
         flex: 0.3,
@@ -246,7 +246,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     checkboxChecked: {
-        baoxChecked: "",
         backgroundColor: '#34A853',
     },
     addToCartSection: {
@@ -274,5 +273,5 @@ const styles = StyleSheet.create({
     cartText: {
         fontSize: wp(5),
         color: colors.WHITE,
-    }
-});
+    }}
+);

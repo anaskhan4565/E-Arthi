@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import colors from '../../../../../../util/colors.js';
@@ -8,11 +8,11 @@ import {
 } from 'react-native-responsive-screen';
 
 const MyPieChartSec = ({
-  chartWidth = wp(50),         
-  chartHeight = hp(17),         
-  containerWidth = wp(42),      
-  containerHeight = hp(30),  
-  paddingLeft=hp(1) ,
+  chartWidth = wp(50),
+  chartHeight = hp(17),
+  containerWidth = wp(42),
+  containerHeight = hp(30),
+  paddingLeft = hp(1),
   data = [],
 }) => {
   const formattedData = data.map((item) => ({
@@ -42,7 +42,7 @@ const MyPieChartSec = ({
           backgroundColor={'transparent'}
           paddingLeft={paddingLeft}
           absolute
-          hasLegend={false} 
+          hasLegend={false}
         />
       </View>
 
@@ -77,30 +77,34 @@ const styles = StyleSheet.create({
   chartContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    
-    
+
+
   },
   legendContainer: {
-    marginTop: hp('2%'),
+    marginTop: hp('1%'),
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    
+
+    marginBottom: hp('1%'),
+
+
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '45%', // Adjust for two columns
-    marginBottom: hp('1%'),
+    // backgroundColor: "red",
+    marginHorizontal: wp(1),
+
   },
   colorBox: {
     width: wp('3%'),
     height: wp('3%'),
     marginRight: wp('2%'),
     borderRadius: wp('0.5%'),
-    
+
   },
   legendText: {
     fontSize: hp('1.5%'),

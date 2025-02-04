@@ -34,7 +34,7 @@ export default [
     { 
         name: "Delivery Address", 
         icon: require('../src/assets/MainApp/Sidebar/Location.png'),
-        screenName: "DeliveryAddressScreen"
+        screenName: ScreensName.LocationPermission
     },
     { 
         name: "Receiving Method", 

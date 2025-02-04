@@ -19,7 +19,6 @@ import MyPieChart from '../E-Loan/CustomComponents/PiChart.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../util/ScreensName.ts';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MMKV } from 'react-native-mmkv';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyPieChartSec from './CustomComponent/MyPiChartSec.jsx';
@@ -203,9 +202,9 @@ const EMunshiFarmName = () => {
                     paddingLeft={hp(9)}
                         
                         chartWidth={wp(75)}
-                        chartHeight={hp(24)}
-                        containerWidth={wp(90)}
-                        containerHeight={hp(32)}
+                        chartHeight={hp(26)}
+                        containerWidth={wp(80)}
+                        containerHeight={hp(35)}
                     />
                 </View>
 
@@ -408,7 +407,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: "center",
         marginTop: hp(3),
-        marginBottom: hp(3),
+        marginBottom: hp(5),
     },
     unitsoldbox: {
         width: wp(80),

@@ -56,12 +56,12 @@ function ETransportAddDetails(): React.JSX.Element {
                                     selectedItem === item && styles.selectedText,
                                 ]}
                             >
-                                {item}
+                                {t(item)}
                             </Text>
                         </TouchableOpacity>
                     ))}</View>
                     <View style={styles.locationdetailscontainer}>
-                        <Text style={styles.locationdetailstext}>Item Details</Text>
+                        <Text style={styles.locationdetailstext}>{t('Item Details')}</Text>
                     </View>
 
                     <View>
@@ -71,7 +71,7 @@ function ETransportAddDetails(): React.JSX.Element {
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Weight')}</Text>
                             <TextInput
-                                placeholder='Enter Here'
+                                placeholder={t('Enter Here')}
                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>
@@ -98,14 +98,14 @@ function ETransportAddDetails(): React.JSX.Element {
                         </View>
                     </View>
                     <View style={styles.locationdetailscontainer}>
-                        <Text style={styles.locationdetailstext}>Location Details</Text>
+                        <Text style={styles.locationdetailstext}>{t('Location Details')}</Text>
                     </View>
                     <View style={styles.detailsContainer}>
 
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('City')}</Text>
                             <TextInput
-                                placeholder='Enter Here'
+                                placeholder={t('Enter Here')}
                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
                             />
                         </View>

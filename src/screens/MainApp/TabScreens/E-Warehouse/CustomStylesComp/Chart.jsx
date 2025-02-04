@@ -17,7 +17,7 @@ const CustomBarChart = ({
 }) => {
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
-      <Text style={styles.title}>{legendTitle}</Text>
+      <Text style={styles.title}>{t(legendTitle)}</Text>
       <BarChart
         data={data}
         width={width}

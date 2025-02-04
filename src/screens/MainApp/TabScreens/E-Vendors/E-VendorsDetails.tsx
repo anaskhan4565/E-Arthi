@@ -71,7 +71,7 @@ function EVendorsDetails(): React.JSX.Element {
             (data, index) =>
               data.name.trim() !== "" && (
                 <View style={styles.tableRow} key={index}>
-                  <Text style={styles.tableRowText}>{data.name}</Text>
+                  <Text style={styles.tableRowText}>{t(data.name)}</Text>
                   <Text style={styles.tableRowText}>{data.date} </Text>
                 </View>
               )

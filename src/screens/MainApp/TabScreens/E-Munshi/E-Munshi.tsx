@@ -72,7 +72,7 @@ function EMunshi(): React.JSX.Element {
               marginLeft: hp(2),
             }}
           >
-            E-Munshi
+            {t('E-Munshi')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>
@@ -87,7 +87,7 @@ function EMunshi(): React.JSX.Element {
             />
             <View style={styles.legendContainer}></View>
           </View>
-          <Text style={styles.subsectionTitle}>Select Warehouse</Text>
+          <Text style={styles.subsectionTitle}>{t('Select Warehouse')}</Text>
           {warehouseData.map((warehouse, index) => (
             <TouchableOpacity
               key={index}
@@ -96,7 +96,7 @@ function EMunshi(): React.JSX.Element {
                 handleNavigation(warehouse.name)
               }}
             >
-              <Text style={styles.warehouseLabel}>{warehouse.name}</Text>
+              <Text style={styles.warehouseLabel}>{t(warehouse.name)}</Text>
               <View style={styles.percentageContainer}>
                 <Text style={styles.warehousePercentage}>
                   {warehouse.value}%

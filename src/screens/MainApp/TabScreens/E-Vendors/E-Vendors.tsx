@@ -74,7 +74,7 @@ function EVendors(): React.JSX.Element {
                     selectedItem === item && styles.selectedText,
                   ]}
                 >
-                  {item}
+                  {t(item)}
                 </Text>
               </TouchableOpacity>
             ))}

@@ -89,7 +89,7 @@ const EMunshiFarmName = () => {
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
 
-                <Text style={styles.chartTitle}>{farm} Stats</Text>
+                <Text style={styles.chartTitle}>{farm} {t('Stats')}</Text>
 
                 {/* Range Selection */}
                 <View style={styles.rangeContainer}>
@@ -106,7 +106,7 @@ const EMunshiFarmName = () => {
                                 selectedRange === 'today' && styles.selectedRangeButtonText,
                             ]}
                         >
-                            Today
+                            {t('Today')}
                         </Text>
                     </TouchableOpacity>
 
@@ -123,7 +123,7 @@ const EMunshiFarmName = () => {
                                 selectedRange === 'lastMonth' && styles.selectedRangeButtonText,
                             ]}
                         >
-                            Last Month
+                            {t('Last Month')}
                         </Text>
                     </TouchableOpacity>
 
@@ -140,7 +140,7 @@ const EMunshiFarmName = () => {
                                 selectedRange === 'lastYear' && styles.selectedRangeButtonText,
                             ]}
                         >
-                            Last Year
+                            {t('Last Year')}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -166,7 +166,7 @@ const EMunshiFarmName = () => {
                         />
 
                     ) : (
-                        <Text style={styles.noDataText}>No data available</Text>
+                        <Text style={styles.noDataText}>{t('No data available')}</Text>
                     )}
                 </View>
                 <View style={styles.unitsoldbox}>
@@ -179,7 +179,7 @@ const EMunshiFarmName = () => {
 
                     </View>
                     <View style={styles.graphcontainer}>
-                        <Text style={styles.unitsoldtext}>4214 units sold</Text>
+                        <Text style={styles.unitsoldtext}>{t('4214 units sold')}</Text>
                         <Image style={styles.graphimage} source={require('../../../../../src/assets/MainApp/E-Transport/Upgraph.png')} />
                     </View>
 
@@ -188,8 +188,8 @@ const EMunshiFarmName = () => {
                 <View style={styles.yellowbox}>
                     <Image style={styles.clockimage} source={require('../../../../../src/assets/Icon/clock.png')} />
                     <View style={styles.pendingbox}>
-                        <Text style={styles.paymenttext}>Payment Status:</Text>
-                        <Text style={styles.pendingtext}> Pending</Text>
+                        <Text style={styles.paymenttext}>{t('Payment Status:')}</Text>
+                        <Text style={styles.pendingtext}>{t(' Pending')}</Text>
                     </View>
 
                 </View>
@@ -197,8 +197,8 @@ const EMunshiFarmName = () => {
                 <View style={styles.piechatcontainer}>
                     <MyPieChartSec
                     data={[
-                        { name: t("Pending Cash: PKR 12500"), value: 100000, color: "#693efe" },
-                        { name: t("Cash Paid PKR 150000"), value: 25000, color: "#D3FE3E"}
+                        { name: "Pending Cash: PKR 12500", value: 100000, color: "#693efe" },
+                        { name: "Cash Paid PKR 150000", value: 25000, color: "#D3FE3E"}
                     ]}
                     paddingLeft={hp(9)}
                         
@@ -209,17 +209,17 @@ const EMunshiFarmName = () => {
                     />
                 </View>
 
-                <Text style={styles.purchasehistorytext}>Purchase History Table</Text>
+                <Text style={styles.purchasehistorytext}>{t('Purchase History Table')}</Text>
 
                 <View style={styles.purchasehistorycontainer}>
                     <View style={styles.purchasehistoryverticlecontainer}>
-                        <Text style={styles.quantitytext}>Quantity</Text>
+                        <Text style={styles.quantitytext}>{t('Quantity')}</Text>
                         <Text style={styles.pricetext}>1000 KG</Text>
                     </View>
                     <View style={styles.purchasehistoryverticlecontainer}>
                         <View>
-                            <Text style={styles.quantitytext}>Selling price</Text>
-                            <Text style={styles.quantitytext}>(Per unit)</Text>
+                            <Text style={styles.quantitytext}>{t('Selling price')}</Text>
+                            <Text style={styles.quantitytext}>{t('Per unit')}</Text>
                         </View>
 
 
@@ -227,57 +227,57 @@ const EMunshiFarmName = () => {
                     </View>
                     <View style={styles.purchasehistoryverticlecontainer}>
                         <View>
-                            <Text style={styles.quantitytext}>Cost price</Text>
-                            <Text style={styles.quantitytext}>(Per unit)</Text>
+                            <Text style={styles.quantitytext}>{t('Cost price')}</Text>
+                            <Text style={styles.quantitytext}>{t('Per unit')}</Text>
                         </View>
 
 
-                        <Text style={styles.pricetext}>Pkr 385</Text>
+                        <Text style={styles.pricetext}>PKR 385</Text>
                     </View>
 
                 </View>
 
                 <TouchableOpacity style={styles.recievingbutton} >
-                    <Text style={styles.recievingmethodtext}> Receiving Method</Text>
+                    <Text style={styles.recievingmethodtext}>{t(' Receiving Method')}</Text>
                     <Image style={styles.raastimage} source={require('../../../../../src/assets/raast.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.recievingbutton} onPress={()=>navigation.navigate(ScreensName.Recieving)}>
-                    <Text style={styles.recievingmethodtext}> Change Receiving Method</Text>
+                    <Text style={styles.recievingmethodtext}>{t(' Change Receiving Method')}</Text>
                     <Image style={styles.forwardimage} source={require('../../../../../src/assets/forward.png')} />
                 </TouchableOpacity> 
 
                 <View style={styles.farmcontactcontainer}>
-                    <Text style={styles.farmcontacttext}>Farm Contact Information</Text>
+                    <Text style={styles.farmcontacttext}>{t('Farm Contact Information')}</Text>
                     <View style={styles.farmcontactecontainer}>
-                        <Text style={styles.contacttext}> Owner Name</Text>
+                        <Text style={styles.contacttext}>{t(' Owner Name')}</Text>
                         <View style={styles.addresscontainer}>
-                            <Text style={styles.contacttext2}> Anas Khan</Text>
+                            <Text style={styles.contacttext2}>{t(' Anas Khan')}</Text>
                         </View>
 
                     </View>
                     <View style={styles.farmcontactecontainer}>
-                        <Text style={styles.contacttext}> Owner Contact</Text>
+                        <Text style={styles.contacttext}>{t(' Owner Contact')}</Text>
                         <View style={styles.addresscontainer}>
                             <Text style={styles.contacttext2}> +92-33327585471</Text>
                         </View>
 
                     </View>
                     <View style={styles.farmcontactecontainer}>
-                        <Text style={styles.contacttext}> Farm Location</Text>
+                        <Text style={styles.contacttext}>{t(' Farm Location')}</Text>
                         <View style={styles.addresscontainer}>
-                            <Text style={styles.contacttext2}>GQ74+FVV, Civil Hospital Rd, Khairpur, Sindh</Text>
+                            <Text style={styles.contacttext2}>{t('GQ74+FVV, Civil Hospital Rd, Khairpur, Sindh')}</Text>
                         </View>
 
                     </View >
                     <View style={styles.farmcontactecontainer}>
-                        <Text style={styles.contacttext}> Contact Deal</Text>
+                        <Text style={styles.contacttext}>{t(' Contact Deal')}</Text>
                         <View style={styles.addresscontainer}>
-                            <Text style={styles.contacttext2}> No</Text>
+                            <Text style={styles.contacttext2}>{t(' No')}</Text>
                         </View>
 
                     </View>
                     <View style={styles.buttoncontainer}>
-                        <CustomButton MainText={"Call owner"} BgGiven={colors.GREEN} txColor={colors.WHITE} />
+                        <CustomButton MainText={t("Call owner")} BgGiven={colors.GREEN} txColor={colors.WHITE} />
                     </View>
 
                 </View>

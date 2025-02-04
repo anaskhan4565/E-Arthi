@@ -16,8 +16,11 @@ import img3 from '../../../assets/MainApp/ProductScreen/product3.png'
 import ScreensName from '../../../../util/ScreensName.ts';
 import { useNavigation } from '@react-navigation/native';
 import Navbar from '../Navbar/Navbar';
+import { useTranslation } from 'react-i18next';
+
 
 const ProductScr = () => {
+    const { t } = useTranslation();
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [Count, SetCount] = useState(1);
     const Navigation = useNavigation()
@@ -54,7 +57,7 @@ const ProductScr = () => {
                     <Image source={Prod2} style={styles.productImage} />
                 </View>
                 <View style={styles.productDetails}>
-                    <Text style={styles.productTitle}>Aries Agro Limited Agromin Gold</Text>
+                    <Text style={styles.productTitle}>{t('Aries Agro Limited Agromin Gold')}</Text>
                     <View style={styles.priceContainer}>
                         <View style={styles.priceDetails}>
                             <Text style={styles.priceText}>Price: PKR 2080</Text>
@@ -72,12 +75,12 @@ const ProductScr = () => {
                         </View>
                     </View>
                     <Text style={styles.description}>
-                        Brown the beef better. Lean ground beef – I like to use 85% lean angus. Garlic – use fresh chopped. Spices – chili powder, cumin, onion powder.
+                        {t('Brown the beef better. Lean ground beef – I like to use 85% lean angus. Garlic – use fresh chopped. Spices – chili powder, cumin, onion powder.')}
                     </Text>
                 </View>
             </View>
             <View style={styles.addOnSection}>
-                <Text style={styles.addOnTitle}>Choices of Add On</Text>
+                <Text style={styles.addOnTitle}>{t('Choices of Add On')}</Text>
                 <View style={styles.addOnContainer}>
                     <View style={styles.addOnProducts}>
                         {products.map((product, key) => (
@@ -110,7 +113,7 @@ const ProductScr = () => {
             <View style={styles.addToCartSection}>
                 <TouchableOpacity style={styles.addToCartButton} onPress={() => Navigation.navigate(ScreensName.MainTabNavigation)}>
                     <Image source={Cart} style={styles.cartIcon} />
-                    <Text style={styles.cartText}>Add to Cart</Text>
+                    <Text style={styles.cartText}>{t('Add to Cart')}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

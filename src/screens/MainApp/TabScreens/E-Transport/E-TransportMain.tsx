@@ -36,7 +36,7 @@ function ETransportMain(): React.JSX.Element {
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
                 <View style={{ marginHorizontal: hp(1) }} >
-                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.SemiBold, marginLeft: hp(2) }}>E-Transport</Text>
+                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.SemiBold, marginLeft: hp(2) }}>{t('E-Transport')}</Text>
                 </View>
                 <View style={styles.bodyContainer}>
 

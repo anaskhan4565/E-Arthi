@@ -39,7 +39,7 @@ function EInventory(): React.JSX.Element {
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
                 <View style={{ marginHorizontal: hp(1) }} >
-                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>E-Inventory</Text>
+                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>{t('E-Inventory')}</Text>
                 </View>
                 <View style={styles.bodyContainer}>
 

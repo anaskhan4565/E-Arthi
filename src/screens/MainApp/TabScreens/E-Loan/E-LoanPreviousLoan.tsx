@@ -46,7 +46,7 @@ function PurchaseHisotry(): React.JSX.Element {
           </Text>
         </View>
         <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>Loan Amount</Text>
+          <Text style={styles.HeaderCol}>{t('Loan Amount')}</Text>
           <Text style={styles.HeaderCol}>{t("Date Loan Taken")}</Text>
         </View>
         {LoanHistory.map(

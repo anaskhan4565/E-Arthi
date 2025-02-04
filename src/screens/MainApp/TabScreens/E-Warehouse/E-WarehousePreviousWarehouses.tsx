@@ -53,7 +53,7 @@ function PurchaseHisotry(): React.JSX.Element {
               marginRight: wp(10) // Add minimal spacing only if needed for readability
             }}
           >
-            E-Warehouse
+            {t('E-Warehouse')}
           </Text>
           <CustomButton
             MainText={t("New Warehouse")}
@@ -83,7 +83,7 @@ function PurchaseHisotry(): React.JSX.Element {
                   navigation.navigate(screenName);
                 }}
               >
-                <Text style={styles.tableRowText}>{data.name}</Text>
+                <Text style={styles.tableRowText}>{t(data.name)}</Text>
                 <Text style={styles.tableRowText}>{data.date} </Text>
               </TouchableOpacity>
             )

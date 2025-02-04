@@ -60,7 +60,7 @@ function PurchaseHisotry(): React.JSX.Element {
                 }}
               >
                 <View style={styles.decsAndQty}>
-                  <Text style={styles.cost}>{data.name}</Text>
+                  <Text style={styles.cost}>{t(data.name)}</Text>
                 </View>
                 <Text style={styles.date}>{data.distance}</Text>
               </TouchableOpacity>

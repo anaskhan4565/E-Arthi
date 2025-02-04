@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     checkboxChecked: {
-        baoxChecked: {
+        baoxChecked: "",
         backgroundColor: '#34A853',
     },
     addToCartSection: {
@@ -274,5 +274,5 @@ const styles = StyleSheet.create({
     cartText: {
         fontSize: wp(5),
         color: colors.WHITE,
-    },
+    }
 });

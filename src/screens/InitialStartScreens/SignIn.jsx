@@ -142,7 +142,7 @@ function SignIn() {
 
             <TextInput
               style={[styles.passInput]}
-              placeholder={SwitchedButton ? t("@agri.edu.pk") : t("Phone Number")}
+              placeholder={SwitchedButton ? t("@agri.pk") : t("Phone Number")}
               placeholderTextColor={usernameError ? colors.RED : colors.LIGHT_GRAY}
               value={username}
               onChangeText={(value) =>handleTextChange(value)}

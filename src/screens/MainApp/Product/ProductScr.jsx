@@ -16,11 +16,14 @@ import img3 from '../../../assets/MainApp/ProductScreen/product3.png'
 import ScreensName from '../../../../util/ScreensName.ts';
 import { useNavigation } from '@react-navigation/native';
 import Navbar from '../Navbar/Navbar';
+import { MMKV } from 'react-native-mmkv';
 
 const ProductScr = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [Count, SetCount] = useState(1);
-    const Navigation = useNavigation()
+    const [Price, setPrice] = useState(2080);
+    const Navigation = useNavigation();
+    const storage = new MMKV();
     const toggleSelection = (value) => {
         if (selectedOptions.includes(value)) {
             setSelectedOptions(selectedOptions.filter((item) => item !== value));
@@ -41,6 +44,12 @@ const ProductScr = () => {
         SetCount(newCount);
     }
     
+    const handleAddtoCart = () => {
+        storage.set("qty", storage.getNumber("qty") + Count)
+        storage.set("cost", storage.getNumber("cost") + Price)
+
+        Navigation.navigate(ScreensName.EMarket)
+    }
 
 
     const products = [
@@ -62,7 +71,7 @@ const ProductScr = () => {
                     <Text style={styles.productTitle}>Aries Agro Limited Agromin Gold</Text>
                     <View style={styles.priceContainer}>
                         <View style={styles.priceDetails}>
-                            <Text style={styles.priceText}>Price: PKR 2080</Text>
+                            <Text style={styles.priceText}>Price: PKR {Price}</Text>
                             <Text style={styles.discountedPrice}>3080</Text>
                             <Text style={styles.saveText}>Save: PKR 1000</Text>
                         </View>
@@ -114,7 +123,7 @@ const ProductScr = () => {
                 </View>
             </View>
             <View style={styles.addToCartSection}>
-                <TouchableOpacity style={styles.addToCartButton} onPress={() => Navigation.navigate(ScreensName.MainTabNavigation)}>
+                <TouchableOpacity style={styles.addToCartButton} onPress={handleAddtoCart}>
                     <Image source={Cart} style={styles.cartIcon} />
                     <Text style={styles.cartText}>Add to Cart</Text>
                 </TouchableOpacity>

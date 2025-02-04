@@ -15,12 +15,10 @@ import colors from '../../../../../util/colors.js';
 import { BarChart } from "react-native-chart-kit";
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
-import MyPieChart from '../E-Loan/CustomComponents/PiChart.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import { MMKV } from 'react-native-mmkv';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyPieChartSec from './CustomComponent/MyPiChartSec.jsx';
 
 const EMunshiFarmName = () => {

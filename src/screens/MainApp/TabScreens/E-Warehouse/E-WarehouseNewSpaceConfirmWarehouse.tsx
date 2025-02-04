@@ -22,7 +22,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
-
+ 
 import EWarehouseMainStack from "./E-WarehouseMainStack.tsx";
 
 function ConfrimWarehouse(): React.JSX.Element {
@@ -89,7 +89,7 @@ function ConfrimWarehouse(): React.JSX.Element {
                 w={wp("90%")}
                 b_radius={10}
                 bg_give={colors.WHITE}
-                hide={0}
+                hide={true}
               />
             </View>
             <View style={styles.buttonContainer}>
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     alignItems: "center",
+    marginLeft:hp(2)
   },
   titleContainer: {
     padding: wp(2),
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(4),
+    marginHorizontal: hp(2),
     marginVertical: hp(1),
   },
   Header: {
@@ -204,6 +205,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Medium,
     fontSize: hp("2%"),
     paddingHorizontal: wp(3),
+    marginHorizontal:hp(2)
   },
   buttonContainer: {
     marginVertical: hp("3%"),

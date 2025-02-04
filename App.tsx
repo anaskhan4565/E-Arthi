@@ -49,6 +49,8 @@ import Recieving from "./src/screens/MainApp/TabScreens/MyProfile/Recieving.tsx"
 import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx";
 import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
 import SelectLangSideBar from "./src/screens/MainApp/Sidebar/SomeDemoNavigations/SelectLangSidebar.jsx";
+import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryMainStack.tsx";
+import EMarket from "./src/screens/MainApp/TabScreens/E-Market.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -93,6 +95,8 @@ function App(): React.JSX.Element {
 
           <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
           <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
+          <Stack.Screen name={ScreensName.EInventoryMainStack} component={EInventoryMainStack} />
+          <Stack.Screen name={ScreensName.EMarket} component={EMarket} />
 
           <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
           <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />

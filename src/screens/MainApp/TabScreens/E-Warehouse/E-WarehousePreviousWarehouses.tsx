@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton";
 import CustomBarChart from "./CustomStylesComp/Chart";
+import InventoryProduct from "../../CustomComponent/WarehouseProduct.jsx";
 
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
@@ -41,14 +42,16 @@ function PurchaseHisotry(): React.JSX.Element {
         <Navbar />
       </View>
       <View style={styles.mainContent}>
+      <View style={styles.mainContent2}>
+
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={t("Search in here")} />
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'baseline',alignSelf:'baseline' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'baseline', alignSelf: 'baseline' }}>
           <Text
             style={{
               fontSize: hp(3),
-              paddingTop:hp(0.2),
+              paddingTop: hp(0.2),
               fontFamily: fonts.SemiBold,
               marginRight: wp(10) // Add minimal spacing only if needed for readability
             }}
@@ -73,21 +76,26 @@ function PurchaseHisotry(): React.JSX.Element {
           <Text style={styles.tableHeaderText}>{t("Warehouse")}</Text>
           <Text style={styles.tableHeaderText}>{t("Date Reserved")}</Text>
         </View>
+        </View>
+        <View style={{flex:1,marginHorizontal:hp(1),justifyContent:'center',alignContent:'center',alignItems:'center'}}>
         {WarehouseHistory.map(
           (data, index) =>
             data.name.trim() !== "" && (
               <TouchableOpacity
                 style={styles.tableRow}
                 key={index}
-                onPress={() => {0
-                  navigation.navigate(screenName);
+                onPress={() => {
+                  0
+                  navigation.navigate(ScreensName.EWarehousePreviousWarehouseDetails);
                 }}
               >
-                <Text style={styles.tableRowText}>{data.name}</Text>
-                <Text style={styles.tableRowText}>{data.date} </Text>
+                <InventoryProduct name={data.name} SecondaryText={data.date} secTextWidth={hp(1.8)} allowImg={false} w={hp(42)} h={hp(5)} isNavigation={true} navigateTo={ScreensName.EWarehouseNewSpaceConfirmWarehouse} />
+
+
               </TouchableOpacity>
             )
         )}
+        </View>
       </View>
       <View style={{ flex: 0.5, marginTop: hp(5), }}>
         <CustomBarChart
@@ -113,7 +121,9 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     flex: 0.5,
-    paddingHorizontal: wp(4),
+  },
+  mainContent2:{
+    paddingLeft:hp(2)
   },
   searchbar: {
     marginVertical: hp(1.3),
@@ -138,6 +148,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.LIGHT_GRAY,
     paddingBottom: hp(1),
+    gap:hp(5),
     marginBottom: hp(1),
     marginTop: hp(3),
   },

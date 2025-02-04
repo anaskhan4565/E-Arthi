@@ -38,7 +38,7 @@ function CropSelect(): React.JSX.Element {
             <ScrollView style={styles.container}>
 
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t('Search in here')} />
+                    <CustomSearchApp placeholder={t('Search in here')} /> 
                 </View>
                 <View style={styles.bodyContainer}>
                 <View style={styles.titleContainer}>

@@ -18,7 +18,7 @@ const NoInternet = () => {
         const unsubscribe = NetInfo.addEventListener(state => {
             setIsConnected(state.isConnected);
             if (state.isConnected) {
-                navigation.navigate(ScreensName.Connect);
+                navigation.navigate(ScreensName.LanguageSelect);
             }
         });
         return () => {

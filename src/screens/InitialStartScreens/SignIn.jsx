@@ -142,7 +142,7 @@ function SignIn() {
 
             <TextInput
               style={[styles.passInput]}
-              placeholder={SwitchedButton ? t("Username") : t("Phone Number")}
+              placeholder={SwitchedButton ? t("@agri.edu.pk") : t("Phone Number")}
               placeholderTextColor={usernameError ? colors.RED : colors.LIGHT_GRAY}
               value={username}
               onChangeText={(value) =>handleTextChange(value)}
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   },
   error: {
     textAlign: "left",
-    color: colors.RED,
+    color: colors.BLACK,
     alignSelf: "flex-start",
     fontFamily: fonts.Medium,
     fontSize: hp(1.5)

@@ -64,9 +64,9 @@ function ConfrimWarehouse(): React.JSX.Element {
               data.type.trim() !== "" && (
                 <TouchableOpacity
                   style={styles.row}
-                  key={index}
+                 // key={index}
                   onPress={() => {
-                    setType(data.type);
+                    console.log('hello')
                   }}
                 >
                   <View style={styles.typeCol}>
@@ -90,9 +90,9 @@ function ConfrimWarehouse(): React.JSX.Element {
                 w={wp("90%")}
                 b_radius={10}
                 bg_give={colors.WHITE}
-                hide={0}
-                editable = {false}
-                value= {Units}
+                //hide={false}
+               // editable = {false}
+                //value= {Units}
               />
             </View>
             <View style={styles.buttonContainer}>
@@ -101,7 +101,7 @@ function ConfrimWarehouse(): React.JSX.Element {
             BgGiven={colors.GREEN}
             name={ScreensName.EWarehouse}
             txColor={colors.WHITE}
-            isNavigation={1}
+            isNavigation={true}
             wgiven = {wp("90%")}
           />
         </View>

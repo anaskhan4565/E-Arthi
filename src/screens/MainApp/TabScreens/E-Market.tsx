@@ -20,6 +20,7 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { fonts } from '../../../../util/FontName.js';
 
 
 
@@ -53,7 +54,7 @@ function EMarket(): React.JSX.Element {
                     </View>
 
                     <View style={styles.recommendedProducts}>
-                        <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
+                        <Text style={styles.recommendedTitle}>{t('Top Products')}</Text>
                         <View style={styles.productRow}>
                             <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} isNavigation={0} />
                             <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} isNavigation={0} />
@@ -119,9 +120,9 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     recommendedTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
+    fontSize: hp('2.5%'),
+    fontFamily: fonts.SemiBold,
+    marginBottom: hp('2%'),
     },
     productRow: {
         flexDirection: 'row',

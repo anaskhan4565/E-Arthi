@@ -8,10 +8,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import arrow from '../../../assets/rightarrowhead.png'
 
-const InventoryProduct = ({ name, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
-      const navigation = useNavigation();
-        const { t } = useTranslation()
-    
+const InventoryProduct = ({secTextWidth=hp(2.3) ,allowImg = true,SecondaryText='Nothing', name, isNavigation, w = wp('90%'), h = hp('10%'), navigateTo }) => {
+    const navigation = useNavigation();
+    const { t } = useTranslation()
+
     const handleNavigation = () => {
         if (isNavigation) {
             console.log('Navigating to:', name);
@@ -24,17 +24,32 @@ const InventoryProduct = ({ name, isNavigation, w = wp('80%'), h = hp('30%'),nav
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: wp(90), height: hp(10) }]}onPress={handleNavigation}>
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation}>
             <View style={styles.rowContainer}>
-                <View style={styles.imageContainer}>
-                    <Image source={Image4} style={styles.ImageStyle} />
-                </View>
-                <View style={styles.textContainer}>
+                {allowImg ?
+                    <View style={styles.imageContainer}>
+                        <Image source={Image4} style={styles.ImageStyle} />
+                    </View>
+                    : null
+                }
+                <View style={[styles.textContainer,{marginLeft:!allowImg?hp(2):null}]}>
                     <Text style={styles.TextStyle}>{t(name)}</Text>
                 </View>
-                <View style={styles.arrowContainer}>
-                    <Image source={arrow} styles={{ width:wp(3), height:hp(3) }} />
-                </View>
+
+                {!allowImg ?
+                    <View style={[styles.arrowContainer, { marginRight: hp(2), alignItems: "center", justifyContent: 'center' }]}>
+
+                        <Text style={[styles.TextStyle, { paddingRight: hp(1),fontSize:secTextWidth }]}>{SecondaryText}</Text>
+                        <Image source={arrow} styles={{ width: wp(3), height: hp(3) }} />
+                    </View>
+
+                    :
+                    <View style={[styles.arrowContainer, { marginRight: hp(2), alignItems: "center", justifyContent: 'center' }]}>
+
+                        <Image source={arrow} styles={{ width: wp(3), height: hp(3) }} />
+                    </View>
+
+                }
             </View>
         </TouchableOpacity>
     );
@@ -50,7 +65,7 @@ const styles = StyleSheet.create({
         gap: 4,
         borderRadius: hp('1.3%'),
         backgroundColor: colors.WHITE,
-        marginHorizontal: hp('1.4%'),
+        // marginHorizontal: hp('1%'),
         elevation: 5,
         shadowColor: '#000',
         shadowOffset: { width: 3, height: 2 },
@@ -69,10 +84,11 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 0.7,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     arrowContainer: {
         flex: 0.3,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -93,6 +109,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.DARK_GREEN,
         fontWeight: 'bold',
-        fontFamily:fonts.bold
+        fontFamily: fonts.bold
     },
 });

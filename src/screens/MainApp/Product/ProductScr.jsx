@@ -24,25 +24,29 @@ const ProductScr = () => {
     const [Price, setPrice] = useState(2080);
     const Navigation = useNavigation();
     const storage = new MMKV();
-    const toggleSelection = (value) => {
-        if (selectedOptions.includes(value)) {
-            setSelectedOptions(selectedOptions.filter((item) => item !== value));
-        } else {
-            setSelectedOptions([...selectedOptions, value]);
-        }
-    };
 
-    function configureCount(less) {
-        let newCount = Count; 
-    
-        if (less) {
-            newCount = Count > 1 ? Count - 1 : 1;
-        } else {
-            newCount = Count + 1;
-        }
-    
-        SetCount(newCount);
+    const toggleSelection = (product) => {
+    let updatedOptions = [...selectedOptions];
+    let updatedPrice = Price;
+
+    if (selectedOptions.includes(product.name)) {
+        // Remove add-on price when deselected
+        updatedOptions = updatedOptions.filter((item) => item !== product.name);
+        updatedPrice -= product.price;
+    } else {
+        // Add add-on price when selected
+        updatedOptions.push(product.name);
+        updatedPrice += product.price;
     }
+
+    setSelectedOptions(updatedOptions);
+    setPrice(updatedPrice);
+};
+
+function configureCount(less) {
+    let newCount = less ? Math.max(1, Count - 1) : Count + 1;
+    SetCount(newCount);
+}
     
     const handleAddtoCart = () => {
         storage.set("qty", storage.getNumber("qty") + Count)
@@ -53,9 +57,9 @@ const ProductScr = () => {
 
 
     const products = [
-        { name: "Agri Moss", image: img1 },
-        { name: "Agri - Humic Granules", image: img2 },
-        { name: "Agri - Aquagel", image: img3 },
+        { name: "Agri Moss", image: img1, price: 250 },
+        { name: "Agri - Humic Granules", image: img2, price: 275  },
+        { name: "Agri - Aquagel", image: img3, price: 325 },
     ];
 
     return (
@@ -71,7 +75,7 @@ const ProductScr = () => {
                     <Text style={styles.productTitle}>Aries Agro Limited Agromin Gold</Text>
                     <View style={styles.priceContainer}>
                         <View style={styles.priceDetails}>
-                            <Text style={styles.priceText}>Price: PKR {Price}</Text>
+                            <Text style={styles.priceText}>Price: PKR {2080}</Text>
                             <Text style={styles.discountedPrice}>3080</Text>
                             <Text style={styles.saveText}>Save: PKR 1000</Text>
                         </View>
@@ -103,9 +107,9 @@ const ProductScr = () => {
                         ))}
                     </View>
                     <View style={styles.checkboxContainer}>
-                        {["first", "second", "third"].map((value, third) => (
+                        {products.map((value, third) => (
                             <View key={third} style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
+                                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>+Rs:{value.price}</Text>
                                 <TouchableOpacity
                                     style={styles.checkbox}
                                     onPress={() => toggleSelection(value)}
@@ -113,7 +117,7 @@ const ProductScr = () => {
                                     <View
                                         style={[
                                             styles.checkboxInner,
-                                            selectedOptions.includes(value) && styles.checkboxChecked
+                                            selectedOptions.includes(value.name) && styles.checkboxChecked
                                         ]}
                                     />
                                 </TouchableOpacity>

@@ -30,13 +30,18 @@ const ProductScr = () => {
     };
 
     function configureCount(less) {
-        let newCount;
-        if (Count > 0) {
-            newCount = less ? Count - 1 : Count + 1;
+        let newCount = Count; 
+    
+        if (less) {
+            newCount = Count > 1 ? Count - 1 : 1;
+        } else {
+            newCount = Count + 1;
         }
-        console.log(Count);
+    
         SetCount(newCount);
     }
+    
+
 
     const products = [
         { name: "Agri Moss", image: img1 },
@@ -46,8 +51,8 @@ const ProductScr = () => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={{marginBottom: hp(1),flex: 0.3 }} >
-                <Navbar  />
+            <View style={{ marginBottom: hp(1), height: hp(7) }} >
+                <Navbar />
             </View>
             <View style={styles.topSection}>
                 <View style={styles.imageContainer}>
@@ -62,13 +67,14 @@ const ProductScr = () => {
                             <Text style={styles.saveText}>Save: PKR 1000</Text>
                         </View>
                         <View style={styles.quantityContainer}>
-                            <TouchableOpacity onPress={() => configureCount(1)}>
+                            <TouchableOpacity onPress={() => configureCount(true)}>
                                 <Image source={ButtonLess} style={styles.quantityButton} />
                             </TouchableOpacity >
-                            <Text style={styles.quantityText}>{Count < 10 && Count > 0 ? '0' + Count : Count > 0 ? Count : 0}</Text>
-                            <TouchableOpacity onPress={() => configureCount()}>
+                            <Text style={styles.quantityText}>{Count < 10 ? '0' + Count : Count}</Text>
+                            <TouchableOpacity onPress={() => configureCount(false)}>
                                 <Image source={ButtonPlus} style={styles.quantityButton} />
                             </TouchableOpacity>
+
                         </View>
                     </View>
                     <Text style={styles.description}>
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.WHITE,
     },
     topSection: {
-        flex: 0.6,
+        flex: 0.3,
     },
     imageContainer: {
         flex: 0.5,
@@ -240,6 +246,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     checkboxChecked: {
+        baoxChecked: {
         backgroundColor: '#34A853',
     },
     addToCartSection: {
@@ -257,7 +264,7 @@ const styles = StyleSheet.create({
         borderRadius: hp(2.5),
         justifyContent: 'center',
         marginBottom: hp(2),
-        
+
     },
     cartIcon: {
         width: wp(7),

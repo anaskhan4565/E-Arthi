@@ -16,13 +16,16 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName';
+import ScreensName from '../../../../../util/ScreensName.ts';
+import CustomButton from '../../../../components/CustomButton.jsx';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 function ETransportAddDetails(): React.JSX.Element {
     const { t } = useTranslation();
-    const [selectedItem, setSelectedItem] = useState('');
+    const [selectedItem, setSelectedItem] = useState('Crop');
+  const navigation = useNavigation();
 
     const items = ['Crop', 'Seeds', 'Medicines', 'Machinery', 'Fertilizers', 'Herbicide'];
 
@@ -30,7 +33,7 @@ function ETransportAddDetails(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-                <Navbar isbackSet={true} isBackTo={ScreensName.EInventorySupplier} />
+                <Navbar />
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
@@ -72,28 +75,28 @@ function ETransportAddDetails(): React.JSX.Element {
                             <Text style={styles.label}>{t('Weight')}</Text>
                             <TextInput
                                 placeholder='Enter Here'
-                                style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Volume')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('No of items')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Amount')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                     </View>
@@ -106,29 +109,32 @@ function ETransportAddDetails(): React.JSX.Element {
                             <Text style={styles.label}>{t('City')}</Text>
                             <TextInput
                                 placeholder='Enter Here'
-                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Area')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('Pickup')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.label}>{t('DropOff')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                  style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
+                        </View>
+                        <View style={{marginTop:hp(3)}}>
+                            <CustomButton MainText={"Add Transport"} BgGiven={colors.GREEN} txColor={colors.WHITE} onPressG={()=>navigation.goBack()} />
                         </View>
                     </View>
 

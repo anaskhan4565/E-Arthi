@@ -9,6 +9,7 @@ import CustomUploadButton from '../NewLoanComponents/CustomUploadButton';
 import TickBox from '../NewLoanComponents/TickBox';
 import CustomButton from '../../../../../components/CustomButton';
 import { fonts } from '../../../../../../util/FontName';
+import ScreensName from '../../../../../../util/ScreensName.ts';
 
 const MainNewLoan = () => {
     return (
@@ -50,8 +51,8 @@ const MainNewLoan = () => {
             <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={true}  />
             <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
             <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
+            <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr}/>
 
-            <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} />
         </View>
     )
 }

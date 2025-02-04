@@ -17,15 +17,15 @@ import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png'
 import { fonts } from '../../../../util/FontName.js';
 
 const Home = () => {
-    const {t}=useTranslation()
-  
+  const { t } = useTranslation()
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}> 
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingTop: hp('8%') }}>
         <View style={styles.contentContainer}>
           <View style={styles.searchContainer}>
             <CustomSearchApp placeholder={t('Search in here')} />
@@ -35,31 +35,33 @@ const Home = () => {
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>{t('Welcome!')}</Text>
             </View>
+            <View style={styles.scrollContainerMain}>
 
-            <View style={styles.scrollContainer}>
-              {allNames.map((data, index) => (
-                data.name.trim() !== '' && (
-                  <View style={styles.itemBoxWrapper} key={index}>
-                    <ItemBox name={t(data.name)} SourceGiven={data.source} isNavigation={true} screen={data.screen} />
-                  </View>
-                )
-              ))}
-            </View>
-
-            {/* Section for Recommended Products */}
-            <View style={styles.recommendedProducts}>
-              <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
-              <View style={styles.productRow}>
-                <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
-                <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"}/>
+              <View style={styles.scrollContainer}>
+                {allNames.map((data, index) => (
+                  data.name.trim() !== '' && (
+                    <View style={styles.itemBoxWrapper} key={index}>
+                      <ItemBox name={t(data.name)} SourceGiven={data.source} isNavigation={true} screen={data.screen} />
+                    </View>
+                  )
+                ))}
               </View>
-              <View style={styles.productRow}>
-                <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"}/>
-                <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"}/>
+              </View>
+
+              {/* Section for Recommended Products */}
+              <View style={styles.recommendedProducts}>
+                <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
+                <View style={styles.productRow}>
+                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
+                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
+                </View>
+                <View style={styles.productRow}>
+                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
+                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
+                </View>
               </View>
             </View>
           </View>
-        </View>
       </ScrollView>
     </View>
   );
@@ -71,18 +73,18 @@ const styles = StyleSheet.create({
   navbarContainer: {
     height: hp('8.5%'),
     backgroundColor: 'white',
-    position: 'absolute', 
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 1, 
+    zIndex: 1,
   },
 
-searchContainer: {
+  searchContainer: {
     marginVertical: hp('3%'),
     height: hp('7%'),
-    alignSelf:"flex-start"
-},
+    alignSelf: "flex-start"
+  },
   contentContainer: {
     flex: 1,
     //marginTop: 10,
@@ -96,7 +98,7 @@ searchContainer: {
     padding: hp('1%'),
   },
   titleText: {
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
     fontSize: hp('4%'),
   },
   scrollContainer: {
@@ -104,20 +106,27 @@ searchContainer: {
     flexWrap: 'wrap',
     justifyContent: 'flex-start', // Align items to the start
     alignContent: 'center', // Ensure items align under each other
-    paddingVertical: hp('3%'),
-    
+    alignItems: 'center',
+    alignSelf: 'center'
+
   },
+  scrollContainerMain:{
+
+    paddingLeft:hp(1)
+},
   itemBoxWrapper: {
-    width: wp('30%'), 
+    width: wp('30%'),
     marginBottom: hp('2%'),
     alignItems: 'center',
   },
   recommendedProducts: {
     marginTop: hp('2%'),
+    margin: 10,
+
   },
   recommendedTitle: {
     fontSize: hp('2.5%'),
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
     marginBottom: hp('2%'),
   },
   productRow: {

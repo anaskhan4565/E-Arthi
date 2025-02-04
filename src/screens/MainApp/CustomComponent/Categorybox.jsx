@@ -12,9 +12,9 @@ const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9
     const { t } = useTranslation();
 
     const handleNavigation = () => {
-        // if (name) {
-        //     navigation.navigate(navigationName, { screen: (screenName) });
-        // }
+        if (name) {
+            navigation.navigate(navigationName, { screen: (screenName) });
+        }
     };
 
     const handleSubmit = () => {

@@ -4,6 +4,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Image,
   Text,
   TouchableOpacity,
   useColorScheme,
@@ -21,7 +22,9 @@ import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/ScreensName";
-
+import WarehousePic from './TempImages/WarehouseBG.jpg'
+import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes";
+import InventoryProduct from "../../CustomComponent/WarehouseProduct";
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -30,7 +33,7 @@ function PurchaseHisotry(): React.JSX.Element {
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
-      <View style={{ flex: 7 }}>
+      <View style={{ flex: 1 }}>
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={"Search in here"} />
         </View>
@@ -49,6 +52,7 @@ function PurchaseHisotry(): React.JSX.Element {
           <Text style={styles.HeaderCol}>Warehouse Name</Text>
           <Text style={styles.HeaderCol}>{t("Distance from You")}</Text>
         </View>
+        <View style={{flex:1}}>
         {allNames.map(
           (data, index) =>
             data.name.trim() !== "" && (
@@ -59,14 +63,14 @@ function PurchaseHisotry(): React.JSX.Element {
                   navigation.navigate(ScreensName.EWarehouseNewSpaceConfirmWarehouse);
                 }}
               >
-                <View style={styles.decsAndQty}>
-                  <Text style={styles.cost}>{data.name}</Text>
-                </View>
-                <Text style={styles.date}>{data.distance}</Text>
+                <InventoryProduct name={data.name} SecondaryText={data.distance} allowImg={false} w={hp(44)} h={hp(6)} isNavigation={true} navigateTo={ScreensName.EWarehouseNewSpaceConfirmWarehouse} />
+
               </TouchableOpacity>
             )
         )}
+        </View>
       </View>
+
     </SafeAreaView>
   );
 }
@@ -118,7 +122,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(4),
     marginVertical: hp(1),
   },
 });

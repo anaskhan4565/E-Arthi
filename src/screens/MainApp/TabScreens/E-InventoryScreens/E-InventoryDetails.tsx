@@ -49,7 +49,7 @@ function EInventoryDetails(): React.JSX.Element {
                         <View style={styles.reorderButtonWrapper}>
                             <TouchableOpacity 
                                 style={styles.reorderButton} 
-                                onPress={() => { navigation.navigate(ScreensName.Connect) }}>
+                                onPress={() => { navigation.navigate(ScreensName.EInventoryDetails) }}>
                                 <Text style={styles.reorderButtonText}>{t('Re-order')}</Text>
                             </TouchableOpacity>
                         </View>
@@ -80,7 +80,7 @@ function EInventoryDetails(): React.JSX.Element {
                             BgGiven={colors.GREEN}
                             txColor={colors.WHITE}
                             isNavigation={true}
-                            name={ScreensName.SignIn}
+                            name={ScreensName.EInventoryAddNew}
                         />
                     </View>
                 </View>

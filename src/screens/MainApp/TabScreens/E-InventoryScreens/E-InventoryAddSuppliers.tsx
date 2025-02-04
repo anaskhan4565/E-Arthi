@@ -42,7 +42,7 @@ function EInventoryDetails(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-                <Navbar isbackSet={true} isBackTo={ScreensName.EInventorySupplier} />
+                <Navbar />
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>

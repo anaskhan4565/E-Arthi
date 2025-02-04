@@ -16,21 +16,27 @@ import { useTranslation } from "react-i18next";
 import { fonts } from '../../../util/FontName';
 
 const LocationSys = () => {
-    const [isLocationEnabled, setIsLocationEnabled] = useState(true);
+    const [isLocationEnabled, setIsLocationEnabled] = useState(false);
     const navigation = useNavigation();
     const {t} = useTranslation();
 
-    useEffect(() => {
-        if (isLocationEnabled) {
-            navigation.navigate(ScreensName.LanguageSelect);
-        }
-    }, [isLocationEnabled, navigation]);
+    // useEffect(() => {
+    //     if (isLocationEnabled) {
+    //         navigation.navigate(ScreensName.LanguageSelect);
+    //     }
+    // }, [isLocationEnabled, navigation]);
 
     const handleEnableLocation = () => {
         setIsLocationEnabled(true);
+        navigation.navigate(HomeScreen.MainTabNavigation)
+    };
+    
+    const justNavigate = () => {
+        setIsLocationEnabled(true);
+        navigation.navigate(ScreensName.MainTabNavigation)
     };
 
-    return (
+    return ( 
         <SafeAreaView style={styles.container}>
             {!isLocationEnabled ? (
                 <View style={{ alignItems: 'center', gap: 10 }}>
@@ -43,15 +49,17 @@ const LocationSys = () => {
                         <CustomButton
                             MainText={t('Allow')}
                             BgGiven={colors.GREEN}
-                            onPress={handleEnableLocation}
+                            name={ScreensName.HomeScreen}
+                            onPressG={justNavigate}
                             txColor={colors.WHITE}
                         />
                         <CustomButton
+                            onPressG={justNavigate}
                             MainText={t('Skip for now')}
                             BgGiven={colors.WHITE}
                             name={ScreensName.Connect}
                             txColor={colors.GREEN}
-                            isNavigation={true}
+                            //isNavigation={ navigation.navigate(ScreensName.HomeScreen)}
                         />
                     </View>
                 </View>

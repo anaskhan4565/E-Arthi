@@ -27,6 +27,7 @@ const CustomButton = ({
   const { t } = useTranslation();
   const handleNavigation = () => {
     if (name) {
+      console.log(name)
       navigation.navigate(name);
     }
   };

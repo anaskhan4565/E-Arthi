@@ -74,12 +74,11 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginTop: hp('3.2%'),
         height: hp('7%'),
-        marginLeft:hp(1),
-        alignSelf:'flex-start',
+        marginLeft: hp(1),
+        alignSelf: 'flex-start',
     },
     bodyContainer: {
         alignItems: 'flex-start',
-        marginLeft:hp(3)
 
     },
     titleContainer: {
@@ -94,6 +93,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: hp('2%'),
         // backgroundColor: 'red',
+        alignSelf: 'center',
         alignItems: 'center',
 
     },

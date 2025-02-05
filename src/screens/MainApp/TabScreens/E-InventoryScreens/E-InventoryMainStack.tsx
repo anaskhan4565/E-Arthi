@@ -40,7 +40,7 @@ const slideFromLeftOptions: NativeStackNavigationOptions = {
     animationDuration: 300,
 };
 
-function EInventoryMainStack(): React.JSX.Element {
+function EInventoryMainStack(): React.JSX.Element { 
     return (
         //  <I18nextProvider i18n={i18next}>
                 <Stack.Navigator initialRouteName={ScreensName.EInventory} screenOptions={{ headerShown: false }}>

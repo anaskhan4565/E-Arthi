@@ -39,7 +39,7 @@ function MyProfile() {
           h={hp("4%")}
           w={hp("4%")}
           isNavigation={1}
-          name={"GoBack"}
+          name={ScreensName.MainTabNavigation}
         />
       </View>
       <View style={styles.User}>

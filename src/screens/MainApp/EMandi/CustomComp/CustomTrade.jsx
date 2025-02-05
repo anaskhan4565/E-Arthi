@@ -46,7 +46,7 @@ const CustomTrade = ({ isExpanded, setIsExpanded }) => {
                         </View>
                         <View style={{ flex: 0.4 }}>
 
-                            <Text style={{fontFamily:fonts.bold,fontSize:hp(1.6)}}>40</Text>
+                            <Text style={{fontFamily:fonts.Bold,fontSize:hp(1.6)}}>40</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', flex: 0.4 }}>

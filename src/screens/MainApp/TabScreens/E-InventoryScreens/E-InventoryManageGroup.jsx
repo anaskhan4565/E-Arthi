@@ -24,7 +24,7 @@ const EInventoryManageGroup = () => {
         </View>
         <ScrollView style={{ flex: 1, marginTop: hp(2) }}>
           <View>
-            <Text style={{ fontSize: wp('5.4%'), fontFamily: fonts.bold, color: colors.BLACK }}>{t("Manage Groups")}</Text>
+            <Text style={{ fontSize: wp('5.4%'), fontFamily: fonts.Bold, color: colors.BLACK }}>{t("Manage Groups")}</Text>
           </View>
           {/* Item Container */}
           <CustomGroupComponent MainHeading={"Seeds"} typ1={"Green Seeds"} typ2={"Yellow Seeds"} typ3={"ABC Seeds"} val1={"1290"} val2={"1360"} val3={"1450"} />

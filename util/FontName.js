@@ -1,5 +1,5 @@
 export const fonts={
-    bold:'Poppins Bold',
+    Bold:'Poppins Bold',
     ExtraBold:'Poppins ExtraBold',
     Light:'Poppins Light',
     Medium:'Poppins Medium',

@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     pickerItem: {
         fontSize: wp('3%'),
         height: hp('6%'),
-        fontFamily: 'Poppins',
+        fontFamily: fonts.Regular,
     },
     monthbutton: {
         borderWidth: 1,

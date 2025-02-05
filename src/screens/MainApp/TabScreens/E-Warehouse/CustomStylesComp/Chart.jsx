@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: hp(3.5),
     fontWeight: "bold",
     color: colors.BLACK,
-    fontFamily: fonts.bold,
+    fontFamily: fonts.Bold,
     marginBottom: hp(1),
   },
   barChart: {

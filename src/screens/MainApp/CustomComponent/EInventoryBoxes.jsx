@@ -43,7 +43,7 @@ const EInventoryBoxes = ({
             <Image source={SourceGiven} style={[styles.ImageStyle, { width: img_size_w, height: img_size_h }]} />
             <Text style={[styles.TextStyle, {
                 fontSize: font_Size,
-                fontFamily: isBold ? fonts.bold : isLightBold ? fonts.SemiBold : fonts.Medium,
+                fontFamily: isBold ? fonts.Bold : isLightBold ? fonts.SemiBold : fonts.Medium,
                 marginTop: give_top_margin,
                 color: fontcolor,
 

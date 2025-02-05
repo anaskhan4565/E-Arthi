@@ -205,26 +205,27 @@ totalContainer: {
   totalText: {
     color: colors.GREEN,
     fontSize: hp(1.8),
-    fontFamily: "Poppins Bold"
+    fontFamily: fonts.Bold
   },
   amountText: {
     color: '#000',
     fontSize: hp(1.8),
-    fontFamily: "Poppins Bold"
+    fontFamily: fonts.Bold
   },
   imageGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginHorizontal: wp(5),
+    marginVertical: wp(4),
     padding: wp(1),
-    marginBottom: hp(2),
-    maxHeight: hp(30),
+    // marginBottom: hp(2),
+    // maxHeight: hp(30),
   },
   imageButton: {
     width: wp(42),
     height: hp(10),
-    marginBottom: hp(2),
+    marginBottom: hp(4),
     borderRadius: 8,
     backgroundColor: colors.WHITE,
     shadowColor: '#000',

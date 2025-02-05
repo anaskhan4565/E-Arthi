@@ -3,6 +3,7 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
+import { fonts } from '../../../../../util/FontName.js';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import {
     SafeAreaView,
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     },
     headingText: {
         fontSize: wp('5%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
     },
     buttonContainer: {
@@ -145,13 +146,13 @@ const styles = StyleSheet.create({
     },
     orderInfoHeading: {
         fontSize: wp('4.5%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
         marginBottom: hp('1%'),
     },
     orderInfoText: {
         fontSize: wp('3.3%'),
-        fontFamily: 'Poppins',
+        fontFamily: fonts.Regular,
         color: colors.BLACK,
         lineHeight: hp('2.8%'),
     },
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp('2%'),
         fontSize: wp('3%'),
         flex: 0.6,
-        fontFamily: 'Poppins',
+        fontFamily: fonts.Regular,
         color: colors.BLACK
     },
     pickerContainer: {
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     pickerItem: {
         fontSize: wp('3%'),
         height: hp('4%'),
-        fontFamily: 'Poppins',
+        fontFamily: fonts.Regular,
     },
     alertRow: {
         flexDirection: 'row',

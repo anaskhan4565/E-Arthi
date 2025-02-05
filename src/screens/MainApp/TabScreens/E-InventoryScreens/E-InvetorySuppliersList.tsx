@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     width: wp(30)
   },
   decs: {
-    fontFamily: fonts.bold,
+    fontFamily: fonts.Bold,
     fontSize: hp(1.8),
   },
   decsAndQty: {

@@ -89,7 +89,7 @@ function CurrentLoan(): React.JSX.Element {
             marginHorizontal: wp(5),
           }}
         >
-          <Text style={{ fontFamily: fonts.bold, fontSize: hp(3) }}>
+          <Text style={{ fontFamily: fonts.Bold, fontSize: hp(3) }}>
             {t("Current Loan")}
           </Text>
         </View>
@@ -172,7 +172,7 @@ function CurrentLoan(): React.JSX.Element {
                 fontSize: hp(3),
                 marginHorizontal: hp(2),
                 marginTop: hp(2),
-                fontFamily: fonts.bold,
+                fontFamily: fonts.Bold,
               },
             ]}
           >

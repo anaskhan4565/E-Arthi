@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.DARK_GREEN,
         fontWeight: 'bold',
-        fontFamily: fonts.bold
+        fontFamily: fonts.Bold
     },
 });

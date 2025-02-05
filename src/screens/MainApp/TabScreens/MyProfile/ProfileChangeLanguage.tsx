@@ -33,7 +33,7 @@ const ProfileLangChange = () => {
             <View style={{ flex: 0.74, backgroundColor: colors.WHITE }}>
                 <View style={{ flex: 1.3, justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={Logo} resizeMode="contain" style={{ height: hp(20), width: wp(200), marginLeft: hp(2.2) }} />
-                    <Text style={{ fontSize: hp(5), textAlign: 'center', letterSpacing: hp(0.9), fontFamily: fonts.bold }}>{t('E-AGRI')}</Text>
+                    <Text style={{ fontSize: hp(5), textAlign: 'center', letterSpacing: hp(0.9), fontFamily: fonts.Bold }}>{t('E-AGRI')}</Text>
                     <Text style={styles.headerText}>{t('Select Your Preferred Language')}</Text>
                 </View>
                 <View style={styles.contentContainer}>

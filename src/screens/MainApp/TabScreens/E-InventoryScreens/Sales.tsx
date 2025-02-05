@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         marginHorizontal: wp(5),
     },
     mainTitle: {
-        fontFamily: fonts.bold,
+        fontFamily: fonts.Bold,
         fontSize: hp(3),
     },
     chartContainer: {

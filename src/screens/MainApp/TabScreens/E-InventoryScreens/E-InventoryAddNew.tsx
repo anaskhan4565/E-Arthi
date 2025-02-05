@@ -3,6 +3,7 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
+import { fonts } from '../../../../../util/FontName.js';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import SwitchToggle from "react-native-switch-toggle";
 import {
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     },
     headingText: {
         fontSize: wp('5%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
     },
     buttonContainer: {
@@ -170,13 +171,13 @@ const styles = StyleSheet.create({
     },
     orderInfoHeading: {
         fontSize: wp('4.5%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
         marginBottom: hp('1%'),
     },
     orderInfoText: {
         fontSize: wp('3.8%'),
-        fontFamily: 'Poppins',
+        fontFamily: fonts.Regular,
         color: colors.BLACK,
         lineHeight: hp('2.8%'),
     },
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp('2%'),
         fontSize: wp('3%'),
         flex: 0.6,
-        fontFamily: 'Poppins',
+        fontFamily: fonts.Regular,
         color: colors.BLACK
     },
     pickerContainer: {

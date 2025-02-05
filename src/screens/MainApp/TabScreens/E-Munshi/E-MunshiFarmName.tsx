@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     },
     paymenttext: {
         fontSize: hp(2),
-        fontFamily: fonts.bold,
+        fontFamily: fonts.Bold,
 
     },
     clockimage: {
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     },
     pendingtext: {
         fontSize: hp(2),
-        fontFamily: fonts.bold,
+        fontFamily: fonts.Bold,
         color: "#6495ED",
     },
     pendingbox: {

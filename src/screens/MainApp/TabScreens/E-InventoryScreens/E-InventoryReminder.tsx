@@ -3,6 +3,7 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
+import { fonts } from '../../../../../util/FontName.js';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { TouchableOpacity, TextInput } from 'react-native';
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     },
     headingText: {
         fontSize: wp('5%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
     },
     filterContainer: {
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
     },
     frequencyTitle: {
         fontSize: wp('4%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
         marginBottom: hp('1%'),
     },
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
     },
     reminderTitle: {
         fontSize: wp('4%'),
-        fontFamily: 'Poppins Bold',
+        fontFamily: fonts.Bold,
         color: colors.BLACK,
         marginBottom: hp('1%'),
     },

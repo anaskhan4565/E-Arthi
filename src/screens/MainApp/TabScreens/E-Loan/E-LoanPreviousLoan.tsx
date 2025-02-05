@@ -41,7 +41,7 @@ function PurchaseHisotry(): React.JSX.Element {
             marginHorizontal: wp(5),
           }}
         >
-          <Text style={{ fontFamily: fonts.bold, fontSize: hp(3.4) }}>
+          <Text style={{ fontFamily: fonts.Bold, fontSize: hp(3.4) }}>
             {t("Loan History")}
           </Text>
         </View>

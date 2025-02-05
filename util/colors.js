@@ -13,6 +13,8 @@ export default{
     GREEN:'#00A980',
     WHITE:'#FFFFFF',
     LIGHT_GRAY:'rgba(0, 0, 0, 0.2)',
+    GRAY:'rgba(0, 0, 0, 0.5)',
+    DARK_GRAY:'rgba(0, 0, 0, 0.8)',
 
 
     //For HomeScreen in mainApp

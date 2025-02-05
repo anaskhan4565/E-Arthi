@@ -29,7 +29,7 @@ function Connect(): React.JSX.Element {
       <View style={{ flex: 0.75, justifyContent: 'center', marginTop: hp(16), alignItems: 'center' }}>
         <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
           <Image source={Logo} resizeMode="contain" style={styles.logo} />
-          <Text style={{ fontSize: hp(5), textAlign: 'center',letterSpacing:hp(0.9),paddingRight:hp(2),fontFamily:fonts.bold }}>{t('E-AGRI')}</Text>
+          <Text style={{ fontSize: hp(5), textAlign: 'center',letterSpacing:hp(0.9),paddingRight:hp(2),fontFamily:fonts.Bold }}>{t('E-AGRI')}</Text>
         </View>
         <View style={{ flex: 0.5, justifyContent: 'center' }}>
           <Text style={{ fontSize: hp(2), textAlign: 'center', fontFamily: fonts.Regular }}>{t('Connect_With_us')}</Text>

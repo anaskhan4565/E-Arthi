@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
-import Prod2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png';
-import ButtonLess from '../../../assets/MainApp/EmarketPlace/Products/Buttons/LessButton.png';
-import ButtonPlus from '../../../assets/MainApp/EmarketPlace/Products/Buttons/MoreButton.png';
-import colors from '../../../../util/colors';
-import Cart from '../../../assets/MainApp/ProductScreen/Cart.png';
+import React, { useState } from "react";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    ScrollView,
+} from "react-native";
+import Prod2 from "../../../assets/MainApp/EmarketPlace/Products/prod2.png";
+import ButtonLess from "../../../assets/MainApp/EmarketPlace/Products/Buttons/LessButton.png";
+import ButtonPlus from "../../../assets/MainApp/EmarketPlace/Products/Buttons/MoreButton.png";
+import colors from "../../../../util/colors";
+import Cart from "../../../assets/MainApp/ProductScreen/Cart.png";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../../../util/FontName';
-import img1 from '../../../assets/MainApp/ProductScreen/product1.png'
-import img2 from '../../../assets/MainApp/ProductScreen/product2.png'
-import img3 from '../../../assets/MainApp/ProductScreen/product3.png'
-import ScreensName from '../../../../util/ScreensName.ts';
-import { useNavigation } from '@react-navigation/native';
-import Navbar from '../Navbar/Navbar';
-import { MMKV } from 'react-native-mmkv';
+import { fonts } from "../../../../util/FontName";
+import img1 from "../../../assets/MainApp/ProductScreen/product1.png";
+import img2 from "../../../assets/MainApp/ProductScreen/product2.png";
+import img3 from "../../../assets/MainApp/ProductScreen/product3.png";
+import ScreensName from "../../../../util/ScreensName.ts";
+import { useNavigation } from "@react-navigation/native";
+import Navbar from "../Navbar/Navbar";
+import { MMKV } from "react-native-mmkv";
 
 const ProductScr = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -26,27 +33,27 @@ const ProductScr = () => {
     const storage = new MMKV();
     const ProductClickInfo = new MMKV();
 
-    const productData = ProductClickInfo.getString('selectedProduct');
+    const productData = ProductClickInfo.getString("selectedProduct");
     const ProductInfo = productData ? JSON.parse(productData) : null;
 
-
     const toggleSelection = (product) => {
-        let updatedOptions = [...selectedOptions];
-        let updatedPrice = Price;
-
-        if (selectedOptions.includes(product.name)) {
-            // Remove add-on price when deselected
-            updatedOptions = updatedOptions.filter((item) => item !== product.name);
-            updatedPrice -= product.price;
-        } else {
-            // Add add-on price when selected
-            updatedOptions.push(product.name);
-            updatedPrice += product.price;
-        }
-
-        setSelectedOptions(updatedOptions);
-        setPrice(updatedPrice);
+        setSelectedOptions((prevOptions) => {
+            let updatedOptions = [...prevOptions];
+            let updatedPrice = Price;
+    
+            if (prevOptions.includes(product.name)) {
+                updatedOptions = updatedOptions.filter((item) => item !== product.name);
+                updatedPrice -= product.price;
+            } else {
+                updatedOptions.push(product.name);
+                updatedPrice += product.price;
+            }
+    
+            setPrice(updatedPrice);
+            return updatedOptions;
+        });
     };
+    
 
     function configureCount(less) {
         let newCount = less ? Math.max(1, Count - 1) : Count + 1;
@@ -54,12 +61,15 @@ const ProductScr = () => {
     }
 
     const handleAddtoCart = () => {
-        storage.set("qty", storage.getNumber("qty") + Count)
-        storage.set("cost", storage.getNumber("cost") + Price)
+        // Ensure qty and cost are initialized properly
+        const currentQty = storage.getNumber("qty") ?? 0;
+        const currentCost = storage.getNumber("cost") ?? 0;
 
-        Navigation.navigate(ScreensName.MainTabNavigation, { screen: ScreensName.EMarket });
-    }
+        storage.set("qty", currentQty + Count);
+        storage.set("cost", currentCost + Price * Count);
 
+        Navigation.navigate(ScreensName.EMarket);
+    };
 
     const products = [
         { name: "Agri Moss", image: img1, price: 250 },
@@ -69,78 +79,133 @@ const ProductScr = () => {
 
     return (
         <ScrollView style={styles.container}>
-            {ProductInfo ?
-            <View>
-            <View style={{ marginBottom: hp(1), height: hp(7) }} >
-                <Navbar />
-            </View>
-            <View style={styles.topSection}>
-                <View style={styles.imageContainer}>
-                    <Image source={ProductInfo.SourceGiven} style={styles.productImage} />
-                </View>
-                <View style={styles.productDetails}>
-                    <Text style={styles.productTitle}>{ProductInfo.name}</Text>
-                    <View style={styles.priceContainer}>
-                        <View style={styles.priceDetails}>
-                            <Text style={styles.priceText}>Price: PKR {ProductInfo.price}</Text>
-                            <Text style={styles.discountedPrice}>{ProductInfo.old}</Text>
-                            <Text style={styles.saveText}>Save: PKR {ProductInfo.save}</Text>
-                        </View>
-                        <View style={styles.quantityContainer}>
-                            <TouchableOpacity onPress={() => configureCount(true)}>
-                                <Image source={ButtonLess} style={styles.quantityButton} />
-                            </TouchableOpacity >
-                            <Text style={styles.quantityText}>{Count < 10 ? '0' + Count : Count}</Text>
-                            <TouchableOpacity onPress={() => configureCount(false)}>
-                                <Image source={ButtonPlus} style={styles.quantityButton} />
-                            </TouchableOpacity>
-
-                        </View>
+            {ProductInfo ? (
+                <View>
+                    <View style={{ marginBottom: hp(1), height: hp(7) }}>
+                        <Navbar />
                     </View>
-                    <Text style={styles.description}>
-                        Brown the beef better. Lean ground beef – I like to use 85% lean angus. Garlic – use fresh chopped. Spices – chili powder, cumin, onion powder.
-                    </Text>
-                </View>
-            </View>
-            <View style={styles.addOnSection}>
-                <Text style={styles.addOnTitle}>Choices of Add On</Text>
-                <View style={styles.addOnContainer}>
-                    <View style={styles.addOnProducts}>
-                        {products.map((product, key) => (
-                            <View key={`product-${key}`} style={styles.addOnItem}>
-                                <Image source={product.image} style={styles.addOnImage} />
-                                <Text style={styles.addOnText}>{product.name}</Text>
+                    <View style={styles.topSection}>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={ProductInfo.SourceGiven}
+                                style={styles.productImage}
+                            />
+                        </View>
+                        <View style={styles.productDetails}>
+                            <Text style={styles.productTitle}>
+                                {ProductInfo.name}
+                            </Text>
+                            <View style={styles.priceContainer}>
+                                <View style={styles.priceDetails}>
+                                    <Text style={styles.priceText}>
+                                        Price: PKR {ProductInfo.price}
+                                    </Text>
+                                    <Text style={styles.discountedPrice}>
+                                        {ProductInfo.old}
+                                    </Text>
+                                    <Text style={styles.saveText}>
+                                        Save: PKR {ProductInfo.save}
+                                    </Text>
+                                </View>
+                                <View style={styles.quantityContainer}>
+                                    <TouchableOpacity
+                                        onPress={() => configureCount(true)}
+                                    >
+                                        <Image
+                                            source={ButtonLess}
+                                            style={styles.quantityButton}
+                                        />
+                                    </TouchableOpacity>
+                                    <Text style={styles.quantityText}>
+                                        {Count < 10 ? "0" + Count : Count}
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => configureCount(false)}
+                                    >
+                                        <Image
+                                            source={ButtonPlus}
+                                            style={styles.quantityButton}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        ))}
+                            <Text style={styles.description}>
+                                Brown the beef better. Lean ground beef – I like
+                                to use 85% lean angus. Garlic – use fresh
+                                chopped. Spices – chili powder, cumin, onion
+                                powder.
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.checkboxContainer}>
-                        {products.map((value, third) => (
-                            <View key={third} style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>+Rs:{value.price}</Text>
-                                <TouchableOpacity
-                                    style={styles.checkbox}
-                                    onPress={() => toggleSelection(value)}
-                                >
+                    <View style={styles.addOnSection}>
+                        <Text style={styles.addOnTitle}>Choices of Add On</Text>
+                        <View style={styles.addOnContainer}>
+                            <View style={styles.addOnProducts}>
+                                {products.map((product, key) => (
                                     <View
-                                        style={[
-                                            styles.checkboxInner,
-                                            selectedOptions.includes(value.name) && styles.checkboxChecked
-                                        ]}
-                                    />
-                                </TouchableOpacity>
+                                        key={`product-${key}`}
+                                        style={styles.addOnItem}
+                                    >
+                                        <Image
+                                            source={product.image}
+                                            style={styles.addOnImage}
+                                        />
+                                        <Text style={styles.addOnText}>
+                                            {product.name}
+                                        </Text>
+                                    </View>
+                                ))}
                             </View>
-                        ))}
+                            <View style={styles.checkboxContainer}>
+                                {products.map((value, third) => (
+                                    <View
+                                        key={third}
+                                        style={{
+                                            flexDirection: "row",
+                                            borderWidth: 0,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: hp(2),
+                                                fontFamily: fonts.SemiBold,
+                                            }}
+                                        >
+                                            +Rs:{value.price}
+                                        </Text>
+                                        <TouchableOpacity
+                                            style={styles.checkbox}
+                                            onPress={() =>
+                                                toggleSelection(value)
+                                            }
+                                        >
+                                            <View
+                                                style={[
+                                                    styles.checkboxInner,
+                                                    selectedOptions.includes(
+                                                        value.name
+                                                    ) && styles.checkboxChecked,
+                                                ]}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.addToCartSection}>
+                        <TouchableOpacity
+                            style={styles.addToCartButton}
+                            onPress={handleAddtoCart}
+                        >
+                            <Image source={Cart} style={styles.cartIcon} />
+                            <Text style={styles.cartText}>Add to Cart</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </View>
-            <View style={styles.addToCartSection}>
-                <TouchableOpacity style={styles.addToCartButton} onPress={handleAddtoCart}>
-                    <Image source={Cart} style={styles.cartIcon} />
-                    <Text style={styles.cartText}>Add to Cart</Text>
-                </TouchableOpacity>
-            </View>
-            </View>
-                : null}
+            ) : null}
         </ScrollView>
     );
 };
@@ -150,20 +215,20 @@ export default ProductScr;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.WHITE
+        backgroundColor: colors.WHITE,
     },
     topSection: {
         flex: 0.3,
     },
     imageContainer: {
         flex: 0.5,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     productImage: {
         width: wp(35),
         height: wp(40),
-        resizeMode: 'contain',
+        resizeMode: "contain",
         marginTop: hp(4),
     },
     productDetails: {
@@ -173,50 +238,50 @@ const styles = StyleSheet.create({
     },
     productTitle: {
         fontSize: wp(6),
-        fontWeight: 'bold',
-        marginBottom: hp(2)
+        fontWeight: "bold",
+        marginBottom: hp(2),
     },
     priceContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     priceDetails: {
         flex: 0.6,
     },
     priceText: {
         fontSize: wp(4),
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     discountedPrice: {
         fontSize: wp(4),
-        fontWeight: '200',
-        textDecorationLine: 'line-through',
+        fontWeight: "200",
+        textDecorationLine: "line-through",
     },
     saveText: {
         fontSize: wp(4),
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     quantityContainer: {
         flex: 0.4,
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
     },
     quantityButton: {
         width: wp(8),
         height: wp(8),
-        marginHorizontal: wp(1)
+        marginHorizontal: wp(1),
     },
     quantityText: {
         fontSize: wp(7),
-        fontWeight: 'bold',
-        textAlign: 'center',
+        fontWeight: "bold",
+        textAlign: "center",
     },
     description: {
         color: colors.BLACK,
-        fontWeight: '400',
+        fontWeight: "400",
         marginTop: wp(3),
-        fontSize: hp(1.6)
+        fontSize: hp(1.6),
     },
     addOnSection: {
         flex: 0.3,
@@ -224,20 +289,20 @@ const styles = StyleSheet.create({
     },
     addOnTitle: {
         fontSize: wp(6),
-        fontWeight: '600',
-        marginBottom: hp(1)
+        fontWeight: "600",
+        marginBottom: hp(1),
     },
     addOnContainer: {
-        flexDirection: 'row',
+        flexDirection: "row",
         marginTop: wp(3),
     },
     addOnProducts: {
         flex: 0.8,
-        justifyContent: 'center',
+        justifyContent: "center",
     },
     addOnItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         marginBottom: wp(2),
     },
     addOnImage: {
@@ -250,7 +315,7 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         flex: 0.2,
-        justifyContent: 'space-around',
+        justifyContent: "space-around",
     },
     checkbox: {
         width: wp(4.5),
@@ -258,33 +323,32 @@ const styles = StyleSheet.create({
         borderRadius: wp(3),
         borderWidth: 2,
         marginHorizontal: wp(2),
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     checkboxInner: {
         width: wp(2.5),
         height: wp(2.5),
         borderRadius: wp(2),
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
     },
     checkboxChecked: {
-        backgroundColor: '#34A853',
+        backgroundColor: "#34A853",
     },
     addToCartSection: {
         flex: 0.2,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     addToCartButton: {
-        backgroundColor: '#34A853',
+        backgroundColor: "#34A853",
         width: wp(40),
         height: hp(5.8),
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         borderRadius: hp(2.5),
-        justifyContent: 'center',
+        justifyContent: "center",
         marginBottom: hp(2),
-
     },
     cartIcon: {
         width: wp(7),
@@ -294,6 +358,5 @@ const styles = StyleSheet.create({
     cartText: {
         fontSize: wp(5),
         color: colors.WHITE,
-    }
-}
-);
+    },
+});

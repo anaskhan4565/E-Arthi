@@ -46,7 +46,7 @@ const SuppliersReport = () => {
                 name.trim() !== '' && (
                   <View style={styles.itemBoxWrapper} key={index}>
                     <Image source={pdf} style={styles.image} />
-                    <Text style={{ fontSize: hp(1.6), textAlign: 'center' }}>{t(name)}</Text>
+                    <Text style={{ fontSize: hp(1.3), textAlign: 'center' }}>{t(name)}</Text>
                   </View>
                 )
               ))}
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
     gap: wp(4)
   },
   image: {
-    width: wp(15),
-    height: hp(5.5),
+    width: wp(14),
+    height: hp(4.8),
     resizeMode: 'contain',
     marginBottom: hp(1),
   },
@@ -108,9 +108,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingVertical: hp('3%'),
+    // backgroundColor: 'red',
   },
   itemBoxWrapper: {
-    width: wp('30%'),
+    width: wp('28%'),
     marginBottom: hp('2%'),
     alignItems: 'center',
     flexWrap: 'wrap',

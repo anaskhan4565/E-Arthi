@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
         alignContent: "space-between",
         padding: 10,
         elevation: 5,
+        marginBottom: hp(2),
     },
     mainboxrow: {
         flexDirection: "row",

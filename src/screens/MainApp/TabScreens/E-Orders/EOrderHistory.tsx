@@ -23,7 +23,8 @@ import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 
 function ETransportDeliveryHistory(): React.JSX.Element {
     const { t } = useTranslation();
-
+    const getStatusStyle = (stat) => (stat ? styles.comp : styles.pend);
+    const getStatusTextStyle = (stat) => (stat ? styles.completed : styles.pending);
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.navbarContainer}>
@@ -38,20 +39,30 @@ function ETransportDeliveryHistory(): React.JSX.Element {
               {t('Order History')}
             </Text>
           </View>
-          {OrderHist.map(
-            (data, index) =>
-              data.desc.trim() !== "" && (
+          
+          {OrderHist.map((data, index) =>
+            data.desc.trim() !== "" && (
+                <View style={styles.metaSuper} key={index}>
                 <View>
-                    <View style={styles.column} key={index}>
-                        <View style={styles.decsAndtime}>
-                            <Text style={styles.decs}>{t(data.time)}</Text>
-                            <Text style={styles.decs}>{data.desc}</Text>
-                        </View>
-                        <Text style={styles.cost}>{data.cost}</Text>
+                    <Text style={styles.date}>{t(data.date)}</Text>
+                </View>
+                <View style={styles.meta}>
+                    <View style={styles.column}>
+                    <View style={styles.decsAndtime}>
+                        <Text style={styles.time}>{t(data.time)}</Text>
+                        <Text style={styles.decs}>{data.desc}</Text>
+                    </View>
+                    <Text style={styles.cost}>{data.cost}</Text>
+                    </View>
+                    <View style={getStatusStyle(data.stat)}>
+                    <Text style={getStatusTextStyle(data.stat)}>
+                        {t(data.stat ? "completed" : "pending")}
+                    </Text>
                     </View>
                 </View>
-              )
-          )}
+                </View>
+            )
+            )}
         </View>
       </SafeAreaView>
     );
@@ -90,31 +101,77 @@ const styles = StyleSheet.create({
   cost: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    textAlign: "center",
+    textAlign: "left",
     width: wp(33),
+    color: colors.GREEN
   },
   date: {
     fontFamily: fonts.Regular,
+    fontSize: hp(1.8)
+  },
+  time: {
+    fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    width: wp(30)
+    textAlign: 'left',
+    color: colors.EOrderHistGray,
   },
   decs: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
+    textAlign: 'left',
+    color: colors.GREEN
   },
   decsAndtime: {
-    width: wp(30),
+    width: wp(65),
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    flexDirection: 'row'
-
+    flexDirection: 'row',
+    gap: 7
   },
   column: {
     flexDirection: "column",
     justifyContent: "space-between",
     marginHorizontal: wp(4),
-
   },
+  meta: {
+    flexDirection:'row',
+    justifyContent: 'center',
+    alignItems:'center',
+    backgroundColor: colors.LIGHT_GREEN,
+    borderRadius: 10,
+    width: wp(90),
+    height: hp(8),
+    margin: hp(0.5)
+  },
+  pend: {
+    justifyContent:'center',
+    alignItems: 'center',
+    height: hp(3),
+    width: wp(19),
+    borderRadius: 6,
+    backgroundColor: colors.ORANGE,
+    marginRight: wp(4)
+  },
+  comp: {
+    justifyContent:'center',
+    alignItems: 'center',
+    height: hp(3),
+    width: wp(19),
+    borderRadius: 6,
+    backgroundColor: colors.COMPLETE_GREEN,
+    marginRight: wp(4)
+  },
+  metaSuper: {
+    flexDirection: 'column',
+    marginLeft: wp(5),
+    margin: hp(1)
+  },
+  pending: {
+    color: colors.BLACK
+  },
+  completed: {
+    color: colors.WHITE
+  }
 });
 
 export default ETransportDeliveryHistory;

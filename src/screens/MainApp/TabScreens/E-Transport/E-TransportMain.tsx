@@ -44,7 +44,7 @@ function ETransportMain(): React.JSX.Element {
                         {ETransportMaindet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={ScreensName.EOrderHistory} navigationName={t(ScreensName.ETransportStack)} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.ETransportStack)} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}

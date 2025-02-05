@@ -10,15 +10,18 @@ import {
 import CustomPicker from '../../EMandi/CustomComp/CustomPicker'
 import CustomTxtAndPicker from '../E-Loan/NewLoanComponents/CustomTxtAndPicker'
 import ScreensName from '../../../../../util/ScreensName'
+import { useTranslation } from 'react-i18next'
 const BankRecieving = () => {
+    const { t } = useTranslation();
+  
   return (
     <ScrollView>
       <View style={styles.inputs}>
-      <CustomTxtAndPicker PlaceHolderGiven={"Bank Name"} itemPackage={[{ label: "Habib Bank Limited", value: "Meezan Bank" }]} Picker_Txt={"Select Bank"} />
+      <CustomTxtAndPicker PlaceHolderGiven={"Bank Name"} itemPackage={[{ label: "Habib Bank Limited", value: "Meezan Bank" },{ label: "Bank Of Punjab", value: "Bank Of Punjab" },{ label: "Habib Bank Limited", value: "HBL" }]} Picker_Txt={"Select Bank"} />
 
         <CustomInputAndText
-          PlaceHolderGiven={"Raast ID"}
-          InputHolder={"Raast ID"}
+          PlaceHolderGiven={"IBAN"}
+          InputHolder={"IBAN"}
         />
 
         <CustomButton

@@ -10,8 +10,11 @@ import TickBox from '../NewLoanComponents/TickBox';
 import CustomButton from '../../../../../components/CustomButton';
 import { fonts } from '../../../../../../util/FontName';
 import ScreensName from '../../../../../../util/ScreensName.ts';
+import { useTranslation } from 'react-i18next';
 
 const MainNewLoan = () => {
+        const { t } = useTranslation();
+    
     return (
         <View style={{ flex: 1, gap: hp(2), marginBottom: hp(5) }}>
             <CustomTxtAndPicker PlaceHolderGiven={"Employement Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business-Owner", value: "Business Owner" }]} Picker_Txt={"Select Employement Type"} />

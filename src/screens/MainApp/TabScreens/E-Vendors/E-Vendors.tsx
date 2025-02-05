@@ -39,9 +39,7 @@ function EVendors(): React.JSX.Element {
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
         <Navbar
-          isbackSet={true}
-          isBackTo={ScreensName.EInventorySupplier}
-          gobackOnly={true}
+
         />
       </View>
       <ScrollView style={styles.scrollView}>

@@ -45,7 +45,7 @@ function ELoanNewBank(): React.JSX.Element {
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
                 <View style={{ marginHorizontal: hp(2.5) }} >
-                    <Text style={{ fontSize: hp(2.5), fontFamily: fonts.SemiBold, letterSpacing: hp(0.1),marginLeft:hp(1) }}>{t('Request A New Loan')}</Text>
+                    <Text style={{ fontSize: hp(2.5), fontFamily: fonts.SemiBold, letterSpacing: hp(0.1),marginLeft:hp(1) }}>Request A New Loan</Text>
                 </View>
                 <View style={[styles.bodyContainer]}>
                     <SwitchButtonCustom selectedOption={selectedOption} setSelectedOption={setSelectedOption} />

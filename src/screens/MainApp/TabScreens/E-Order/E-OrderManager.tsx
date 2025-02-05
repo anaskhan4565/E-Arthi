@@ -46,8 +46,8 @@ const EOrderManager = () => {
                       navigationName={t(ScreensName.EOrderMainStack)}
                       SourceGiven={Category.img}
                       isNavigation={1}
-                      w={wp("44%")}
-                      h={hp("17%")}
+                      w={wp("38%")}
+                      h={hp("16%")}
                       img_size_h={hp(5)}
                       img_size_w={hp(20)}
                       font_Size={hp('2%')}
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "center",
     // backgroundColor: 'red',
+    width: wp(90),
   },
   itemBoxWrapper: {
     // width: "30%",

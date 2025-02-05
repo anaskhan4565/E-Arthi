@@ -7,6 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../../util/colors.js";
 import { fonts } from "../../../../../../util/FontName.js";
+import { useTranslation } from "react-i18next";
 
 const CustomBarChart = ({
   data,
@@ -15,6 +16,7 @@ const CustomBarChart = ({
   width = wp(100),
   height = hp(30),
 }) => {
+  const { t } = useTranslation();
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
       <Text style={styles.title}>{t(legendTitle)}</Text>

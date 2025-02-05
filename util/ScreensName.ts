@@ -119,4 +119,6 @@ export default {
     EOrderManager: "EOrderManager",
     EOrderPlaceOrder: "EOrderPlaceOrder",
     EOrderTransaction: "EOrderTransaction",
+    EOrderCheckout: "EOrderCheckout",
+    EOrderPaymentMethod: "EOrderPaymentMethod",
 }

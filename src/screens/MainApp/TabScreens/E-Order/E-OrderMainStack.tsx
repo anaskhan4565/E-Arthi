@@ -21,6 +21,8 @@ import EOrderManager from "./E-OrderManager";
 import EOrderHistory from "./E-OrderHistory";
 import EOrderPlaceOrder from "./E-OrderPlaceOrder";
 import EOrderTransaction from "./E-OrderTransaction";
+import EOrderCheckout from "./E-OrderCheckout";
+import EOrderPaymentMethod from "./EOrderPaymentMethod";
 import { fonts } from '../../../../../util/FontName.js';
 
 const Stack = createNativeStackNavigator();
@@ -34,7 +36,8 @@ function EOrderMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EOrderHistory} component={EOrderHistory} />
                     <Stack.Screen name={ScreensName.EOrderPlaceOrder} component={EOrderPlaceOrder} />
                     <Stack.Screen name={ScreensName.EOrderTransaction} component={EOrderTransaction} />
-        
+                    <Stack.Screen name={ScreensName.EOrderCheckout} component={EOrderCheckout} />
+                    <Stack.Screen name={ScreensName.EOrderPaymentMethod} component={EOrderPaymentMethod} />
                 </Stack.Navigator>
         // </I18nextProvider>
     );

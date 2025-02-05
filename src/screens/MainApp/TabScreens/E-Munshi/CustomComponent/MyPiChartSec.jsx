@@ -6,6 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 const MyPieChartSec = ({
   chartWidth = wp(50),
@@ -15,6 +16,7 @@ const MyPieChartSec = ({
   paddingLeft = hp(1),
   data = [],
 }) => {
+  const { t } = useTranslation();
   const formattedData = data.map((item) => ({
     name: item.name,
     population: item.value,
@@ -51,7 +53,7 @@ const MyPieChartSec = ({
         {formattedData.map((item, index) => (
           <View key={index} style={styles.legendItem}>
             <View style={[styles.colorBox, { backgroundColor: item.color }]} />
-            <Text style={styles.legendText}>{item.name}</Text>
+            <Text style={styles.legendText}>{t(item.name)}</Text>
           </View>
         ))}
       </View>

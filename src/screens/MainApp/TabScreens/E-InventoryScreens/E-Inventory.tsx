@@ -28,50 +28,35 @@ import ScreensName from "../../../../../util/ScreensName.ts";
 function EInventory(): React.JSX.Element {
   const { t } = useTranslation();
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.navbarContainer}>
-        <Navbar />
-      </View>
-      <ScrollView style={styles.container}>
-        <View style={styles.searchContainer}>
-          <CustomSearchApp placeholder={t("Search in here")} />
-        </View>
-        <View style={{ marginHorizontal: hp(1) }}>
-          <Text
-            style={{
-              fontSize: hp(3.5),
-              fontFamily: fonts.ExtraBold,
-              marginLeft: hp(2),
-              letterSpacing: hp(0.6),
-            }}
-          >
-            E-Inventory
-          </Text>
-        </View>
-        <View style={styles.bodyContainer}>
-          <View style={styles.scrollContainer}>
-            {EInventoryDet.map(
-              (Category, index) =>
-                Category.title.trim() !== "" && (
-                  <View style={styles.itemBoxWrapper} key={index}>
-                    <EInventoryBoxes
-                      name={t(Category.title)}
-                      screenName={Category.screen}
-                      navigationName={t(ScreensName.EInventoryMainStack)}
-                      SourceGiven={Category.img}
-                      isNavigation={1}
-                      w={wp("85%")}
-                      h={hp("18%")}
-                    />
-                  </View>
-                )
-            )}
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    return (
+        <SafeAreaView style={styles.container}>
+
+            <View style={styles.navbarContainer}>
+                <Navbar />
+            </View>
+            <ScrollView style={styles.container}>
+
+                <View style={styles.searchContainer}>
+                    <CustomSearchApp placeholder={t('Search in here')} />
+                </View>
+                <View style={{ marginHorizontal: hp(1) }} >
+                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>{t('E-Inventory')}</Text>
+                </View>
+                <View style={styles.bodyContainer}>
+
+                    <View style={styles.scrollContainer}>
+                        {EInventoryDet.map((Category, index) => (
+                            Category.title.trim() !== '' && (
+                                <View style={styles.itemBoxWrapper} key={index}>
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
+                                </View>
+                            )
+                        ))}
+                    </View>
+                </View>
+            </ScrollView>
+        </SafeAreaView >
+    );
 }
 
 const styles = StyleSheet.create({

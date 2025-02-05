@@ -48,7 +48,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
               selectedOption === "Raast ID" && styles.selectedText,
             ]}
           >
-            Raast ID
+            {t('Raast ID')}
           </Text>
         </Animated.View>
         
@@ -68,7 +68,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
               selectedOption === "Bank Transfer" && styles.selectedText,
             ]}
           >
-            Bank Transfer
+            {t('Bank Transfer')}
           </Text>
         </Animated.View>
       </TouchableOpacity>

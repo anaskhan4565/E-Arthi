@@ -63,8 +63,10 @@ function PurchaseHisotry(): React.JSX.Element {
                   navigation.navigate(ScreensName.EWarehouseNewSpaceConfirmWarehouse);
                 }}
               >
-                <InventoryProduct name={data.name} SecondaryText={data.distance} allowImg={false} w={hp(44)} h={hp(6)} isNavigation={true} navigateTo={ScreensName.EWarehouseNewSpaceConfirmWarehouse} />
-
+                <View style={styles.decsAndQty}>
+                  <Text style={styles.cost}>{t(data.name)}</Text>
+                </View>
+                <Text style={styles.date}>{data.distance}</Text>
               </TouchableOpacity>
             )
         )}

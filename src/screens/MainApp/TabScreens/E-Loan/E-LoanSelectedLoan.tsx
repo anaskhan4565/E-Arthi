@@ -41,7 +41,7 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
           }}
         >
           <Text style={{ fontFamily: fonts.bold, fontSize: hp(2.4) }}>
-            Loan Report 2024
+            {t('Loan Report 2024')}
           </Text>
 
           <MyPieChart

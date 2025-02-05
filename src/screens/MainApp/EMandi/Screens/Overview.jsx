@@ -57,7 +57,7 @@ const Overview = () => {
             <ScrollView>
                 <CustomNavigationMandi />
                 <View style={{ marginHorizontal: hp(2),marginVertical:hp(1.5) }} >
-                    <Text style={{ fontSize: hp(3), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6) }}>E-Mandi Overview</Text>
+                    <Text style={{ fontSize: hp(3), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6) }}>{t('E-Mandi Overview')}</Text>
                 </View>
 
                 <View style={styles.mandiContainer}>

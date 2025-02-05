@@ -40,7 +40,7 @@ function ETransportAnalytics(): React.JSX.Element {
             </View>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                 <View style={styles.searchbar}>
-                    <CustomSearchApp placeholder={"Search in here"} />
+                    <CustomSearchApp placeholder={t("Search in here")} />
                 </View>
                 <View style={styles.Titlebuttoncontainer}>
                     <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.8) }}>
@@ -79,7 +79,7 @@ function ETransportAnalytics(): React.JSX.Element {
                             style={styles.image}
                             source={require("../../../../../src/assets/MainApp/E-Transport/City.png")}
                         />
-                        <Text style={styles.citytext}>Popular City</Text>
+                        <Text style={styles.citytext}>{t('Popular City')}</Text>
                         <View style={styles.monthbutton}>
                             <Picker
                                 style={styles.picker}
@@ -105,11 +105,11 @@ function ETransportAnalytics(): React.JSX.Element {
                         </View>
                     </View>
                     <View style={styles.totalcitycontainer}>
-                        <Text style={styles.totalcitytext}>Total Cities</Text>
+                        <Text style={styles.totalcitytext}>{t('Total Cities')}</Text>
                         <View style={styles.jakartacontainer}>
                             <Text style={styles.cityquantitytext}>102</Text>
                             <View style={styles.greenbox}></View>
-                            <Text style={styles.jakartatext}>Jakarta</Text>
+                            <Text style={styles.jakartatext}>{t('Jakarta')}</Text>
                         </View>
                     </View>
 

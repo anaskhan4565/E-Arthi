@@ -132,6 +132,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                   price={product.price}
                   isNavigation={0}
                   description={product.name}
+                  AddIcon={true}
                 onPressG={() => handleAddItem(product.price)}
                 />
               ))}

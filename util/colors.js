@@ -8,9 +8,12 @@ export default{
     GREAT_WHITE: '#F3F6FE',
     LIGHT_PURPLE: '#b7bbd8',
     RED: '#FF0000',
+    ORANGE: '#FFA412',
+    EOrderHistGray: '#ADADAD',
 
     //for buttons::
     GREEN:'#00A980',
+    COMPLETE_GREEN: '#52DC18',
     WHITE:'#FFFFFF',
     LIGHT_GRAY:'rgba(0, 0, 0, 0.2)',
     GRAY:'rgba(0, 0, 0, 0.5)',

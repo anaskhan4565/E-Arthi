@@ -69,7 +69,7 @@ function ConfrimWarehouse(): React.JSX.Element {
                   }}
                 >
                   <View style={styles.typeCol}>
-                    <Text style={styles.typeText}>{data.type}</Text>
+                    <Text style={styles.typeText}>{t(data.type)}</Text>
                   </View>
                   <Text style={styles.price}>{data.price}</Text>
                   <Text style={styles.space}>{data.space}</Text>
@@ -81,7 +81,7 @@ function ConfrimWarehouse(): React.JSX.Element {
           <View>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>
-                Enter the number of {Type} units you want to reserve
+                {t('Enter the number of ')}{Type}{t(' units you want to reserve')}
               </Text>
               <CustomInput
                 placeholder={t("Units")}

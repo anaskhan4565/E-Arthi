@@ -6,42 +6,43 @@ import Seed5 from './Images/Seeds/Seed5.png'
 
 export default [
     {
-        name: "YSM 8108 10kg Hybrid Corn Seed Best for Maximum Silage",
+        title: "Urea Fertilizer",
+        name: "Premium Urea Fertilizer 50kg Bag for High-Yield Crops",
         img: Seed1,
-        save: "15.00",
-        price: "10535.00",
-        old: "10550.00"
-
+        save: "5",
+        price: "3200",
+        old: "3300"
     },
     {
-        name: "Hybrid Hot Pepper SV 7864 F1 10gm Seminis Seeds Ali akbar Chili Seed Chilli Seed",
+        title: "DAP Fertilizer",
+        name: "High-Quality Diammonium Phosphate (DAP) Fertilizer 50kg",
         img: Seed2,
-        save: "15.00",
-        price: "2935.00",
-        old: "2950.00"
-
+        save: "10",
+        price: "3500",
+        old: "3600"
     },
     {
-        name: "Super tomato Beej 3000 Seeds in 1 pack F1 Hybrid Seeds",
+        title: "SOP Fertilizer",
+        name: "Sulphate of Potash (SOP) Fertilizer 50kg Bag for Enhanced Crop Growth",
         img: Seed3,
-        save: "15.00",
-        price: "3235.00",
-        old: "3250.00"
-
+        save: "8",
+        price: "3700",
+        old: "3800"
     },
     {
-        name: "Hybrid Cucumber Alpha F1 (parthenocarpic) 1000 Seeds ",
+        title: "SSP Fertilizer",
+        name: "Single Super Phosphate (SSP) Fertilizer 50kg for Improved Root Development",
         img: Seed4,
-        save: "50.00",
-        price: "3450.00",
-        old: "3500.00"
-
+        save: "12",
+        price: "3000",
+        old: "3120"
     },
     {
-        name: "Tinda 50GM Rachna Hybrid Tinda F1 Round Gold",
+        title: "Multi-NPK Fertilizer",
+        name: "Balanced NPK Fertilizer 50kg Bag Suitable for All Crops",
         img: Seed5,
-        save: "15.00",
-        price: "980.00",
-        old: "995.00"
+        save: "15",
+        price: "4000",
+        old: "4150"
     }
 ]

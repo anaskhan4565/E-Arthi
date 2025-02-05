@@ -16,10 +16,10 @@ type SplashScreenProps = {
 const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.dispatch(
+      navigation.dispatch( 
         CommonActions.reset({
           index: 0,
-          routes: [{ name: ScreensName.LanguageSelect }],
+          routes: [{ name: ScreensName.MainTabNavigation }],
         }),
       );
     }, 3000);

@@ -45,7 +45,7 @@ function InvetorySuppliersList(): React.JSX.Element {
       <ScrollView style={{ flex: 7 }}>
         <View style={styles.searchbar}>
           <CustomSearchApp
-            placeholder={"Search Suppliers..."}
+            placeholder={t("Search Suppliers...")}
             value={searchTerm}
             onChangeText={setSearchTerm}
           />

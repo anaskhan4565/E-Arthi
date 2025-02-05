@@ -20,6 +20,8 @@ import CustomButton from "../../../../components/CustomButton.jsx";
 import ScreensName from "../../../../../util/ScreensName.ts";
 
 const RaastRecieving = () => {
+    const { t } = useTranslation();
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Wrapper}>

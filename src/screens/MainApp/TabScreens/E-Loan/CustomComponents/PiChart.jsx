@@ -6,12 +6,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 const MyPieChart = ({
-  chartWidth = wp(50),         
-  chartHeight = hp(17),         
-  containerWidth = wp(40),      
-  containerHeight = hp(30),     
+  chartWidth = wp(50),
+  chartHeight = hp(17),
+  containerWidth = wp(40),
+  containerHeight = hp(30),
   legend1Name = 'Total Loan Amount',
   legend1Population = 100000,
   legend2Name = 'Remaining Loan',
@@ -19,6 +20,7 @@ const MyPieChart = ({
   legend1_color = colors.GREEN,
   legend2_color = colors.LIGHT_PURPLE,
 }) => {
+  const { t } = useTranslation();
   const data = [
     {
       name: legend1Name,
@@ -37,35 +39,37 @@ const MyPieChart = ({
   ];
 
   return (
-    <View style={[styles.box, { width: containerWidth, height: containerHeight }]}>
-      <PieChart
-        data={data}
-        width={chartWidth}
-        height={chartHeight}
-        chartConfig={{
-          backgroundColor: '#1cc910',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        }}
-        accessor={'population'}
-        backgroundColor={'transparent'}
-        paddingLeft={'15'}
-        absolute
-        hasLegend={false} 
-      />
-
-      <View style={styles.legendContainer}>
-        {data.map((item, index) => (
-          <View key={index} style={styles.legendItem}>
-            <View style={[styles.colorBox, { backgroundColor: item.color }]} />
-            <Text style={styles.legendText}>{item.name}</Text>
-          </View>
-        ))}
+      <View style={[styles.box, { width: containerWidth, height: containerHeight, alignItems: 'center', justifyContent: 'center' }]}>
+        <View style={{marginLeft:hp(8)}}>
+          <PieChart
+            data={data}
+            width={chartWidth}
+            height={chartHeight}
+            chartConfig={{
+              backgroundColor: '#1cc910',
+              backgroundGradientFrom: '#eff3ff',
+              backgroundGradientTo: '#efefef',
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            }}
+            accessor={'population'}
+            backgroundColor={'transparent'}
+            paddingLeft={'15'}
+            absolute
+            hasLegend={false}
+          />
+        </View>
+        <View style={styles.legendContainer}>
+          {data.map((item, index) => (
+            <View key={index} style={styles.legendItem}>
+              <View style={[styles.colorBox, { backgroundColor: item.color }]} />
+              <Text style={styles.legendText}>{t(item.name)}</Text>
+            </View>
+          ))}
+        </View>
       </View>
-    </View>
+    
   );
 };
 
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
   legendContainer: {
     marginTop: hp('2%'),
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   legendItem: {
     flexDirection: 'row',

@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { Picker } from '@react-native-picker/picker';
+import { useTranslation } from 'react-i18next';
 
 const PickerMainLogin = ({ items, isheader}) => {
         const [selectedValue, setSelectedValue] = useState(items[0].value);
-      
+        const { t } = useTranslation();
         return (
           <View
             style={{
@@ -30,7 +31,7 @@ const PickerMainLogin = ({ items, isheader}) => {
                   marginBottom: 5,
                 }}
               >
-                Select Code
+                {t('Select Code')}
               </Text>
             )}
             <Picker

@@ -1,47 +1,48 @@
-import Seed1 from './Images/Seeds/Seed1.png'
-import Seed2 from './Images/Seeds/Seed2.png'
-import Seed3 from './Images/Seeds/Seed3.png'
-import Seed4 from './Images/Seeds/Seed4.png'
-import Seed5 from './Images/Seeds/Seed5.png'
+import Seed1 from './Images/Seeds/Seed1.png';
+import Seed2 from './Images/Seeds/Seed2.png';
+import Seed3 from './Images/Seeds/Seed3.png';
+import Seed4 from './Images/Seeds/Seed4.png';
+import Seed5 from './Images/Seeds/Seed5.png';
 
 export default [
     {
-        name: "YSM 8108 10kg Hybrid Corn Seed Best for Maximum Silage",
+        title: "Tractor",
+        name: "Massey Ferguson 240",
         img: Seed1,
-        save: "15.00",
-        price: "10535.00",
-        old: "10550.00"
-
+        save: "10%",
+        price: "1,200,000",
+        old: "1,333,333"
     },
     {
-        name: "Hybrid Hot Pepper SV 7864 F1 10gm Seminis Seeds Ali akbar Chili Seed Chilli Seed",
+        title: "Combine Harvester",
+        name: "New Holland CR10.90",
         img: Seed2,
-        save: "15.00",
-        price: "2935.00",
-        old: "2950.00"
-
+        save: "15%",
+        price: "25,000,000",
+        old: "29,411,765"
     },
     {
-        name: "Super tomato Beej 3000 Seeds in 1 pack F1 Hybrid Seeds",
+        title: "Rotavator",
+        name: "Al-Qasim Agro Engineering Rotavator",
         img: Seed3,
-        save: "15.00",
-        price: "3235.00",
-        old: "3250.00"
-
+        save: "5%",
+        price: "150,000",
+        old: "157,894"
     },
     {
-        name: "Hybrid Cucumber Alpha F1 (parthenocarpic) 1000 Seeds ",
+        title: "Laser Land Leveler",
+        name: "Al-Qasim Agro Engineering Laser Land Leveler",
         img: Seed4,
-        save: "50.00",
-        price: "3450.00",
-        old: "3500.00"
-
+        save: "8%",
+        price: "500,000",
+        old: "543,478"
     },
     {
-        name: "Tinda 50GM Rachna Hybrid Tinda F1 Round Gold",
+        title: "Super Seeder",
+        name: "Al-Qasim Agro Engineering Super Seeder",
         img: Seed5,
-        save: "15.00",
-        price: "980.00",
-        old: "995.00"
+        save: "12%",
+        price: "1,000,000",
+        old: "1,136,364"
     }
-]
+];

@@ -3,10 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native
 import colors from "../../../../../../util/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from "../../../../../../util/FontName";
+import { useTranslation } from "react-i18next";
 
 const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) => {
   // const [selectedOption, setSelectedOption] = useState("Specific");
   const animationValue = useRef(new Animated.Value(0)).current;
+  const { t } = useTranslation();
 
   const handlePress = (option) => {
     if (selectedOption !== option) {
@@ -48,7 +50,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
               selectedOption === "Raast ID" && styles.selectedText,
             ]}
           >
-            Raast ID
+            {t('Raast ID')}
           </Text>
         </Animated.View>
         
@@ -68,7 +70,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
               selectedOption === "Bank Transfer" && styles.selectedText,
             ]}
           >
-            Bank Transfer
+            {t('Bank Transfer')}
           </Text>
         </Animated.View>
       </TouchableOpacity>

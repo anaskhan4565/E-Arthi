@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { fonts } from '../../util/FontName';
+import { useTranslation } from 'react-i18next';
 
 const CustomInput = ({
   placeholder,
@@ -29,7 +30,7 @@ const CustomInput = ({
       onChangeText(text);
     }
   };
-
+  const { t } = useTranslation();
   return (
     <TextInput
       style={[
@@ -43,7 +44,7 @@ const CustomInput = ({
           borderColor: borderColor,
         },
       ]}
-      placeholder={placeholder}
+      placeholder={t(placeholder)}
       placeholderTextColor={placeholder_color}
       secureTextEntry={hide}
       editable={editable}

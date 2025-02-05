@@ -6,11 +6,11 @@ import { fonts } from '../../../../../util/FontName.js';
 import Image4 from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import AddImg from '../TempImages/AddImg.png';
+const InventoryProduct = ({ name, price, isNavigation, w = wp('80%'), h = hp('30%'), navigateTo, description, onPressG, AddIcon = false, }) => {
+    const navigation = useNavigation();
+    const { t } = useTranslation()
 
-const InventoryProduct = ({ name, price, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
-      const navigation = useNavigation();
-        const { t } = useTranslation()
-    
     const handleNavigation = () => {
         if (isNavigation) {
             navigation.navigate(navigateTo)
@@ -21,17 +21,33 @@ const InventoryProduct = ({ name, price, isNavigation, w = wp('80%'), h = hp('30
         console.log('just a submit demo');
     };
 
+    const HandleAddPress = () => {
+        if (onPressG) {
+            onPressG();
+        }
+    };
+
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: wp(90), height: hp(10) }]}onPress={handleNavigation}>
+        <TouchableOpacity style={[styles.Wrapper, { width: wp(90), height: hp(12) }]} onPress={handleNavigation}>
             <View style={styles.rowContainer}>
                 <View style={styles.imageContainer}>
                     <Image source={Image4} style={styles.ImageStyle} />
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.TextStyle}>{t(name)}</Text>
-                    <Text style={styles.descriptionText}>{t("Introducing BRINC Ball transforming rescue and tactical operations.")}</Text>
+                    {description ? (
+                        <Text style={styles.descriptionText}>{t(description)}</Text>
+                    ) : (
+                        <Text style={styles.descriptionText}>{t("Introducing BRINC Ball transforming rescue and tactical operations.")}</Text>
+                    )}
+
                 </View>
                 <View style={styles.priceContainer}>
+                    {AddIcon && (
+                        <TouchableOpacity style={styles.addIcon} onPress={HandleAddPress}>
+                            <Image source={AddImg} style={styles.addIconImage} />
+                        </TouchableOpacity>
+                    )}
                     <Text style={styles.priceText}>{t('PKR')} {price}</Text>
                 </View>
             </View>
@@ -91,7 +107,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.DARK_GREEN,
         fontWeight: 'bold',
+<<<<<<< HEAD
         fontFamily:fonts.Bold,
+=======
+        fontFamily: fonts.bold,
+>>>>>>> main
         fontSize: hp(1.6),
+    },
+    addIconImage: {
+        width: hp(2.5),
+        height: hp(2.5),
+        marginBottom: hp(0.5),
     },
 });

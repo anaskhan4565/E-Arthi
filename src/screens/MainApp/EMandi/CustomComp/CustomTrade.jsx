@@ -38,7 +38,7 @@ const CustomTrade = ({ isExpanded, setIsExpanded }) => {
                     <Image source={HandImg} style={{width:hp(8), height:hp(6)}}/>
                 </View>
                 <View style={{ flex: 0.6 }}>
-                    <Text style={{fontWeight:'bold'}}>Portfolio Holdings</Text>
+                    <Text style={{fontWeight:'bold'}}>{t('Portfolio Holdings')}</Text>
                     <View style={{ flexDirection: 'row', flex: 0.4 }}>
                         <View style={{ flex: 0.7 }}>
 

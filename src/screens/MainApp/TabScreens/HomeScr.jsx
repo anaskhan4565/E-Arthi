@@ -54,12 +54,12 @@ const JustADemoPreview=()=>{
               <View style={styles.recommendedProducts}>
                 <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
                 <View style={styles.productRow}>
-                  <ProductBox name={"Agri-Protex"} onPressG={JustADemoPreview} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
-                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
+                  <ProductBox name={"Agri-Protex"} AddIcon={false}  price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
+                  <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
                 </View>
                 <View style={styles.productRow}>
-                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
-                  <ProductBox name={"Agri-Protex"} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
+                  <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
+                  <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
                 </View>
               </View>
             </View>

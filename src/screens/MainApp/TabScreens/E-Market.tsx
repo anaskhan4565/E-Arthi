@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     recommendedProducts: {
-        marginTop: 20,
+        marginTop: hp(2),
+        marginBottom:hp(4)
     },
     recommendedTitle: {
         fontSize: hp("2.5%"),

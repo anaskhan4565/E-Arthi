@@ -24,60 +24,67 @@ const ProductScr = () => {
     const [Price, setPrice] = useState(2080);
     const Navigation = useNavigation();
     const storage = new MMKV();
+    const ProductClickInfo = new MMKV();
+
+    const productData = ProductClickInfo.getString('selectedProduct');
+    const ProductInfo = productData ? JSON.parse(productData) : null;
+
 
     const toggleSelection = (product) => {
-    let updatedOptions = [...selectedOptions];
-    let updatedPrice = Price;
+        let updatedOptions = [...selectedOptions];
+        let updatedPrice = Price;
 
-    if (selectedOptions.includes(product.name)) {
-        // Remove add-on price when deselected
-        updatedOptions = updatedOptions.filter((item) => item !== product.name);
-        updatedPrice -= product.price;
-    } else {
-        // Add add-on price when selected
-        updatedOptions.push(product.name);
-        updatedPrice += product.price;
+        if (selectedOptions.includes(product.name)) {
+            // Remove add-on price when deselected
+            updatedOptions = updatedOptions.filter((item) => item !== product.name);
+            updatedPrice -= product.price;
+        } else {
+            // Add add-on price when selected
+            updatedOptions.push(product.name);
+            updatedPrice += product.price;
+        }
+
+        setSelectedOptions(updatedOptions);
+        setPrice(updatedPrice);
+    };
+
+    function configureCount(less) {
+        let newCount = less ? Math.max(1, Count - 1) : Count + 1;
+        SetCount(newCount);
     }
 
-    setSelectedOptions(updatedOptions);
-    setPrice(updatedPrice);
-};
-
-function configureCount(less) {
-    let newCount = less ? Math.max(1, Count - 1) : Count + 1;
-    SetCount(newCount);
-}
-    
     const handleAddtoCart = () => {
         storage.set("qty", storage.getNumber("qty") + Count)
         storage.set("cost", storage.getNumber("cost") + Price)
 
-        Navigation.navigate(ScreensName.EMarket)
+        Navigation.navigate(ScreensName.MainTabNavigation, { screen: ScreensName.EMarket });
     }
 
 
     const products = [
         { name: "Agri Moss", image: img1, price: 250 },
-        { name: "Agri - Humic Granules", image: img2, price: 275  },
+        { name: "Agri - Humic Granules", image: img2, price: 275 },
         { name: "Agri - Aquagel", image: img3, price: 325 },
     ];
 
     return (
         <ScrollView style={styles.container}>
+            {ProductInfo ?
+            <View>
             <View style={{ marginBottom: hp(1), height: hp(7) }} >
                 <Navbar />
             </View>
             <View style={styles.topSection}>
                 <View style={styles.imageContainer}>
-                    <Image source={Prod2} style={styles.productImage} />
+                    <Image source={ProductInfo.SourceGiven} style={styles.productImage} />
                 </View>
                 <View style={styles.productDetails}>
-                    <Text style={styles.productTitle}>Aries Agro Limited Agromin Gold</Text>
+                    <Text style={styles.productTitle}>{ProductInfo.name}</Text>
                     <View style={styles.priceContainer}>
                         <View style={styles.priceDetails}>
-                            <Text style={styles.priceText}>Price: PKR {2080}</Text>
-                            <Text style={styles.discountedPrice}>3080</Text>
-                            <Text style={styles.saveText}>Save: PKR 1000</Text>
+                            <Text style={styles.priceText}>Price: PKR {ProductInfo.price}</Text>
+                            <Text style={styles.discountedPrice}>{ProductInfo.old}</Text>
+                            <Text style={styles.saveText}>Save: PKR {ProductInfo.save}</Text>
                         </View>
                         <View style={styles.quantityContainer}>
                             <TouchableOpacity onPress={() => configureCount(true)}>
@@ -132,6 +139,8 @@ function configureCount(less) {
                     <Text style={styles.cartText}>Add to Cart</Text>
                 </TouchableOpacity>
             </View>
+            </View>
+                : null}
         </ScrollView>
     );
 };
@@ -153,7 +162,7 @@ const styles = StyleSheet.create({
     },
     productImage: {
         width: wp(35),
-        height: wp(35),
+        height: wp(40),
         resizeMode: 'contain',
         marginTop: hp(4),
     },
@@ -263,7 +272,6 @@ const styles = StyleSheet.create({
     },
     addToCartSection: {
         flex: 0.2,
-        marginTop: hp(3),
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -286,5 +294,6 @@ const styles = StyleSheet.create({
     cartText: {
         fontSize: wp(5),
         color: colors.WHITE,
-    }}
+    }
+}
 );

@@ -19,7 +19,7 @@ const TickBox = ({TextGiven,givePadding=false}) => {
                 textComponent={true}
                 innerIconStyle={{ borderRadius: 7 }}
             />
-                <Text style={{ fontSize: hp(1.6), fontFamily: fonts.Regular,width:givePadding?hp(30):null }}>{TextGiven}</Text>
+                <Text style={{ fontSize: hp(1.6), fontFamily: fonts.Regular,width:givePadding?hp(30):null }}>{t(TextGiven)}</Text>
             
                </View>
     )

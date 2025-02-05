@@ -23,6 +23,7 @@ import { launchCamera } from 'react-native-image-picker';
 const { height, width } = Dimensions.get("window");
 
 import { fonts } from "../../../util/FontName";
+import { useTranslation } from "react-i18next";
 
 const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; textColor: string }> = ({ onPress, title, bgColor, textColor }) => (
   <TouchableOpacity style={[styles.button, { backgroundColor: bgColor, width: '100%', height: hp(5.7) }]} onPress={onPress}>
@@ -34,6 +35,7 @@ const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; 
 function BiometricVerification() {
   const [handCaptured, setHandCaptured] = useState(false);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const handleScanHands = () => {
     launchCamera({ mediaType: 'photo' }, (response) => {
@@ -56,12 +58,12 @@ function BiometricVerification() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Header}>
-        <Text style={styles.Heading}>Biometric Verification</Text>
+        <Text style={styles.Heading}>{t('Biometric Verification')}</Text>
         <Text style={styles.SubHeading}>
-          Line up your hand with the guide. {'\n'}
-          Keep your fingers together. {'\n'}
-          Then stay still. {'\n'}
-          <Text style={{ fontWeight: 'bold' }}>Scan Left Hand First and Then Right Hand</Text>
+          {t('Line up your hand with the guide. ')}{'\n'}
+          {t('Keep your fingers together. ')}{'\n'}
+          {t('Then stay still. ')}{'\n'}
+          <Text style={{ fontWeight: 'bold' }}>{t('Scan Left Hand First and Then Right Hand')}</Text>
         </Text>
         <Image
           source={require('../../assets/LoginSignup/Hand-Scan.jpg')}

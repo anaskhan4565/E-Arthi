@@ -14,7 +14,7 @@ const BankRecieving = () => {
   return (
     <ScrollView>
       <View style={styles.inputs}>
-      <CustomTxtAndPicker PlaceHolderGiven={"Bank Name"} itemPackage={[{ label: "Habhib Bank Limited", value: "Meezan Bank" }]} Picker_Txt={"Select Bank"} />
+      <CustomTxtAndPicker PlaceHolderGiven={"Bank Name"} itemPackage={[{ label: "Habib Bank Limited", value: "Meezan Bank" }]} Picker_Txt={"Select Bank"} />
 
         <CustomInputAndText
           PlaceHolderGiven={"Raast ID"}

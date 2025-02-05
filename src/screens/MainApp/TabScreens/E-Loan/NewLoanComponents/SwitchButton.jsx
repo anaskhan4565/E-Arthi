@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native
 import colors from "../../../../../../util/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from "../../../../../../util/FontName";
-
+import { useTranslation } from "react-i18next";
 const SwitchButtonCustom = ({ selectedOption="Generic", setSelectedOption }) => {
   // const [selectedOption, setSelectedOption] = useState("Specific");
   const animationValue = useRef(new Animated.Value(0)).current;
-
+  const { t } = useTranslation();
   const handlePress = (option) => {
     if (selectedOption !== option) {
       setSelectedOption(option);
@@ -48,7 +48,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic", setSelectedOption }) => 
               selectedOption === "Generic" && styles.selectedText,
             ]}
           >
-            Generic
+            {t('Generic')}
           </Text>
         </Animated.View>
         
@@ -68,7 +68,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic", setSelectedOption }) => 
               selectedOption === "Specific" && styles.selectedText,
             ]}
           >
-            Specific
+            {t('Specific')}
           </Text>
         </Animated.View>
       </TouchableOpacity>

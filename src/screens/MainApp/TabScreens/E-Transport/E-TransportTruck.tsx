@@ -37,7 +37,7 @@ function ETransportTruck(): React.JSX.Element {
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
-                <Text style={styles.titleText}>Select Vehicle Type</Text>
+                <Text style={styles.titleText}>{t('Select Vehicle Type')}</Text>
                 <View style={styles.bodyContainer}>
 
                     <View style={styles.scrollContainer}>

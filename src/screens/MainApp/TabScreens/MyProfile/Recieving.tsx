@@ -51,7 +51,7 @@ function Recieving(): React.JSX.Element {
               marginLeft: hp(1),
             }}
           >
-            Receiving Method
+            {t('Receiving Method')}
           </Text>
         </View>
         <View style={[styles.bodyContainer]}>

@@ -77,7 +77,7 @@ const CustomPicker = ({
           ]}
         >
           <Picker.Item
-            label={placeholder}
+            label={t(placeholder)}
             value={null}
             enabled={false} 
             style={[styles.pickerItem, { color: colors.GRAY, fontSize: placeholderFontSize }]} // Dynamic font size for placeholder
@@ -85,7 +85,7 @@ const CustomPicker = ({
           {items.map((item, index) => (
             <Picker.Item
               key={item.value || index} 
-              label={item.value}
+              label={t(item.value)}
               value={index}
               style={[styles.pickerItem, { color: colors.BLACK }]} // Set item color
             />

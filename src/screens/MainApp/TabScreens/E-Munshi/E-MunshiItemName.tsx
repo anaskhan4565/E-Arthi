@@ -68,7 +68,7 @@ function EMunshiItem(): React.JSX.Element {
               marginLeft: hp(2),
             }}
           >
-            Available Farms
+            {t('Available Farms')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>
@@ -80,7 +80,7 @@ function EMunshiItem(): React.JSX.Element {
                 handleNavigation(farm.name)
               }}
             >
-              <Text style={styles.farmLabel}>{farm.name}</Text>
+              <Text style={styles.farmLabel}>{t(farm.name)}</Text>
               <View style={styles.percentageContainer}>
                 <Image
                   source={require("../../../../assets/MainApp/E-Munshi/chevron-right-solid.png")}

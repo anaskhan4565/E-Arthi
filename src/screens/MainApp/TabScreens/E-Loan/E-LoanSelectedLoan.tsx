@@ -40,13 +40,8 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
             justifyContent: "center",
           }}
         >
-<<<<<<< HEAD
           <Text style={{ fontFamily: fonts.Bold, fontSize: hp(2.4) }}>
             Loan Report 2024
-=======
-          <Text style={{ fontFamily: fonts.bold, fontSize: hp(2.4) }}>
-            {t('Loan Report 2024')}
->>>>>>> main
           </Text>
 
           <MyPieChart

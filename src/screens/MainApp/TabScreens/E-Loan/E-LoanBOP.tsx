@@ -54,11 +54,7 @@ function ELoanBOP(): React.JSX.Element {
                     <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"} />
                     <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"} />
                     <CustomTxtAndPicker PlaceHolderGiven={"Desired Loan Repayment Period"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
-<<<<<<< HEAD
                     <Text style={{ fontSize: hp(3), fontFamily: fonts.Bold, fontStyle: 'normal', borderTopWidth: hp(0.2) }}>--Documents--</Text>
-=======
-                    <Text style={{ fontSize: hp(3), fontFamily: fonts.bold, fontStyle: 'normal', borderTopWidth: hp(0.2) }}>{t('--Documents--')}</Text>
->>>>>>> main
 
                     <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
                     <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />

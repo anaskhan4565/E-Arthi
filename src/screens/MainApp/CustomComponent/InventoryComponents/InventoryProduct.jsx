@@ -107,11 +107,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.DARK_GREEN,
         fontWeight: 'bold',
-<<<<<<< HEAD
         fontFamily:fonts.Bold,
-=======
-        fontFamily: fonts.bold,
->>>>>>> main
         fontSize: hp(1.6),
     },
     addIconImage: {

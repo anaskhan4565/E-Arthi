@@ -68,7 +68,8 @@ const ProductScr = () => {
         storage.set("qty", currentQty + Count);
         storage.set("cost", currentCost + Price * Count);
 
-        Navigation.navigate(ScreensName.EMarket);
+        // Navigation.navigate(ScreensName.EMarket);
+        Navigation.navigate(ScreensName.MainTabNavigation, { screen: ScreensName.EMarket });
     };
 
     const products = [

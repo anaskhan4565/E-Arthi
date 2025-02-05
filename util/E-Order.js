@@ -16,6 +16,11 @@ const EOrderMainBoxDet = [
         title: "Transactions",
         img: require('../src/assets/MainApp/E-Order/orderhistory.png')
     },
+    {
+        screen: ScreensName.EOrderCheckout,
+        title: "Checkout",
+        img: require('../src/assets/MainApp/E-Order/placeorder.png')
+    },
 ];
 
 export { EOrderMainBoxDet };

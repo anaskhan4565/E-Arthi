@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -20,6 +20,15 @@ import ScreensName from '../../../../../util/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
+import { crops, seeds, medicines, machinery, fertilizers, herbicides } from '../../../../../util/E-Order.js';
+import Crops from '../EMarketPlaceProducts/Crops.js';
+import Fertilizer from '../EMarketPlaceProducts/Fertilizer.js';
+import Herbicide from '../EMarketPlaceProducts/Herbicide.js';
+import Machinery from '../EMarketPlaceProducts/Machinery.js';
+import Medicine from '../EMarketPlaceProducts/Medicine.js';
+import SeedsProducts from '../EMarketPlaceProducts/SeedsProducts.js';
+import { MMKV } from "react-native-mmkv";
+
 
 
 
@@ -27,12 +36,56 @@ function EOrderPlaceOrder(): React.JSX.Element {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState('Crop');
   const navigation = useNavigation();
+  const [qty, setqty] = useState(0);
+  const [cost, setcost] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  // const [productData, setProductData] = useState(TopProducts);
 
   const items = ['Crop', 'Seeds', 'Medicines', 'Machinery', 'Fertilizers', 'Herbicide'];
 
+  const storage = new MMKV();
+
+  const categoryMap = {
+    Crop: Crops,
+    Seeds: SeedsProducts,
+    Medicines: Medicine,
+    Machinery: Machinery,
+    Fertilizers: Fertilizer,
+    Herbicide: Herbicide,
+  };
+
+  const selectedProducts = categoryMap[selectedItem] || [];
+  // useEffect(() => {
+  //   if (selectedCategory && categoryFiles[selectedCategory]) {
+  //     categoryFiles[selectedCategory]()
+  //       .then((module) => setProductData(module.default))
+  //       .catch((error) => {
+  //         console.error("Error loading category file:", error);
+  //         setProductData(TopProducts);
+  //       });
+  //   } else {
+  //     setProductData(TopProducts);
+  //   }
+  // }, [selectedCategory]);
+
+
+
+
+  useEffect(() => {
+    setqty(storage.getNumber("qty") ? storage.getNumber("qty") : 0);
+    setcost(storage.getNumber("cost") ? storage.getNumber("cost") : 0);
+  }, []);
+
+  const handleAddItem = (givePrice) => {
+    setqty(qty + 1);
+    setcost(cost + givePrice);
+    storage.set("qty", qty);
+    storage.set("cost", cost);
+  };
+
+
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.navbarContainer}>
         <Navbar />
       </View>
@@ -43,48 +96,54 @@ function EOrderPlaceOrder(): React.JSX.Element {
 
         <View style={styles.bodyContainer}>
           <View style={styles.headerRow}>
-            <Text style={styles.headerText}>{t('Add New Transport')}</Text>
+            <Text style={styles.headerText}>{t('Place Order')}</Text>
           </View>
-          <View style={styles.selectercontainer}>{items.map((item) => (
-            <TouchableOpacity
-              key={item}
-              style={[
-                styles.itemBox,
-                selectedItem === item && styles.selectedBox,
-              ]}
-              onPress={() => setSelectedItem(item)}
-            >
-              <Text
+
+          {/* Category Selector */}
+          <View style={styles.selectercontainer}>
+            {items.map((item) => (
+              <TouchableOpacity
+                key={item}
                 style={[
-                  styles.itemText,
-                  selectedItem === item && styles.selectedText,
+                  styles.itemBox,
+                  selectedItem === item && styles.selectedBox,
                 ]}
+                onPress={() => setSelectedItem(item)}
               >
-                {item}
-              </Text>
-            </TouchableOpacity>
-          ))}</View>
+                <Text
+                  style={[
+                    styles.itemText,
+                    selectedItem === item && styles.selectedText,
+                  ]}
+                >
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Render Products Based on Selected Category */}
           <View style={styles.recommendedProducts}>
             <View style={styles.productRow}>
-              <InventoryProduct name={'Fresh Vegetables'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
-              <InventoryProduct name={'Leather Products'} price={4562} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
-              <InventoryProduct name={'Canned Goods '} price={1500} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
-              <InventoryProduct name={'Farm Fresh Juices'} price={1400} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
-              <InventoryProduct name={'Flowers '} price={1394} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
-              <InventoryProduct name={'Fertilizers'} price={1412} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
-
+              {selectedProducts.map((product, index) => (
+                <InventoryProduct
+                  key={index}
+                  name={product.title}
+                  price={product.price}
+                  isNavigation={0}
+                  description={product.name}
+                onPressG={() => handleAddItem(product.price)}
+                />
+              ))}
             </View>
-
           </View>
-
-
-
 
         </View>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -154,17 +213,17 @@ const styles = StyleSheet.create({
   recommendedProducts: {
     marginTop: hp('2%'),
     marginLeft: wp(2)
-},
-recommendedTitle: {
+  },
+  recommendedTitle: {
     fontSize: hp('3%'),
     fontFamily: fonts.SemiBold,
     marginBottom: hp('2%'),
-},
-productRow: {
+  },
+  productRow: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginBottom: hp('3%'),
-},
+  },
 
 });
 

@@ -98,7 +98,7 @@ export default {
     ETransportShip: "ETransportShip",
     ETransportTruck: "ETransportTruck",
     ETransportMain: "ETransportMain",
-    SelectLangSideBar:"SelectLangSideBar",
+    SelectLangSideBar: "SelectLangSideBar",
     MyProfileMainStack: "MyProfileMainStack",
     MyProfile: "MyProfile",
     ProfileChangeLanguage: "ProfileChangeLanguage",
@@ -106,10 +106,17 @@ export default {
     RaastRecieving: "RaastRecieving",
     Recieving: "Recieving",
 
-    EMunshiMainStack : "EMunshiMainStack",
+    EMunshiMainStack: "EMunshiMainStack",
     EMunshi: "EMunshi",
     EMunshiItemName: "EMunshiItemName",
     EMunshiCashFlow: "EMunshiCashFlow",
-    EMunshiFarmName :"EMunshiFarmName",
+    EMunshiFarmName: "EMunshiFarmName",
     EMunshiWarehouseInfo: "EMunshiWarehouseInfo",
+
+
+    EOrderHistory: "EOrderHistory",
+    EOrderMainStack: "EOrderMainStack",
+    EOrderManager: "EOrderManager",
+    EOrderPlaceOrder: "EOrderPlaceOrder",
+    EOrderTransaction: "EOrderTransaction",
 }

@@ -7,7 +7,7 @@ import Image4 from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitorin
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-const InventoryProduct = ({ name, price, SourceGiven, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
+const InventoryProduct = ({ name, price, isNavigation, w = wp('80%'), h = hp('30%'),navigateTo }) => {
       const navigation = useNavigation();
         const { t } = useTranslation()
     

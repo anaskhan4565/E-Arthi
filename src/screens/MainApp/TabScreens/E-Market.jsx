@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { PropsWithChildren } from "react";
-import ECategories from "../../../../util/E-Categories";
+import ECategories from "../../../../util/E-Categories.js";
 import Navbar from "../Navbar/Navbar.jsx";
 import CustomSearchApp from "../CustomComponent/CustomSearchApp.jsx";
 import {
@@ -11,8 +10,6 @@ import colors from "../../../../util/colors.js";
 import Categorybox from "../CustomComponent/Categorybox.jsx";
 import ProductBox from "../CustomComponent/ProductBox.jsx";
 
-import Image1 from "../../../assets/MainApp/EmarketPlace/Products/prod1.png";
-import Image2 from "../../../assets/MainApp/EmarketPlace/Products/prod2.png";
 import {
     SafeAreaView,
     ScrollView,
@@ -25,21 +22,52 @@ import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../util/FontName.js";
 import { MMKV } from "react-native-mmkv";
 
-function EMarket(): React.JSX.Element {
+// Import TopProducts as default
+import TopProducts from "./EMarketPlaceProducts/TopProducts.js";
+
+const EMarket = () => {
     const [qty, setqty] = useState(0);
     const [cost, setcost] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [productData, setProductData] = useState(TopProducts);
+
     const storage = new MMKV();
+
+    // Category mapping
+    const categoryFiles = {
+        Herbicide: () => import("./EMarketPlaceProducts/Herbicide.js"),
+        Labour: () => import("./EMarketPlaceProducts/Labour.js"),
+        Machinery: () => import("./EMarketPlaceProducts/Machinery.js"),
+        Seeds: () => import("./EMarketPlaceProducts/SeedsProducts.js"),
+        Fertilizer: () => import("./EMarketPlaceProducts/Fertilizer.js"),
+        Crops: () => import("./EMarketPlaceProducts/Crops.js"),
+        Fungicide: () => import("./EMarketPlaceProducts/Fungicide.js"),
+    };
+
+    useEffect(() => {
+        if (selectedCategory && categoryFiles[selectedCategory]) {
+            categoryFiles[selectedCategory]()
+                .then((module) => setProductData(module.default))
+                .catch((error) => {
+                    console.error("Error loading category file:", error);
+                    setProductData(TopProducts);
+                });
+        } else {
+            setProductData(TopProducts);
+        }
+    }, [selectedCategory]);
+
+    const { t } = useTranslation();
+
 
     useEffect(() => {
         setqty(storage.getNumber("qty") ? storage.getNumber("qty") : 0);
         setcost(storage.getNumber("cost") ? storage.getNumber("cost") : 0);
     }, []);
 
-    const { t } = useTranslation();
-
-    const handleAddItem = () => {
-        setqty(qty+ 1);
-        setcost(cost + 2300);
+    const handleAddItem = (givePrice) => {
+        setqty(qty + 1);
+        setcost(cost + givePrice);
         storage.set("qty", qty);
         storage.set("cost", cost);
     };
@@ -71,7 +99,11 @@ function EMarket(): React.JSX.Element {
                                         <Categorybox
                                             name={t(Category.title)}
                                             SourceGiven={Category.img}
-                                            isNavigation={0}
+                                            isNavigation={false}
+                                            selectedCategory={selectedCategory}
+                                            setSelectedCategory={setSelectedCategory}
+                                            OnpressCustom={true}
+           
                                         />
                                     </View>
                                 )
@@ -80,49 +112,27 @@ function EMarket(): React.JSX.Element {
 
                     <View style={styles.recommendedProducts}>
                         <Text style={styles.recommendedTitle}>
-                            {t("Top Products")}
+                            {selectedCategory || "Top Products"}
                         </Text>
-                        <View style={styles.productRow}>
-                            <ProductBox
-                                name={"Agri-Protex"}
-                                price={"2050"}
-                                save={"1000"}
-                                SourceGiven={Image1}
-                                old={"3060"}
-                                isNavigation={0}
-                                onPressG={handleAddItem}
-                            />
-                            <ProductBox
-                                name={"Agri-Protex"}
-                                price={"2050"}
-                                save={"1000"}
-                                SourceGiven={Image2}
-                                old={"3060"}
-                                isNavigation={0}
-                                onPressG={handleAddItem}
-                            />
-                        </View>
-                        <View style={styles.productRow}>
-                            <ProductBox
-                                name={"Agri-Protex"}
-                                price={"2050"}
-                                save={"1000"}
-                                SourceGiven={Image1}
-                                old={"3060"}
-                                isNavigation={0}
-                                onPressG={handleAddItem}
-                            />
-                            <ProductBox
-                                name={"Agri-Protex"}
-                                price={"2050"}
-                                save={"1000"}
-                                SourceGiven={Image2}
-                                old={"3060"}
-                                isNavigation={0}
-                                onPressG={handleAddItem}
-                            />
+
+                        <View style={styles.productContainer}>
+                            {productData.map((product, index) => (
+                                <View style={styles.productBoxWrapper} key={index}>
+                                    <ProductBox
+                                        name={product.name}
+                                        price={product.price}
+                                        save={product.save}
+                                        SourceGiven={product.img}
+                                        old={product.old}
+                                        isNavigation={0}
+                                        onPressG={()=>handleAddItem(product.price)}
+                    
+                                    />
+                                </View>
+                            ))}
                         </View>
                     </View>
+
                 </View>
             </ScrollView>
             <View style={styles.cartWrapper}>
@@ -138,7 +148,21 @@ function EMarket(): React.JSX.Element {
         </SafeAreaView>
     );
 }
+
 const styles = StyleSheet.create({
+    
+
+    productContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+    },
+    
+    productBoxWrapper: {
+        width: "48%", // Ensures two products per row
+        marginBottom: 20,
+    },
+    
     container: {
         flex: 1,
         backgroundColor: colors.WHITE,
@@ -168,18 +192,18 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-between", // Spreads items evenly in each row
+        justifyContent: "space-between",
         paddingVertical: hp("2%"),
-        width: "100%", // Ensures it spans the full width
+        width: "100%",
     },
     itemBoxWrapper: {
-        width: "22%", // Fits 4 items per row with proper spacing
+        width: "22%",
         marginBottom: hp("2%"),
         alignItems: "center",
     },
     recommendedProducts: {
         marginTop: hp(2),
-        marginBottom:hp(4)
+        marginBottom: hp(4),
     },
     recommendedTitle: {
         fontSize: hp("2.5%"),
@@ -188,6 +212,7 @@ const styles = StyleSheet.create({
     },
     productRow: {
         flexDirection: "row",
+        flexWrap: 'wrap',
         justifyContent: "space-between",
         marginBottom: 20,
     },
@@ -200,7 +225,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        elevation: 5, // Android shadow
+        elevation: 5,
     },
     cartButton: {
         width: "100%",

@@ -50,7 +50,8 @@ import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx"
 import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
 import SelectLangSideBar from "./src/screens/MainApp/Sidebar/SomeDemoNavigations/SelectLangSidebar.jsx";
 import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryMainStack.tsx";
-import EMarket from "./src/screens/MainApp/TabScreens/E-Market.tsx";
+import EMarket from "./src/screens/MainApp/TabScreens/E-Market.jsx";
+import EOrderMainStack from "./src/screens/MainApp/TabScreens/E-Order/E-OrderMainStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -119,6 +120,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.EMandi} component={Overview} />
           <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
           <Stack.Screen name={ScreensName.Profile} component={Profile} />
+          <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
 
         </Stack.Navigator>
       </NavigationContainer>

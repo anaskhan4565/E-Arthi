@@ -1,15 +1,27 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import colors from '../../../../util/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { fonts } from '../../../../util/FontName.js';
 import { useTranslation } from 'react-i18next';
+import { MMKV } from 'react-native-mmkv';
 
-const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9%'), navigationName, screenName }) => {
+const Categorybox = ({OnpressCustom=false,
+    isSelected=true ,
+    name, SourceGiven,
+     isNavigation,
+      w = wp('18%'),
+       h = hp('9%'),
+        navigationName, 
+        screenName,
+        selectedCategory,
+        setSelectedCategory
+    }) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
+    const MarketProductType = new MMKV();
 
     const handleNavigation = () => {
         if (name) {
@@ -21,9 +33,19 @@ const Categorybox = ({ name, SourceGiven, isNavigation, w = wp('18%'), h = hp('9
         console.log('just a submit demo');
     };
 
+    const MarketProductSet = () => {
+        if (selectedCategory === name) {
+            MarketProductType.set('MarketProductType', "");
+            setSelectedCategory('');
+        } else {
+            MarketProductType.set('MarketProductType', name);
+            setSelectedCategory(name);
+        }
+    };
+
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation} >
-            <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h,borderWidth:selectedCategory === name ?hp(0.4):hp(0.1)}]} onPress={OnpressCustom?MarketProductSet:handleNavigation} >
+            <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%')}]} />
             <Text style={styles.TextStyle}>{t(name)}</Text>
         </TouchableOpacity>
     );

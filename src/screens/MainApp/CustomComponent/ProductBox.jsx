@@ -9,39 +9,46 @@ import { useTranslation } from 'react-i18next';
 import AddImg from './TempImages/AddImg.png';
 import { MMKV } from 'react-native-mmkv';
 
-const ProductBox = ({AddIcon=true, name, price, save, old, SourceGiven, isNavigation, w = wp('40%'), h = hp('22%'), onPressG }) => {
+const ProductBox = ({ AddIcon = true, name,
+   price, save, old, SourceGiven,
+    isNavigation, w = wp('40%'),
+     h = hp('28%'), onPressG ,
+    
+    }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const ProductClickInfo = new MMKV();
 
   const handlePress = () => {
-    //name, price, save, old, SourceGiven to save
     if (name) {
       const productData = JSON.stringify({ name, price, save, old, SourceGiven });
       ProductClickInfo.set('selectedProduct', productData);
       navigation.navigate(ScreensName.ProductScr);
     }
   };
-  const HandleAddPress=()=>{
-    if(onPressG){
-      onPressG()
+
+  const HandleAddPress = () => {
+    if (onPressG) {
+      onPressG();
     }
-  }
+  };
 
   return (
     <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handlePress}>
-      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, flexDirection: 'row', marginTop: hp(0.4) }}>
-        <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
-        {AddIcon?
-        <TouchableOpacity style={{ position: 'absolute', top: hp(1), right: hp(2) }}onPress={HandleAddPress}>
-          <Image source={AddImg} style={{ width: hp(2.5), height: hp(2.5) }}  />
-        </TouchableOpacity>
-        :null}
+      <View style={styles.imageContainer}>
+        <Image source={SourceGiven} style={styles.ImageStyle} />
+        {AddIcon && (
+          <TouchableOpacity style={styles.addIcon} onPress={HandleAddPress}>
+            <Image source={AddImg} style={styles.addIconImage} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.TextStyle}>{t(name)}</Text>
+        <Text style={styles.TextStyle2} numberOfLines={2} ellipsizeMode="tail">
+          {t(name)}
+        </Text>
         <View style={styles.priceContainer}>
-          <Text style={[styles.TextStyle, styles.price]}>{t('Price')}: PKR{price}</Text>
+          <Text style={[styles.TextStyle, styles.price]}>{t('Price')}: PKR {price}</Text>
           <Text style={[styles.TextStyle, styles.save]}>{t('PKR')}{t(old)}</Text>
         </View>
         <Text style={styles.TextStyle}>{t('Save')}: {t(save)}</Text>
@@ -62,11 +69,28 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+    overflow: 'hidden',
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: hp(0.4),
+    overflow: 'hidden',
+  },
+  addIcon: {
+    position: 'absolute',
+    top: hp(1),
+    right: hp(1),
+  },
+  addIconImage: {
+    width: hp(2.5),
+    height: hp(2.5),
   },
   textContainer: {
-    rowGap: hp('1%'),
-    margin: hp('0.5%'),
-    marginTop: hp('2%'),
+    paddingHorizontal: hp('1%'),
+    paddingBottom: hp('1.5%'),
   },
   priceContainer: {
     flexDirection: 'row',
@@ -76,7 +100,12 @@ const styles = StyleSheet.create({
   TextStyle: {
     fontFamily: fonts.Medium,
     textAlign: 'left',
-    fontSize: hp('1.2%'),
+    fontSize: hp('1%'),
+  },
+  TextStyle2: {
+    fontFamily: fonts.Medium,
+    textAlign: 'left',
+    fontSize: hp('1.4%'),
   },
   price: {
     flex: 1,
@@ -89,7 +118,10 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   ImageStyle: {
+    width: wp('30%'),
+    height: hp('14%'),
     resizeMode: 'contain',
-    marginTop: hp(1),
+    maxWidth: '100%',
+    maxHeight: '100%',
   },
 });

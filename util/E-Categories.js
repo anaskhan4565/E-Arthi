@@ -19,7 +19,7 @@ export default [
     },
   
     {
-        title: "Seeds",
+        title: "Machinery",
         img:require('../src/assets/MainApp/E-Market/Seeds2.png'),
         subcategories: [
             { name: "Rice Seeds" },
@@ -29,7 +29,7 @@ export default [
         ]
     },
     {
-        title: "Fertilizer",
+        title: "Crops",
         img:require('../src/assets/MainApp/E-Market/Fertilizer2.png'),
         subcategories: [
             { name: "ENGRO-400 Fertilizer" },
@@ -45,7 +45,7 @@ export default [
         ]
     },
     {
-        title: "Fertilizer",
+        title: "Labour",
         img:require('../src/assets/MainApp/E-Market/Fertilizer3.png'),
         subcategories: [
             { name: "ENGRO-400 Fertilizer" },

@@ -50,7 +50,7 @@ import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx"
 import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
 import SelectLangSideBar from "./src/screens/MainApp/Sidebar/SomeDemoNavigations/SelectLangSidebar.jsx";
 import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryMainStack.tsx";
-import EMarket from "./src/screens/MainApp/TabScreens/E-Market.tsx";
+import EMarket from "./src/screens/MainApp/TabScreens/E-Market.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {

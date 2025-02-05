@@ -28,18 +28,16 @@ const ProductScr = () => {
 
     const productData = ProductClickInfo.getString('selectedProduct');
     const ProductInfo = productData ? JSON.parse(productData) : null;
-
+    
 
     const toggleSelection = (product) => {
         let updatedOptions = [...selectedOptions];
         let updatedPrice = Price;
 
         if (selectedOptions.includes(product.name)) {
-            // Remove add-on price when deselected
             updatedOptions = updatedOptions.filter((item) => item !== product.name);
             updatedPrice -= product.price;
         } else {
-            // Add add-on price when selected
             updatedOptions.push(product.name);
             updatedPrice += product.price;
         }
@@ -55,7 +53,7 @@ const ProductScr = () => {
 
     const handleAddtoCart = () => {
         storage.set("qty", storage.getNumber("qty") + Count)
-        storage.set("cost", storage.getNumber("cost") + Price)
+        storage.set("cost", storage.getNumber("cost") + ProductInfo.price)
 
         Navigation.navigate(ScreensName.MainTabNavigation, { screen: ScreensName.EMarket });
     }

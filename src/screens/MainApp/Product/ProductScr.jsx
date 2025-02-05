@@ -16,18 +16,16 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../../../util/FontName';
-import img1 from '../../../assets/MainApp/ProductScreen/product1.png'
-import img2 from '../../../assets/MainApp/ProductScreen/product2.png'
-import img3 from '../../../assets/MainApp/ProductScreen/product3.png'
-import ScreensName from '../../../../util/ScreensName.ts';
-import { useNavigation } from '@react-navigation/native';
-import Navbar from '../Navbar/Navbar';
-import { useTranslation } from 'react-i18next';
-
+import { fonts } from "../../../../util/FontName";
+import img1 from "../../../assets/MainApp/ProductScreen/product1.png";
+import img2 from "../../../assets/MainApp/ProductScreen/product2.png";
+import img3 from "../../../assets/MainApp/ProductScreen/product3.png";
+import ScreensName from "../../../../util/ScreensName.ts";
+import { useNavigation } from "@react-navigation/native";
+import Navbar from "../Navbar/Navbar";
+import { MMKV } from "react-native-mmkv";
 
 const ProductScr = () => {
-    const { t } = useTranslation();
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [Count, SetCount] = useState(1);
     const [Price, setPrice] = useState(2080);
@@ -82,73 +80,133 @@ const ProductScr = () => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={{marginBottom: hp(1),flex: 0.3 }} >
-                <Navbar  />
-            </View>
-            <View style={styles.topSection}>
-                <View style={styles.imageContainer}>
-                    <Image source={Prod2} style={styles.productImage} />
-                </View>
-                <View style={styles.productDetails}>
-                    <Text style={styles.productTitle}>{t('Aries Agro Limited Agromin Gold')}</Text>
-                    <View style={styles.priceContainer}>
-                        <View style={styles.priceDetails}>
-                            <Text style={styles.priceText}>Price: PKR 2080</Text>
-                            <Text style={styles.discountedPrice}>3080</Text>
-                            <Text style={styles.saveText}>Save: PKR 1000</Text>
-                        </View>
-                        <View style={styles.quantityContainer}>
-                            <TouchableOpacity onPress={() => configureCount(1)}>
-                                <Image source={ButtonLess} style={styles.quantityButton} />
-                            </TouchableOpacity >
-                            <Text style={styles.quantityText}>{Count < 10 && Count > 0 ? '0' + Count : Count > 0 ? Count : 0}</Text>
-                            <TouchableOpacity onPress={() => configureCount()}>
-                                <Image source={ButtonPlus} style={styles.quantityButton} />
-                            </TouchableOpacity>
-                        </View>
+            {ProductInfo ? (
+                <View>
+                    <View style={{ marginBottom: hp(1), height: hp(7) }}>
+                        <Navbar />
                     </View>
-                    <Text style={styles.description}>
-                        {t('Brown the beef better. Lean ground beef – I like to use 85% lean angus. Garlic – use fresh chopped. Spices – chili powder, cumin, onion powder.')}
-                    </Text>
-                </View>
-            </View>
-            <View style={styles.addOnSection}>
-                <Text style={styles.addOnTitle}>{t('Choices of Add On')}</Text>
-                <View style={styles.addOnContainer}>
-                    <View style={styles.addOnProducts}>
-                        {products.map((product, key) => (
-                            <View key={`product-${key}`} style={styles.addOnItem}>
-                                <Image source={product.image} style={styles.addOnImage} />
-                                <Text style={styles.addOnText}>{product.name}</Text>
+                    <View style={styles.topSection}>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={ProductInfo.SourceGiven}
+                                style={styles.productImage}
+                            />
+                        </View>
+                        <View style={styles.productDetails}>
+                            <Text style={styles.productTitle}>
+                                {ProductInfo.name}
+                            </Text>
+                            <View style={styles.priceContainer}>
+                                <View style={styles.priceDetails}>
+                                    <Text style={styles.priceText}>
+                                        Price: PKR {ProductInfo.price}
+                                    </Text>
+                                    <Text style={styles.discountedPrice}>
+                                        {ProductInfo.old}
+                                    </Text>
+                                    <Text style={styles.saveText}>
+                                        Save: PKR {ProductInfo.save}
+                                    </Text>
+                                </View>
+                                <View style={styles.quantityContainer}>
+                                    <TouchableOpacity
+                                        onPress={() => configureCount(true)}
+                                    >
+                                        <Image
+                                            source={ButtonLess}
+                                            style={styles.quantityButton}
+                                        />
+                                    </TouchableOpacity>
+                                    <Text style={styles.quantityText}>
+                                        {Count < 10 ? "0" + Count : Count}
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => configureCount(false)}
+                                    >
+                                        <Image
+                                            source={ButtonPlus}
+                                            style={styles.quantityButton}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        ))}
+                            <Text style={styles.description}>
+                                Brown the beef better. Lean ground beef – I like
+                                to use 85% lean angus. Garlic – use fresh
+                                chopped. Spices – chili powder, cumin, onion
+                                powder.
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.checkboxContainer}>
-                        {["first", "second", "third"].map((value, third) => (
-                            <View key={third} style={{ flexDirection: 'row', borderWidth: 0, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: hp(2), fontFamily: fonts.SemiBold }}>+Rs:{third + 124}</Text>
-                                <TouchableOpacity
-                                    style={styles.checkbox}
-                                    onPress={() => toggleSelection(value)}
-                                >
+                    <View style={styles.addOnSection}>
+                        <Text style={styles.addOnTitle}>Choices of Add On</Text>
+                        <View style={styles.addOnContainer}>
+                            <View style={styles.addOnProducts}>
+                                {products.map((product, key) => (
                                     <View
-                                        style={[
-                                            styles.checkboxInner,
-                                            selectedOptions.includes(value) && styles.checkboxChecked
-                                        ]}
-                                    />
-                                </TouchableOpacity>
+                                        key={`product-${key}`}
+                                        style={styles.addOnItem}
+                                    >
+                                        <Image
+                                            source={product.image}
+                                            style={styles.addOnImage}
+                                        />
+                                        <Text style={styles.addOnText}>
+                                            {product.name}
+                                        </Text>
+                                    </View>
+                                ))}
                             </View>
-                        ))}
+                            <View style={styles.checkboxContainer}>
+                                {products.map((value, third) => (
+                                    <View
+                                        key={third}
+                                        style={{
+                                            flexDirection: "row",
+                                            borderWidth: 0,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: hp(2),
+                                                fontFamily: fonts.SemiBold,
+                                            }}
+                                        >
+                                            +Rs:{value.price}
+                                        </Text>
+                                        <TouchableOpacity
+                                            style={styles.checkbox}
+                                            onPress={() =>
+                                                toggleSelection(value)
+                                            }
+                                        >
+                                            <View
+                                                style={[
+                                                    styles.checkboxInner,
+                                                    selectedOptions.includes(
+                                                        value.name
+                                                    ) && styles.checkboxChecked,
+                                                ]}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.addToCartSection}>
+                        <TouchableOpacity
+                            style={styles.addToCartButton}
+                            onPress={handleAddtoCart}
+                        >
+                            <Image source={Cart} style={styles.cartIcon} />
+                            <Text style={styles.cartText}>Add to Cart</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </View>
-            <View style={styles.addToCartSection}>
-                <TouchableOpacity style={styles.addToCartButton} onPress={() => Navigation.navigate(ScreensName.MainTabNavigation)}>
-                    <Image source={Cart} style={styles.cartIcon} />
-                    <Text style={styles.cartText}>{t('Add to Cart')}</Text>
-                </TouchableOpacity>
-            </View>
+            ) : null}
         </ScrollView>
     );
 };

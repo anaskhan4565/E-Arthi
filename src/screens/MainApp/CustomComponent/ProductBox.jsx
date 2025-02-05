@@ -9,7 +9,12 @@ import { useTranslation } from 'react-i18next';
 import AddImg from './TempImages/AddImg.png';
 import { MMKV } from 'react-native-mmkv';
 
-const ProductBox = ({ name, price, save, old, SourceGiven, isNavigation, w = wp('40%'), h = hp('22%') }) => {
+const ProductBox = ({ AddIcon = true, name,
+   price, save, old, SourceGiven,
+    isNavigation, w = wp('40%'),
+     h = hp('28%'), onPressG ,
+    
+    }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const ProductClickInfo = new MMKV();
@@ -43,7 +48,7 @@ const ProductBox = ({ name, price, save, old, SourceGiven, isNavigation, w = wp(
           {t(name)}
         </Text>
         <View style={styles.priceContainer}>
-          <Text style={[styles.TextStyle, styles.price]}>{t('Price')}: {t('PKR')}{price}</Text>
+          <Text style={[styles.TextStyle, styles.price]}>{t('Price')}: PKR {price}</Text>
           <Text style={[styles.TextStyle, styles.save]}>{t('PKR')}{t(old)}</Text>
         </View>
         <Text style={styles.TextStyle}>{t('Save')}: {t(save)}</Text>

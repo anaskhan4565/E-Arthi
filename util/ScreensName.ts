@@ -112,4 +112,6 @@ export default {
     EMunshiCashFlow: "EMunshiCashFlow",
     EMunshiFarmName :"EMunshiFarmName",
     EMunshiWarehouseInfo: "EMunshiWarehouseInfo",
+
+    EOrderHistory: "EOrderHistory"
 }

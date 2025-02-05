@@ -26,6 +26,7 @@ import ETransportNewTransport from "./E-TransportNewTransport";
 import ETransportSelectVehicleType from "./E-TransportSelectVehicleType";
 import ETransportTruck from "./E-TransportTruck";
 import ETransportShip from "./E-TransportShip";
+import EOrderHistory from "../E-Orders/EOrderHistory"
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ function ETransportStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.ETransportSelectVehicleType} component={ETransportSelectVehicleType} />
                     <Stack.Screen name={ScreensName.ETransportShip} component={ETransportShip} />
                     <Stack.Screen name={ScreensName.ETransportTruck} component={ETransportTruck} />
+                    <Stack.Screen name={ScreensName.EOrderHistory} component={EOrderHistory} />
                 </Stack.Navigator>
         // </I18nextProvider>
     );

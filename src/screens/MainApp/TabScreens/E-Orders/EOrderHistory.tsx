@@ -1,0 +1,120 @@
+import React from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
+import { useTranslation } from "react-i18next";
+import { fonts } from "../../../../../util/FontName";
+import { OrderHist } from "../../../../../util/E-OrderHistory";
+import Navbar from "../../Navbar/Navbar";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import colors from "../../../../../util/colors";
+import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
+
+
+
+function ETransportDeliveryHistory(): React.JSX.Element {
+    const { t } = useTranslation();
+
+    return (
+        <SafeAreaView style={styles.container}>
+        <View style={styles.navbarContainer}>
+          <Navbar />
+        </View>      
+        <View style={{ flex: 7 }}>
+          <View style={styles.searchbar}>
+            <CustomSearchApp placeholder={"Search in here"} />
+          </View>
+          <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
+              {t('Order History')}
+            </Text>
+          </View>
+          {OrderHist.map(
+            (data, index) =>
+              data.desc.trim() !== "" && (
+                <View>
+                    <View style={styles.column} key={index}>
+                        <View style={styles.decsAndtime}>
+                            <Text style={styles.decs}>{t(data.time)}</Text>
+                            <Text style={styles.decs}>{data.desc}</Text>
+                        </View>
+                        <Text style={styles.cost}>{data.cost}</Text>
+                    </View>
+                </View>
+              )
+          )}
+        </View>
+      </SafeAreaView>
+    );
+}
+
+
+const styles = StyleSheet.create({
+  navbarContainer: {
+    height: hp(8.5),
+    backgroundColor: colors.WHITE,
+  },
+  container: {
+    flex: 1,
+
+    backgroundColor: colors.WHITE,
+  },
+  searchbar: {
+    marginTop: hp(1.3),
+    height: hp('7%'),
+
+  },
+  Header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: wp(4),
+    height: hp(10)
+  },
+  HeaderCol: {
+    fontFamily: fonts.SemiBold,
+    fontSize: hp(2),
+    width: wp(29),
+    textAlign: "left"
+
+  },
+  cost: {
+    fontFamily: fonts.Regular,
+    fontSize: hp(1.8),
+    textAlign: "center",
+    width: wp(33),
+  },
+  date: {
+    fontFamily: fonts.Regular,
+    fontSize: hp(1.8),
+    width: wp(30)
+  },
+  decs: {
+    fontFamily: fonts.Regular,
+    fontSize: hp(1.8),
+  },
+  decsAndtime: {
+    width: wp(30),
+    fontFamily: fonts.Regular,
+    fontSize: hp(1.8),
+    flexDirection: 'row'
+
+  },
+  column: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginHorizontal: wp(4),
+
+  },
+});
+
+export default ETransportDeliveryHistory;

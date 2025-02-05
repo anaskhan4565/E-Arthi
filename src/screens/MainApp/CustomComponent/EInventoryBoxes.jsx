@@ -18,7 +18,8 @@ const EInventoryBoxes = ({
     img_size_w = hp(20),
     font_Size = hp('2.5%'),
     isLightBold = false,
-    give_top_margin = 0
+    give_top_margin = 0,
+    fontcolor = "black",
 
 
 }) => {
@@ -44,6 +45,7 @@ const EInventoryBoxes = ({
                 fontSize: font_Size,
                 fontFamily: isBold ? fonts.bold : isLightBold ? fonts.SemiBold : fonts.Medium,
                 marginTop: give_top_margin,
+                color: fontcolor,
 
 
 

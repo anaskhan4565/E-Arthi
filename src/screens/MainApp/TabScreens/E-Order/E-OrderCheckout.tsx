@@ -100,6 +100,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
               <TextInput
                 style={styles.notesInput}
                 placeholder={t('Enter your notes here')}
+                placeholderTextColor={colors.LIGHT_GRAY}
                 multiline
                 numberOfLines={4}
               />
@@ -253,6 +254,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: colors.WHITE,
     borderRadius: 5,
+    color: colors.BLACK,
   },
   notesButton: { 
     width: wp(10),

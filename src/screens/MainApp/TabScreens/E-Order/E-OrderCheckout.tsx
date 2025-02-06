@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -18,29 +18,42 @@ import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
+import { MMKV } from 'react-native-mmkv';
+import Sub from './TempImgsOrder/sub.png'
 
+import Add from './TempImgsOrder/add.png'
 function EOrderPlaceOrder(): React.JSX.Element {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState('Crop');
   const navigation = useNavigation();
+  const [key, setKey] = useState(0); // Change key to force re-render
+  const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
-  // New JSON variable for products
-  const products = [
-    { name: 'Guava', category: 'Fruits', price: 1500, quantity: 10 },
-    { name: 'Spinach', category: 'Vegetables', price: 2000, quantity: 5 },
-    { name: 'Milk', category: 'Dairy', price: 3000, quantity: 8 },
-    { name: 'Milk', category: 'Dairy', price: 3000, quantity: 8 },
-    { name: 'Milk', category: 'Dairy', price: 3000, quantity: 8 },
-  ];
+  useFocusEffect(
+    useCallback(() => {
+      setKey(prevKey => prevKey + 1); // Update key to trigger re-render
+    }, [])
+  );
+  const storage = new MMKV();
 
-  // Function to update quantity
-  const updateQuantity = (index: number, change: number) => {
-    const newProducts = [...products];
-    newProducts[index].quantity = Math.max(0, newProducts[index].quantity + change);
-    // Update state or handle the newProducts as needed
+  const savedCart = storage.getString("cart"); 
+  const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+  console.log(parsedCart);
+
+
+  const updateQuantity = (product: any, change: number) => {
+    const productIndex = parsedCart.findIndex(item => item.name === product.name);
+  
+    if (productIndex !== -1 && parsedCart[productIndex].quantity + change >= 0) {
+      parsedCart[productIndex].quantity += change;
+  
+      storage.set('cart', JSON.stringify(parsedCart));
+      setKey(prevKey => prevKey + 1); // Force re-render 
+    }
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,26 +74,24 @@ function EOrderPlaceOrder(): React.JSX.Element {
           <View style={{ width: wp(85) }}>
             <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Items')}</Text>
           </View>
-          {products.map((product, index) => (
+          {parsedCart.map((product, index) => (
             <View key={index} style={styles.productRow}>
               <View style={styles.productInfo}>
                 <Text style={styles.productText}>{product.name}</Text>
-                <Text style={styles.priceText}>PKR {product.price.toFixed(2)}</Text>
+                <Text style={styles.priceText}>PKR {formatNumber(product.price.toFixed(2))}</Text>
               </View>
-              <View style={styles.quantityContainer}>
-                <View style={styles.quantityBox}>
-                  <TouchableOpacity onPress={() => updateQuantity(index, -1)}>
-                    <Text>-</Text>
+              <View style={[styles.quantityContainer,{justifyContent:'space-around'}]}>
+                <View style={{justifyContent:"center",marginRight:hp(1)}}>
+                  <TouchableOpacity onPress={() => updateQuantity(product, -1)}>
+                  <Image source={Sub} style={{width:hp(4),height:hp(4)}}/>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.quantityBox}>
                   <Text style={{color: colors.GREEN}}>{product.quantity}</Text>
                 </View>
-                <View style={styles.quantityBox}>
-                  <TouchableOpacity onPress={() => updateQuantity(index, 1)}>
-                    <Text>+</Text>
+                  <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{margin:hp(1)}}>
+                    <Image source={Add} style={{width:hp(4),height:hp(4)}}/>
                   </TouchableOpacity>
-                </View>
               </View>
             </View>
           ))}
@@ -101,18 +112,18 @@ function EOrderPlaceOrder(): React.JSX.Element {
           <View style={styles.summaryContainer}>
             <View style={styles.totalContainer}>
               <Text style={{fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {products.reduce((acc, product) => acc + product.price * product.quantity, 0).toFixed(2)}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + product.price * product.quantity, 0).toFixed(2))}</Text>
             </View>
             <View style={styles.totalContainer}>
               <Text style={{fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {((products.reduce((acc, product) => acc + product.price * product.quantity, 0) * 0.13)).toFixed(2)}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + product.price * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
             </View>
             {/* Dotted Line */}
             <View style={styles.dottedLine} />
             
             <View style={styles.totalContainer}>
               <Text style={{fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {((products.reduce((acc, product) => acc + product.price * product.quantity, 0) * 1.13)).toFixed(2)}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + product.price * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
             </View>
           </View>
           
@@ -207,6 +218,7 @@ const styles = StyleSheet.create({
   productText: {
     color: colors.PRIMARY,
     fontSize: hp(2),
+    width:hp(20)
   },
   quantityContainer: {
     flexDirection: 'row',
@@ -222,7 +234,6 @@ const styles = StyleSheet.create({
     width: wp(8),
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: wp(5)
   },
   notesContainer: {
     marginTop: hp(3),

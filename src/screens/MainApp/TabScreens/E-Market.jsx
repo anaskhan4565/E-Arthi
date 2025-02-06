@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ECategories from "../../../../util/E-Categories.js";
 import Navbar from "../Navbar/Navbar.jsx";
 import CustomSearchApp from "../CustomComponent/CustomSearchApp.jsx";
@@ -22,18 +22,18 @@ import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../util/FontName.js";
 import { MMKV } from "react-native-mmkv";
 
-// Import TopProducts as default
 import TopProducts from "./EMarketPlaceProducts/TopProducts.js";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import ScreensName from "../../../../util/ScreensName.ts";
 
 const EMarket = () => {
-    const [qty, setqty] = useState(0);
-    const [cost, setcost] = useState(0);
+    const [cart, setCart] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [productData, setProductData] = useState(TopProducts);
 
     const storage = new MMKV();
+    const Navigation = useNavigation();
 
-    // Category mapping
     const categoryFiles = {
         Herbicide: () => import("./EMarketPlaceProducts/Herbicide.js"),
         Labour: () => import("./EMarketPlaceProducts/Labour.js"),
@@ -59,18 +59,44 @@ const EMarket = () => {
 
     const { t } = useTranslation();
 
-    useEffect(() => {
-        setqty(storage.getNumber("qty") ? storage.getNumber("qty") : 0);
-        setcost(storage.getNumber("cost") ? storage.getNumber("cost") : 0);
-    }, []);
+    // useEffect(() => {
+    //     const savedCart = storage.getString("cart");
+    //     if (savedCart) {
+    //         setCart(JSON.parse(savedCart));
+    //     }
+    // }, []);
 
-    const handleAddItem = (givePrice) => {
-        setqty(qty + 1);
-        setcost(cost + givePrice);
-        storage.set("qty", qty);
-        storage.set("cost", cost);
+    const handleAddItem = (product) => {
+        setCart((prevCart) => {
+            const existingItem = prevCart.find((item) => item.name === product.name);
+            let updatedCart;
+            if (existingItem) {
+                updatedCart = prevCart.map((item) =>
+                    item.name === product.name ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            } else {
+                updatedCart = [...prevCart, { ...product, quantity: 1 }];
+            }
+
+            storage.set("cart", JSON.stringify(updatedCart)); // Save to MMKV
+            return updatedCart;
+        });
     };
 
+useFocusEffect(
+    useCallback(() => {
+        // console.log("opens")
+        const savedCart = storage.getString("cart");
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+    }, []) 
+)
+const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+
+        const totalQuantity=cart.reduce((sum, item) => sum + item.quantity, 0)
+        const totalCost=cart.reduce((sum, item) => sum + item.quantity * item.price, 0)
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -91,18 +117,13 @@ const EMarket = () => {
                         {ECategories.map(
                             (Category, index) =>
                                 Category.title.trim() !== "" && (
-                                    <View
-                                        style={styles.itemBoxWrapper}
-                                        key={index}
-                                    >
+                                    <View style={styles.itemBoxWrapper} key={index}>
                                         <Categorybox
                                             name={t(Category.title)}
                                             SourceGiven={Category.img}
                                             isNavigation={false}
                                             selectedCategory={selectedCategory}
-                                            setSelectedCategory={
-                                                setSelectedCategory
-                                            }
+                                            setSelectedCategory={setSelectedCategory}
                                             OnpressCustom={true}
                                         />
                                     </View>
@@ -117,10 +138,7 @@ const EMarket = () => {
 
                         <View style={styles.productContainer}>
                             {productData.map((product, index) => (
-                                <View
-                                    style={styles.productBoxWrapper}
-                                    key={index}
-                                >
+                                <View style={styles.productBoxWrapper} key={index}>
                                     <ProductBox
                                         name={product.name}
                                         price={product.price}
@@ -128,11 +146,7 @@ const EMarket = () => {
                                         SourceGiven={product.img}
                                         old={product.old}
                                         isNavigation={0}
-                                        onPressG={() =>
-                                            handleAddItem(
-                                                parseInt(product.price)
-                                            )
-                                        }
+                                        onPressG={() => handleAddItem(product)}
                                     />
                                 </View>
                             ))}
@@ -141,9 +155,12 @@ const EMarket = () => {
                 </View>
             </ScrollView>
             <View style={styles.cartWrapper}>
-                <TouchableOpacity style={styles.cartButton}>
+                <TouchableOpacity
+                    style={styles.cartButton}
+                    onPress={() => Navigation.navigate(ScreensName.EOrderMainStack, { screen: ScreensName.EOrderCheckout })}
+                >
                     <Text style={styles.cartText}>
-                        {qty} Items . PKR {cost}
+                        {totalQuantity} Items . PKR {formatNumber(totalCost)}
                     </Text>
                     <Text style={styles.cartText}>Buy Now</Text>
                 </TouchableOpacity>
@@ -158,12 +175,10 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "space-between",
     },
-
     productBoxWrapper: {
-        width: "48%", // Ensures two products per row
+        width: "48%",
         marginBottom: 20,
     },
-
     container: {
         flex: 1,
         backgroundColor: colors.WHITE,
@@ -211,22 +226,11 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SemiBold,
         marginBottom: hp("2%"),
     },
-    productRow: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        marginBottom: 20,
-    },
     cartWrapper: {
         position: "absolute",
         bottom: hp(2),
         alignSelf: "center",
         width: wp(80),
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
     },
     cartButton: {
         width: "100%",
@@ -246,5 +250,8 @@ const styles = StyleSheet.create({
         color: colors.WHITE,
     },
 });
+
+
+
 
 export default EMarket;

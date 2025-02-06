@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -35,12 +35,13 @@ const ProductScr = () => {
 
     const productData = ProductClickInfo.getString("selectedProduct");
     const ProductInfo = productData ? JSON.parse(productData) : null;
+    const [cart, setCart] = useState([]);
 
     const toggleSelection = (product) => {
         setSelectedOptions((prevOptions) => {
             let updatedOptions = [...prevOptions];
             let updatedPrice = Price;
-    
+
             if (prevOptions.includes(product.name)) {
                 updatedOptions = updatedOptions.filter((item) => item !== product.name);
                 updatedPrice -= product.price;
@@ -48,28 +49,46 @@ const ProductScr = () => {
                 updatedOptions.push(product.name);
                 updatedPrice += product.price;
             }
-    
+
             setPrice(updatedPrice);
             return updatedOptions;
         });
     };
-    
+
 
     function configureCount(less) {
         let newCount = less ? Math.max(1, Count - 1) : Count + 1;
         SetCount(newCount);
     }
+    useEffect(() => {
+        const savedCart = storage.getString("cart");
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+    }, []);
+
 
     const handleAddtoCart = () => {
-        // Ensure qty and cost are initialized properly
-        const currentQty = storage.getNumber("qty") ?? 0;
-        const currentCost = storage.getNumber("cost") ?? 0;
+        if (!ProductInfo) return;
 
-        storage.set("qty", currentQty + Count);
-        storage.set("cost", currentCost + Price * Count);
+        setCart((prevCart) => {
+            const existingItem = prevCart.find((item) => item.name === ProductInfo.name);
+            let updatedCart;
+            if (existingItem) {
+                updatedCart = prevCart.map((item) =>
+                    item.name === ProductInfo.name ? { ...item, quantity: item.quantity + Count } : item
+                );
+            } else {
+                updatedCart = [...prevCart, { ...ProductInfo, quantity: Count }];
+            }
 
-        // Navigation.navigate(ScreensName.EMarket);
-        Navigation.navigate(ScreensName.MainTabNavigation, { screen: ScreensName.EMarket });
+            storage.set("cart", JSON.stringify(updatedCart)); // Save to MMKV storage
+            return updatedCart;
+        });
+        const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+        console.log("New quan",totalQuantity)
+        Navigation.goBack()
+
     };
 
     const products = [
@@ -199,7 +218,7 @@ const ProductScr = () => {
                     <View style={styles.addToCartSection}>
                         <TouchableOpacity
                             style={styles.addToCartButton}
-                            onPress={handleAddtoCart}
+                            onPress={()=>handleAddtoCart(ProductInfo)}
                         >
                             <Image source={Cart} style={styles.cartIcon} />
                             <Text style={styles.cartText}>Add to Cart</Text>

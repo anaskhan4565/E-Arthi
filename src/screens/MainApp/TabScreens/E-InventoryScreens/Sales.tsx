@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Medium,
         color: colors.GREEN,
         fontSize: hp(1.6),
+        width:hp(16)
     },
     SectionBody: {
         fontFamily: fonts.SemiBold,

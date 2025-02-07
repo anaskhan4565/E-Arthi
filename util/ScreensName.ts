@@ -26,6 +26,7 @@ export default {
     //Specific After logging in::
     MainTabNavigation: "MainTabNavigation",
     HomeScreen: "Home",
+    HomeScreenMainStack: "HomeScreenMainStack",
 
     ELoanMainStack: "ELoanMainStack",
     ELoan: "E-Loan",

@@ -15,6 +15,7 @@ import EWarehouseMainStack from "./E-Warehouse/E-WarehouseMainStack"
 import TopNavigator from '../EMandi/MainNavigator/TopNavigator';
 import EInventory from '../../../screens/MainApp/TabScreens/E-Loan/E-LoanHome'
 import EMunshiMainStack from './E-Munshi/E-MunshiMainStack';
+import HomeScreenMainStack from '../HomeScreenMainStack';
 const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -41,8 +42,8 @@ export default function MainTabNavigation() {
                 }}
             >
                 <Tab.Screen
-                    name={t(ScreensName.Home)}
-                    component={Home}
+                    name={t(ScreensName.HomeScreenMainStack)}
+                    component={HomeScreenMainStack}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image

@@ -10,7 +10,7 @@ export default [
         name: "YSM 8108 10kg Hybrid Corn Seed Best for Maximum Silage",
         img: Seed1,
         save: "15",
-        price: 10535,
+        price: "10535",
         old: "10550"
     },
     {
@@ -18,7 +18,7 @@ export default [
         name: "Hybrid Hot Pepper SV 7864 F1 10gm Seminis Seeds Ali akbar Chili Seed Chilli Seed",
         img: Seed2,
         save: "15",
-        price: 2935,
+        price: "2935",
         old: "2950"
     },
     {
@@ -26,7 +26,7 @@ export default [
         name: "Super tomato Beej 3000 Seeds in 1 pack F1 Hybrid Seeds",
         img: Seed3,
         save: "15",
-        price: 3235,
+        price: "3235",
         old: "3250"
     },
     {
@@ -34,7 +34,7 @@ export default [
         name: "Hybrid Cucumber Alpha F1 (parthenocarpic) 1000 Seeds",
         img: Seed4,
         save: "50",
-        price: 3450,
+        price: "3450",
         old: "3500"
     },
     {
@@ -42,7 +42,7 @@ export default [
         name: "Tinda 50GM Rachna Hybrid Tinda F1 Round Gold",
         img: Seed5,
         save: "15",
-        price: 980,
+        price: "980",
         old: "995"
     }
 ]

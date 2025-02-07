@@ -89,7 +89,7 @@ function ConfrimWarehouse(): React.JSX.Element {
                 w={wp("90%")}
                 b_radius={10}
                 bg_give={colors.WHITE}
-                hide={true}
+                hide={false}
               />
             </View>
             <View style={styles.buttonContainer}>

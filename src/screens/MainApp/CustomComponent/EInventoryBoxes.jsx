@@ -20,6 +20,7 @@ const EInventoryBoxes = ({
     isLightBold = false,
     give_top_margin = 0,
     fontcolor = "black",
+    amount,
 
 
 }) => {
@@ -46,10 +47,16 @@ const EInventoryBoxes = ({
                 fontFamily: isBold ? fonts.Bold : isLightBold ? fonts.SemiBold : fonts.Medium,
                 marginTop: give_top_margin,
                 color: fontcolor,
-
-
-
             }]}>{t(name)}</Text>
+            {amount && (
+                <Text style={[styles.TextStyle, {
+                    fontSize: font_Size,
+                    fontFamily: isBold ? fonts.Bold : isLightBold ? fonts.SemiBold : fonts.Medium,
+                    marginTop: give_top_margin,
+              
+                }]}>{t(amount)}</Text>
+            )}
+
         </TouchableOpacity>
     );
 };

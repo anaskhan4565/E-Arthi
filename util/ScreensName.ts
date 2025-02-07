@@ -43,8 +43,10 @@ export default {
     EloanMeezan: "EloanMeezan",
     EloanBOP: "EloanBOP",
     EloanZTBL: "EloanZTBL",
-    ELoanFaisal:"ELoanFaisal",
- 
+    ELoanFaisal: "ELoanFaisal",
+    ELoanWoanScreen2: "ELoanWoanScreen2",
+    ELoanPending: "ELoanPending",
+
     EWarehouseMainStack: "EWarehouseMainStack",
     EWarehouse: "EWarehouse",
     EWarehouseNewSpaceCropSelect: "EWarehouseNewSpaceCropSelect",

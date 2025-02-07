@@ -1,25 +1,34 @@
 import ScreensName from './ScreensName.ts';
 const EloanDet = [
     {
+        screen: ScreensName.EloanCurrentLoan,
+        title: "Current Loan",
+        img: require('../src/assets/MainApp/E-Loan/CurrentLoan.png'),
+        amount:'Rs 100000',
+    },
+    {
+        screen: ScreensName.ELoanPending,
+        title: "Pending Loan",
+        img: require('../src/assets/MainApp/E-Loan/clock.png'),
+      amount:'Rs 25000'
+    },
+    {
         screen: ScreensName.ELoanNewBank,
         title: "New Loan",
         img: require('../src/assets/MainApp/E-Loan/loan.png')
-    },
-    {
-        screen: ScreensName.ELoanNewLoan,
-        title: "Women Special Loan Program",
-        img: require('../src/assets/MainApp/E-Loan/women.webp')
-    },
-    {
-        screen: ScreensName.EloanCurrentLoan,
-        title: "View current Loan",
-        img: require('../src/assets/MainApp/E-Loan/CurrentLoan.png')
     },
     {
         screen: ScreensName.EloanPreviousLoan,
         title: "View Previous Loans",
         img: require('../src/assets/MainApp/E-Loan/loans.png')
     },
+    {
+        screen: ScreensName.ELoanWoanScreen2,
+        title: "Women Loan Program",
+        img: require('../src/assets/MainApp/E-Loan/women.webp')
+    },
+
+
 ];
 const ELoanBank = [
     {
@@ -48,4 +57,35 @@ const ELoanBank = [
         img: require('../src/assets/MainApp/E-Loan/AskariBank.png')
     },
 ];
-export { EloanDet, ELoanBank };
+const pendingloan = [
+    {
+        desc: "Loan #08098999917",
+        time: "14:56 PM",
+        cost: "PKR 23000",
+        stat: false,
+        date: "Today, 4 February 2025"
+    },
+    {
+        desc: "Loan #08098999918",
+        time: "15:30 PM",
+        cost: "PKR 50000",
+        stat: false,
+        date: "Today, 4 February 2025"
+    },
+    {
+        desc: "Loan #08098999919",
+        time: "10:00 AM",
+        cost: "PKR 120000",
+        stat: false,
+        date: "Tomorrow, 5 February 2025"
+    },
+    {
+        desc: "Loan #08098999920",
+        time: "09:15 AM",
+        cost: "PKR 80000",
+        stat: false,
+        date: "6 February 2025"
+    }
+];
+
+export { EloanDet, ELoanBank,pendingloan };

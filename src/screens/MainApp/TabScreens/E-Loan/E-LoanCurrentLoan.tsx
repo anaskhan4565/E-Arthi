@@ -29,7 +29,7 @@ import FilterPic from "./CustomPictures/try/filter.png";
 
 function CurrentLoan(): React.JSX.Element {
   const { t } = useTranslation();
-  const currency = "$"; // Currency header
+  const currency = "Rs"; // Currency header
   const selectionBoth = [LoanCategoryDetails, LoanVendorDetails];
   const [currentState, setCurrentState] = useState(0);
 
@@ -106,12 +106,12 @@ function CurrentLoan(): React.JSX.Element {
               { name: t("Total Loan Amount"), value: 100000, color: "#FF6F61" },
               { name: t("Remaining Loan"), value: 25000, color: "#6B8E23" },
             ]}
-            
+
             chartHeight={hp(15)}
           />
 
           <MyPieChart
-          chartHeight={hp(15)}
+            chartHeight={hp(15)}
             data={[
               {
                 name: t("Unutilized Cash Line"),
@@ -127,11 +127,11 @@ function CurrentLoan(): React.JSX.Element {
             legend1Name={"Unutilized Cash Line"}
             legend1Population={32425}
             legend2Name={"Unutilized Line of Credit"}
-            legend2Population={42221}  
+            legend2Population={42221}
             legend1_color={'#F3495F'}
             legend2_color={'#49F3DD'}
-            
-            />
+
+          />
         </View>
         <View style={styles.MainHeader}>
           <View style={styles.mainboxrow}>
@@ -343,11 +343,13 @@ const styles = StyleSheet.create({
   },
   mainboxrow: {
     flexDirection: "row",
-    width: wp(100),
+    width: wp(95),
     height: hp(9),
     justifyContent: "space-between",
     flexWrap: "wrap",
     alignItems: "center",
+    // backgroundColor: "red",
+    alignSelf: "center",
   },
 });
 

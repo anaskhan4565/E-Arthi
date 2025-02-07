@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import colors from '../../../util/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from '../../assets/Icon/Logo-only.png';
-import langsymb from '../../assets/language_symbol.png';
-import greenLangSymb from '../../assets/language_symbol_green.png';
+import Langsymb from '../../assets/Vector.svg';
+import GreenLangSymb from '../../assets/langgreen.svg';
 import CustomButton from '../../components/CustomButton';
 import ScreensName from '../../../util/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
@@ -17,13 +17,12 @@ import { useNavigation } from '@react-navigation/native';
 
 const AboutMore = () => {
     const [selectedCard, setSelectedCard] = useState('');
-    const [imgPath, setImgPath] = useState(langsymb);
     const navigation = useNavigation();
     const { t } = useTranslation();
     const { i18n } = useTranslation();
+
     const handleCardPress = (language: string) => {
         setSelectedCard(language);
-        setImgPath(language === 'English' ? greenLangSymb : langsymb); // Update based on the language
         i18n.changeLanguage(language);
         navigation.navigate(ScreensName.Connect);
     };
@@ -41,43 +40,62 @@ const AboutMore = () => {
                         <TouchableOpacity
                             style={[
                                 styles.card,
-                                selectedCard === 'English' && { borderColor: colors.GREEN, borderWidth: 2 },
+                                selectedCard === 'en' && { borderColor: colors.GREEN, borderWidth: 2 },
                             ]}
                             onPress={() => handleCardPress('en')}
                         >
-                            <Image source={selectedCard === 'English' ? greenLangSymb : langsymb} style={styles.vectorLogo} />
+                            {selectedCard === 'en' ? (
+                                <GreenLangSymb width={wp(10)} height={hp(5)} />
+                            ) : (
+                                <Langsymb width={wp(10)} height={hp(4)}  />
+                            )}
                             <Text style={styles.cardText}>{t('English')}</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity
                             style={[
                                 styles.card,
-                                selectedCard === 'Urdu' && { borderColor: colors.GREEN, borderWidth: 2 },
+                                selectedCard === 'ur' && { borderColor: colors.GREEN, borderWidth: 2 },
                             ]}
                             onPress={() => handleCardPress('ur')}
                         >
-                            <Image source={selectedCard === 'Urdu' ? greenLangSymb : langsymb} style={styles.vectorLogo} />
+                            {selectedCard === 'ur' ? (
+                                <GreenLangSymb width={wp(10)} height={hp(4)} />
+                            ) : (
+                                <Langsymb width={wp(10)} height={hp(4)} />
+                            )}
                             <Text style={styles.cardText}>اردو</Text>
                         </TouchableOpacity>
                     </View>
+
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={[
                                 styles.card,
-                                selectedCard === 'Sindhi' && { borderColor: colors.GREEN, borderWidth: 2 },
+                                selectedCard === 'sin' && { borderColor: colors.GREEN, borderWidth: 2 },
                             ]}
                             onPress={() => handleCardPress('sin')}
                         >
-                            <Image source={selectedCard === 'Sindhi' ? greenLangSymb : langsymb} style={styles.vectorLogo} />
+                            {selectedCard === 'sin' ? (
+                                <GreenLangSymb width={wp(10)} height={hp(4)}  />
+                            ) : (
+                                <Langsymb width={wp(10)} height={hp(4)}  />
+                            )}
                             <Text style={styles.cardText}>سنڌي</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity
                             style={[
                                 styles.card,
-                                selectedCard === 'Pashto' && { borderColor: colors.GREEN, borderWidth: 2 },
+                                selectedCard === 'psh' && { borderColor: colors.GREEN, borderWidth: 2 },
                             ]}
                             onPress={() => handleCardPress('psh')}
                         >
-                            <Image source={selectedCard === 'Pashto' ? greenLangSymb : langsymb} style={styles.vectorLogo} />
+                            {selectedCard === 'psh' ? (
+                                <GreenLangSymb width={wp(10)} height={hp(4)}  />
+                            ) : (
+                                <Langsymb width={wp(10)} height={hp(4)}  />
+                            )}
                             <Text style={styles.cardText}>پښتو</Text>
                         </TouchableOpacity>
                     </View>
@@ -115,11 +133,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: wp('30%'),
         height: hp('13%'),
-    },
-    vectorLogo: {
-        width: wp(10),
-        height: hp(9),
-        resizeMode: 'contain',
     },
     cardText: {
         marginTop: hp(0.6),

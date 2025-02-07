@@ -43,6 +43,7 @@ export default {
     EloanMeezan: "EloanMeezan",
     EloanBOP: "EloanBOP",
     EloanZTBL: "EloanZTBL",
+    ELoanFaisal:"ELoanFaisal",
  
     EWarehouseMainStack: "EWarehouseMainStack",
     EWarehouse: "EWarehouse",

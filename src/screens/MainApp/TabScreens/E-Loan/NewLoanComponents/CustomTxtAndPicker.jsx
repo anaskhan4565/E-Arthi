@@ -11,7 +11,7 @@ const CustomTxtAndPicker = ({ PlaceHolderGiven = "demo", itemPackage,Picker_Txt=
     const { t } = useTranslation();
     return (
         <View style={{ flex: 1, alignItems: 'flex-start', gap: hp(0.5) }}>
-            <Text style={{ fontSize: hp(2), fontFamily: fonts.Regular,paddingLeft:hp(0.1) }}>{t(PlaceHolderGiven)}</Text>
+            <Text style={{ fontSize: hp(2),paddingLeft:hp(0.1) }}>{t(PlaceHolderGiven)}</Text>
             <CustomPicker items={itemPackage}
              key={0} isheader={false}
                 w_given={wp(85)}

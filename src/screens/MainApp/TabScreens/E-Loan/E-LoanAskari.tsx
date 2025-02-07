@@ -1,0 +1,136 @@
+import React, { useState } from 'react';
+import Navbar from '../../Navbar/Navbar.jsx';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import colors from '../../../../../util/colors.js';
+import {
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    Image
+} from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { fonts } from '../../../../../util/FontName.js';
+import CustomInputAndText from './NewLoanComponents/CustomInputAndText.jsx';
+import CustomTxtAndPicker from './NewLoanComponents/CustomTxtAndPicker.jsx';
+import CustomUploadButton from './NewLoanComponents/CustomUploadButton.jsx';
+import TickBox from './NewLoanComponents/TickBox.jsx';
+import CustomButton from '../../../../components/CustomButton.jsx';
+import ScreensName from '../../../../../util/ScreensName.ts';
+
+
+
+function ELoanAskari(): React.JSX.Element {
+    const { t } = useTranslation();
+    const [selectedOption, setSelectedOption] = useState("Generic");
+
+    return (
+        <SafeAreaView style={styles.container}>
+
+            <View style={styles.navbarContainer}>
+                <Navbar gobackOnly={true} />
+            </View>
+            <ScrollView style={styles.container}>
+                <View style={[styles.header, { alignSelf: 'center' }]}>
+                    <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/AskariBank.png')} />
+                    <Text style={styles.titletext}>Faisal Bank</Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
+                    <CustomTxtAndPicker PlaceHolderGiven={"Employement Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business-Owner", value: "Business Owner" }]} Picker_Txt={"Select Employement Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Personal Loan", value: "Personal Loan" },  { label: "Agriculture Loan", value: "Agriculture Loan" }]} Picker_Txt={"Select Loan Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Mr.", value: "mr" }, { label: "Ms.", value: "ms" }, { label: "Mrs.", value: "mrs" }]} Picker_Txt={"Select Title"} />
+                    <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
+                    <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
+                    <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"} />
+                    <CustomInputAndText PlaceHolderGiven={"Date of birth"} InputHolder={"MM-DD-YYYYY"} />
+                    <CustomInputAndText PlaceHolderGiven={"Phone number"} InputHolder={"+92-012345678"} />
+                    <CustomInputAndText PlaceHolderGiven={"Alternative Phone Number"} InputHolder={"+92-012345678"} />
+                    <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"} />
+                    <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Desired Loan Repayment Period"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
+                    <Text style={{ fontSize: hp(3), fontFamily: fonts.Bold, fontStyle: 'normal', borderTopWidth: hp(0.2) }}>--Documents--</Text>
+
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true} />
+
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security in shape of Bank's FIxed Deposit Receipts"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true} />
+
+                    <View style={{ flex: 1, gap: hp(3) }}>
+                        <TickBox TextGiven={'Are you older than 18'} givePadding={false} />
+                        <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={false} />
+                        <TickBox TextGiven={'Do you agree with Askari Terms & Conditions'} givePadding={false} />
+                        <TickBox TextGiven={'I have a valid government-issued ID'} givePadding={false} />
+                        <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
+                        <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
+                    </View>
+                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr}/>
+
+                </View>
+            </ScrollView>
+        </SafeAreaView >
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+
+        backgroundColor: colors.WHITE,
+
+    },
+    navbarContainer: {
+        height: hp('8.5%'),
+        backgroundColor: colors.WHITE,
+    },
+    searchContainer: {
+        marginVertical: hp('3.2%'),
+        height: hp('7%'),
+    },
+    bodyContainer: {
+        alignItems: 'center',
+
+    },
+    titleContainer: {
+        padding: 10,
+    },
+    titleText: {
+        fontWeight: 'bold',
+        fontSize: 25,
+    },
+    titletext: {
+        fontSize: hp(3),
+        fontFamily: fonts.SemiBold,
+    },
+    header: {
+        marginTop: hp(2),
+        width: wp(90),
+        height: hp(20),
+        borderRadius: 8,
+        elevation: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.WHITE,
+        marginBottom: hp(1),
+
+    },
+    image: {
+        resizeMode: 'contain',
+        width: wp(50),
+        height: hp(12),
+    },
+
+});
+
+
+
+export default ELoanAskari;

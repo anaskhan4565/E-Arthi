@@ -42,5 +42,10 @@ const ELoanBank = [
         title: "Meezan Bank",
         img: require('../src/assets/MainApp/E-Loan/Meezan.png')
     },
+    {
+        screen: ScreensName.ELoanFaisal,
+        title: "Askari Bank",
+        img: require('../src/assets/MainApp/E-Loan/AskariBank.png')
+    },
 ];
 export { EloanDet, ELoanBank };

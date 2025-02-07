@@ -32,6 +32,7 @@ import EloanHBL from "./E-LoanHBL";
 import EloanBOP from "./E-LoanBOP";
 import EloanZTBL from "./E-LoanZTBL";
 import EloanMeezan from "./E-LoanMeezan";
+import ELoanFaisal from "./E-LoanAskari";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +55,8 @@ function ELoanMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EloanMeezan} component={EloanMeezan} />
                     <Stack.Screen name={ScreensName.EloanCurrentLoan} component={ELoanCurrentLoan} />
                     <Stack.Screen name={ScreensName.EloanSelectedLoan} component={EloanSelectedLoan} />
+                    <Stack.Screen name={ScreensName.ELoanFaisal} component={ELoanFaisal} />
+
                 </Stack.Navigator>
         // </I18nextProvider>
     );

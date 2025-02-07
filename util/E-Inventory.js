@@ -16,6 +16,16 @@ const EInventoryDet = [
         title: "Suppliers",
         img: require('../src/assets/MainApp/E-Inventory/Suppliers.png')
     },
+    // {
+    //     screen: ScreensName.Suppliers,
+    //     title: "Food Survelence",
+    //     img: require('../src/assets/MainApp/E-Inventory/FoodSurvelence.png')
+    // },
+    // {
+    //     screen: ScreensName.Suppliers,
+    //     title: "Food Safety And Security",
+    //     img: require('../src/assets/MainApp/E-Inventory/src/assets/MainApp/E-Inventory/FoodSafety.png')
+    // },
 ];
 
 const InventoryDet = [

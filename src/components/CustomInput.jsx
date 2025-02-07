@@ -36,7 +36,7 @@ const CustomInput = ({
       style={[
         styles.textInputStyle,
         { 
-          paddingLeft: wp(2),
+          paddingLeft: wp(3),
           width: w,
           height: h,
           backgroundColor: bg_give,
@@ -45,7 +45,7 @@ const CustomInput = ({
         },
       ]}
       placeholder={t(placeholder)}
-      placeholderTextColor={placeholder_color}
+      //placeholderTextColor={placeholder_color}
       secureTextEntry={hide}
       editable={editable}
       value={value}
@@ -59,10 +59,10 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   textInputStyle: {
-    fontSize: wp('3.8%'),
+    fontSize: wp('3.4%'),
     alignSelf: 'center',
     borderWidth: 1,
-    fontFamily: fonts.Regular,
     color: colors.BLACK,
+    
   },
 });

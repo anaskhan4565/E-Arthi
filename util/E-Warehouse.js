@@ -10,4 +10,14 @@ export default [
         title: "View Warehouse History",
         img: require('../src/assets/MainApp/E-Inventory/Sales.png')
     },
+    {
+        screen: ScreensName.EWarehousePreviousWarehouses,
+        title: "Food Survelence",
+        img: require('../src/assets/MainApp/E-Inventory/FoodSurvelence.png')
+    },
+    {
+        screen: ScreensName.EWarehousePreviousWarehouses,
+        title: "Food Safety And Security",
+        img: require('../src/assets/MainApp/E-Inventory/FoodSafety.png')
+    },
 ];

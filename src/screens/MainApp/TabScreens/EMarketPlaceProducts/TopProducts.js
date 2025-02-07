@@ -6,7 +6,7 @@ export default [
         name: "Agri-Protex",
         img: Image1,
         save: "1000",
-        price: 2050,
+        price: "2050",
         old: "3050"
 
     },
@@ -14,7 +14,7 @@ export default [
         name: "Agri-Protex",
         img: Image2,
         save: "1000",
-        price: 2050,
+        price: "2050",
         old: "3050"
 
     },
@@ -22,7 +22,7 @@ export default [
         name: "Agri-Protex",
         img: Image1,
         save: "1000",
-        price: 2050,
+        price: "2050",
         old: "3050"
 
     },
@@ -30,7 +30,7 @@ export default [
         name: "Agri-Protex",
         img: Image2,
         save: "1000",
-        price: 2050,
+        price: "2050",
         old: "3050"
 
     },

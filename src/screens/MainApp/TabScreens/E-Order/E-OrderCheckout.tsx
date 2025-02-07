@@ -46,13 +46,18 @@ function EOrderPlaceOrder(): React.JSX.Element {
   const updateQuantity = (product: any, change: number) => {
     const productIndex = parsedCart.findIndex(item => item.name === product.name);
   
-    if (productIndex !== -1 && parsedCart[productIndex].quantity + change >= 0) {
+    if (productIndex !== -1) {
       parsedCart[productIndex].quantity += change;
+  
+      if (parsedCart[productIndex].quantity <= 0) {
+        parsedCart.splice(productIndex, 1); // Remove item with 0 quantity
+      }
   
       storage.set('cart', JSON.stringify(parsedCart));
       setKey(prevKey => prevKey + 1); // Force re-render 
     }
   };
+  
   
 
   return (
@@ -75,10 +80,10 @@ function EOrderPlaceOrder(): React.JSX.Element {
             <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Items')}</Text>
           </View>
           {parsedCart.map((product, index) => (
-            <View key={index} style={styles.productRow}>
+             product.quantity >= 1&& <View key={index} style={styles.productRow}>
               <View style={styles.productInfo}>
                 <Text style={styles.productText}>{product.name}</Text>
-                <Text style={styles.priceText}>PKR {formatNumber(product.price.toFixed(2))}</Text>
+                <Text style={styles.priceText}>PKR {formatNumber(parseInt(product.price.replace(/,/g, '')).toFixed(2))}</Text>
               </View>
               <View style={[styles.quantityContainer,{justifyContent:'space-around'}]}>
                 <View style={{justifyContent:"center",marginRight:hp(1)}}>
@@ -100,6 +105,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
               <TextInput
                 style={styles.notesInput}
                 placeholder={t('Enter your notes here')}
+                placeholderTextColor={colors.LIGHT_GRAY}
                 multiline
                 numberOfLines={4}
               />
@@ -112,18 +118,18 @@ function EOrderPlaceOrder(): React.JSX.Element {
           <View style={styles.summaryContainer}>
             <View style={styles.totalContainer}>
               <Text style={{fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + product.price * product.quantity, 0).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
             </View>
             <View style={styles.totalContainer}>
               <Text style={{fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + product.price * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
             </View>
             {/* Dotted Line */}
             <View style={styles.dottedLine} />
             
             <View style={styles.totalContainer}>
               <Text style={{fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + product.price * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
             </View>
           </View>
           
@@ -254,6 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
     color:colors.BLACK,
     borderRadius: 5,
+    color: colors.BLACK,
   },
   notesButton: { 
     width: wp(10),

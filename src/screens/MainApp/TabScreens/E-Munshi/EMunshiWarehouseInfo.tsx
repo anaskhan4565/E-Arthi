@@ -37,8 +37,9 @@ const chartConfig = {
   propsForDots: {
     r: "4",
     strokeWidth: "2",
-    stroke: "#6a00f5",
+    stroke: colors.GREEN,
   },
+  
 };
 
 function EMunshiWarehouseInfo(): React.JSX.Element {
@@ -54,7 +55,7 @@ function EMunshiWarehouseInfo(): React.JSX.Element {
     datasets: [
       {
         data: [400, 550, 600, 800, 1100, 500, 700],
-        color: (opacity = 1) => `rgba(106, 0, 245, ${opacity})`, // Your preferred button color
+        color: (opacity = 1) => `rgba(0, 169, 128, ${opacity})`, // Your preferred button color
         strokeWidth: 2,
       },
     ],

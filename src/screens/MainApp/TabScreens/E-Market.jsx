@@ -59,7 +59,7 @@ const EMarket = () => {
 
     const { t } = useTranslation();
 
-    // useEffect(() => {
+        // useEffect(() => {
     //     const savedCart = storage.getString("cart");
     //     if (savedCart) {
     //         setCart(JSON.parse(savedCart));
@@ -95,8 +95,8 @@ useFocusEffect(
 const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
         const totalQuantity=cart.reduce((sum, item) => sum + item.quantity, 0)
-        const totalCost=cart.reduce((sum, item) => sum + item.quantity * item.price, 0)
-    
+        const totalCost=cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price.replace(/,/g, '')), 0)
+        
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>

@@ -34,7 +34,7 @@ function ELoanAskari(): React.JSX.Element {
             <ScrollView style={styles.container}>
                 <View style={[styles.header, { alignSelf: 'center' }]}>
                     <Image style={styles.image} source={require('../../../../../src/assets/MainApp/E-Loan/AskariBank.png')} />
-                    <Text style={styles.titletext}>Faisal Bank</Text>
+                    <Text style={styles.titletext}>Askari Bank</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
                     <CustomTxtAndPicker PlaceHolderGiven={"Employement Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business-Owner", value: "Business Owner" }]} Picker_Txt={"Select Employement Type"} />
@@ -124,9 +124,8 @@ const styles = StyleSheet.create({
 
     },
     image: {
-        resizeMode: 'contain',
-        width: wp(50),
-        height: hp(12),
+        width:hp(24),
+        height: wp(30),
     },
 
 });

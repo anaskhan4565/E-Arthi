@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     elevation: 5,
     backgroundColor: colors.WHITE,
+    color:colors.BLACK,
     borderRadius: 5,
   },
   notesButton: { 

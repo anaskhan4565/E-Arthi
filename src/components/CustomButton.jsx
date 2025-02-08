@@ -20,6 +20,7 @@ const CustomButton = ({
   onPressG, // Custom onPress event
   b_end_only,
   isSelected = false,
+  isdisabled=false,
   tx_size=hp('2.2%'),
   tx_center=false
 }) => {
@@ -44,6 +45,7 @@ const CustomButton = ({
 
   return (
     <TouchableOpacity
+    disabled={isdisabled}
       style={[
         styles.Wrapper,
         {

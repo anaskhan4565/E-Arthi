@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
@@ -20,7 +20,7 @@ import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton.jsx";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import InventoryProduct from "../../CustomComponent/InventoryComponents/InventoryProduct.jsx";
 import {
     crops,
@@ -38,10 +38,12 @@ import Medicine from "../EMarketPlaceProducts/Medicine.js";
 import SeedsProducts from "../EMarketPlaceProducts/SeedsProducts.js";
 import { MMKV } from "react-native-mmkv";
 
-function EOrderPlaceOrder(): React.JSX.Element {
+const EOrderPlaceOrder=()=> {
     const { t } = useTranslation();
     const [selectedItem, setSelectedItem] = useState("Crop");
     const navigation = useNavigation();
+        const [cart, setCart] = useState([]);
+    
     const [qty, setqty] = useState(0);
     const [cost, setcost] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -68,37 +70,56 @@ function EOrderPlaceOrder(): React.JSX.Element {
     };
 
     const selectedProducts = categoryMap[selectedItem] || [];
-    // useEffect(() => {
-    //   if (selectedCategory && categoryFiles[selectedCategory]) {
-    //     categoryFiles[selectedCategory]()
-    //       .then((module) => setProductData(module.default))
-    //       .catch((error) => {
-    //         console.error("Error loading category file:", error);
-    //         setProductData(TopProducts);
-    //       });
-    //   } else {
-    //     setProductData(TopProducts);
-    //   }
-    // }, [selectedCategory]);
+
 
     useEffect(() => {
         setqty(storage.getNumber("qty") ? storage.getNumber("qty") : 0);
         setcost(storage.getNumber("cost") ? storage.getNumber("cost") : 0);
     }, []);
 
-    const handleAddItem = (givePrice) => {
-        setqty((prevQty) => {
-            const newQty = prevQty + 1;
-            storage.set("qty", newQty);
-            return newQty;
+    // const handleAddItem = (givePrice) => {
+    //     setqty((prevQty) => {
+    //         const newQty = prevQty + 1;
+    //         storage.set("qty", newQty);
+    //         return newQty;
+    //     });
+
+    const handleAddItem = (product) => {
+        setCart((prevCart) => {
+            const existingItem = prevCart.find((item) => item.name === product.name);
+            let updatedCart;
+            if (existingItem) {
+                updatedCart = prevCart.map((item) =>
+                    item.name === product.name ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            } else {
+                updatedCart = [...prevCart, { ...product, quantity: 1 }];
+            }
+
+            storage.set("cart", JSON.stringify(updatedCart)); // Save to MMKV
+            return updatedCart;
         });
 
-        setcost((prevCost) => {
-            const newCost = prevCost + givePrice;
-            storage.set("cost", newCost);
-            return newCost;
-        });
+
+        // setcost((prevCost) => {
+        //     const newCost = prevCost + givePrice;
+        //     storage.set("cost", newCost);
+        //     return newCost;
+        // });
     };
+useFocusEffect(
+    useCallback(() => {
+        // console.log("opens")
+        const savedCart = storage.getString("cart");
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+    }, []) 
+)
+const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+
+const totalQuantity=cart.reduce((sum, item) => sum + item.quantity, 0)
+const totalCost=cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price.replace(/,/g, '')), 0)
 
     return (
         <SafeAreaView style={styles.container}>
@@ -153,7 +174,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                                     description={product.name}
                                     AddIcon={true}
                                     onPressG={() =>
-                                        handleAddItem(parseInt(product.price))
+                                        handleAddItem(product)
                                     }
                                     navigateTo={undefined}
                                 />
@@ -162,10 +183,13 @@ function EOrderPlaceOrder(): React.JSX.Element {
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.cartWrapper}>
-                <TouchableOpacity style={styles.cartButton}>
+      <View style={styles.cartWrapper}>
+                <TouchableOpacity
+                    style={styles.cartButton}
+                    onPress={() => navigation.navigate(ScreensName.EOrderMainStack, { screen: ScreensName.EOrderCheckout })}
+                >
                     <Text style={styles.cartText}>
-                        {qty} Items . PKR {cost}
+                        {totalQuantity} Items . PKR {formatNumber(totalCost)}
                     </Text>
                     <Text style={styles.cartText}>Buy Now</Text>
                 </TouchableOpacity>

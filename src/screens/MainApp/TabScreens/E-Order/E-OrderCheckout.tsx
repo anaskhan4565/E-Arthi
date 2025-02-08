@@ -38,27 +38,27 @@ function EOrderPlaceOrder(): React.JSX.Element {
   );
   const storage = new MMKV();
 
-  const savedCart = storage.getString("cart"); 
+  const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
   console.log(parsedCart);
 
 
   const updateQuantity = (product: any, change: number) => {
     const productIndex = parsedCart.findIndex(item => item.name === product.name);
-  
+
     if (productIndex !== -1) {
       parsedCart[productIndex].quantity += change;
-  
+
       if (parsedCart[productIndex].quantity <= 0) {
         parsedCart.splice(productIndex, 1); // Remove item with 0 quantity
       }
-  
+
       storage.set('cart', JSON.stringify(parsedCart));
       setKey(prevKey => prevKey + 1); // Force re-render 
     }
   };
-  
-  
+  const totalPrice = parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13;
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,23 +80,23 @@ function EOrderPlaceOrder(): React.JSX.Element {
             <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Items')}</Text>
           </View>
           {parsedCart.map((product, index) => (
-             product.quantity >= 1&& <View key={index} style={styles.productRow}>
+            product.quantity >= 1 && <View key={index} style={styles.productRow}>
               <View style={styles.productInfo}>
                 <Text style={styles.productText}>{product.name}</Text>
                 <Text style={styles.priceText}>PKR {formatNumber(parseInt(product.price.replace(/,/g, '')).toFixed(2))}</Text>
               </View>
-              <View style={[styles.quantityContainer,{justifyContent:'space-around'}]}>
-                <View style={{justifyContent:"center",marginRight:hp(1)}}>
+              <View style={[styles.quantityContainer, { justifyContent: 'space-around' }]}>
+                <View style={{ justifyContent: "center", marginRight: hp(1) }}>
                   <TouchableOpacity onPress={() => updateQuantity(product, -1)}>
-                  <Image source={Sub} style={{width:hp(4),height:hp(4)}}/>
+                    <Image source={Sub} style={{ width: hp(4), height: hp(4) }} />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.quantityBox}>
-                  <Text style={{color: colors.GREEN}}>{product.quantity}</Text>
+                  <Text style={{ color: colors.GREEN }}>{product.quantity}</Text>
                 </View>
-                  <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{margin:hp(1)}}>
-                    <Image source={Add} style={{width:hp(4),height:hp(4)}}/>
-                  </TouchableOpacity>
+                <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{ margin: hp(1) }}>
+                  <Image source={Add} style={{ width: hp(4), height: hp(4) }} />
+                </TouchableOpacity>
               </View>
             </View>
           ))}
@@ -117,23 +117,29 @@ function EOrderPlaceOrder(): React.JSX.Element {
 
           <View style={styles.summaryContainer}>
             <View style={styles.totalContainer}>
-              <Text style={{fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
+              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
               <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
             </View>
             <View style={styles.totalContainer}>
-              <Text style={{fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
+              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
               <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
             </View>
             {/* Dotted Line */}
             <View style={styles.dottedLine} />
-            
+
             <View style={styles.totalContainer}>
-              <Text style={{fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
+              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
               <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
             </View>
           </View>
-          
-          <CustomButton MainText={t('Proceed')} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EOrderPaymentMethod} />
+
+          <CustomButton MainText={t('Proceed')}
+            BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
+            txColor={colors.WHITE}
+            bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
+            isNavigation={totalPrice === 0 ? 0 :1}
+            isdisabled={totalPrice === 0?true:false} 
+            name={totalPrice!==0?ScreensName.EOrderPaymentMethod:null} />
           <View style={{ marginTop: hp(2) }}>
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
@@ -224,7 +230,7 @@ const styles = StyleSheet.create({
   productText: {
     color: colors.PRIMARY,
     fontSize: hp(2),
-    width:hp(20)
+    width: hp(20)
   },
   quantityContainer: {
     flexDirection: 'row',
@@ -258,14 +264,14 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     elevation: 5,
     backgroundColor: colors.WHITE,
-    color:colors.BLACK,
+    color: colors.BLACK,
     borderRadius: 5,
     color: colors.BLACK,
   },
-  notesButton: { 
+  notesButton: {
     width: wp(10),
     marginLeft: wp(3),
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: {

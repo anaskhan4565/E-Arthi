@@ -21,9 +21,11 @@ import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
 import { MMKV } from 'react-native-mmkv';
-import Sub from './TempImgsOrder/sub.png'
+import Sub from './TempImgsOrder/sub.png';
+import CustomTxtAndPicker from '../E-Loan/NewLoanComponents/CustomTxtAndPicker.jsx';
 
 import Add from './TempImgsOrder/add.png'
+import CustomInput from '../../../../components/CustomInput.jsx';
 function EOrderPlaceOrder(): React.JSX.Element {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState('Crop');
@@ -66,42 +68,64 @@ function EOrderPlaceOrder(): React.JSX.Element {
         <Navbar />
       </View>
       <ScrollView style={styles.container}>
-        <View style={styles.searchContainer}>
-          <CustomSearchApp placeholder={t('Search in here')} />
-        </View>
 
-        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-            {t('Your Order')}
+        <View style={{ marginBottom: hp(1.2), marginTop: hp(1), marginHorizontal: wp(5), }}>
+          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign:'center' }}>
+            {t('New Payee')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>
+          
+          {/* TAKING RAAST ID OR IBAN */}
           <View style={{ width: wp(85) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Items')}</Text>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('RAAST ID/ IBAN')}</Text>
           </View>
-          {parsedCart.map((product, index) => (
-            product.quantity >= 1 && <View key={index} style={styles.productRow}>
-              <View style={styles.productInfo}>
-                <Text style={styles.productText}>{product.name}</Text>
-                <Text style={styles.priceText}>PKR {formatNumber(parseInt(product.price.replace(/,/g, '')).toFixed(2))}</Text>
-              </View>
-              <View style={[styles.quantityContainer, { justifyContent: 'space-around' }]}>
-                <View style={{ justifyContent: "center", marginRight: hp(1) }}>
-                  <TouchableOpacity onPress={() => updateQuantity(product, -1)}>
-                    <Image source={Sub} style={{ width: hp(4), height: hp(4) }} />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.quantityBox}>
-                  <Text style={{ color: colors.GREEN }}>{product.quantity}</Text>
-                </View>
-                <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{ margin: hp(1) }}>
-                  <Image source={Add} style={{ width: hp(4), height: hp(4) }} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
             <View style={styles.notesContainer}>
+              <CustomInput placeholder={"03XXXXXXXXX/PKXXXXXXXXXXXXXXXXXXXXXXXX"} hide={false} />
+            </View>
+          </View>
+          <View style={{ width: wp(85) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(1.3) }}>{t('Please use 11 digit mobile number or 24 digit IBAN number excluding special characters.')}</Text>
+          </View>
+
+          {/* SHOWING AMOUNT TO BE PAID */}
+          <View style={{ width: wp(85) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2), marginTop: hp(1) }}>{t('Amount')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
+            </View>
+          </View>
+
+          {/* TRANSFER FROM */}
+          <View style={{ width: wp(85), marginTop:hp(1) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Transfer From')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.pickerContainer}>
+              <CustomTxtAndPicker PlaceHolderGiven={""} itemPackage={[{ label: "05280010078240790018", value: "05280010078240790018" }, { label: "05280010078240790018", value: "05280010078240790018" }]} Picker_Txt={"Select"} />
+            </View>
+          </View>
+          <View style={{ width: wp(85) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(1.2), textAlign:'right' }}>{t('Balance: Rs. 90,571.32')}</Text>
+          </View>
+
+          {/* PURPOSE */}
+          <View style={{ width: wp(85), marginTop:hp(1) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Purpose')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.pickerContainer}>
+              <CustomTxtAndPicker PlaceHolderGiven={""} itemPackage={[{ label: "Agri Land", value: "Agri Land" }, { label: "Agri Tools", value: "Agri Tools" }, { label: "Agri Machinery", value: "Agri Machinery" }, { label: "Agri Fertilizers", value: "Agri Fertilizers" }, { label: "Agri Seeds", value: "Agri Seeds" }]} Picker_Txt={"Select"} />
+            </View>
+          </View>
+
+          {/* NOTES SECTION */}
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center', marginTop: hp(1)}}>
+            <View style={styles.newNotesContainer}>
+              <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Notes')}</Text>
               <TextInput
                 style={styles.notesInput}
                 placeholder={t('Enter your notes here')}
@@ -114,33 +138,15 @@ function EOrderPlaceOrder(): React.JSX.Element {
               <Image source={require('../../../../assets/MainApp/E-Order/Bucket.png')} />
             </TouchableOpacity>
           </View>
-
-          <View style={styles.summaryContainer}>
-            <View style={styles.totalContainer}>
-              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
-            </View>
-            <View style={styles.totalContainer}>
-              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
-            </View>
-            {/* Dotted Line */}
-            <View style={styles.dottedLine} />
-
-            <View style={styles.totalContainer}>
-              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
-            </View>
-          </View>
-
-          <CustomButton MainText={t('Proceed')}
-            BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
-            txColor={colors.WHITE}
-            bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
-            isNavigation={totalPrice === 0 ? 0 :1}
-            isdisabled={totalPrice === 0?true:false} 
-            name={totalPrice!==0?ScreensName.EOrderPaymentMethod:null} />
-          <View style={{ marginTop: hp(2) }}>
+          
+          <View style={{ marginTop: hp(2), gap:5 }}>
+            <CustomButton MainText={t('Proceed')}
+              BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
+              txColor={colors.WHITE}
+              bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
+              isNavigation={totalPrice === 0 ? 0 :1}
+              isdisabled={totalPrice === 0?true:false} 
+              name={totalPrice!==0?ScreensName.EOrderPaymentMethod:null} />
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
         </View>
@@ -247,8 +253,43 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  pickerContainer: {
+    marginTop: hp(-3),
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    // elevation: 5,
+  },
+  newNotesContainer: {
+    marginTop: hp(1),
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    // elevation: 5,
+  },
   notesContainer: {
-    marginTop: hp(3),
+    marginLeft: hp(2.9),
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    // elevation: 5,
+  },
+  amountContainer: {
     width: '85%',
     shadowColor: '#000',
     shadowOffset: {
@@ -264,13 +305,11 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     elevation: 5,
     backgroundColor: colors.WHITE,
-    color: colors.BLACK,
     borderRadius: 5,
     color: colors.BLACK,
   },
   notesButton: {
     width: wp(10),
-    marginLeft: wp(3),
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',

@@ -11,8 +11,8 @@ export default [
         img: require('../src/assets/MainApp/E-Inventory/Sales.png')
     },
     {
-        screen: ScreensName.EWarehousePreviousWarehouses,
-        title: "Food Survelence",
+        screen: ScreensName.FoodSurveillanceSelectWarehouse,
+        title: "Food Surveillance",
         img: require('../src/assets/MainApp/E-Inventory/FoodSurvelence.png')
     },
     {

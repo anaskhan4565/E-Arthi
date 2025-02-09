@@ -3,17 +3,17 @@ const EOrderMainBoxDet = [
 
     {
         screen: ScreensName.EOrderPlaceOrder,
-        title: "Place Order",
+        title: "New Order",
         img: require('../src/assets/MainApp/E-Order/placeorder.png')
     },
     {
         screen: ScreensName.EOrderHistory,
-        title: "Order History",
+        title: "Pending Order",
         img: require('../src/assets/MainApp/E-Order/orderhistory.png')
     },
     {
         screen: ScreensName.EOrderTransaction,
-        title: "Transactions",
+        title: "Order History",
         img: require('../src/assets/MainApp/E-Order/orderhistory.png')
     },
     {

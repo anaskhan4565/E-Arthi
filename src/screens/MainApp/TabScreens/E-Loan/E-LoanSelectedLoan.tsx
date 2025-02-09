@@ -63,19 +63,8 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
             chartWidth={wp(55)}
             chartHeight={hp(19)}
             containerHeight={hp(30)}
-            containerWidth={wp(55)}
-            data={[
-              {
-                name: "Total Loan Amount",
-                value: val1,
-                color: "#FF6F61",
-              },
-              {
-                name: "Remaining Loan",
-                value: val2,
-                color: "#6B8E23",
-              },
-            ]}
+            containerWidth={wp(70)}
+           
           />
         </View>
         <View
@@ -96,7 +85,7 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
           </View>
           <View style={styles.HeaderSection}>
             <Text style={styles.SectionHead}>{t("Amount Left")}</Text>
-            <Text style={styles.SectionBody}>PKR 85,000</Text>
+            <Text style={styles.SectionBody}>PKR 0</Text>
           </View>
           <View style={styles.HeaderSection}>
             <Text style={styles.SectionHead}>{t("Line of Credit")}</Text>

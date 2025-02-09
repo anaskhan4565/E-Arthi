@@ -19,24 +19,25 @@ const MyPieChart = ({
   legend2Population = 25000,
   legend1_color = colors.GREEN,
   legend2_color = colors.LIGHT_PURPLE,
-}) => {
-  const { t } = useTranslation();
-  const data = [
+  datagiven=[
     {
-      name: legend1Name,
-      population: legend1Population,
+      name: "Total Loan Amount",
+      population: 100000,
       color: legend2_color,
       legendFontColor: '#7F7F7F',
       legendFontSize: 0,
     },
     {
-      name: legend2Name,
-      population: legend2Population,
+      name: "Remaining Loan",
+      population: 25000,
       color: legend1_color,
       legendFontColor: colors.WHITE,
       legendFontSize: 0,
     },
-  ];
+  ]
+}) => {
+  const { t } = useTranslation();
+  const data = datagiven
 
   return (
       <View style={[styles.box, { width: containerWidth, height: containerHeight, alignItems: 'center', justifyContent: 'center' }]}>

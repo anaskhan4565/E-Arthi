@@ -26,7 +26,7 @@ function EOrderTranscations(): React.JSX.Element {
     const getStatusStyle = (stat) => (stat ? styles.comp : styles.pend);
     const getStatusTextStyle = (stat) => (stat ? styles.completed : styles.pending);
     return (
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
         <View style={styles.navbarContainer}>
           <Navbar />
         </View>      
@@ -64,7 +64,7 @@ function EOrderTranscations(): React.JSX.Element {
             )
             )}
         </View>
-      </SafeAreaView>
+      </ScrollView>
     );
 }
 

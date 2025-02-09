@@ -43,12 +43,12 @@ function SupplersComp(): React.JSX.Element {
                         {InventorySupplierDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)}  SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)}  SourceGiven={Category.img} isNavigation={1} w={wp('88%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}
                     </View>
-                    <CustomButton MainText={'Add New Supplier'} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EInventoryAddSuppliers}/>
+                    <CustomButton MainText={'Add New Vendor'} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EInventoryAddSuppliers}/>
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexWrap: 'wrap',
+        flexDirection:'column',
         justifyContent: 'center',
         paddingVertical: hp('2%'),
         // backgroundColor: 'red',

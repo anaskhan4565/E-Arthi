@@ -10,7 +10,7 @@ const EloanDet = [
         screen: ScreensName.ELoanPending,
         title: "Pending Loan",
         img: require('../src/assets/MainApp/E-Loan/clock.png'),
-      amount:'Rs 25000'
+      amount:'Rs 25,000'
     },
     {
         screen: ScreensName.ELoanNewBank,
@@ -19,7 +19,7 @@ const EloanDet = [
     },
     {
         screen: ScreensName.EloanPreviousLoan,
-        title: "View Previous Loans",
+        title: "Loan History",
         img: require('../src/assets/MainApp/E-Loan/loans.png')
     },
     {

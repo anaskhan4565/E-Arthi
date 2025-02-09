@@ -33,7 +33,7 @@ const SuppliersReport = () => {
 
           <View style={styles.bodyContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>{t('Supplier Reports')}</Text>
+              <Text style={styles.titleText}>{t('Vendors Reports')}</Text>
               <TouchableOpacity
                 style={styles.reorderButton}
                 onPress={() => { navigation.navigate(ScreensName.EInventorySuppliersList) }}>

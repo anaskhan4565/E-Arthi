@@ -102,34 +102,49 @@ function CurrentLoan(): React.JSX.Element {
           }}
         >
           <MyPieChart
-            data={[
-              { name: t("Total Loan Amount"), value: 100000, color: "#FF6F61" },
-              { name: t("Remaining Loan"), value: 25000, color: "#6B8E23" },
+            datagiven={[
+              {
+                name: "Remaining Loan",
+                population: 32425,
+                color: '#02CA50',
+                legendFontColor: '#7F7F7F',
+                legendFontSize: 0,
+              },
+              {
+                name: t("Utilized Amount"),
+                population: 44532,
+                color: '#CA027C',
+                legendFontColor: '#FFA400',
+                legendFontSize: 0,
+              },
             ]}
-
             chartHeight={hp(15)}
           />
 
           <MyPieChart
             chartHeight={hp(15)}
-            data={[
+            datagiven={[
               {
-                name: t("Unutilized Cash Line"),
-                value: 40000,
-                color: "#7ED321",
+                name: "Unutilized Cash Line",
+                population: 32425,
+                color: '#00A9D7',
+                legendFontColor: '#7F7F7F',
+                legendFontSize: 0,
               },
               {
                 name: t("Unutilized Line of Credit"),
-                value: 25000,
-                color: "#4A90E2",
+                population: 44532,
+                color: '#FFA400',
+                legendFontColor: '#FFA400',
+                legendFontSize: 0,
               },
             ]}
-            legend1Name={"Unutilized Cash Line"}
-            legend1Population={32425}
-            legend2Name={"Unutilized Line of Credit"}
-            legend2Population={42221}
-            legend1_color={'#F3495F'}
-            legend2_color={'#49F3DD'}
+          // legend1Name={"Unutilized Cash Line"}
+          // legend1Population={32425}
+          // legend2Name={"Unutilized Line of Credit"}
+          // legend2Population={42221}
+          // legend1_color={'#00A9D7'}
+          // legend2_color={'#FFA400'}
 
           />
         </View>

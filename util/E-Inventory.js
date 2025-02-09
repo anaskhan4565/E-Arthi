@@ -13,7 +13,7 @@ const EInventoryDet = [
     },
     {
         screen: ScreensName.Suppliers,
-        title: "Suppliers",
+        title: "Vendors",
         img: require('../src/assets/MainApp/E-Inventory/Suppliers.png')
     },
     // {
@@ -45,7 +45,7 @@ const InventoryDet = [
 const InventorySupplierDet = [
     {
         screen: ScreensName.EInventorySuppliersList,
-        title: "Supplier List",
+        title: "Vendors List",
         img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },
     {

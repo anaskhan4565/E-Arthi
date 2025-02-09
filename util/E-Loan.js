@@ -3,6 +3,7 @@ const EloanDet = [
     {
         screen: ScreensName.EloanCurrentLoan,
         title: "Current Loan",
+        SecondaryTitle:"Available Loan",
         img: require('../src/assets/MainApp/E-Loan/CurrentLoan.png'),
         amount:'Rs 25,000',
     },

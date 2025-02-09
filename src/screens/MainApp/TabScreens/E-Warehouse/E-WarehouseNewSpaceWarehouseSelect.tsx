@@ -30,7 +30,7 @@ function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const storage = new MMKV();
-  const handlePress = (name,type) =>{
+  const handlePress = (name, type) => {
     storage.set("AvailableWarehouse", name);
     storage.set("StorageType", type);
     navigation.navigate(ScreensName.EWarehouseNewSpaceConfirmWarehouse);
@@ -52,27 +52,36 @@ function PurchaseHisotry(): React.JSX.Element {
           }}
         >
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-            {t("Available Warehouses")}
+            {t("Available Space")}
           </Text>
         </View>
         <View style={styles.Header}>
           <Text style={styles.HeaderCol}>Warehouse Name</Text>
+          <Text style={styles.HeaderCol}>Warehouse Type</Text>
+
           <Text style={styles.HeaderCol}>{t("Distance from You")}</Text>
         </View>
-        <View style={{flex:1}}>
-        {allNames.map(
-          (data, index) =>
-            data.name.trim() !== "" && (
-              <TouchableOpacity
-                style={styles.row}
-                key={index}
-                
-              >
-                <InventoryProduct name={data.name} SecondaryText={data.distance} allowImg={false} w={hp(44)} h={hp(6)} isNavigation={true} customPress={1} handlePress={() => {handlePress(data.name,data.type)}} />
+        <View style={{ flex: 1 }}>
+          {allNames.map(
+            (data, index) =>
+              data.name.trim() !== "" && (
+                <TouchableOpacity
+                  style={styles.row}
+                  key={index}
 
-              </TouchableOpacity>
-            )
-        )}
+                >
+                  <InventoryProduct name={data.name}
+                    SecondaryText={data.distance}
+                    allowImg={false} w={hp(44)}
+                    ThirdText={data.type}
+                    fGiven={hp(2)}
+                    h={hp(6)} isNavigation={true}
+                    customPress={1}
+                    handlePress={() => { handlePress(data.name, data.type) }} />
+
+                </TouchableOpacity>
+              )
+          )}
         </View>
       </View>
 
@@ -98,8 +107,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(4),
+    marginHorizontal: wp(3),
     height: hp(10),
+    borderBottomWidth:hp(0.2)
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,

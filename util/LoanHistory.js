@@ -1,6 +1,6 @@
 export default 
 [
-    { cost: "PKR 117,511.30", date: "10/23/2023" },
+    { cost: "PKR 4,55,000", date: "10/23/2023" },
     { cost: "PKR 104,837.50", date: "10/24/2024" },
     { cost: "PKR 89,925.00", date: "10/25/2024" },
     { cost: "PKR 134,737.50", date: "4/26/2024" },
@@ -9,4 +9,4 @@ export default
     { cost: "PKR 89,925.00", date: "6/25/2024" },
     { cost: "PKR 134,737.50", date: "3/26/2024" },
     { cost: "PKR 117,511.30", date: "5/11/2024" },
-  ]
+  ] 

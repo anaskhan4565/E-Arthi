@@ -18,11 +18,6 @@ const FoodSafetyAndSecuirty=()=> {
   const navigation = useNavigation();
   
 
-  const handlePress = (name : string) => {
-    storage.set("SurveilledWarehouse", name);
-    navigation.navigate(ScreensName.FoodSurveillanceWarehouse)
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>

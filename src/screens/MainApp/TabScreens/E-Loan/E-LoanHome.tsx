@@ -54,6 +54,7 @@ function EInventory(): React.JSX.Element {
                                             screenName={Category.screen}
                                             navigationName={Category.screen}
                                             SourceGiven={Category.img}
+                                            SecondaryText={Category.SecondaryTitle?Category.SecondaryTitle:null}
                                             isNavigation={1}
                                             w={wp("38%")}
                                             h={hp("16%")}

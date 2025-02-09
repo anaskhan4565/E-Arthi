@@ -18,9 +18,11 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     imgW = wp(15),
     imgH = hp(7),
     AllowElv = true,
-    SecTextAllow=false,
+    SecTextAllow = false,
     customPress = 0,
+    ThirdText = null,
     handlePress = null,
+    fGiven=hp(2.4)
 }) => {
     const navigation = useNavigation();
     const { t } = useTranslation()
@@ -37,7 +39,7 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, elevation: AllowElv ? 5 : 0 }]} onPress={customPress?handlePress: handleNavigation}>
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, elevation: AllowElv ? 5 : 0 }]} onPress={customPress ? handlePress : handleNavigation}>
             <View style={styles.rowContainer}>
                 {allowImg ?
                     <View style={styles.imageContainer}>
@@ -46,14 +48,26 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
                     : null
                 }
                 <View style={[styles.textContainer, { marginLeft: !allowImg ? hp(2) : null }]}>
-                    <Text style={styles.TextStyle}>{t(name)}</Text>
-                    {SecTextAllow?
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>Remaining Amount:</Text>
-                        <Text style={{ fontSize: hp(1.4), color: colors.GREEN,fontFamily:fonts.Bold }}>PKR 53,950</Text>
+                    {ThirdText ?
+                        <View style={{ flexDirection: 'row', gap: hp(1), alignItems: 'center' }}>
+                            <Text style={[styles.TextStyle,{fontSize:fGiven,width:hp(16)}]}>{t(name)}</Text>
 
-                    </View>
-                    :null}
+                            <Text style={{width:hp(14),fontWeight:'bold',color:colors.HAZY_SKY}}>{ThirdText}</Text>
+                        </View>
+                        :
+
+                        <Text style={styles.TextStyle}>{t(name)}</Text>
+
+
+                    }
+
+                    {SecTextAllow ?
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>Remaining Amount:</Text>
+                            <Text style={{ fontSize: hp(1.4), color: colors.GREEN, fontFamily: fonts.Bold }}>PKR 53,950</Text>
+
+                        </View>
+                        : null}
                 </View>
 
                 {!allowImg ?

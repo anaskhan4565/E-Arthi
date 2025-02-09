@@ -21,7 +21,7 @@ const EInventoryBoxes = ({
     give_top_margin = 0,
     fontcolor = "black",
     amount,
-
+    SecondaryText = null
 
 }) => {
     const navigation = useNavigation();
@@ -41,22 +41,29 @@ const EInventoryBoxes = ({
 
     return (
         <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
-            <Image source={SourceGiven} style={[styles.ImageStyle, { width: img_size_w, height: img_size_h }]} />
-            <Text style={[styles.TextStyle, {
-                fontSize: font_Size,
-                fontFamily: isBold ? fonts.Bold : isLightBold ? fonts.SemiBold : fonts.Medium,
-                marginTop: give_top_margin,
-                color: fontcolor,
-            }]}>{t(name)}</Text>
-            {amount && (
+            <View style={{marginTop:SecondaryText?hp(2):null,}}>
+                <Image source={SourceGiven} style={[styles.ImageStyle, { width: img_size_w, height: img_size_h }]} />
                 <Text style={[styles.TextStyle, {
                     fontSize: font_Size,
                     fontFamily: isBold ? fonts.Bold : isLightBold ? fonts.SemiBold : fonts.Medium,
                     marginTop: give_top_margin,
-              
-                }]}>{t(amount)}</Text>
-            )}
+                    color: fontcolor,
+                }]}>{t(name)}</Text>
+            </View>
+            <View >
+                {SecondaryText ?
+                    <Text style={{ color: colors.PRIMARY }}>{SecondaryText}</Text>
 
+                    : null}
+                {amount && (
+                    <Text style={[styles.TextStyle, {
+                        fontSize: font_Size,
+                        fontFamily: isBold ? fonts.Bold : isLightBold ? fonts.SemiBold : fonts.Medium,
+                        marginTop: give_top_margin,
+
+                    }]}>{t(amount)}</Text>
+                )}
+            </View>
         </TouchableOpacity>
     );
 };
@@ -81,6 +88,7 @@ const styles = StyleSheet.create({
     },
     ImageStyle: {
         resizeMode: 'contain',
+        justifyContent:"center",alignContent:'center',alignSelf:'center',
         marginBottom: hp(0.5), // Optional: Add a bottom margin to the image for consistent spacing
     },
 });

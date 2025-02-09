@@ -42,77 +42,15 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
             <Text style={styles.headerText}>{t("Loan Report 2024")}</Text>
           </View>
           <ELoanPiChart style={styles.image} />
-          <PiChartLegend style={styles.image} />
+          <View >
+          <PiChartLegend style={styles.image} width={hp(45)} height={hp(35)}/>
+          </View>
           <View style={styles.headerRow}>
-            <Text style={styles.headerText}>{t("Loan Repay History")}</Text>
+            <Text style={styles.headerText}>{t("Loan Payoff History")}</Text>
           </View>
-          <ELoanBarChart style={styles.image} />
-        </View>
-        {/* <View
-          style={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ fontFamily: fonts.Bold, fontSize: hp(2.4) }}>
-            Loan Report 2024
-          </Text>
-
-          <MyPieChart
-            chartWidth={wp(55)}
-            chartHeight={hp(19)}
-            containerHeight={hp(30)}
-            containerWidth={wp(70)}
-           
-          />
-        </View>
-        <View
-          style={{
-            marginBottom: hp(1.2),
-            marginTop: hp(0),
-            marginHorizontal: wp(5),
-          }}
-        >
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-            {t("Selected Loan")}
-          </Text>
-        </View>
-        <View style={styles.MainHeader}>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Loan Amount")}</Text>
-            <Text style={styles.SectionBody}>PKR 110,000</Text>
-          </View>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Amount Left")}</Text>
-            <Text style={styles.SectionBody}>PKR 0</Text>
-          </View>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Line of Credit")}</Text>
-            <Text style={styles.SectionBody}>PKR 70,000</Text>
-          </View>
-          <View style={styles.HeaderSection}>
-            <Text style={styles.SectionHead}>{t("Cash")}</Text>
-            <Text style={styles.SectionBody}>PKR 52,130</Text>
-          </View>
+          <ELoanBarChart style={styles.image} width={hp(45)} height={hp(50)} />
         </View>
 
-        <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>{t("Category")}</Text>
-
-          <Text style={styles.HeaderCol}>{t("Amount")}</Text>
-        </View>
-        {LoanCategoryDetails.map(
-          (data, index) =>
-            data.category.trim() !== "" && (
-              <View style={styles.row} key={index}>
-                <View style={styles.decsAndQty}>
-                  <Text style={styles.date}>{t(data.category)}</Text>
-                </View>
-                <Text style={styles.cost}>PKR: {data.cost}</Text>
-              </View>
-            )
-        )} */}
       </View>
     </ScrollView>
   );
@@ -162,7 +100,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
   },
-  row: {
+  row: { 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -186,12 +124,14 @@ const styles = StyleSheet.create({
     fontSize: hp(2.2),
   },
   image: {
-    width: wp(85),
-    height: undefined,
+    width: wp(90),
+  
+    height: hp(10),
     resizeMode: 'contain',
     marginVertical: hp(1.5),
     alignSelf: 'center',
   },
+  
   headerRow: {
     marginTop: hp(1),
     flexDirection: "row",

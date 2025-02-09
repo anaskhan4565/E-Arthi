@@ -23,11 +23,18 @@ import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/ScreensName";
 import WarehousePic from './TempImages/WarehouseBG.jpg'
-import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes";
 import InventoryProduct from "../../CustomComponent/WarehouseProduct";
+import { MMKV } from "react-native-mmkv";
+
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const storage = new MMKV();
+  const handlePress = (name,type) =>{
+    storage.set("AvailableWarehouse", name);
+    storage.set("StorageType", type);
+    navigation.navigate(ScreensName.EWarehouseNewSpaceConfirmWarehouse);
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
@@ -59,11 +66,9 @@ function PurchaseHisotry(): React.JSX.Element {
               <TouchableOpacity
                 style={styles.row}
                 key={index}
-                onPress={() => {
-                  navigation.navigate(ScreensName.EWarehouseNewSpaceConfirmWarehouse);
-                }}
+                
               >
-                <InventoryProduct name={data.name} SecondaryText={data.distance} allowImg={false} w={hp(44)} h={hp(6)} isNavigation={true} navigateTo={ScreensName.EWarehouseNewSpaceConfirmWarehouse} />
+                <InventoryProduct name={data.name} SecondaryText={data.distance} allowImg={false} w={hp(44)} h={hp(6)} isNavigation={true} customPress={1} handlePress={() => {handlePress(data.name,data.type)}} />
 
               </TouchableOpacity>
             )

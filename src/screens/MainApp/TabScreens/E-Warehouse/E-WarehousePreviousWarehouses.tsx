@@ -22,13 +22,20 @@ import ScreensName from "../../../../../util/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton";
 import CustomBarChart from "./CustomStylesComp/Chart";
 import InventoryProduct from "../../CustomComponent/WarehouseProduct.jsx";
+import { MMKV } from "react-native-mmkv";
 
 function PurchaseHisotry(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const screenName = ScreensName.EWarehousePreviousWarehouseDetails;
+  const storage = new MMKV();
+
+  const handlePress = (name,type) =>{
+      storage.set("AvailableWarehouse", name);
+      storage.set("StorageType", type);
+      navigation.navigate(ScreensName.EWarehousePreviousWarehouseDetails);
+    }
   const barChartData = {
-    labels: ["PASSCO", "Cargill", "Kissan", "PASSCO", "Cargill"],
+    labels: ["PASSCO", "Cargill", "Kissan", "Suncrop Group", "GrowPak Store"],
     datasets: [
       {
         data: [5000, 10000, 7500, 12500, 9000],
@@ -71,7 +78,6 @@ function PurchaseHisotry(): React.JSX.Element {
           />
         </View>
 
-
         <View style={styles.tableHeader}>
           <Text style={styles.tableHeaderText}>{t("Warehouse")}</Text>
           <Text style={styles.tableHeaderText}>{t("Date Reserved")}</Text>
@@ -85,13 +91,12 @@ function PurchaseHisotry(): React.JSX.Element {
                 style={styles.tableRow}
                 key={index}
                 onPress={() => {
-                  0
-                  navigation.navigate(ScreensName.EWarehousePreviousWarehouseDetails);
-                }}
+                    storage.set("AvailableWarehouse", data.name);
+                    storage.set("StorageType", data.type);
+                    navigation.navigate(ScreensName.EWarehousePreviousWarehouseDetails);
+                  }}
               >
-                <InventoryProduct name={data.name} SecondaryText={data.date} secTextWidth={hp(1.8)} allowImg={false} w={hp(42)} h={hp(5)} isNavigation={true} navigateTo={ScreensName.EWarehouseNewSpaceConfirmWarehouse} />
-
-
+                <InventoryProduct name={data.name} SecondaryText={data.date} secTextWidth={hp(1.8)} allowImg={false} w={hp(42)} h={hp(5)} isNavigation={true} customPress={1} handlePress={() => {handlePress(data.name,data.type)}} />
               </TouchableOpacity>
             )
         )}

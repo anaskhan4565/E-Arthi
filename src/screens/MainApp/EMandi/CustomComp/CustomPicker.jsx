@@ -23,10 +23,11 @@ const CustomPicker = ({
   hp_given = hp(5),
   min_given = wp(50),
   padding_f = false,
+  defaultValue=null,
   placeholderFontSize = hp(2), 
 }) => {
   const { t } = useTranslation();
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(defaultValue);
 
   const checkVal = (e) => {
     setSelectedValue(e);
@@ -51,7 +52,7 @@ const CustomPicker = ({
         allow_shadow ? styles.shadowStyle : null,
       ]}
     >
-      <View style={[styles.pickerContainer, { height: hp_given, minWidth: min_given, marginLeft: isThatColor ? hp(-1.5) : null }]}
+      <View style={[styles.pickerContainer, {borderColor:colors.RED, height: hp_given, minWidth: min_given, marginLeft: isThatColor ? hp(-1.5) : null }]}
       >
         <Picker
           selectedValue={selectedValue}
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     elevation: hp(0.3), 
   },
   pickerContainer: {
-    borderColor: colors.LIGHT_GRAY,
+    // borderColor: colors.LIGHT_GRAY,
     borderRadius: 8,
     justifyContent: 'center',
   },

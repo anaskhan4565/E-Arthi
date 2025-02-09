@@ -15,7 +15,7 @@ const CustomBottomSheetExport = () => {
     const { t } = useTranslation();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [currentState, setCurrentState] = useState(['Buy'])
-
+    console.log(currentState)
     return (
         <CustomBottomSheet expanded={isExpanded}>
             <View style={{ flex: 1, flexDirection: 'col' }} >
@@ -30,39 +30,54 @@ const CustomBottomSheetExport = () => {
                             w_given={hp(17)}
                             hp_given={hp(3)}
                             min_given={hp(15)}
+                            defaultValue={0}
+
                         />
 
                         <CustomPicker items={[
                             { label: "Buy", value: "Buy" },
                             { label: "Sell", value: "Sell" },
-                        ]} 
-                        w_given={hp(17)}
-                        hp_given={hp(3)}
-                        min_given = {hp(15)}
-                        key={24} currentState={currentState} setCurrentState={setCurrentState} />
+                        ]}
+                            w_given={hp(17)}
+                            defaultValue={0}
+                            stateName={'BuyScreen'}
+                            hp_given={hp(3)}
+                            min_given={hp(15)}
+                            key={24} currentState={currentState} setCurrentState={setCurrentState} />
                         <CustomPicker items={[
                             { label: "Limit", value: "Limit" },
                             { label: "Market", value: "Market" },
                         ]} key={8}
-                        w_given={hp(17)}
-                        hp_given={hp(3)}
-                        min_given = {hp(15)}
+                            w_given={hp(17)}
+                            hp_given={hp(3)}
+                            defaultValue={0}
+
+                            min_given={hp(15)}
                         />
-                        <View style={{width:hp(17)}} >
-                            <TextInput placeholder={t('100')} style={{ backgroundColor: colors.LIGHT_GRAY }} />
+                        <View style={{ width: hp(17) }} >
+                            <TextInput
+                                placeholder={t('100')}
+                                style={{ backgroundColor: colors.LIGHT_GRAY }}
+                                keyboardType="number-pad" // Opens a numeric keypad
+                            />
                         </View>
                         <View style={{ flex: 0.01, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Text style={{ fontWeight: '900', color: colors.RED }}>9.22</Text>
                             <Text style={{ fontWeight: '900', color: colors.GREEN }}>11.22</Text>
                         </View>
-                        <View style={{ flex: 0.2,width:hp(17) }}>
-                            <TextInput placeholder={t('10.15')} style={{ backgroundColor: colors.LIGHT_GRAY }} />
+                        <View style={{ flex: 0.2, width: hp(17) }}>
+                            <TextInput placeholder={t('10.15')}
+                            keyboardType="number-pad" // Opens a numeric keypad
+                
+                            style={{ backgroundColor: colors.LIGHT_GRAY }} />
                         </View>
 
                         <View style={[styles.passInputBox, { marginTop: hp(3) }]}>
                             <TextInput
                                 style={styles.passInput}
                                 placeholder={t("Pin")}
+                                keyboardType="number-pad" // Opens a numeric keypad
+
                                 placeholderTextColor={colors.BLACK}
                                 secureTextEntry={passwordVisible}
                             />
@@ -77,7 +92,11 @@ const CustomBottomSheetExport = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <CustomButton MainText={currentState == 'Buy' ? t('Buy') : t('Sell')} hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)} BgGiven={currentState == 'Buy' ? colors.GREEN : colors.RED} txColor={colors.WHITE} />
+                            <CustomButton MainText={currentState == 'Buy' ? t('Buy') : t('Sell')}
+                                hgiven={hp(5)} wgiven={wp(35)} b_radius={hp(0.3)}
+                                BgGiven={currentState == 'Buy' ? colors.GREEN : colors.RED}
+                                bordergiven={currentState == 'Buy' ? colors.GREEN : colors.RED}
+                                txColor={colors.WHITE} />
                         </View>
                     </View>
                     <View style={{ flex: 0.6, borderWidth: 1 }}>

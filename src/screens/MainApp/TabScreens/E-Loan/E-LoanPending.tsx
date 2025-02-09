@@ -18,7 +18,7 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
-import { pendingloan } from "../../../../../util/E-Loan";
+// import { pendingloan } from "../../../../../util/E-Loan";
 
 
 
@@ -26,6 +26,16 @@ function ELoanPending(): React.JSX.Element {
     const { t } = useTranslation();
     const getStatusStyle = (stat) => (stat ? styles.comp : styles.pend);
     const getStatusTextStyle = (stat) => (stat ? styles.completed : styles.pending);
+    const pendingloan = [
+      {
+          desc: "Loan #08098999917",
+          time: "14:56 PM",
+          cost: "PKR 25,000",
+          stat: false,
+          date: "4 February 2025"
+      }
+    ]
+    
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.navbarContainer}>

@@ -7,11 +7,9 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors.js";
 import { Animated, Image, TouchableOpacity } from "react-native";
-
 import {
     SafeAreaView,
     ScrollView,
-    TextInput,
     StyleSheet,
     Text,
     View,
@@ -21,24 +19,28 @@ import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
-import RAAST from '../../../../assets/MainApp/E-Order/PaymentMethods/Raast.png'
-import DEBIT from '../../../../assets/MainApp/E-Order/PaymentMethods/Debit.png'
-import MASTER from '../../../../assets/MainApp/E-Order/PaymentMethods/Master.png'
-import VISA from '../../../../assets/MainApp/E-Order/PaymentMethods/VISA.png'
-import AGRICARD from '../../../../assets/MainApp/E-Order/PaymentMethods/AgriCard.png'
-import KISSANCARD from '../../../../assets/MainApp/E-Order/PaymentMethods/KisaanCard.png'
+
+// Import your assets
+import RAAST from "../../../../assets/MainApp/E-Order/PaymentMethods/RAAST.svg";
+import DEBIT from "../../../../assets/MainApp/E-Order/PaymentMethods/DEBIT.svg";
+import MASTER from "../../../../assets/MainApp/E-Order/PaymentMethods/Mastercard.svg";
+import VISA from "../../../../assets/MainApp/E-Order/PaymentMethods/visa-logo.svg";
+import AGRICARD from "../../../../assets/MainApp/E-Order/PaymentMethods/AgriCard.png";
+import KISSANCARD from "../../../../assets/MainApp/E-Order/PaymentMethods/KisaanCard.png";
 import InventoryProduct from "../../CustomComponent/WarehouseProduct.jsx";
 import Wallet from './TempImgsOrder/image.png'
 import { Button, RadioButton } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+
 const paymentMethods = [
     { name: "Raast", image: RAAST },
     { name: "Debit Card", image: DEBIT },
     { name: "MasterCard", image: MASTER },
     { name: "VISA", image: VISA },
-    { name: "Agri Card", image: AGRICARD },
+    // { name: "Agri Card", image: AGRICARD },
     { name: "Kisaan Card", image: KISSANCARD },
 ];
+
 function EOrderPlaceOrder(): React.JSX.Element {
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -52,11 +54,9 @@ function EOrderPlaceOrder(): React.JSX.Element {
 
     const NavigateToPayment = (passed) => {
         PassedPayment.set("PassedName", passed.name);
-        PassedPayment.set("PassedImage", passed.image);
-
-        navigation.navigate(ScreensName.RaastPaymentScreen)
-    }
-
+        // PassedPayment.set("PassedImage", passed.image);
+        navigation.navigate(ScreensName.RaastPaymentScreen);
+    };
 
     const translateY = useRef(new Animated.Value(hp(20))).current;
     const opacity = useRef(new Animated.Value(0)).current;
@@ -97,7 +97,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                         style={{
                             fontFamily: fonts.SemiBold,
                             fontSize: hp(2.9),
-                            marginLeft: hp(1)
+                            marginLeft: hp(1),
                         }}
                     >
                         {t("Payment Methods")}
@@ -178,22 +178,37 @@ function EOrderPlaceOrder(): React.JSX.Element {
                     ]}
                     pointerEvents={selected === "Card" ? "auto" : "none"} // Disable interaction when off
                 >
-                    {paymentMethods.map((each, index) => (
-                        <TouchableOpacity
-                            onPress={() => NavigateToPayment(each)}
-                            key={index}
-                            style={styles.imageButton}
-                        >
-                            <View style={styles.imageWrapper}>
-                                <Image source={each.image} style={styles.image} />
-                            </View>
-                        </TouchableOpacity>
-                    ))}
+                    {paymentMethods.map((each, index) => {
+                        return (
+                            <TouchableOpacity
+                                onPress={() => NavigateToPayment(each)}
+                                key={index}
+                                style={[styles.imageButton,{elevation:selected=="Card"?5:0}]}
+                            >
+                                <View style={styles.imageWrapper}>
+                                    {typeof each.image === "function" ? (
+                                        <each.image
+                                            width={wp(20)}
+                                            height={hp(10)}
+                                            style={styles.image}
+                                        />
+                                    ) : (
+                                        <Image
+                                            source={each.image}
+                                            style={[styles.image, { width: wp(46), height: hp(13.5) }]}
+                                            resizeMode="contain"
+                                        />
+                                    )}
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    })}
                 </Animated.View>
 
             </ScrollView>
         </SafeAreaView>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -216,7 +231,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: hp(4),
         padding: wp(5),
-
     },
     selectercontainer: {
         width: wp(100),
@@ -235,7 +249,6 @@ const styles = StyleSheet.create({
         fontSize: hp(3),
         color: colors.DARK_GRAY,
     },
-
     itemBox: {
         width: wp(30),
         height: hp(5),
@@ -308,7 +321,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: wp(2),
         height: hp(10),
-        textAlignVertical: "top", // Ensures text starts at the top
+        textAlignVertical: "top",
     },
     summaryContainer: {
         marginTop: hp(3),
@@ -316,13 +329,12 @@ const styles = StyleSheet.create({
         padding: wp(3),
         borderRadius: 5,
     },
-
     totalContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         marginHorizontal: wp(4),
         marginBottom: hp(2),
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
     },
     totalText: {
         color: colors.GREEN,
@@ -342,11 +354,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         padding: hp(1),
-        backgroundColor: '#F4FEFF',
+        backgroundColor: "#F4FEFF",
         margin: hp(2),
-        borderRadius: hp(0.9)
-        // marginBottom: hp(2),
-        // maxHeight: hp(30),
+        borderRadius: hp(0.9),
     },
     imageButton: {
         width: wp(42),
@@ -361,7 +371,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.3,
         shadowRadius: 4,
-        elevation: 5,
+        justifyContent: "center",
+        alignItems: "center",
     },
     imageWrapper: {
         borderRadius: 8,

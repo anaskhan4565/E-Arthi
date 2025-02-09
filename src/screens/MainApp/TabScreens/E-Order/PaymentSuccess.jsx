@@ -43,9 +43,8 @@ const AboutMore = () => {
 const ResetDefaultsStore=()=>{
     storage.clearAll()
     PassedPayment.clearAll()
-    navigation.navigate(ScreensName.MainTabNavigation, {
-        screen: ScreensName.EMarket, 
-      });
+    navigation.navigate(ScreensName.MainTabNavigation
+      );
 }
 
     return (

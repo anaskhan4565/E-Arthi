@@ -89,20 +89,19 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     scrollContainer: {
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        paddingVertical: hp('2%'),
+        //flexWrap: 'wrap',
+        justifyContent: "center",
+        paddingVertical: hp("2%"),
         // backgroundColor: 'red',
-        alignItems: 'center',
-
-    },
-    itemBoxWrapper: {
-        width: '30%',
-        marginBottom: hp('2%'),
-        marginHorizontal: wp('-3%'),
-        alignItems: 'center',
-
-    },
+        alignSelf: "center",
+        alignItems: "center",
+      },
+      itemBoxWrapper: {
+        width: "30%",
+        marginBottom: hp("2%"),
+        marginHorizontal: wp("-3%"),
+        alignItems: "center",
+      },
     recommendedProducts: {
         marginTop: 20,
     },

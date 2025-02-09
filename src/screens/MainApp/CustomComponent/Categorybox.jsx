@@ -8,17 +8,17 @@ import { fonts } from '../../../../util/FontName.js';
 import { useTranslation } from 'react-i18next';
 import { MMKV } from 'react-native-mmkv';
 
-const Categorybox = ({OnpressCustom=false,
-    isSelected=true ,
+const Categorybox = ({ OnpressCustom = false,
+    isSelected = true,
     name, SourceGiven,
-     isNavigation,
-      w = wp('18%'),
-       h = hp('9%'),
-        navigationName, 
-        screenName,
-        selectedCategory,
-        setSelectedCategory
-    }) => {
+    isNavigation,
+    w = wp('18%'),
+    h = hp('9%'),
+    navigationName,
+    screenName,
+    selectedCategory,
+    setSelectedCategory
+}) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
     const MarketProductType = new MMKV();
@@ -44,8 +44,8 @@ const Categorybox = ({OnpressCustom=false,
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h,borderWidth:selectedCategory === name ?hp(0.4):hp(0.1)}]} onPress={OnpressCustom?MarketProductSet:handleNavigation} >
-            <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%')}]} />
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, borderWidth: selectedCategory === name ? hp(0.4) : hp(0.1) }]} onPress={OnpressCustom ? MarketProductSet : handleNavigation} >
+            <Image source={SourceGiven} style={[styles.ImageStyle, { width: wp('6%'), height: hp('5%') }]} />
             <Text style={styles.TextStyle}>{t(name)}</Text>
         </TouchableOpacity>
     );
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     },
     TextStyle: {
         fontFamily: fonts.Regular,
-        fontSize: 12,
+        fontSize: hp(1.3),
+        textAlign: 'center',
     },
     ImageStyle: {
         resizeMode: 'contain',

@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
-import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import { Image } from 'react-native';
 
 import {
   SafeAreaView,
@@ -19,24 +17,26 @@ import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
 import { MMKV } from 'react-native-mmkv';
-import Sub from './TempImgsOrder/sub.png'
 
-import Add from './TempImgsOrder/add.png'
-function EOrderPlaceOrder(): React.JSX.Element {
+
+
+function PaymentConfirmation(): React.JSX.Element {
   const { t } = useTranslation();
-  const [selectedItem, setSelectedItem] = useState('Crop');
   const navigation = useNavigation();
-  const [key, setKey] = useState(0); // Change key to force re-render
+  const [key, setKey] = useState(0); 
   const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
   useFocusEffect(
     useCallback(() => {
-      setKey(prevKey => prevKey + 1); // Update key to trigger re-render
+      setKey(prevKey => prevKey + 1);
     }, [])
   );
   const storage = new MMKV();
+    const PassedPayment = new MMKV();
+  
+  const finalPrice=storage.getString("FinalPrice")
+  const passedName = PassedPayment.getString("PassedName");
 
   const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
@@ -58,7 +58,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
     }
   };
   const totalPrice = parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13;
-  storage.set('FinalPrice',JSON.stringify(totalPrice))
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,81 +66,72 @@ function EOrderPlaceOrder(): React.JSX.Element {
         <Navbar />
       </View>
       <ScrollView style={styles.container}>
-        <View style={styles.searchContainer}>
-          <CustomSearchApp placeholder={t('Search in here')} />
-        </View>
 
-        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-            {t('Your Order')}
+        <View style={{ marginBottom: hp(1.2), marginTop: hp(1), marginHorizontal: wp(5), }}>
+          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign:'center' }}>
+            {passedName?.toLocaleUpperCase()} {t('Transfers')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>
+
+          {/* TRANSFER TO */}
           <View style={{ width: wp(85) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Items')}</Text>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(1) }}>{t('Transfer To')}</Text>
           </View>
-          {parsedCart.map((product, index) => (
-            product.quantity >= 1 && <View key={index} style={styles.productRow}>
-              <View style={styles.productInfo}>
-                <Text style={styles.productText}>{product.name}</Text>
-                <Text style={styles.priceText}>PKR {formatNumber(parseInt(product.price.replace(/,/g, '')).toFixed(2))}</Text>
-              </View>
-              <View style={[styles.quantityContainer, { justifyContent: 'space-around' }]}>
-                <View style={{ justifyContent: "center", marginRight: hp(1) }}>
-                  <TouchableOpacity onPress={() => updateQuantity(product, -1)}>
-                    <Image source={Sub} style={{ width: hp(4), height: hp(4) }} />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.quantityBox}>
-                  <Text style={{ color: colors.GREEN }}>{product.quantity}</Text>
-                </View>
-                <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{ margin: hp(1) }}>
-                  <Image source={Add} style={{ width: hp(4), height: hp(4) }} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
-            <View style={styles.notesContainer}>
-              <TextInput
-                style={styles.notesInput}
-                placeholder={t('Enter your notes here')}
-                placeholderTextColor={colors.LIGHT_GRAY}
-                multiline
-                numberOfLines={4}
-              />
-            </View>
-            <TouchableOpacity style={styles.notesButton}>
-              <Image source={require('../../../../assets/MainApp/E-Order/Bucket.png')} />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.summaryContainer}>
-            <View style={styles.totalContainer}>
-              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
-            </View>
-            <View style={styles.totalContainer}>
-              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
-            </View>
-            {/* Dotted Line */}
-            <View style={styles.dottedLine} />
-
-            <View style={styles.totalContainer}>
-              <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('Agri-Tech Bank')}</Text>
             </View>
           </View>
 
-          <CustomButton MainText={t('Proceed')}
-            BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
-            txColor={colors.WHITE}
-            bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
-            isNavigation={totalPrice === 0 ? 0 :1}
-            isdisabled={totalPrice === 0?true:false} 
-            name={totalPrice!==0?ScreensName.EOrderPaymentMethod:null} />
-          <View style={{ marginTop: hp(2) }}>
+          {/* SHOWING AMOUNT TO BE PAID */}
+          <View style={{ width: wp(85) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(2) }}>{t('Amount')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>PKR {formatNumber(parseInt(finalPrice).toFixed(2))}</Text>
+            </View>
+          </View>
+
+          {/* TRANSFER FROM */}
+          <View style={{ width: wp(85) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(2) }}>{t('Transfer From')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('0378240790018')}</Text>
+            </View>
+          </View>
+
+          {/* PURPOSE */}
+          <View style={{ width: wp(85), marginTop:hp(1) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5) }}>{t('Purpose')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('Agri Land')}</Text>
+            </View>
+          </View>
+
+          {/* PURPOSE */}
+          <View style={{ width: wp(85), marginTop:hp(1) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5) }}>{t('Notes')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('First 100 Acres of Land')}</Text>
+            </View>
+          </View>
+          
+          <View style={{ marginTop: hp(2), gap:5 }}>
+            <CustomButton MainText={t('Confirm')}
+              BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
+              txColor={colors.WHITE}
+              bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
+              isNavigation={totalPrice === 0 ? 0 :1}
+              isdisabled={totalPrice === 0?true:false} 
+              name={totalPrice!==0?ScreensName.AllOTP:null} />
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
         </View>
@@ -247,8 +238,43 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  pickerContainer: {
+    marginTop: hp(-3),
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    // elevation: 5,
+  },
+  newNotesContainer: {
+    marginTop: hp(1),
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    // elevation: 5,
+  },
   notesContainer: {
-    marginTop: hp(3),
+    marginLeft: hp(2.9),
+    width: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    // elevation: 5,
+  },
+  amountContainer: {
     width: '85%',
     shadowColor: '#000',
     shadowOffset: {
@@ -264,13 +290,11 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     elevation: 5,
     backgroundColor: colors.WHITE,
-    color: colors.BLACK,
     borderRadius: 5,
     color: colors.BLACK,
   },
   notesButton: {
     width: wp(10),
-    marginLeft: wp(3),
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -327,4 +351,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EOrderPlaceOrder;
+export default PaymentConfirmation;

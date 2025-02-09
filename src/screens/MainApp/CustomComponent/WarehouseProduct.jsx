@@ -8,7 +8,17 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import arrow from '../../../assets/rightarrowhead.png'
 
-const InventoryProduct = ({secTextWidth=hp(2.3) ,gapGiven,allowImg = true,SecondaryText='Nothing', name, isNavigation, w = wp('90%'), h = hp('10%'), navigateTo }) => {
+const InventoryProduct = ({ secTextWidth = hp(2.3)
+    , gapGiven,
+    allowImg = true,
+    SecondaryText = 'Nothing',
+    name, isNavigation, w = wp('90%'),
+    h = hp('10%'), navigateTo,
+    customImg={Image4},
+    imgW=wp(15),
+    imgH=hp(7)
+
+}) => {
     const navigation = useNavigation();
     const { t } = useTranslation()
 
@@ -28,18 +38,18 @@ const InventoryProduct = ({secTextWidth=hp(2.3) ,gapGiven,allowImg = true,Second
             <View style={styles.rowContainer}>
                 {allowImg ?
                     <View style={styles.imageContainer}>
-                        <Image source={Image4} style={styles.ImageStyle} />
+                        <Image source={customImg} style={[styles.ImageStyle,{width:imgW,height:imgH}]} />
                     </View>
                     : null
                 }
-                <View style={[styles.textContainer,{marginLeft:!allowImg?hp(2):null}]}>
+                <View style={[styles.textContainer, { marginLeft: !allowImg ? hp(2) : null }]}>
                     <Text style={styles.TextStyle}>{t(name)}</Text>
                 </View>
 
                 {!allowImg ?
                     <View style={[styles.arrowContainer, { marginRight: hp(2), alignItems: "center", justifyContent: 'center' }]}>
 
-                        <Text style={[styles.TextStyle, { paddingRight: hp(1),fontSize:secTextWidth }]}>{SecondaryText}</Text>
+                        <Text style={[styles.TextStyle, { paddingRight: hp(1), fontSize: secTextWidth }]}>{SecondaryText}</Text>
                         <Image source={arrow} styles={{ width: wp(3), height: hp(3) }} />
                     </View>
 
@@ -102,8 +112,7 @@ const styles = StyleSheet.create({
     },
     ImageStyle: {
         resizeMode: 'contain',
-        width: wp(15),
-        height: hp(7),
+
     },
     priceText: {
         textAlign: 'center',

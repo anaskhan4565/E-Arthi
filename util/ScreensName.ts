@@ -129,4 +129,9 @@ export default {
     EOrderTransaction: "EOrderTransaction",
     EOrderCheckout: "EOrderCheckout",
     EOrderPaymentMethod: "EOrderPaymentMethod",
+
+    RaastPaymentScreen:"RaastPaymentScreen",
+    RaastConfirmPayment:"RaastConfirmPayment",
+    PaymentSuccess:"PaymentSuccess",
+    AllOTP:"AllOTP"
 }

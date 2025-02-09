@@ -51,12 +51,12 @@ function EInventoryDetails(): React.JSX.Element {
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.headerRow}>
-                        <Text style={styles.headerText}>{t('Add Suppliers')}</Text>
+                        <Text style={styles.headerText}>{t('Add Vendor')}</Text>
                     </View>
 
                     <View style={styles.detailsContainer}>
                         <View style={styles.detailRow}>
-                            <Text style={styles.label}>{t('Supplier Name')}</Text>
+                            <Text style={styles.label}>{t('Vendor Name')}</Text>
                             <TextInput
                            placeholder='Enter Here'
                            style={[styles.value, {paddingHorizontal: wp(2)}]}

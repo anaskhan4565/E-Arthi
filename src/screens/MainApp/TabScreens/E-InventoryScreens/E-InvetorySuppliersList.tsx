@@ -52,17 +52,17 @@ function InvetorySuppliersList(): React.JSX.Element {
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: hp(1.2), marginTop: hp(0),  gap: wp(23) }}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(4),marginRight:wp(4) }}>
-            {t('Suppliers')}
+            {t('Vendors')}
           </Text>
           <TouchableOpacity
             style={styles.reorderButton}
             onPress={() => { navigation.navigate(ScreensName.EInventoryAddSuppliers) }}>
-            <Text style={styles.reorderButtonText}>{t('Add Suppliers')}</Text>
+            <Text style={styles.reorderButtonText}>{t('Add Vendor')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.Header}>
-          <Text style={styles.HeaderCol}>{t('Supplier ID')}</Text>
-          <Text style={[styles.HeaderCol, { textAlign: "center" }]}>{t('Supplier Name')}</Text>
+          <Text style={styles.HeaderCol}>{t('Vendor ID')}</Text>
+          <Text style={[styles.HeaderCol, { textAlign: "center" }]}>{t('Vendor Name')}</Text>
           <Text style={styles.HeaderCol}>{t('Item')}</Text>
         </View>
         {filteredSuppliers.map(

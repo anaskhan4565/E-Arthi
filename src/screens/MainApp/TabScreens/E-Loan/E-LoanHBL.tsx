@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/FontName.js';
@@ -18,12 +19,27 @@ import CustomUploadButton from './NewLoanComponents/CustomUploadButton';
 import TickBox from './NewLoanComponents/TickBox';
 import CustomButton from '../../../../components/CustomButton';
 import ScreensName from '../../../../../util/ScreensName.ts';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 
 
 function ELoanHBL(): React.JSX.Element {
     const { t } = useTranslation();
     const [selectedOption, setSelectedOption] = useState("Generic");
+
+    const handleButtonPress = () => {
+        console.log('Button Pressed')
+        launchImageLibrary({ mediaType: 'photo' }, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                console.log('Selected image: ', response.assets[0]);
+            }
+        });
+    };
+    
 
     return (
         <SafeAreaView style={styles.container}>

@@ -23,7 +23,7 @@ import ScreensName from '../../../../../util/ScreensName.ts';
 
 function ELoanAskari(): React.JSX.Element {
     const { t } = useTranslation();
-    const [selectedOption, setSelectedOption] = useState("Generic");
+    // const [selectedOption, setSelectedOption] = useState("Generic");
 
     return (
         <SafeAreaView style={styles.container}>

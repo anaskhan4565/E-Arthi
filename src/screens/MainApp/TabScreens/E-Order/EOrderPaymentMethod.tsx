@@ -22,14 +22,23 @@ import ScreensName from "../../../../../util/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
-const imageList = [
-    require("../../../../assets/MainApp/E-Order/PaymentMethods/Raast.png"),
-    require("../../../../assets/MainApp/E-Order/PaymentMethods/GPay.png"),
-    require("../../../../assets/MainApp/E-Order/PaymentMethods/ApplePay.png"),
-    require("../../../../assets/MainApp/E-Order/PaymentMethods/Debit.png"),
-    require("../../../../assets/MainApp/E-Order/PaymentMethods/Master.png"),
-    require("../../../../assets/MainApp/E-Order/PaymentMethods/VISA.png"),
+import RAAST from '../../../../assets/MainApp/E-Order/PaymentMethods/Raast.png'
+import DEBIT from '../../../../assets/MainApp/E-Order/PaymentMethods/Debit.png'
+import MASTER from '../../../../assets/MainApp/E-Order/PaymentMethods/Master.png'
+import VISA from '../../../../assets/MainApp/E-Order/PaymentMethods/VISA.png'
+import AGRICARD from '../../../../assets/MainApp/E-Order/PaymentMethods/AgriCard.png'
+import KISSANCARD from '../../../../assets/MainApp/E-Order/PaymentMethods/KisaanCard.png'
+
+const paymentMethods = [
+    { name: "Raast", image: RAAST },
+    { name: "Debit Card", image: DEBIT },
+    { name: "MasterCard", image:MASTER  },
+    { name: "VISA", image:VISA },
+    { name: "Agri Card", image:AGRICARD },
+    { name: "Kisaan Card", image: KISSANCARD },
 ];
+
+
 
 function EOrderPlaceOrder(): React.JSX.Element {
     const { t } = useTranslation();
@@ -41,6 +50,25 @@ function EOrderPlaceOrder(): React.JSX.Element {
     const savedCart = storage.getString("cart");
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
 
+    const PassedPayment=new MMKV();
+
+    const NavigateToPayment=(passed)=>{
+        PassedPayment.set("PassedName", passed.name);
+        navigation.navigate(ScreensName.RaastPaymentScreen)
+    }
+    const getImage = (imageName) => {
+        const images = {
+            "Raast": RAAST,
+            "Debit Card": DEBIT,
+            "MasterCard": MASTER,
+            "VISA": VISA,
+            "Agri Card": AGRICARD,
+            "Kisaan Card": KISSANCARD,
+        };
+    
+        return images[imageName] || null;
+    };
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -61,6 +89,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                         style={{
                             fontFamily: fonts.SemiBold,
                             fontSize: hp(2.4),
+                            marginLeft:hp(2)
                         }}
                     >
                         {t("Payment Methods")}
@@ -68,7 +97,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                 </View>
                 <View style={styles.totalContainer}>
                     <Text style={styles.totalText}>{t("Total")}</Text>
-                    <Text style={styles.amountText}>
+                    <Text style={styles.amountText}> PKR{'\u00A0'}     
                         {formatNumber(
                             (
                                 parsedCart.reduce(
@@ -85,13 +114,14 @@ function EOrderPlaceOrder(): React.JSX.Element {
                     </Text>
                 </View>
                 <View style={styles.imageGrid}>
-                    {imageList.map((image, index) => (
+                    {paymentMethods.map((each, index) => (
                         <TouchableOpacity
+                        onPress={()=>NavigateToPayment(each)}
                             key={index}
                             style={styles.imageButton}
                         >
                             <View style={styles.imageWrapper}>
-                                <Image source={image} style={styles.image} />
+                                <Image source={each.image} style={styles.image} />
                             </View>
                         </TouchableOpacity>
                     ))}
@@ -235,11 +265,13 @@ const styles = StyleSheet.create({
     totalText: {
         color: colors.GREEN,
         fontSize: hp(1.8),
+        marginLeft:hp(2),
         fontFamily: fonts.Bold,
     },
     amountText: {
         color: "#000",
         fontSize: hp(1.8),
+        marginRight:hp(2),
         fontFamily: fonts.Bold,
     },
     imageGrid: {

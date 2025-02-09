@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
-import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../../../util/colors.js';
-import { Image } from 'react-native';
 
 import {
   SafeAreaView,
@@ -19,26 +17,24 @@ import { fonts } from '../../../../../util/FontName.js';
 import ScreensName from '../../../../../util/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
 import { MMKV } from 'react-native-mmkv';
-import Sub from './TempImgsOrder/sub.png';
-import CustomTxtAndPicker from '../E-Loan/NewLoanComponents/CustomTxtAndPicker.jsx';
 
-import Add from './TempImgsOrder/add.png'
-import CustomInput from '../../../../components/CustomInput.jsx';
-function EOrderPlaceOrder(): React.JSX.Element {
+function PaymentConfirmation(): React.JSX.Element {
   const { t } = useTranslation();
-  const [selectedItem, setSelectedItem] = useState('Crop');
   const navigation = useNavigation();
-  const [key, setKey] = useState(0); // Change key to force re-render
+  const [key, setKey] = useState(0); 
   const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
   useFocusEffect(
     useCallback(() => {
-      setKey(prevKey => prevKey + 1); // Update key to trigger re-render
+      setKey(prevKey => prevKey + 1);
     }, [])
   );
   const storage = new MMKV();
+    const PassedPayment = new MMKV();
+  
+  const finalPrice=storage.getString("FinalPrice")
+  const passedName = PassedPayment.getString("PassedName");
 
   const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
@@ -71,82 +67,69 @@ function EOrderPlaceOrder(): React.JSX.Element {
 
         <View style={{ marginBottom: hp(1.2), marginTop: hp(1), marginHorizontal: wp(5), }}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign:'center' }}>
-            {t('New Payee')}
+            {passedName?.toLocaleUpperCase()} {t('Transfers')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>
-          
-          {/* TAKING RAAST ID OR IBAN */}
+
+          {/* TRANSFER TO */}
           <View style={{ width: wp(85) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('RAAST ID/ IBAN')}</Text>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(1) }}>{t('Transfer To')}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
-            <View style={styles.notesContainer}>
-              <CustomInput placeholder={"03XXXXXXXXX/PKXXXXXXXXXXXXXXXXXXXXXXXX"} hide={false} />
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('Agri-Tech Bank')}</Text>
             </View>
-          </View>
-          <View style={{ width: wp(85) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(1.3) }}>{t('Please use 11 digit mobile number or 24 digit IBAN number excluding special characters.')}</Text>
           </View>
 
           {/* SHOWING AMOUNT TO BE PAID */}
           <View style={{ width: wp(85) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2), marginTop: hp(1) }}>{t('Amount')}</Text>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(2) }}>{t('Amount')}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
             <View style={styles.amountContainer}>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>PKR {formatNumber(parseInt(finalPrice).toFixed(2))}</Text>
             </View>
           </View>
 
           {/* TRANSFER FROM */}
-          <View style={{ width: wp(85), marginTop:hp(1) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Transfer From')}</Text>
+          <View style={{ width: wp(85) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(2) }}>{t('Transfer From')}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
-            <View style={styles.pickerContainer}>
-              <CustomTxtAndPicker PlaceHolderGiven={""} itemPackage={[{ label: "05280010078240790018", value: "05280010078240790018" }, { label: "05280010078240790018", value: "05280010078240790018" }]} Picker_Txt={"Select"} />
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('0378240790018')}</Text>
             </View>
-          </View>
-          <View style={{ width: wp(85) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(1.2), textAlign:'right' }}>{t('Balance: Rs. 90,571.32')}</Text>
           </View>
 
           {/* PURPOSE */}
           <View style={{ width: wp(85), marginTop:hp(1) }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Purpose')}</Text>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5) }}>{t('Purpose')}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
-            <View style={styles.pickerContainer}>
-              <CustomTxtAndPicker PlaceHolderGiven={""} itemPackage={[{ label: "Agri Land", value: "Agri Land" }, { label: "Agri Tools", value: "Agri Tools" }, { label: "Agri Machinery", value: "Agri Machinery" }, { label: "Agri Fertilizers", value: "Agri Fertilizers" }, { label: "Agri Seeds", value: "Agri Seeds" }]} Picker_Txt={"Select"} />
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('Agri Land')}</Text>
             </View>
           </View>
 
-          {/* NOTES SECTION */}
-          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center', marginTop: hp(1)}}>
-            <View style={styles.newNotesContainer}>
-              <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Notes')}</Text>
-              <TextInput
-                style={styles.notesInput}
-                placeholder={t('Enter your notes here')}
-                placeholderTextColor={colors.LIGHT_GRAY}
-                multiline
-                numberOfLines={4}
-              />
+          {/* PURPOSE */}
+          <View style={{ width: wp(85), marginTop:hp(1) }}>
+            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5) }}>{t('Notes')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
+            <View style={styles.amountContainer}>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('First 100 Acres of Land')}</Text>
             </View>
-            <TouchableOpacity style={styles.notesButton}>
-              <Image source={require('../../../../assets/MainApp/E-Order/Bucket.png')} />
-            </TouchableOpacity>
           </View>
           
           <View style={{ marginTop: hp(2), gap:5 }}>
-            <CustomButton MainText={t('Proceed')}
+            <CustomButton MainText={t('Confirm')}
               BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
               txColor={colors.WHITE}
               bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
               isNavigation={totalPrice === 0 ? 0 :1}
               isdisabled={totalPrice === 0?true:false} 
-              name={totalPrice!==0?ScreensName.EOrderPaymentMethod:null} />
+              name={totalPrice!==0?ScreensName.OTP:null} />
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
         </View>
@@ -366,4 +349,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EOrderPlaceOrder;
+export default PaymentConfirmation;

@@ -58,7 +58,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
     }
   };
   const totalPrice = parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13;
-
+  storage.set('FinalPrice',JSON.stringify(totalPrice))
 
   return (
     <SafeAreaView style={styles.container}>

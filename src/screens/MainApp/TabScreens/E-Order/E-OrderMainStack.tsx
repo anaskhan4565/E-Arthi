@@ -24,6 +24,8 @@ import EOrderTransaction from "./E-OrderTransaction";
 import EOrderCheckout from "./E-OrderCheckout";
 import EOrderPaymentMethod from "./EOrderPaymentMethod";
 import { fonts } from '../../../../../util/FontName.js';
+import RaastPaymentScreen from "./AllReceivingScreen.tsx";
+import RaastConfirmPayment from "./PaymentConfirmation.tsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +40,10 @@ function EOrderMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EOrderTransaction} component={EOrderTransaction} />
                     <Stack.Screen name={ScreensName.EOrderCheckout} component={EOrderCheckout} />
                     <Stack.Screen name={ScreensName.EOrderPaymentMethod} component={EOrderPaymentMethod} />
+                    <Stack.Screen name={ScreensName.RaastPaymentScreen} component={RaastPaymentScreen} />
+                    <Stack.Screen name={ScreensName.RaastConfirmPayment} component={RaastConfirmPayment} />
+
+
                 </Stack.Navigator>
         // </I18nextProvider>
     );

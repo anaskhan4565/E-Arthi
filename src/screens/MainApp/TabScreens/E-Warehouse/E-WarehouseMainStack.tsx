@@ -25,7 +25,9 @@ import EWarehouseNewSpaceConfirmWarehouse from "./E-WarehouseNewSpaceConfirmWare
 import EWarehousePreviousWarehouses from "./E-WarehousePreviousWarehouses"
 import EWarehousePreviousWarehouseDetails from "./E-WarehousePreviousWarehouseDetails"
 import ConfrimWarehouse from "./E-WarehouseNewSpaceConfirmWarehouse";
-
+import FoodSurveillanceSelectWarehouse from "./FoodSurveillanceSelectWarehouse"
+import FoodSurveillanceWarehouse from "./FoodSurveillanceWarehouse"
+import FoodSurveillanceItem from "./FoodSurveillanceItem"
 const Stack = createNativeStackNavigator();
 
 
@@ -39,6 +41,9 @@ function EWarehouseMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EWarehouseNewSpaceConfirmWarehouse} component={EWarehouseNewSpaceConfirmWarehouse} />
                     <Stack.Screen name={ScreensName.EWarehousePreviousWarehouses} component={EWarehousePreviousWarehouses} />
                     <Stack.Screen name={ScreensName.EWarehousePreviousWarehouseDetails} component={ConfrimWarehouse} />
+                    <Stack.Screen name={ScreensName.FoodSurveillanceSelectWarehouse} component={FoodSurveillanceSelectWarehouse} />
+                    <Stack.Screen name={ScreensName.FoodSurveillanceWarehouse} component={FoodSurveillanceWarehouse}/>
+                    <Stack.Screen name={ScreensName.FoodSurveillanceItem} component={FoodSurveillanceItem}/>
                 </Stack.Navigator>
         // </I18nextProvider>
     );

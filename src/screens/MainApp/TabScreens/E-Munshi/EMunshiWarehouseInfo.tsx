@@ -24,7 +24,6 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LineChart } from "react-native-chart-kit";
 import { MMKV } from 'react-native-mmkv';
 

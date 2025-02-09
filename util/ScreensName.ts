@@ -55,6 +55,10 @@ export default {
     EWarehouseNewSpaceConfirmWarehouse: "EWarehouseNewSpaceConfirmWarehouse",
     EWarehousePreviousWarehouses: "EWarehousePreviousWarehouses",
     EWarehousePreviousWarehouseDetails: "EWarehousePreviousWarehouseDetails",
+    FoodSurveillanceSelectWarehouse: "FoodSurveillanceSelectWarehouse",
+    FoodSurveillanceWarehouse: "FoodSurveillanceWarehouse",
+    FoodSurveillanceItem: "FoodSurveillanceItem",
+   
 
     EVendorsMainStack: "EVendorsMainStack",
     EVendors: "EVendors",

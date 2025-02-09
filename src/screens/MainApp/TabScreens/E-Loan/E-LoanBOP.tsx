@@ -37,33 +37,33 @@ function ELoanBOP(): React.JSX.Element {
                     <Text style={styles.titletext}>Bank Of Punjab</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
-                    <CustomTxtAndPicker PlaceHolderGiven={"Employement Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business-Owner", value: "Business Owner" }]} Picker_Txt={"Select Employement Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Employment Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business Owner", value: "Business Owner" }]} Picker_Txt={"Select Employment Type"} />
                     <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Personal Loan", value: "Personal Loan" },  { label: "Agriculture Loan", value: "Agriculture Loan" }]} Picker_Txt={"Select Loan Type"} />
                     <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Mr.", value: "mr" }, { label: "Ms.", value: "ms" }, { label: "Mrs.", value: "mrs" }]} Picker_Txt={"Select Title"} />
                     <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
                     <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
-                    <CustomInputAndText PlaceHolderGiven={"CNIC number"} InputHolder={"42101-1234567-8"} />
-                    <CustomInputAndText PlaceHolderGiven={"Date of birth"} InputHolder={"MM-DD-YYYYY"} />
-                    <CustomInputAndText PlaceHolderGiven={"Phone number"} InputHolder={"+92-012345678"} />
+                    <CustomInputAndText PlaceHolderGiven={"CNIC Number"} InputHolder={"42101-1234567-8"} />
+                    <CustomInputAndText PlaceHolderGiven={"Date of Birth"} InputHolder={"MM-DD-YYYY"} />
+                    <CustomInputAndText PlaceHolderGiven={"Phone Number"} InputHolder={"+92-012345678"} />
                     <CustomInputAndText PlaceHolderGiven={"Alternative Phone Number"} InputHolder={"+92-012345678"} />
-                    <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Nearest City"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"Enter Here"} />
                     <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"} />
-                    <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"Enter Here"} />
                     <CustomTxtAndPicker PlaceHolderGiven={"Desired Loan Repayment Period"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
                     <Text style={{ fontSize: hp(3), fontFamily: fonts.Bold, fontStyle: 'normal', borderTopWidth: hp(0.2) }}>--Documents--</Text>
 
-                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} />
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} />
 
-                    <CustomUploadButton PlaceHolderGiven={"Liquid security in shape of Bank's FIxed Deposit Receipts"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security in shape of Bank's FIxed Deposit Receipts"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} />
 
                     <View style={{ flex: 1, gap: hp(3) }}>
                         <TickBox TextGiven={'Are you older than 18'} givePadding={false} />

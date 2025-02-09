@@ -61,7 +61,7 @@ function PurchaseHisotry(): React.JSX.Element {
 
           <Text style={styles.HeaderCol}>{t("Distance from You")}</Text>
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1,justifyContent:'center',alignItems:'center',alignContent:'center',alignSelf:'center' }}>
           {allNames.map(
             (data, index) =>
               data.name.trim() !== "" && (
@@ -72,7 +72,7 @@ function PurchaseHisotry(): React.JSX.Element {
                 >
                   <InventoryProduct name={data.name}
                     SecondaryText={data.distance}
-                    allowImg={false} w={hp(44)}
+                    allowImg={false} w={hp(45)}
                     ThirdText={data.type}
                     fGiven={hp(2)}
                     h={hp(6)} isNavigation={true}

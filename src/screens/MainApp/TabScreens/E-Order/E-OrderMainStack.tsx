@@ -28,6 +28,8 @@ import RaastPaymentScreen from "./AllReceivingScreen.tsx";
 import RaastConfirmPayment from "./PaymentConfirmation.tsx";
 import PaymentScreens from "./AllReceivingScreen.tsx";
 import PaymentConfirmation from "./PaymentConfirmation.tsx";
+import AllOTP from "./AllOTP.tsx";
+import PaymentSuccess from "./PaymentSuccess.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +46,8 @@ function EOrderMainStack(): React.JSX.Element {
                     <Stack.Screen name={ScreensName.EOrderPaymentMethod} component={EOrderPaymentMethod} />
                     <Stack.Screen name={ScreensName.RaastPaymentScreen} component={PaymentScreens} />
                     <Stack.Screen name={ScreensName.RaastConfirmPayment} component={PaymentConfirmation} />
+                    <Stack.Screen name={ScreensName.AllOTP} component={AllOTP} />
+                    <Stack.Screen name={ScreensName.PaymentSuccess} component={PaymentSuccess} />
 
 
                 </Stack.Navigator>

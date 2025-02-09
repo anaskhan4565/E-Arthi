@@ -79,7 +79,7 @@ useEffect(()=>{
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
             <View style={styles.notesContainer}>
-              <CustomInput placeholder={"03XXXXXXXXX/PKXXXXXXXXXXXXXXXXXXXXXXXX"} hide={false} />
+              <CustomInput placeholder={"03XXXXXXXXX/PKXXXXXXXXXXXXXXXXXXXXXXXX"} hide={false}  fntGiven={hp(1.5)} value={1} numericOnly={true}/>
             </View>
           </View>
           <View style={{ width: wp(85) }}>

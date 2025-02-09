@@ -8,7 +8,7 @@ import ScreensName from '../../../../../util/ScreensName';
 import { useTranslation } from "react-i18next";
 import { fonts } from '../../../../../util/FontName';
 
-const OTP = () => {
+const AllOTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputs = useRef([]);
     const [timer, setTimer] = useState<boolean>(false);
@@ -168,4 +168,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default OTP;
+export default AllOTP;

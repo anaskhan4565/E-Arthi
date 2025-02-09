@@ -17,6 +17,7 @@ const CustomInput = ({
   b_radius = 3,
   editable = true,
   value,
+  fntGiven=wp('4%'),
   placeholder_color = colors.LIGHT_GRAY,
   onChangeText = () => {},
   numericOnly = false,
@@ -39,6 +40,7 @@ const CustomInput = ({
         styles.textInputStyle,
         { 
           paddingLeft: wp(1),
+          fontSize: fntGiven,
           width: w,
           height: h,
           backgroundColor: bg_give,
@@ -62,7 +64,6 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   textInputStyle: {
-    fontSize: wp('4%'),
     alignSelf: 'center',
     borderWidth: 1,
     color: colors.BLACK, // Ensure text input remains black

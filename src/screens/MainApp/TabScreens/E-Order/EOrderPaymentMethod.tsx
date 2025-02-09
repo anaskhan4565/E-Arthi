@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
@@ -6,7 +6,7 @@ import {
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors.js";
-import { Image, TouchableOpacity } from "react-native";
+import { Animated, Image, TouchableOpacity } from "react-native";
 
 import {
     SafeAreaView,
@@ -19,7 +19,6 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
-import CustomButton from "../../../../components/CustomButton.jsx";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
 import RAAST from '../../../../assets/MainApp/E-Order/PaymentMethods/Raast.png'
@@ -28,21 +27,18 @@ import MASTER from '../../../../assets/MainApp/E-Order/PaymentMethods/Master.png
 import VISA from '../../../../assets/MainApp/E-Order/PaymentMethods/VISA.png'
 import AGRICARD from '../../../../assets/MainApp/E-Order/PaymentMethods/AgriCard.png'
 import KISSANCARD from '../../../../assets/MainApp/E-Order/PaymentMethods/KisaanCard.png'
-
+import InventoryProduct from "../../CustomComponent/WarehouseProduct.jsx";
+import Wallet from './TempImgsOrder/image.png'
 const paymentMethods = [
     { name: "Raast", image: RAAST },
     { name: "Debit Card", image: DEBIT },
-    { name: "MasterCard", image:MASTER  },
-    { name: "VISA", image:VISA },
-    { name: "Agri Card", image:AGRICARD },
+    { name: "MasterCard", image: MASTER },
+    { name: "VISA", image: VISA },
+    { name: "Agri Card", image: AGRICARD },
     { name: "Kisaan Card", image: KISSANCARD },
 ];
-
-
-
 function EOrderPlaceOrder(): React.JSX.Element {
     const { t } = useTranslation();
-    const [selectedItem, setSelectedItem] = useState("Crop");
     const navigation = useNavigation();
     const formatNumber = (num) =>
         new Intl.NumberFormat("en-US").format(num ?? 0);
@@ -50,25 +46,35 @@ function EOrderPlaceOrder(): React.JSX.Element {
     const savedCart = storage.getString("cart");
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
 
-    const PassedPayment=new MMKV();
+    const PassedPayment = new MMKV();
 
-    const NavigateToPayment=(passed)=>{
+    const NavigateToPayment = (passed) => {
         PassedPayment.set("PassedName", passed.name);
+        PassedPayment.set("PassedImage", passed.image);
+
         navigation.navigate(ScreensName.RaastPaymentScreen)
     }
-    const getImage = (imageName) => {
-        const images = {
-            "Raast": RAAST,
-            "Debit Card": DEBIT,
-            "MasterCard": MASTER,
-            "VISA": VISA,
-            "Agri Card": AGRICARD,
-            "Kisaan Card": KISSANCARD,
-        };
-    
-        return images[imageName] || null;
-    };
-    
+
+
+    const translateY = useRef(new Animated.Value(hp(20))).current;
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(translateY, {
+            toValue: 0,
+            duration: 700,
+            useNativeDriver: true,
+        }).start();
+
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+        }).start();
+    }, []);
+
+
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -88,16 +94,17 @@ function EOrderPlaceOrder(): React.JSX.Element {
                     <Text
                         style={{
                             fontFamily: fonts.SemiBold,
-                            fontSize: hp(2.4),
-                            marginLeft:hp(2)
+                            fontSize: hp(2.9),
+                            marginLeft: hp(1)
                         }}
                     >
                         {t("Payment Methods")}
                     </Text>
                 </View>
+
                 <View style={styles.totalContainer}>
                     <Text style={styles.totalText}>{t("Total")}</Text>
-                    <Text style={styles.amountText}> PKR{'\u00A0'}     
+                    <Text style={styles.amountText}> PKR{'\u00A0'}
                         {formatNumber(
                             (
                                 parsedCart.reduce(
@@ -106,17 +113,22 @@ function EOrderPlaceOrder(): React.JSX.Element {
                                         parseInt(
                                             product.price.replace(/,/g, "")
                                         ) *
-                                            product.quantity,
+                                        product.quantity,
                                     0
                                 ) * 1.13
                             ).toFixed(2)
                         )}
                     </Text>
                 </View>
-                <View style={styles.imageGrid}>
+                <View style={{ flex: 1, marginLeft: hp(2) }}>
+                    <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Pay with your Card</Text>
+                </View>
+                <Animated.View style={[styles.imageGrid, {
+                    transform: [{ translateY }], opacity
+                }]}>
                     {paymentMethods.map((each, index) => (
                         <TouchableOpacity
-                        onPress={()=>NavigateToPayment(each)}
+                            onPress={() => NavigateToPayment(each)}
                             key={index}
                             style={styles.imageButton}
                         >
@@ -125,8 +137,20 @@ function EOrderPlaceOrder(): React.JSX.Element {
                             </View>
                         </TouchableOpacity>
                     ))}
+                </Animated.View>
+                <View style={{ flex: 1, marginLeft: hp(2),marginBottom:hp(4) }}>
+                    <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Other options</Text>
+                    <InventoryProduct
+                        key={1}
+                        name={"Line of credit"}
+                        //price={product.price}
+                        isNavigation={false}
+                        AddIcon={true}
+                        customImg={Wallet}
+                        imgH={hp(4.6)}
+                        navigateTo={undefined}
+                    />
                 </View>
-                <View style={styles.bodyContainer}></View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -152,6 +176,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: hp(4),
         padding: wp(5),
+
     },
     selectercontainer: {
         width: wp(100),
@@ -251,36 +276,35 @@ const styles = StyleSheet.create({
         padding: wp(3),
         borderRadius: 5,
     },
-    summaryText: {
-        fontSize: hp(2.5),
-        color: colors.DARK_GRAY,
-        marginVertical: hp(1),
-    },
+
     totalContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginHorizontal: wp(5),
+        marginHorizontal: wp(4),
         marginBottom: hp(2),
+        borderBottomWidth: 1
     },
     totalText: {
         color: colors.GREEN,
-        fontSize: hp(1.8),
-        marginLeft:hp(2),
+        fontSize: hp(2),
+        marginLeft: hp(2),
         fontFamily: fonts.Bold,
     },
     amountText: {
         color: "#000",
-        fontSize: hp(1.8),
-        marginRight:hp(2),
+        fontSize: hp(2),
+        marginRight: hp(2),
         fontFamily: fonts.Bold,
     },
     imageGrid: {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        marginHorizontal: wp(5),
-        marginVertical: wp(4),
-        padding: wp(1),
+        alignItems: "center",
+        padding: hp(1),
+        backgroundColor: '#F4FEFF',
+        margin: hp(2),
+        borderRadius: hp(0.9)
         // marginBottom: hp(2),
         // maxHeight: hp(30),
     },

@@ -19,6 +19,8 @@ import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv';
 
+
+
 function PaymentConfirmation(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -129,7 +131,7 @@ function PaymentConfirmation(): React.JSX.Element {
               bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
               isNavigation={totalPrice === 0 ? 0 :1}
               isdisabled={totalPrice === 0?true:false} 
-              name={totalPrice!==0?ScreensName.OTP:null} />
+              name={totalPrice!==0?ScreensName.AllOTP:null} />
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
         </View>

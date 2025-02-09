@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
         height: hp("7%"),
     },
     bodyContainer: {
+        
         alignItems: "center",
         alignSelf: "center",
     },
@@ -189,7 +190,6 @@ const styles = StyleSheet.create({
     SummaryBox: {
         backgroundColor: colors.LIGHT_GREEN,
         width: wp(90),
-        height: hp(17),
         flexDirection: "row",
     },
     ImageBox: {
@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     },
     LegendText: {
         fontFamily: fonts.Regular,
+        width:hp(15)
     },
     DetailRow: {
       flexDirection: "row",

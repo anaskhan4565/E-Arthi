@@ -46,25 +46,25 @@ function ELoanBOP(): React.JSX.Element {
                     <CustomInputAndText PlaceHolderGiven={"Date of birth"} InputHolder={"MM-DD-YYYYY"} />
                     <CustomInputAndText PlaceHolderGiven={"Phone number"} InputHolder={"+92-012345678"} />
                     <CustomInputAndText PlaceHolderGiven={"Alternative Phone Number"} InputHolder={"+92-012345678"} />
-                    <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"enter here"} />
-                    <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Alternative Number"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Postal Address"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Email Address"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Nearest City/City"} InputHolder={"Enter Here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Organization Name"} InputHolder={"Enter Here"} />
                     <CustomInputAndText PlaceHolderGiven={"Loan Amount"} InputHolder={"Amount (In PKR)"} />
-                    <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"enter here"} />
+                    <CustomInputAndText PlaceHolderGiven={"Monthly Net Income"} InputHolder={"Enter Here"} />
                     <CustomTxtAndPicker PlaceHolderGiven={"Desired Loan Repayment Period"} itemPackage={[{ label: "Value1", value: "Value2" }]} Picker_Txt={"Select"} />
                     <Text style={{ fontSize: hp(3), fontFamily: fonts.Bold, fontStyle: 'normal', borderTopWidth: hp(0.2) }}>--Documents--</Text>
 
-                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Front)"} InputHolder={'Upload'} isCamera={true} />
+                    <CustomUploadButton PlaceHolderGiven={"CNIC Image (Back)"} InputHolder={'Upload'} isCamera={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Passport Size Photograph"} InputHolder={'Upload'} />
 
-                    <CustomUploadButton PlaceHolderGiven={"Mortgage of Property"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} givePad={true} />
-                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} givePad={true} />
+                    <CustomUploadButton PlaceHolderGiven={"Mortgage of Property"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Agri. Passbook"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Liquid security Certification Documents"} InputHolder={'Upload'} />
+                    <CustomUploadButton PlaceHolderGiven={"Two written satisfactory market verified reports"} InputHolder={'Upload'} />
 
                     <View style={{ flex: 1, gap: hp(3) }}>
                         <TickBox TextGiven={'Do you agree with E-Agri Terms & Conditions'} givePadding={false} />

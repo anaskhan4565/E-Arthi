@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -18,15 +18,29 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors";
-
+import { MMKV } from "react-native-mmkv";
 const FoodSurveillanceItem = () => {
   const { t } = useTranslation();
   const [price, setPrice] = useState("");
-
+  const [statusText, setstatusText] = useState("")
+  const [statusColor, setstatusColor] = useState("")
   const handlePriceUpdate = () => {
     console.log(`New price set: ${price} Rupees/Kg`);
 
-  };
+  }; 
+  const storage = new MMKV();
+  useEffect(() => {
+    if(storage.getNumber("itemStatus")){
+      setstatusText("Fresh")
+      setstatusColor("rgb(0, 169, 128)")
+    }
+    else{
+      setstatusText("Almost Ripe")
+      setstatusColor("rgb(235, 169, 40)")
+    }
+  
+  }, [])
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,9 +57,9 @@ const FoodSurveillanceItem = () => {
 
      
         <View style={styles.headerRow}>
-          <Text style={styles.productTitle}>Tomato</Text>
-          <View style={styles.statusBadge}>
-            <Text style={styles.statusText}>About to be ripe</Text>
+          <Text style={styles.productTitle}>{storage.getString("itemName")}</Text>
+          <View style={[styles.statusBadge,{backgroundColor: statusColor}]}>
+            <Text style={styles.statusText}>{statusText}</Text>
           </View>
         </View>
 
@@ -123,7 +137,7 @@ const styles = StyleSheet.create({
     color: colors.BLACK,
   },
   statusBadge: {
-    backgroundColor: "#EBA928",
+    // backgroundColor: "#EBA928",
     paddingVertical: hp(0.5),
     paddingHorizontal: wp(3),
     borderRadius: wp(2),

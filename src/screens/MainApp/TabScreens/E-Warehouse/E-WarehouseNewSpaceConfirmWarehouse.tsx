@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors.js";
-import WarehouseSpaceCategory from "../../../../../util/WarehouseSpaceCategory.js";
+import WarehouseItems from "../../../../../util/WarehouseItems.js";
 import CustomInput from "../../../../components/CustomInput.jsx";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import {
@@ -22,12 +22,14 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
- 
-import EWarehouseMainStack from "./E-WarehouseMainStack.tsx";
+import { MMKV } from "react-native-mmkv";
 
 function ConfrimWarehouse(): React.JSX.Element {
   const { t } = useTranslation();
-  const [Type, setType] = useState("");
+  const storage = new MMKV();
+  const StorageType = storage.getString("StorageType");
+  const [items, setItems] = useState(WarehouseItems[StorageType]);
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,48 +42,43 @@ function ConfrimWarehouse(): React.JSX.Element {
         </View>
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{t("PASSCO")}</Text>
+            <Text style={styles.titleText}>{storage.getString("AvailableWarehouse")}</Text>
           </View>
           <View style={styles.SubtitleContainer}>
             <Text style={styles.SubtitleText}>{t("Type of Storage : ")}</Text>
             <Text style={[styles.SubtitleText, { fontFamily: fonts.Regular }]}>
-              {t("Box Storage")}
+              {StorageType}
             </Text>
           </View>
           <View style={styles.bodyTextContainer}>
-            <Text style={styles.bodyText}>{t("Select space type")}</Text>
+            <Text style={styles.bodyText}>{t("Previously Stored Items")}</Text>
           </View>
           <View style={styles.Header}>
-            <Text style={styles.HeaderCol}>{t("Space type")}</Text>
-            <Text style={[styles.HeaderCol, { textAlign: "center" }]}>
-              {t("Cost per unit")}
-            </Text>
-            <Text style={styles.HeaderCol}>{t("Space")}</Text>
+            <Text style={styles.HeaderCol}>{t("Item Name")}</Text>
+            <Text style={styles.HeaderCol}>{t("Space Reserved")}</Text>
           </View>
-          {WarehouseSpaceCategory.map(
+          {items.map(
             (data, index) =>
               data.type.trim() !== "" && (
-                <TouchableOpacity
+                <View
                   style={styles.row}
                   key={index}
-                  onPress={() => {
-                    setType(data.type);
-                  }}
+                  
                 >
                   <View style={styles.typeCol}>
                     <Text style={styles.typeText}>{t(data.type)}</Text>
                   </View>
-                  <Text style={styles.price}>{data.price}</Text>
+                  
                   <Text style={styles.space}>{data.space}</Text>
-                </TouchableOpacity>
+                </View>
               )
           )}
         </View>
-        {Type && (
+        
           <View>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>
-                {t('Enter the number of ')}{Type}{t(' units you want to reserve')}
+                {t('Enter the number of ')}{t(' units you want to reserve')}
               </Text>
               <CustomInput
                 placeholder={t("Units")}
@@ -103,7 +100,7 @@ function ConfrimWarehouse(): React.JSX.Element {
           />
         </View>
           </View>
-        )}
+        
       </ScrollView>
     </SafeAreaView>
   );
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     alignItems: "center",
-    marginLeft:hp(2)
+    marginLeft: hp(2),
   },
   titleContainer: {
     padding: wp(2),
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SemiBold,
     fontSize: hp(3),
   },
-  bodyTextContainer:{
+  bodyTextContainer: {
     paddingTop: wp(2),
     paddingLeft: wp(2),
     alignSelf: "flex-start",
@@ -142,7 +139,7 @@ const styles = StyleSheet.create({
   bodyText: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2),
-    textAlign: "left"
+    textAlign: "left",
   },
   SubtitleContainer: {
     padding: wp(2),
@@ -154,49 +151,46 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Medium,
     fontSize: hp(2),
   },
-  price: {
-    fontFamily: fonts.Regular,
-    fontSize: hp(1.8),
-    textAlign: "center",
-    width: wp(33),
+  Header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: wp(85),
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(2),
+    borderRadius: wp(2),
   },
-  space: {
-    fontFamily: fonts.Regular,
-    fontSize: hp(1.8),
-    width: wp(30),
-  },
-  typeText: {
-    fontFamily: fonts.Regular,
-    fontSize: hp(1.8),
-  },
-  typeCol: {
-    alignContent: "center",
-    width: wp(30),
-    fontFamily: fonts.Regular,
-    fontSize: hp(1.8),
+  HeaderCol: {
+    fontFamily: fonts.SemiBold,
+    fontSize: hp(2),
+    flex: 1,
+    textAlign: "left",
+    marginRight: wp(15)
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: hp(2),
-    marginVertical: hp(1),
+    width: wp(85),
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(2),
   },
-  Header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: wp(4),
-    height: hp(8),
-    // borderWidth: 1,
-    width: wp(95),
+  typeCol: {
+    flex: 1,
+    alignItems: "flex-start",
   },
-  HeaderCol: {
-    fontFamily: fonts.SemiBold,
-    fontSize: hp(2),
-    width: wp(29),
+  typeText: {
+    fontFamily: fonts.Regular,
+    fontSize: hp(1.8),
     textAlign: "left",
   },
+  space: {
+    fontFamily: fonts.Regular,
+    fontSize: hp(1.8),
+    flex: 1,
+    textAlign: "left",
+  },
+
   inputContainer: {
     marginTop: hp(2),
     gap: hp("1%"),
@@ -205,12 +199,13 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Medium,
     fontSize: hp("2%"),
     paddingHorizontal: wp(3),
-    marginHorizontal:hp(2)
+    marginHorizontal: hp(2),
   },
   buttonContainer: {
     marginVertical: hp("3%"),
     alignItems: "center",
   },
 });
+
 
 export default ConfrimWarehouse;

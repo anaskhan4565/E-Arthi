@@ -18,8 +18,9 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     imgW = wp(15),
     imgH = hp(7),
     AllowElv = true,
-    SecTextAllow=false
-
+    SecTextAllow=false,
+    customPress = 0,
+    handlePress = null,
 }) => {
     const navigation = useNavigation();
     const { t } = useTranslation()
@@ -36,7 +37,7 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, elevation: AllowElv ? 5 : 0 }]} onPress={handleNavigation}>
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, elevation: AllowElv ? 5 : 0 }]} onPress={customPress?handlePress: handleNavigation}>
             <View style={styles.rowContainer}>
                 {allowImg ?
                     <View style={styles.imageContainer}>

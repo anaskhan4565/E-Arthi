@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors.js";
-import WarehouseSpaceCategory from "../../../../../util/WarehouseSpaceCategory.js";
+import WarehouseItems from "../../../../../util/WarehouseItems.js";
 import CustomInput from "../../../../components/CustomInput.jsx";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import {
@@ -22,13 +22,16 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
-
+import { MMKV } from "react-native-mmkv";
 import EWarehouseMainStack from "./E-WarehouseMainStack.tsx";
 
 function ConfrimWarehouse(): React.JSX.Element {
   const { t } = useTranslation();
   const [Type, setType] = useState("Silo Storage");
   const [Units, setUnits] = useState("35,000");
+  const storage = new MMKV();
+  const StorageType = storage.getString("StorageType");
+  const [items, setItems] = useState(WarehouseItems[StorageType]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,48 +44,45 @@ function ConfrimWarehouse(): React.JSX.Element {
         </View>
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{t("PASSCO")}</Text>
+            <Text style={styles.titleText}>{t(storage.getString("AvailableWarehouse"))}</Text>
           </View>
           <View style={styles.SubtitleContainer}>
             <Text style={styles.SubtitleText}>{t("Type of Storage : ")}</Text>
             <Text style={[styles.SubtitleText, { fontFamily: fonts.Regular }]}>
-              {t("Box Storage")}
+              {t(storage.getString("StorageType"))}
             </Text>
           </View>
           <View style={styles.bodyTextContainer}>
-            <Text style={styles.bodyText}>{t("Select space type")}</Text>
+            <Text style={styles.bodyText}>{t("Previously Stored Items")}</Text>
           </View>
           <View style={styles.Header}>
-            <Text style={styles.HeaderCol}>{t("Space type")}</Text>
-            <Text style={[styles.HeaderCol, { textAlign: "center" }]}>
-              {t("Cost per unit")}
-            </Text>
-            <Text style={styles.HeaderCol}>{t("Space")}</Text>
+            <Text style={styles.HeaderCol}>{t("Item Name")}</Text>
+            <Text style={styles.HeaderCol}>{t("Space Reserved")}</Text>
           </View>
-          {WarehouseSpaceCategory.map(
-            (data, index) =>
-              data.type.trim() !== "" && (
-                <TouchableOpacity
-                  style={styles.row}
-                 // key={index}
-                  onPress={() => {
-                    console.log('hello')
-                  }}
-                >
-                  <View style={styles.typeCol}>
-                    <Text style={styles.typeText}>{data.type}</Text>
-                  </View>
-                  <Text style={styles.price}>{data.price}</Text>
-                  <Text style={styles.space}>{data.space}</Text>
-                </TouchableOpacity>
-              )
-          )}
+          {items.map(
+                      (data, index) =>
+                        data.type.trim() !== "" && (
+                          <View
+                            style={styles.row}
+                            key={index}
+                            onPress={() => {
+                              setType(data.type);
+                            }}
+                          >
+                            <View style={styles.typeCol}>
+                              <Text style={styles.typeText}>{t(data.type)}</Text>
+                            </View>
+                            
+                            <Text style={styles.space}>{data.space}</Text>
+                          </View>
+                        )
+                    )}
         </View>
         {Type && (
           <View>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>
-                Enter the number of {Type} units you want to reserve
+                Number of units reserved
               </Text>
               <CustomInput
                 placeholder={t("Units")}
@@ -90,9 +90,9 @@ function ConfrimWarehouse(): React.JSX.Element {
                 w={wp("90%")}
                 b_radius={10}
                 bg_give={colors.WHITE}
-                //hide={false}
-               // editable = {false}
-                //value= {Units}
+                hide={false}
+               editable = {false}
+                value= {Units}
               />
             </View>
             <View style={styles.buttonContainer}>
@@ -165,39 +165,41 @@ const styles = StyleSheet.create({
   space: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
-    width: wp(30),
+    flex: 1,
+    textAlign: "left",
   },
   typeText: {
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
+    textAlign: "left",
   },
   typeCol: {
-    alignContent: "center",
-    width: wp(30),
-    fontFamily: fonts.Regular,
-    fontSize: hp(1.8),
+    flex: 1,
+    alignItems: "flex-start",
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(4),
-    marginVertical: hp(1),
+    width: wp(85),
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(2),
   },
   Header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(4),
-    height: hp(8),
-    // borderWidth: 1,
-    width: wp(95),
+    width: wp(85),
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(2),
+    borderRadius: wp(2),
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2),
-    width: wp(29),
+    flex: 1,
     textAlign: "left",
+    marginRight: wp(15)
   },
   inputContainer: {
     marginTop: hp(2),

@@ -7,21 +7,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { fonts } from '../../../../../../util/FontName';
 import { useTranslation } from 'react-i18next';
 
-const CustomInputAndText = ({PlaceHolderGiven="demo",InputHolder="Enter Detail"}) => {
+const CustomInputAndText = ({PlaceHolderGiven="demo",InputHolder="Enter Detail",OnlyNN=false}) => {
   const { t } = useTranslation();
   return (
     <View style={{flex:1,alignItems:'flex-start',gap:hp(0.5)}}>
       <Text style={{fontSize:hp(2),fontFamily:fonts.Regular,paddingLeft:hp(0.3)}}>{t(PlaceHolderGiven)}</Text>
-      <CustomInput placeholder={t(InputHolder)} bg_give={colors.WHITE}  placeholder_color={colors.Text_Fancy}/>
+      <CustomInput placeholder={t(InputHolder)} bg_give={colors.WHITE}  placeholder_color={colors.Text_Fancy} AllowNumberOnly={OnlyNN}/>
 
-      {/* <View style={styles.inputContainer}>
-        <Input 
-          placeholder={t(InputHolder)} 
-          style={[styles.input, { fontFamily: fonts.Bold }]}  
-          placeholderTextColor={colors.Text_Fancy}
-          
-        />
-      </View> */}
+    
     </View>
   )
 }

@@ -52,6 +52,7 @@ import SelectLangSideBar from "./src/screens/MainApp/Sidebar/SomeDemoNavigations
 import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryMainStack.tsx";
 import EMarket from "./src/screens/MainApp/TabScreens/E-Market.jsx";
 import EOrderMainStack from "./src/screens/MainApp/TabScreens/E-Order/E-OrderMainStack.tsx";
+import OTPSignUp from "./src/screens/InitialStartScreens/OTPSignup.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -113,6 +114,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.RaastRecieving} component={RaastRecieving} />
           <Stack.Screen name={ScreensName.Recieving} component={Recieving} />
           <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
+          <Stack.Screen name={ScreensName.OTPSignUp} component={OTPSignUp} />
 
 
           <Stack.Screen name={ScreensName.EMunshiMainStack} component={EMunshiMainStack} />

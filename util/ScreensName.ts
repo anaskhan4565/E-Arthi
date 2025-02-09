@@ -130,7 +130,7 @@ export default {
     EOrderTransaction: "EOrderTransaction",
     EOrderCheckout: "EOrderCheckout",
     EOrderPaymentMethod: "EOrderPaymentMethod",
-
+    OTPSignUp:"OTPSignUp",
     RaastPaymentScreen:"RaastPaymentScreen",
     RaastConfirmPayment:"RaastConfirmPayment",
     PaymentSuccess:"PaymentSuccess",

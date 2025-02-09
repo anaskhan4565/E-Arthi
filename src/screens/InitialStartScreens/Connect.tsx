@@ -32,7 +32,7 @@ function Connect(): React.JSX.Element {
           <Text style={{ fontSize: hp(5), textAlign: 'center',letterSpacing:hp(0.9),paddingRight:hp(2),fontFamily:fonts.Bold }}>{t('E-AGRI')}</Text>
         </View>
         <View style={{ flex: 0.5, justifyContent: 'center' }}>
-          <Text style={{ fontSize: hp(2), textAlign: 'center', fontFamily: fonts.Regular }}>{t('Connect_With_us')}</Text>
+          <Text style={{ fontSize: hp(2), textAlign: 'center', fontFamily: fonts.Regular }}>{t('Join us and connect with the digital agriculture platform')}</Text>
         </View>
       </View>
 

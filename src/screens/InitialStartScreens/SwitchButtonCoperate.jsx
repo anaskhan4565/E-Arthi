@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
-import colors from "../../../../../../util/colors";
+import colors from "../../../util/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from "../../../../../../util/FontName";
+import { fonts } from "../../../util/FontName";
 import { useTranslation } from "react-i18next";
-const SwitchButtonCustom = ({ selectedOption="Generic",
+const SwitchButtonCoperate = ({ selectedOption="Individual",
    setSelectedOption }) => {
   // const [selectedOption, setSelectedOption] = useState("Specific");
   const animationValue = useRef(new Animated.Value(0)).current;
@@ -14,7 +14,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
       setSelectedOption(option);
       // Animate the value from 0 to 1
       Animated.timing(animationValue, {
-        toValue: option === "Generic" ? 0 : 1,
+        toValue: option === "Individual" ? 0 : 1,
         duration: 500, // Duration of the animation in milliseconds
         useNativeDriver: false,
       }).start();
@@ -34,7 +34,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
   return (
     <View style={styles.container}>
      
-      <TouchableOpacity onPress={() => handlePress("Generic")} style={{ flex: 1 }}>
+      <TouchableOpacity onPress={() => handlePress("Individual")} style={{ flex: 1 }}>
         <Animated.View
           style={[
             styles.button,
@@ -46,15 +46,15 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
           <Text
             style={[
               styles.text,
-              selectedOption === "Generic" && styles.selectedText,
+              selectedOption === "Individual" && styles.selectedText,
             ]}
           >
-            {t('Generic')}
+            {t('Individual')}
           </Text>
         </Animated.View>
         
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePress("Specific")} style={{ flex: 1 }}>
+      <TouchableOpacity onPress={() => handlePress("Corporate")} style={{ flex: 1 }}>
         <Animated.View
           style={[
             styles.button,
@@ -66,10 +66,10 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
           <Text
             style={[
               styles.text,
-              selectedOption === "Specific" && styles.selectedText,
+              selectedOption === "Corporate" && styles.selectedText,
             ]}
           >
-            {t('Specific')}
+            {t('Corporate')}
           </Text>
         </Animated.View>
       </TouchableOpacity>
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    margin: hp(3),
+    marginHorizontal: hp(3),
+    marginTop:hp(2),
     backgroundColor: colors.fancy_BG,
     borderRadius: hp(1),
   },
@@ -107,4 +108,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SwitchButtonCustom;
+export default SwitchButtonCoperate;

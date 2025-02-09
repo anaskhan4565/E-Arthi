@@ -8,30 +8,40 @@ import ScreensName from "../../../util/ScreensName.ts";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import { fonts } from "../../../util/FontName";
+import CustomInputAndText from "../MainApp/TabScreens/E-Loan/NewLoanComponents/CustomInputAndText.jsx";
+import SwitchButtonCustom from "../MainApp/TabScreens/E-Loan/NewLoanComponents/SwitchButton.jsx";
+import SwitchButtonCoperate from "./SwitchButtonCoperate.jsx";
 
 const { height, width } = Dimensions.get("window");
 
 function SignUp(): React.JSX.Element {
     const [passwordVisible, setPasswordVisible] = useState(true);
     const { t } = useTranslation();
+        const [selectedOption, setSelectedOption] = useState("Individual");
+    
     return (
         <ScrollView style={styles.container}>
             <View style={styles.Header}>
                 <Text style={styles.Heading}>{t('Register')}</Text>
                 <Text style={styles.SubHeading}>{t('Welcome, please Register')}</Text>
+                <SwitchButtonCoperate selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+
             </View>
 
             <View style={styles.inputs}>
-                <CustomInput placeholder={t('Full Name')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={true} />
-                <CustomInput placeholder={t('Phone No.')} bg_give={colors.WHITE} b_radius={hp('1.2%')} hide={true} />
-                <View style={styles.passInputBox}>
+            <CustomInputAndText PlaceHolderGiven={t('Full Name')} InputHolder={t('Full Name')} />
+            <CustomInputAndText PlaceHolderGiven={t('Email Address')} InputHolder={"Email Address"} />
+            <CustomInputAndText PlaceHolderGiven={t('Mobile No.')} InputHolder={t('Mobile No.')} OnlyNN={true}/>
+               <View>
+            <Text style={{fontSize:hp(2),fontFamily:fonts.Regular,paddingLeft:hp(0.3)}}>Password</Text>
+            <View style={styles.passInputBox}>
                     <TextInput
                         style={[styles.passInput, {
                             paddingLeft: wp(2),
                             paddingVertical: 8,
                         }]}
                         placeholder={t('Password')}
-                        placeholderTextColor={colors.LIGHT_GRAY}
+                        placeholderTextColor={colors.Text_Fancy}
                         secureTextEntry={passwordVisible}
                     />
                     <TouchableOpacity
@@ -43,6 +53,7 @@ function SignUp(): React.JSX.Element {
                             style={styles.showPassIcon}
                         />
                     </TouchableOpacity>
+                </View>
                 </View>
             </View>
 
@@ -69,7 +80,7 @@ function SignUp(): React.JSX.Element {
                 <CustomButton
                     MainText={t('Register')}
                     BgGiven={colors.GREEN}
-                    name={ScreensName.Cnic_page_1}
+                    name={ScreensName.OTPSignUp}
                     txColor={colors.WHITE}
                     isNavigation={1}
                 />
@@ -126,8 +137,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: width / 20,
     },
     Header: {
-        marginTop: height / 10,
-        marginBottom: height / 20,
+        marginTop: height / 18,
+        marginBottom: height / 30,
     },
     Heading: {
         fontSize: height / 25,
@@ -144,7 +155,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
     },
     inputs: {
-        gap: height / 40,
+        gap: height / 70,
         alignItems: "center",
     },
     button: {
@@ -184,11 +195,13 @@ const styles = StyleSheet.create({
     ORtext: {
         marginHorizontal: 10,
         fontSize: height / 55,
+        
         fontFamily: fonts.Regular,
         color: colors.GREEN,
     },
     altSignin: {
         gap: height / 80,
+        
     },
     altSigninButton: {
         width: width / 1.11,
@@ -239,6 +252,8 @@ const styles = StyleSheet.create({
     terms: {
         flexDirection: "row",
         flexWrap: "wrap",
+        marginLeft:hp(1),
+
     },
     redirectLink: {
         color: colors.GREEN,

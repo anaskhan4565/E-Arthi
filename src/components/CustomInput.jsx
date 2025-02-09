@@ -17,10 +17,11 @@ const CustomInput = ({
   b_radius = 3,
   editable = true,
   value,
-  fntGiven=wp('4%'),
+  fntGiven=wp('3.5%'),
   placeholder_color = colors.LIGHT_GRAY,
   onChangeText = () => {},
   numericOnly = false,
+  AllowNumberOnly=false,
   borderColor = colors.LIGHT_GRAY,
 }) => {
   const handleTextChange = (text) => {
@@ -39,7 +40,7 @@ const CustomInput = ({
       style={[
         styles.textInputStyle,
         { 
-          paddingLeft: wp(1),
+          paddingLeft: wp(2),
           fontSize: fntGiven,
           width: w,
           height: h,
@@ -52,10 +53,11 @@ const CustomInput = ({
       placeholder={t(placeholder)}
       placeholderTextColor={colors.Text_Fancy} // Ensure placeholder remains gray
       secureTextEntry={hide}
+      keyboardType={AllowNumberOnly?'phone-pad':'default'}
       editable={editable}
       value={value}
       onChangeText={handleTextChange}
-      keyboardType={numericOnly ? 'numeric' : 'default'}
+           // keyboardType={numericOnly ? 'numeric' : 'default'}
     />
   );
 };

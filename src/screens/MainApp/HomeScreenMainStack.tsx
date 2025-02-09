@@ -20,6 +20,7 @@ import MarketDept from "./EMandi/Screens/MarketDept";
 import Profile from "./EMandi/Screens/Profile";
 import EVendorsMainStack from "./TabScreens/E-Vendors/E-VendorsMainStack";
 import Home from "./TabScreens/HomeScr";
+import ETransportStack from "./TabScreens/E-Transport/E-TransportStack";
 
 
 
@@ -31,7 +32,7 @@ function HomeScreenMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
                 <Stack.Navigator initialRouteName={ScreensName.Home} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name={ScreensName.ETransportStack} component={ETransportMain} />
+                    <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
                     <Stack.Screen name={ScreensName.Home} component={Home} />
                     <Stack.Screen name={ScreensName.EMandi} component={Overview} />
                     <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />

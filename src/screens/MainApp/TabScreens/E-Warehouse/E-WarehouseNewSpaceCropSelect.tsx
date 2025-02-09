@@ -48,7 +48,7 @@ function CropSelect(): React.JSX.Element {
                         {EWarehouseCrops.map((Crop, index) => (
                             Crop.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <Categorybox name={Crop.title} SourceGiven={Crop.img} isNavigation={true} screenName={ScreensName.EWarehouseNewSpaceWarehouseSelect} navigationName={ScreensName.EWarehouseMainStack}/>
+                                    <Categorybox name={Crop.title} SourceGiven={Crop.img} isNavigation={true} screenName={ScreensName.EWarehouseNewSpaceWarehouseSelect} navigationName={ScreensName.EWarehouseMainStack}w={wp(19)} h={hp(9)}/>
                                 </View>
                             )
                         ))}

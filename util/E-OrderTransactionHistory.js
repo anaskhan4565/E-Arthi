@@ -57,30 +57,44 @@ const OrderHist = [
     {
         desc: "Order #08098999917",
         time: "14:56 PM",
-        cost: "PKR 2300",
+        cost: "PKR 5,420",
         stat: true,
-        date: "Today, 4 February 2025"
+        date: "4 February 2025"
     },
     {
         desc: "Order #08098999917",
         time: "14:56 PM",
-        cost: "PKR 2300",
+        cost: "PKR 9,120",
         stat: true,
-        date: "Today, 4 February 2025"
+        date: "3 February 2025"
     },
     {
         desc: "Order #08098999917",
         time: "14:56 PM",
-        cost: "PKR 2300",
+        cost: "PKR 11,000",
         stat: true,
-        date: "Today, 4 February 2025"
+        date: "3 February 2025"
     },
     {
         desc: "Order #08098999917",
         time: "14:56 PM",
-        cost: "PKR 2300",
+        cost: "PKR 2,300",
         stat: true,
-        date: "Today, 4 February 2025"
+        date: "2 February 2025"
+    },
+    {
+        desc: "Order #08098999917",
+        time: "14:56 PM",
+        cost: "PKR 4,200",
+        stat: true,
+        date: "29 January 2025"
+    },
+    {
+        desc: "Order #08098999917",
+        time: "14:56 PM",
+        cost: "PKR 1,000",
+        stat: true,
+        date: "5 January 2025"
     }
 ]
 

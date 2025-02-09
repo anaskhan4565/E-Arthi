@@ -16,7 +16,7 @@ export default [
         img: require('../src/assets/MainApp/E-Inventory/FoodSurvelence.png')
     },
     {
-        screen: ScreensName.EWarehousePreviousWarehouses,
+        screen: ScreensName.FoodSafetyAndSecurity,
         title: "Food Safety And Security",
         img: require('../src/assets/MainApp/E-Inventory/FoodSafety.png')
     },

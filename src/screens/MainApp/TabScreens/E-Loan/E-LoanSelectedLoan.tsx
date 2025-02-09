@@ -12,6 +12,10 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName";
 import LoanCategoryDetails from "../../../../../util/LoanCategoryDetails";
+// import WomanFarmer from '../../../../assets/MainApp/E-Loan/';
+import ELoanPiChart from '../../../../assets/MainApp/E-Loan/ELoanPiChart.svg';
+import PiChartLegend from '../../../../assets/MainApp/E-Loan/PiChartLegend.svg';
+import ELoanBarChart from '../../../../assets/MainApp/E-Loan/ELoanBarChart.svg';
 import Navbar from "../../Navbar/Navbar";
 import {
   widthPercentageToDP as wp,
@@ -33,7 +37,18 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
         <View style={styles.searchbar}>
           <CustomSearchApp placeholder={"Search in here"} />
         </View>
-        <View
+        <View>
+          <View style={styles.headerRow}>
+            <Text style={styles.headerText}>{t("Loan Report 2024")}</Text>
+          </View>
+          <ELoanPiChart style={styles.image} />
+          <PiChartLegend style={styles.image} />
+          <View style={styles.headerRow}>
+            <Text style={styles.headerText}>{t("Loan Repay History")}</Text>
+          </View>
+          <ELoanBarChart style={styles.image} />
+        </View>
+        {/* <View
           style={{
             flexDirection: "column",
             alignItems: "center",
@@ -108,7 +123,7 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
                 <Text style={styles.cost}>PKR: {data.cost}</Text>
               </View>
             )
-        )}
+        )} */}
       </View>
     </ScrollView>
   );
@@ -180,6 +195,24 @@ const styles = StyleSheet.create({
   SectionBody: {
     fontFamily: fonts.SemiBold,
     fontSize: hp(2.2),
+  },
+  image: {
+    width: wp(85),
+    height: undefined,
+    resizeMode: 'contain',
+    marginVertical: hp(1.5),
+    alignSelf: 'center',
+  },
+  headerRow: {
+    marginTop: hp(1),
+    flexDirection: "row",
+    width: wp(100),
+    paddingHorizontal: wp(5),
+    alignItems: "center",
+  },
+  headerText: {
+    fontFamily: fonts.SemiBold,
+    fontSize: hp(2.4)
   },
   MainHeader: {
     width: wp(90),

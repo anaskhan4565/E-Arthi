@@ -30,22 +30,25 @@ const CustomInput = ({
       onChangeText(text);
     }
   };
+
   const { t } = useTranslation();
+
   return (
     <TextInput
       style={[
         styles.textInputStyle,
         { 
-          paddingLeft: wp(3),
+          paddingLeft: wp(1),
           width: w,
           height: h,
           backgroundColor: bg_give,
           borderRadius: b_radius,
           borderColor: borderColor,
+          color: colors.BLACK, // Ensure input text is always black
         },
       ]}
       placeholder={t(placeholder)}
-      //placeholderTextColor={placeholder_color}
+      placeholderTextColor={colors.Text_Fancy} // Ensure placeholder remains gray
       secureTextEntry={hide}
       editable={editable}
       value={value}
@@ -59,10 +62,9 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   textInputStyle: {
-    fontSize: wp('3.4%'),
+    fontSize: wp('4%'),
     alignSelf: 'center',
     borderWidth: 1,
-    color: colors.BLACK,
-    
+    color: colors.BLACK, // Ensure text input remains black
   },
 });

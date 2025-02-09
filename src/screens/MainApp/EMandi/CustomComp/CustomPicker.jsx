@@ -26,10 +26,10 @@ const CustomPicker = ({
   placeholderFontSize = hp(2), 
 }) => {
   const { t } = useTranslation();
-  const [selectedValue, setSelectedValue] = useState(null); // Track the selected value
+  const [selectedValue, setSelectedValue] = useState(null);
 
   const checkVal = (e) => {
-    setSelectedValue(e); // Update selected value
+    setSelectedValue(e);
     if (stateName === 'BuyScreen') {
       setCurrentState(e === 0 ? 'Buy' : 'Sell');
     } else if (stateName === 'CategoryVendor') {
@@ -44,50 +44,38 @@ const CustomPicker = ({
         {
           borderWidth: bd_give ? 1 : 0,
           borderColor: isThatColor ? '#D4D4D8' : color_bd ? color_bd : 'transparent',
-          backgroundColor: isThatColor ? colors.WHITE : !bg_color_on
-            ? null
-            : isheader
-              ? colors.DARK_GREEN
-              : colors.LIGHT_GRAY,
+          backgroundColor: isThatColor ? colors.WHITE : !bg_color_on ? null : isheader ? colors.DARK_GREEN : colors.LIGHT_GRAY,
           padding: !padding_f ? hp(1) : 0,
           width: w_given,
         },
-        allow_shadow ? styles.shadowStyle : null, // Apply shadow conditionally
+        allow_shadow ? styles.shadowStyle : null,
       ]}
     >
-      <View
-        style={[
-          styles.pickerContainer,
-          { height: hp_given, minWidth: min_given,
-            marginLeft:isThatColor?hp(-1.5):null
-           },
-        ]}
+      <View style={[styles.pickerContainer, { height: hp_given, minWidth: min_given, marginLeft: isThatColor ? hp(-1.5) : null }]}
       >
         <Picker
           selectedValue={selectedValue}
           mode="dropdown"
           onValueChange={(e) => checkVal(e)}
           style={{
-            color:isThatColor?colors.tx_color: isheader ? tx_color : colors.BLACK,
+            color: selectedValue === null ? colors.Text_Fancy : colors.BLACK, // Gray until selected
             fontSize: hp(2.5),
+            // paddingLeft: hp(4), // Added left padding
           }}
-          itemStyle={[
-            styles.pickerItem,
-            { fontSize: placeholderFontSize }, // Affects all items
-          ]}
+          itemStyle={[styles.pickerItem, { fontSize: placeholderFontSize }]}
         >
           <Picker.Item
             label={t(placeholder)}
             value={null}
             enabled={false} 
-            style={[styles.pickerItem, { color: colors.GRAY, fontSize: placeholderFontSize }]} // Dynamic font size for placeholder
+            style={[styles.pickerItem, { color: colors.Text_Fancy, fontSize: placeholderFontSize, paddingLeft: hp(1) }]} 
           />
           {items.map((item, index) => (
             <Picker.Item
-              key={item.value || index} 
+              key={item.value || index}
               label={t(item.value)}
               value={index}
-              style={[styles.pickerItem, { color: colors.BLACK }]} // Set item color
+              style={[styles.pickerItem, { color: colors.BLACK, paddingLeft: hp(1) }]} // Added left padding
             />
           ))}
         </Picker>
@@ -122,6 +110,7 @@ const styles = StyleSheet.create({
   pickerItem: {
     height: hp(7), 
     fontSize: hp(2.5), 
-    paddingVertical: hp(1), 
+    paddingVertical: hp(1),
+    paddingLeft: hp(1), // Added left padding
   },
 });

@@ -14,9 +14,11 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     SecondaryText = 'Nothing',
     name, isNavigation, w = wp('90%'),
     h = hp('10%'), navigateTo,
-    customImg={Image4},
-    imgW=wp(15),
-    imgH=hp(7)
+    customImg = { Image4 },
+    imgW = wp(15),
+    imgH = hp(7),
+    AllowElv = true,
+    SecTextAllow=false
 
 }) => {
     const navigation = useNavigation();
@@ -34,16 +36,23 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     };
 
     return (
-        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={handleNavigation}>
+        <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, elevation: AllowElv ? 5 : 0 }]} onPress={handleNavigation}>
             <View style={styles.rowContainer}>
                 {allowImg ?
                     <View style={styles.imageContainer}>
-                        <Image source={customImg} style={[styles.ImageStyle,{width:imgW,height:imgH}]} />
+                        <Image source={customImg} style={[styles.ImageStyle, { width: imgW, height: imgH }]} />
                     </View>
                     : null
                 }
                 <View style={[styles.textContainer, { marginLeft: !allowImg ? hp(2) : null }]}>
                     <Text style={styles.TextStyle}>{t(name)}</Text>
+                    {SecTextAllow?
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>Remaining Amount:</Text>
+                        <Text style={{ fontSize: hp(1.4), color: colors.GREEN,fontFamily:fonts.Bold }}>PKR 53,950</Text>
+
+                    </View>
+                    :null}
                 </View>
 
                 {!allowImg ?
@@ -76,7 +85,6 @@ const styles = StyleSheet.create({
         borderRadius: hp('1.3%'),
         backgroundColor: colors.WHITE,
         // marginHorizontal: hp('1%'),
-        elevation: 5,
         shadowColor: '#000',
         shadowOffset: { width: 3, height: 2 },
         shadowOpacity: 4.2,

@@ -29,6 +29,8 @@ import AGRICARD from '../../../../assets/MainApp/E-Order/PaymentMethods/AgriCard
 import KISSANCARD from '../../../../assets/MainApp/E-Order/PaymentMethods/KisaanCard.png'
 import InventoryProduct from "../../CustomComponent/WarehouseProduct.jsx";
 import Wallet from './TempImgsOrder/image.png'
+import { Button, RadioButton } from "react-native-paper";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 const paymentMethods = [
     { name: "Raast", image: RAAST },
     { name: "Debit Card", image: DEBIT },
@@ -73,7 +75,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
         }).start();
     }, []);
 
-
+    const [selected, setSelected] = useState("recommended");
 
     return (
         <SafeAreaView style={styles.container}>
@@ -120,12 +122,62 @@ function EOrderPlaceOrder(): React.JSX.Element {
                         )}
                     </Text>
                 </View>
-                <View style={{ flex: 1, marginLeft: hp(2) }}>
-                    <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Pay with your Card</Text>
+                <View style={{ flex: 1, marginLeft: hp(2), marginBottom: hp(4) }}>
+                    <View style={{ flexDirection: 'row', alignItems: "center", alignContent: 'center' }}>
+                        <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Recommended Option</Text>
+                        <TouchableOpacity onPress={() => setSelected("recommended")} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+                            <RadioButton
+                                value="recommended"
+                                status={selected === "recommended" ? "checked" : "unchecked"}
+                                onPress={() => setSelected("recommended")}
+                                color={colors.GREEN}
+
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View
+                        style={{
+                            opacity: selected === "recommended" ? 1 : 0.5, // Reduce opacity when disabled
+                            // transform: [{ translateY }],
+
+                        }}
+                        pointerEvents={selected === "recommended" ? "auto" : "none"} // Disable interaction when off
+                    >
+                        <InventoryProduct
+                            key={1}
+                            name={"Line of credit"}
+                            //price={product.price}
+                            isNavigation={true}
+                            SecTextAllow={true}
+                            customImg={Wallet}
+                            imgH={hp(4.6)}
+                            h={hp(7)}
+                            AllowElv={selected === "recommended" ? true : false}
+                            navigateTo={ScreensName.LineOfCreditPay}
+                        />
+                    </View>
                 </View>
-                <Animated.View style={[styles.imageGrid, {
-                    transform: [{ translateY }], opacity
-                }]}>
+                <View style={{ flex: 1, marginLeft: hp(2), flexDirection: 'row', alignItems: "center", alignContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Pay with your Card</Text>
+                    <TouchableOpacity onPress={() => setSelected("Card")} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+                        <RadioButton
+                            value="Card"
+                            status={selected === "Card" ? "checked" : "unchecked"}
+                            onPress={() => setSelected("Card")}
+                            color={colors.GREEN}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Animated.View
+                    style={[
+                        styles.imageGrid,
+                        {
+                            transform: [{ translateY }],
+                            opacity: selected === "Card" ? 1 : 0.5, // Reduce opacity when disabled
+                        },
+                    ]}
+                    pointerEvents={selected === "Card" ? "auto" : "none"} // Disable interaction when off
+                >
                     {paymentMethods.map((each, index) => (
                         <TouchableOpacity
                             onPress={() => NavigateToPayment(each)}
@@ -138,19 +190,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                         </TouchableOpacity>
                     ))}
                 </Animated.View>
-                <View style={{ flex: 1, marginLeft: hp(2),marginBottom:hp(4) }}>
-                    <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Other options</Text>
-                    <InventoryProduct
-                        key={1}
-                        name={"Line of credit"}
-                        //price={product.price}
-                        isNavigation={false}
-                        AddIcon={true}
-                        customImg={Wallet}
-                        imgH={hp(4.6)}
-                        navigateTo={undefined}
-                    />
-                </View>
+
             </ScrollView>
         </SafeAreaView>
     );

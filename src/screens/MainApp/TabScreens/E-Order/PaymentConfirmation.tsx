@@ -229,39 +229,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp(30),
   },
-  quantityBox: {
-    borderWidth: 1,
-    borderColor: colors.LIGHT_GRAY,
-    borderRadius: 5,
-    padding: 5,
-    width: wp(8),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  pickerContainer: {
-    marginTop: hp(-3),
-    width: '85%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    // elevation: 5,
-  },
-  newNotesContainer: {
-    marginTop: hp(1),
-    width: '85%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    // elevation: 5,
-  },
+
   notesContainer: {
     marginLeft: hp(2.9),
     width: '85%',
@@ -285,70 +253,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     // elevation: 5,
   },
-  notesInput: {
-    height: hp(10),
-    textAlignVertical: 'top',
-    elevation: 5,
-    backgroundColor: colors.WHITE,
-    borderRadius: 5,
-    color: colors.BLACK,
-  },
-  notesButton: {
-    width: wp(10),
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    elevation: 5,
-  },
-  summaryContainer: {
-    marginTop: hp(3),
-    width: '100%',
-    padding: wp(3),
-    borderRadius: 5,
-  },
-  summaryText: {
-    fontSize: hp(2.5),
-    color: colors.DARK_GRAY,
-    marginVertical: hp(1),
-  },
-  totalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    // marginHorizontal: wp(5),
-    // marginBottom: hp(2),
-    width: wp(85)
-  },
-  totalText: {
-    color: colors.GREEN,
-    fontSize: hp(1.8),
-    fontFamily: fonts.Bold
-  },
-  amountText: {
-    color: '#000',
-    fontSize: hp(1.8),
-    fontFamily: fonts.Bold
-  },
-  dottedLine: {
-    borderBottomColor: colors.DARK_GRAY,
-    borderBottomWidth: 1,
-    borderStyle: 'dotted',
-    width: '100%',
-    marginVertical: hp(1),
-  },
-  productInfo: {
-    flexDirection: 'column',
-  },
-  priceText: {
-    color: colors.GRAY,
-    fontSize: hp(1.5),
-    fontFamily: fonts.Regular
-  },
+  
 });
 
 export default PaymentConfirmation;

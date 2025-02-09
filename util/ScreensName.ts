@@ -133,5 +133,6 @@ export default {
     RaastPaymentScreen:"RaastPaymentScreen",
     RaastConfirmPayment:"RaastConfirmPayment",
     PaymentSuccess:"PaymentSuccess",
-    AllOTP:"AllOTP"
+    AllOTP:"AllOTP",
+    LineOfCreditPay:"LineOfCreditPay"
 }

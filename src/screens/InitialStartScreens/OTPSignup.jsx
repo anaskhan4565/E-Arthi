@@ -7,6 +7,7 @@ import colors from '../../../util/colors';
 import ScreensName from '../../../util/ScreensName';
 import { useTranslation } from "react-i18next";
 import { fonts } from '../../../util/FontName';
+import { MMKV } from 'react-native-mmkv';
 
 const OTPSignUp = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -14,6 +15,7 @@ const OTPSignUp = () => {
     const [timer, setTimer] = useState(false);
     const [timeLeft, setTimeLeft] = useState(60);
     const isFocused = useIsFocused()
+    const storage = new MMKV();
     let intervalId: NodeJS.Timeout;
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -76,7 +78,7 @@ const OTPSignUp = () => {
 
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
-                    {t('Please enter the verification code we’ve sent you on +92-0332521550')}
+                    {t(`Please enter the verification code we’ve sent you on ${storage.getString("Number")}`)}
                 </Text>
             </View>
 

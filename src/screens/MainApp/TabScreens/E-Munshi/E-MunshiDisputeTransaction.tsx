@@ -34,7 +34,7 @@ const transaction =
     "Vendor": "TechMart",
 }
 
-function DisputeTransaction({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
+function EmunshiDisputeTransaction({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
     const { t } = useTranslation();
 
     return (
@@ -221,4 +221,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DisputeTransaction;
+export default EmunshiDisputeTransaction;

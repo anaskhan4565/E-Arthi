@@ -8,8 +8,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors.js";
-import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
-import { ETransportMaindet } from "../../../../../util/E-Transport.js";
+
 
 import {
   SafeAreaView,
@@ -23,12 +22,12 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName.ts";
-import CustomButton from "../../../../components/CustomButton.jsx";
-import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx";
+
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import placeholder from '../../../../../src/assets/MainApp/E-Order/placeorder.png';
 import { MMKV } from 'react-native-mmkv';
-import MyPieChartSec from "./CustomComponent/MyPiChartSec.jsx";
+import { emunshiDet } from "../../../../../util/MunshiData.js";
+import Back from "../../../../assets/MainApp/Sidebar/Back.png";
 
 
 const warehouseData = [
@@ -38,14 +37,14 @@ const warehouseData = [
   { name: "Lasbela Warehouse", value: 30, color: "#CA6C0F" },
   { name: "Sialkot Warehouse", value: 10, color: "#204D00" },
 ];
- 
+
 function EMunshi(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
-     const storage = new MMKV();
+  const storage = new MMKV();
 
   const handleNavigation = async (name: string) => {
-    try { 
+    try {
       console.log("Storing name in AsyncStorage:", name);
       storage.set("warehouse", name);
       console.log("Stored successfully");
@@ -54,7 +53,7 @@ function EMunshi(): React.JSX.Element {
       console.error("Error saving to AsyncStorage:", error);
     }
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
@@ -70,44 +69,38 @@ function EMunshi(): React.JSX.Element {
               fontSize: hp(3.5),
               fontFamily: fonts.SemiBold,
               marginLeft: hp(2),
+              marginBottom: hp(3),
             }}
           >
             {t('E-Munshi')}
           </Text>
         </View>
-        <View style={styles.bodyContainer}>
-          <View style={styles.chartContainer}>
-            <MyPieChartSec
-              data={warehouseData}
-              containerWidth={wp(90)}
-              containerHeight={hp(40)}
-              chartHeight={hp(25)}
-              paddingLeft={hp(5)}
-              chartWidth={wp(45)}
-            />
-            <View style={styles.legendContainer}></View>
-          </View>
-          <Text style={styles.subsectionTitle}>{t('Select Warehouse')}</Text>
-          {warehouseData.map((warehouse, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.warehouseBox}
-              onPress={() => {
-                handleNavigation(warehouse.name)
-              }}
-            >
-              <Text style={styles.warehouseLabel}>{t(warehouse.name)}</Text>
-              <View style={styles.percentageContainer}>
-                <Text style={styles.warehousePercentage}>
-                  {warehouse.value}%
-                </Text>
-                <Image
-                  source={require("../../../../assets/MainApp/E-Munshi/chevron-right-solid.png")}
-                  style={styles.arrowImage}
-                />
+        {emunshiDet.map(
+          (warehouse, index) =>
+            warehouse.name.trim() !== "" && (
+              <View
+                style={styles.itemBoxWrapper}
+                key={index}
+              >
+                <TouchableOpacity style={styles.WarehouseBox} onPress={() =>navigation.navigate(warehouse.screenname)}>
+                  <View style={styles.leftContainer}>
+                    <Image source={placeholder} style={styles.WhIcon} />
+                    <Text style={styles.WarehouseName}>
+                      {warehouse.name}
+                    </Text>
+                  </View>
+                  <View>
+                    <Image
+                      source={Back}
+                      style={[styles.image, { transform: [{ scaleX: -1 },], },]}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          ))}
+            )
+        )}
+        <View style={styles.bodyContainer}>
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -152,93 +145,57 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemBoxWrapper: {
-    width: "30%",
+    width: "85%",
     marginBottom: hp("2%"),
     marginHorizontal: wp("-3%"),
     alignItems: "center",
+    alignSelf: 'center',
+
   },
-  recommendedProducts: {
-    marginTop: 20,
-  },
-  recommendedTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  productRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  subsectionTitle: {
-    fontSize: hp(2),
-    fontFamily: "Poppins Bold",
-    marginBottom: hp(2),
-    textAlign: "center",
-  },
-  chartContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
-  legendContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: hp(2),
-    marginBottom: hp(2),
-    backgroundColor: "#F8F6F6",
-    borderRadius: hp(2),
-  },
-  legendItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: hp(0.5),
-    width: "50%",
-    justifyContent: "center",
-  },
-  colorBox: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    marginRight: hp(1),
-  },
-  legendText: {
-    fontSize: hp(2),
-    color: "#7F7F7F",
-  },
-  warehouseBox: {
-    backgroundColor: colors.WHITE,
-    padding: hp(2),
-    marginVertical: hp(1),
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderRadius: 5,
-    elevation: 2, // Optional: for shadow effect on Android
-  },
-  warehouseLabel: {
-    color: "black",
-    fontSize: hp(2),
-    fontFamily: "Poppins",
-  },
-  warehousePercentage: {
-    color: colors.PRIMARY,
-    fontSize: hp(2),
-    fontFamily: "Poppins",
-  },
-  percentageContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  arrowImage: {
-    width: 20,
-    height: 20,
+  image: {
+    width: wp(8),
+    height: wp(7),
+    marginRight: wp(2),
     resizeMode: "contain",
-    marginLeft: hp(1),
   },
+  WhIcon: {
+    width: wp(10),
+    height: wp(10),
+    marginRight: wp(2),
+    resizeMode: "contain",
+  },
+  leftContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+
+  },
+  WarehouseName: {
+
+    marginLeft: wp(2),
+    fontSize: hp(2.3),
+    fontFamily: fonts.Regular,
+  },
+  BackIcon: {
+    width: wp(6),
+    height: wp(6),
+    transform: [{ scaleX: -1 }], // Flipped back icon
+    paddingRight: wp(-4),
+  },
+  WarehouseBox: {
+    width: wp(85),
+    height: hp(10),
+    backgroundColor: colors.WHITE,
+    borderRadius: hp(0.5),
+    justifyContent: 'space-between', // Space between left and right elements
+    alignItems: "center",
+    flexDirection: "row",
+    elevation: 10,
+    paddingHorizontal: wp(4), // Padding for better spacing
+  },
+
+
+
+
 });
 
 export default EMunshi;

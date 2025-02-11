@@ -33,7 +33,7 @@ const transaction =
     "Vendor": "TechMart",
 }
 
-function TransactionDetail({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
+function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
     const { t } = useTranslation();
 
     return (
@@ -214,4 +214,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TransactionDetail;
+export default EmunshiTransactionDetail;

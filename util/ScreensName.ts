@@ -58,7 +58,7 @@ export default {
     FoodSurveillanceSelectWarehouse: "FoodSurveillanceSelectWarehouse",
     FoodSurveillanceWarehouse: "FoodSurveillanceWarehouse",
     FoodSurveillanceItem: "FoodSurveillanceItem",
-   
+
 
     EVendorsMainStack: "EVendorsMainStack",
     EVendors: "EVendors",
@@ -120,7 +120,10 @@ export default {
     EMunshiCashFlow: "EMunshiCashFlow",
     EMunshiFarmName: "EMunshiFarmName",
     EMunshiWarehouseInfo: "EMunshiWarehouseInfo",
-    FoodSafetyAndSecurity:"FoodSafetyAndSecurity",
+    FoodSafetyAndSecurity: "FoodSafetyAndSecurity",
+    EmunshiLineOfCredit: "EmunshiLineOfCredit",
+    EmunshiDisputeTransaction: "EmunshiDisputeTransaction",
+    EmunshiTransactionDetail: "EmunshiTransactionDetail",
 
 
     EOrderHistory: "EOrderHistory",
@@ -130,11 +133,11 @@ export default {
     EOrderTransaction: "EOrderTransaction",
     EOrderCheckout: "EOrderCheckout",
     EOrderPaymentMethod: "EOrderPaymentMethod",
-    OTPSignUp:"OTPSignUp",
-    RaastPaymentScreen:"RaastPaymentScreen",
-    RaastConfirmPayment:"RaastConfirmPayment",
-    PaymentSuccess:"PaymentSuccess",
-    AllOTP:"AllOTP",
-    LineOfCreditPay:"LineOfCreditPay",
-    EVendorViewTranscations:"EVendorViewTranscations"
+    OTPSignUp: "OTPSignUp",
+    RaastPaymentScreen: "RaastPaymentScreen",
+    RaastConfirmPayment: "RaastConfirmPayment",
+    PaymentSuccess: "PaymentSuccess",
+    AllOTP: "AllOTP",
+    LineOfCreditPay: "LineOfCreditPay",
+    EVendorViewTranscations: "EVendorViewTranscations"
 }

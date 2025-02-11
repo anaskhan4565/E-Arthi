@@ -23,7 +23,7 @@ const TransactionComponent = ({
                     { backgroundColor: State === 1 ? '#0EAE2D' : State === 2 ? '#1B7ED4' : State === 3 ? '#e0ff63' : '#ccc' }
                 ]}>
                     <Text style={[styles.statusText,{color:State==3?colors.BLACK:colors.WHITE}]}>
-                        {State === 1 ? 'Completed' : State === 2 ? 'Active' : State === 3 ?  'Pending':null}
+                        {t(State === 1 ? 'Completed' : State === 2 ? 'Active' : State === 3 ?  'Pending':null)}
                     </Text>
                 </View>
             </View>

@@ -136,5 +136,9 @@ export default {
     PaymentSuccess:"PaymentSuccess",
     AllOTP:"AllOTP",
     LineOfCreditPay:"LineOfCreditPay",
-    EVendorViewTranscations:"EVendorViewTranscations"
+    EVendorViewTranscations:"EVendorViewTranscations",
+
+    EBroker:"EBroker",
+    EBrokerPage:"EBrokerPage",
+    EBrokerMainStack: "EBrokerMainStack"
 }

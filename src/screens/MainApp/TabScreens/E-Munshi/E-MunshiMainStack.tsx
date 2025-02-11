@@ -19,6 +19,9 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from "i18next";
 
 import EMunshi from "./E-Munshi"
+import EMunshiCashFlow from "./E-MunshiCashFlow"
+import EMunshiTransactionDetail from "./E-MunshiTransactionDetail"
+import EMunshiDisputeTransaction from "./E-MunshiDisputeTransaction"
 import EMunshiItemName from "./E-MunshiItemName"
 import EMunshiFarmName from "./E-MunshiFarmName";
 import EMunshiWarehouseInfo from "./EMunshiWarehouseInfo";

@@ -10,9 +10,11 @@ export default{
     RED: '#FF0000',
     ORANGE: '#FFA412',
     EOrderHistGray: '#ADADAD',
+    BLUE: '#0000FF',
 
     //for buttons::
     GREEN:'#00A980',
+    BRIGHTGREEN:'#22B14C',
     COMPLETE_GREEN: '#52DC18',
     WHITE:'#FFFFFF',
     LIGHT_GRAY:'rgba(0, 0, 0, 0.2)',

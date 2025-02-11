@@ -180,21 +180,24 @@ const styles = StyleSheet.create({
   },
   detailRow: {
     flexDirection: 'row',
-    marginHorizontal: hp("1.5%"),
-    flex: 1
+    marginHorizontal: hp("1%"),
+    flex: 1,
   },
+  
   labelText: {
-    fontSize: hp("2.5%"),
+    fontSize: wp("5%"),
     fontFamily: fonts.SemiBold,
     color: colors.BLACK,
-    textAlign: "left",
+    textAlign:'left'
+
   },
   infoText: {
     fontSize: wp("4.3%"),
     fontFamily: fonts.Bold,
-    width:hp(20),
+    width:hp(21),
     color: colors.GREEN,
-    textAlign: "left",
+    textAlign:'left',
+    marginBottom:hp(0.4)
   },
   buttonContainer: {
     alignItems: "center",

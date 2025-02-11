@@ -19,7 +19,7 @@ import MyPieChart from "../E-Loan/CustomComponents/PiChart";
 
 function Sales(): React.JSX.Element {
     const { t } = useTranslation();
-    const currency = "$"; // Currency header
+    const currency = "PKR"; // Currency header
     const [currentState, setCurrentState] = useState(0);
 
     useEffect(() => {

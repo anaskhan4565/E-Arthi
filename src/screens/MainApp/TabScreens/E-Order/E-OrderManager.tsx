@@ -31,7 +31,7 @@ const EOrderManager = () => {
               letterSpacing: hp(0.6),
             }}
           >
-            E-Order Manager
+            {t('E-Order Manager')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>

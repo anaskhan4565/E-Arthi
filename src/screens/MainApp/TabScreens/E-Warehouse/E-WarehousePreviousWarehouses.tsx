@@ -63,7 +63,7 @@ function PurchaseHisotry(): React.JSX.Element {
               marginRight: wp(10) // Add minimal spacing only if needed for readability
             }}
           >
-            E-Warehouse
+            {t('E-Warehouse')}
           </Text>
           <CustomButton
             MainText={t("New Warehouse")}

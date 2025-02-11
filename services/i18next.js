@@ -11,8 +11,8 @@ i18n.use(initReactI18next).init({
     sin: { translation: sin },
     psh: { translation: psh },
   },
-  lng: 'en', // Default language
-  fallbackLng: 'en',
+  lng: 'ur', // Default language
+  fallbackLng: 'ur',
   interpolation: {
     escapeValue: false, // React already handles escaping
   },

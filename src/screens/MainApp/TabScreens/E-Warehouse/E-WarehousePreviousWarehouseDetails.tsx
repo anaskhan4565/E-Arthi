@@ -82,7 +82,7 @@ function ConfrimWarehouse(): React.JSX.Element {
           <View>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>
-                Number of units reserved
+                {t('Number of units reserved')}
               </Text>
               <CustomInput
                 placeholder={t("Units")}

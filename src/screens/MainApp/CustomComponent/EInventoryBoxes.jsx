@@ -52,7 +52,7 @@ const EInventoryBoxes = ({
             </View>
             <View >
                 {SecondaryText ?
-                    <Text style={{ color: colors.PRIMARY }}>{SecondaryText}</Text>
+                    <Text style={{ color: colors.PRIMARY }}>{t(SecondaryText)}</Text>
 
                     : null}
                 {amount && (

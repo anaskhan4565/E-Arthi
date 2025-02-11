@@ -19,6 +19,7 @@ import { fonts } from "../../../../../util/FontName.js";
 import ScreensName from "../../../../../util/ScreensName";
 import VendorList from "../../../../../util/E-Vendorlist.js";
 import { useNavigation } from "@react-navigation/native";
+import { MMKV } from "react-native-mmkv";
 
 function EVendors(): React.JSX.Element {
   const { t } = useTranslation();
@@ -28,13 +29,27 @@ function EVendors(): React.JSX.Element {
   const items = ["Seeds", "Machinery", "Fertilizers", "Pesticides", "Products"];
   useEffect(() => {
     if (selectedItem) {
-    setVendors(VendorList.filter((entry) => entry.Category === selectedItem));
+      setVendors(VendorList.filter((entry) => entry.Category === selectedItem));
     }
-    else{
-        setVendors(VendorList);
+    else {
+      setVendors(VendorList);
     }
   }, [selectedItem]);
 
+  const SetSelectedFollow = (item) => {
+    if (selectedItem == item) {
+      setSelectedItem("")
+    } else {
+      setSelectedItem(item)
+
+    }
+  }
+  const storage = new MMKV();
+
+  const HandleEachVendor = (data) => {
+    storage.set("VendorDetail", JSON.stringify(data)); 
+    navigation.navigate(ScreensName.EVendorsDetails)
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
@@ -64,7 +79,7 @@ function EVendors(): React.JSX.Element {
                   styles.itemBox,
                   selectedItem === item && styles.selectedBox,
                 ]}
-                onPress={() => setSelectedItem(item)}
+                onPress={() => SetSelectedFollow(item)}
               >
                 <Text
                   style={[
@@ -79,22 +94,22 @@ function EVendors(): React.JSX.Element {
           </View>
 
           <View style={styles.tableHeader}>
-            <Text style={[styles.tableHeaderText,{width: wp(55)}]}>{t("Vendors")}</Text>
+            <Text style={[styles.tableHeaderText, { width: wp(55) }]}>{t("Vendors")}</Text>
             <Text style={styles.tableHeaderText}>{t("Orders Placed")}</Text>
           </View>
 
           {Vendors.map(
             (data, index) =>
-              data["Vendor Name"].trim() !== "" && (
+              data["VendorName"].trim() !== "" && (
                 <TouchableOpacity
                   key={index}
                   style={styles.tableRow}
                   onPress={() =>
-                    navigation.navigate(ScreensName.EVendorsDetails)
+                    HandleEachVendor(data)
                   }
                 >
-                  <Text style={[styles.tableRowText,{width: wp(55)}]}>{data["Vendor Name"]}</Text>
-                  <Text style={[styles.tableRowText,{textAlign: "right",paddingRight: wp(2)}]}>
+                  <Text style={[styles.tableRowText, { width: wp(55) }]}>{data["VendorName"]}</Text>
+                  <Text style={[styles.tableRowText, { textAlign: "right", paddingRight: wp(2) }]}>
                     {data["Orders Placed"]}
                   </Text>
                 </TouchableOpacity>

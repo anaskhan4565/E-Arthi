@@ -33,7 +33,7 @@ const { height, width } = Dimensions.get("window");
 function SignUp(): React.JSX.Element {
     const [Name, setName] = useState("");
     const [Email, setEmail] = useState("");
-    const [Number, setNumber] = useState("92");
+    const [Number, setNumber] = useState("+92");
     const [Password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState();
     const [NameError, setNameError] = useState(false);
@@ -46,7 +46,7 @@ function SignUp(): React.JSX.Element {
     const navigation = useNavigation(); // Added navigation instance
     const storage = new MMKV();
     const handleNumberChange = (value: string) => {
-        value = value.replace(/[^0-9]/g, "");
+        //value = value.replace(/[^0-9]/g, "");
         setNumber(value);
     };
 
@@ -60,12 +60,11 @@ function SignUp(): React.JSX.Element {
             setErrorMessage(t("Please fill all fields"));
             if (!Name) setNameError(true);
             if (!Password) setPasswordError(true);
-            if (Number === "92" || !Number) setNumberError(true);
+            if (Number === "+92" || !Number) setNumberError(true);
             if (!Email) setEmailError(true);
             return;
         }
-
-        if (!/^\d{12}$/.test(Number)) {
+        if ( Number.length<13) {
             setErrorMessage(t("Mobile number must be 12 digits"));
             setNumberError(true);
             return;
@@ -152,6 +151,8 @@ function SignUp(): React.JSX.Element {
                             placeholder={t("Mobile No.")}
                             placeholderTextColor={NumberError ? colors.RED : colors.Text_Fancy}
                             value={Number}
+                            keyboardType="number-pad"
+                            maxLength={13}
                             onChangeText={(value) => handleNumberChange(value)}
                         />
                     </View>

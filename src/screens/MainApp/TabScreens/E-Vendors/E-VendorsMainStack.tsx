@@ -20,6 +20,7 @@ import i18next from "i18next";
 
 import EVendors from "./E-Vendors"
 import EVendorsDetails from "./E-VendorsDetails"
+import EVendorViewTranscations from "./E-VendorViewTranscations";
 const Stack = createNativeStackNavigator();
 
 
@@ -29,6 +30,8 @@ function EVendorsMainStack(): React.JSX.Element {
                 <Stack.Navigator initialRouteName={ScreensName.EVendors} screenOptions={{ headerShown: false }}>
                     <Stack.Screen name={ScreensName.EVendors} component={EVendors} />
                     <Stack.Screen name={ScreensName.EVendorsDetails} component={EVendorsDetails} />
+                    <Stack.Screen name={ScreensName.EVendorViewTranscations} component={EVendorViewTranscations} />
+
                 </Stack.Navigator>
         // </I18nextProvider>
     );

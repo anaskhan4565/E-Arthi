@@ -21,11 +21,17 @@ import ScreensName from "../../../../../util/ScreensName.ts";
 import { fonts } from "../../../../../util/FontName.js";
 import VendorOrders from "../../../../../util/E-VendorOrders.js";
 import { useNavigation } from "@react-navigation/native";
-
-function EVendorsDetails(): React.JSX.Element {
+import ProductBox from "../../CustomComponent/ProductBox.jsx";
+import Image2 from '../../../../assets/MainApp/EmarketPlace/Products/prod2.png'
+import { MMKV } from "react-native-mmkv";
+const EVendorsDetails = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const storage = new MMKV();
+  const [VendorDetail, SetVendorDetail] = useState([])
 
+  const vendorDetail = JSON.parse(storage.getString("VendorDetail") || "{}");
+  // SetVendorDetail(vendorDetail)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
@@ -44,38 +50,75 @@ function EVendorsDetails(): React.JSX.Element {
           <View style={styles.detailsContainer}>
             <View style={styles.detailRow}>
               <Text style={styles.labelText}>{t("Name: ")}</Text>
-              <Text style={styles.infoText}>{t("Engro Fertilizers")}</Text>
+              <Text style={styles.infoText}>{t(vendorDetail.VendorName)}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.labelText}>{t("Location: ")}</Text>
               <Text style={styles.infoText}>
                 {t("123 Street, ABC District, Karachi Pakistan")}
               </Text>
+              <View style={styles.detailRow}>
+
+                <Text style={styles.labelText}>{t("Helpline: ")}</Text>
+
+                <Text style={styles.infoText}>
+                  {vendorDetail.Helpline}
+                </Text>
+              </View>
             </View>
+            <CustomButton MainText={"View Transactions"}
+             wgiven={hp(20)} hgiven={hp(3.5)} 
+             tx_size={hp(1.7)} txColor={colors.WHITE} 
+             BgGiven={colors.GREEN} 
+             isSelected={true} 
+             isNavigation={true}
+             name={ScreensName.EVendorViewTranscations} />
+
           </View>
           <View style={styles.imageContainer}>
             <Image
-              source={require("../../../../assets/MainApp/E-Vendors/engro.png")}
+              source={vendorDetail.Logo}
               style={styles.itemImage}
               resizeMode="contain"
+
             />
+
+
           </View>
         </View>
         <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={styles.tableHeaderText}>{t("Order Number")}</Text>
-            <Text style={styles.tableHeaderText}>{t("Date Ordered")}</Text>
+            <Text style={styles.tableHeaderText}>{t("Offered Products")}</Text>
           </View>
 
-          {VendorOrders.map(
-            (data, index) =>
-              data.name.trim() !== "" && (
-                <View style={styles.tableRow} key={index}>
-                  <Text style={styles.tableRowText}>{t(data.name)}</Text>
-                  <Text style={styles.tableRowText}>{data.date} </Text>
-                </View>
-              )
-          )}
+
+          <View style={styles.tableRow} >
+            <ProductBox name={"Agri-Protex"}
+              AddIcon={false} price={"2050"}
+              SourceGiven={Image2}
+              iscentered={true}
+
+              backColor={colors.LIGHT_GREEN}
+            />
+            <ProductBox name={"Agri-Protex"}
+              AddIcon={false} price={"2050"}
+              SourceGiven={Image2}
+              iscentered={true}
+
+              backColor={colors.LIGHT_GREEN}
+            />
+
+            <ProductBox name={"Agri-Protex"}
+              AddIcon={false} price={"2050"}
+              SourceGiven={Image2}
+              iscentered={true}
+
+              backColor={colors.LIGHT_GREEN}
+            />
+
+
+          </View>
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -165,7 +208,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: hp(1),
+    gap: hp(2),
     borderBottomWidth: 1,
+    flexWrap: 'wrap',
     borderBottomColor: colors.LIGHT_GRAY,
   },
   tableRowText: {

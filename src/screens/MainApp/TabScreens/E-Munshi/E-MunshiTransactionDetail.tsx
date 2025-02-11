@@ -16,6 +16,8 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
+import { useNavigation } from "@react-navigation/native";
+import ScreensName from "../../../../../util/ScreensName";
 
 const transaction =
 {
@@ -33,8 +35,11 @@ const transaction =
     "Vendor": "TechMart",
 }
 
-function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
+function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990, route }): React.JSX.Element {
     const { t } = useTranslation();
+    const navigation = useNavigation();
+    const { transactiondata } = route.params;
+    console.log(transactiondata);
 
     return (
         <ScrollView style={styles.container}>
@@ -46,38 +51,38 @@ function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990 }): React.JSX.Elem
                     <CustomSearchApp placeholder={"Search in here"} />
                 </View>
                 <View style={styles.headerRow}>
-                    <Text style={styles.headerText}>{"Transaction " + transaction.number}</Text>
-                    <View style={[styles.statusContainer, { backgroundColor: transaction.status === "Active" ? colors.BRIGHTGREEN : colors.BLUE }]}>
+                    <Text style={styles.headerText}>{"Transaction " + transactiondata.number}</Text>
+                    <View style={[styles.statusContainer, { backgroundColor: transactiondata.status === "Active" ? colors.BRIGHTGREEN : colors.BLUE }]}>
                         <Text style={[styles.transactionText, styles.statusText]}>
-                            {transaction.status}
+                            {transactiondata.status}
                         </Text>
                     </View>
                 </View>
 
-                <View style={{ width:'100%', padding: wp(5) }}>
+                <View style={{ width: '100%', padding: wp(5) }}>
                     <View style={styles.row}>
                         <Text style={styles.transactionTextBold}>Date: </Text>
-                        <Text style={styles.transactionText}>{transaction.Date}</Text>
+                        <Text style={styles.transactionText}>{transactiondata.Date}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.transactionTextBold}>Location: </Text>
-                        <Text style={styles.transactionText}>{transaction.Location}</Text>
+                        <Text style={styles.transactionText}>{transactiondata.Location}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.transactionTextBold}>Time: </Text>
-                        <Text style={styles.transactionText}>{transaction.Time}</Text>
+                        <Text style={styles.transactionText}>{transactiondata.Time}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.transactionTextBold}>Items Purchased: </Text>
-                        <Text style={styles.transactionText}>{transaction.Items.reduce((total, item) => total + item.qty, 0)}</Text>
+                        <Text style={styles.transactionText}>{transactiondata.Items.reduce((total, item) => total + item.qty, 0)}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.transactionTextBold}>Vendor: </Text>
-                        <Text style={styles.transactionText}>{transaction.Vendor}</Text>
+                        <Text style={styles.transactionText}>{transactiondata.Vendor}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.transactionTextBold}>Amount: </Text>
-                        <Text style={styles.transactionText}>{transaction.Items.reduce((total, item) => total + (item.qty * item.price), 0)} Rs</Text>
+                        <Text style={styles.transactionText}>{transactiondata.Items.reduce((total, item) => total + (item.qty * item.price), 0)} Rs</Text>
                     </View>
                 </View>
                 <View style={styles.headerRow}>
@@ -85,11 +90,11 @@ function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990 }): React.JSX.Elem
                 </View>
                 <View style={styles.tableContainer}>
                     <View style={styles.tableHeader}>
-                        <Text style={[styles.tableHeaderText, styles.tableCellName]}>Name</Text>
+                        <Text style={[styles.tableHeaderText, styles.tableCellName]}>Item Name</Text>
                         <Text style={[styles.tableHeaderText, styles.tableCellQty]}>Qty</Text>
                         <Text style={[styles.tableHeaderText, styles.tableCellPrice]}>Price (Rs)</Text>
                     </View>
-                    {transaction.Items.map((item, index) => (
+                    {transactiondata.Items.map((item, index) => (
                         <View key={index} style={[styles.tableRow, index === transaction.Items.length - 1 ? { borderBottomWidth: 0 } : {}]}>
                             <Text style={[styles.tableCell, styles.tableCellName]}>{item.name}</Text>
                             <Text style={[styles.tableCell, styles.tableCellQty]}>{item.qty}</Text>
@@ -100,11 +105,11 @@ function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990 }): React.JSX.Elem
                 <View style={styles.headerRow}>
                     <Text style={styles.headerText}>{"Did Not Make This Transaction?"}</Text>
                 </View>
-                <Text style={[styles.transactionText, { width:'100%', padding: wp(5) }]}>
+                <Text style={[styles.transactionText, { width: '100%', padding: wp(5) }]}>
                     Dispute the transaction if you did not make it. Your dispute will be investigated by the team.
                 </Text>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(ScreensName.EmunshiDisputeTransaction,{transactiondata:transactiondata})}>
                         <Text style={styles.buttonText}>Dispute Transaction</Text>
                     </TouchableOpacity>
                 </View>
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
     statusContainer: {
         backgroundColor: colors.BRIGHTGREEN,
         borderRadius: 5,
-        paddingHorizontal: 2,
+        paddingHorizontal: wp(2),
     },
     transactionTextBold: {
         fontFamily: fonts.SemiBold,
@@ -162,6 +167,10 @@ const styles = StyleSheet.create({
     tableContainer: {
         marginTop: hp(1),
         padding: wp(5),
+        backgroundColor: colors.LIGHT_GREEN,
+        width: wp(90),
+        alignSelf: 'center',
+        borderRadius: 5,
     },
     tableHeader: {
         flexDirection: 'row',
@@ -201,6 +210,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
         marginTop: hp(2),
+        marginBottom: hp(3),
     },
     button: {
         backgroundColor: colors.GREEN,

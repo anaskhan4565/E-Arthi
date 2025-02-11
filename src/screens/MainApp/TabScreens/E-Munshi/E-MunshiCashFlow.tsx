@@ -15,10 +15,12 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
+import { useNavigation } from "@react-navigation/native";
+import ScreensName from "../../../../../util/ScreensName";
 
 const transactions = [
     {
-        "id":1214,
+        "id": 1214,
         "number": 1,
         "status": "Active",
         "Date": "2025-02-10",
@@ -32,7 +34,7 @@ const transactions = [
         "Vendor": "TechMart",
     },
     {
-        "id":1215,
+        "id": 1215,
         "number": 2,
         "status": "Complete",
         "Date": "2025-02-11",
@@ -45,7 +47,7 @@ const transactions = [
         "Vendor": "AudioGear",
     },
     {
-        "id":1216,
+        "id": 1216,
         "number": 3,
         "status": "Active",
         "Date": "2025-02-12",
@@ -57,7 +59,7 @@ const transactions = [
         "Vendor": "VisionTech",
     },
     {
-        "id":1217,
+        "id": 1217,
         "number": 4,
         "status": "Active",
         "Date": "2025-02-10",
@@ -71,7 +73,7 @@ const transactions = [
         "Vendor": "TechMart",
     },
     {
-        "id":1218,
+        "id": 1218,
         "number": 5,
         "status": "Complete",
         "Date": "2025-02-11",
@@ -87,6 +89,7 @@ const transactions = [
 
 function CashFlow(): React.JSX.Element {
     const { t } = useTranslation();
+    const navigation = useNavigation();
 
     return (
         <ScrollView style={styles.container}>
@@ -102,7 +105,7 @@ function CashFlow(): React.JSX.Element {
                 </View>
                 <View style={styles.gridContainer}>
                     {transactions.map((transaction, index) => (
-                        <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => {/* Add navigation logic here */}}>
+                        <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => { navigation.navigate(ScreensName.EmunshiTransactionDetail,{transactiondata:transactions[index]}) }}>
                             <View style={styles.RectangleheaderRow}>
                                 <Text style={[styles.transactionText, styles.transactionLabel]}>
                                     Transaction {index + 1}
@@ -150,7 +153,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        
+
         width: '100%',
     },
     headerText: {
@@ -172,6 +175,7 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 2, height: 2 },
         shadowRadius: 4,
+        backgroundColor: colors.LIGHT_GREEN,
     },
     transactionText: {
         fontFamily: fonts.Regular,
@@ -185,11 +189,12 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
         fontSize: hp(1.1),
         color: colors.WHITE,
+        padding: wp(0.5),
     },
     statusContainer: {
         backgroundColor: colors.BRIGHTGREEN,
-        borderRadius: 5,
-        paddingHorizontal: 2,
+        borderRadius: 3,
+        paddingHorizontal: wp(1),
     },
 });
 

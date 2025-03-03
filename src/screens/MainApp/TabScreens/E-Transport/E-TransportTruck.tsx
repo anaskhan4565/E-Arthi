@@ -3,9 +3,9 @@ import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import ItemBox from '../../CustomComponent/ItemBox.jsx';
-import { ETransportTruckdet } from '../../../../../util/E-Transport.js';
+import { ETransportTruckdet } from '../../../../../util/Data/E-Transport.js';
 
 import {
     SafeAreaView,
@@ -17,8 +17,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import TransportTypeBox from '../../CustomComponent/TransportTypeBox.jsx';
@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         paddingVertical: hp('2%'),
         alignItems: 'center',
-        height:hp('50')
+        height: hp('50')
 
     },
     itemBoxWrapper: {
         width: '30%',
         marginBottom: hp('2%'),
         marginHorizontal: wp('-1%'),
-        marginVertical:hp('1'),
+        marginVertical: hp('1'),
         alignItems: 'center',
 
     },

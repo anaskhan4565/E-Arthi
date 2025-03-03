@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import {
     SafeAreaView,
     ScrollView,
@@ -11,13 +11,13 @@ import {
     Image
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import CustomInputAndText from './NewLoanComponents/CustomInputAndText.jsx';
 import CustomTxtAndPicker from './NewLoanComponents/CustomTxtAndPicker';
 import CustomUploadButton from './NewLoanComponents/CustomUploadButton';
 import TickBox from './NewLoanComponents/TickBox';
 import CustomButton from '../../../../components/CustomButton';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 
 
@@ -73,7 +73,7 @@ function ELoanBOP(): React.JSX.Element {
                         <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
                         <TickBox TextGiven={' I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
                     </View>
-                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr}/>
+                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr} />
 
                 </View>
             </ScrollView>

@@ -12,20 +12,20 @@ import {
 } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import colors from "../../../util/colors";
+import colors from "../../../util/Constants/colors.js";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import ScreensName from "../../../util/ScreensName.ts";
+import ScreensName from "../../../util/Constants/ScreensName.ts";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../util/FontName";
+import { fonts } from "../../../util/Constants/FontName.js";
 import CustomInputAndText from "../MainApp/TabScreens/E-Loan/NewLoanComponents/CustomInputAndText.jsx";
 import SwitchButtonCustom from "../MainApp/TabScreens/E-Loan/NewLoanComponents/SwitchButton.jsx";
 import SwitchButtonCoperate from "./SwitchButtonCoperate.jsx";
 import { useNavigation } from "@react-navigation/native";
-import userData from "../../../util/User";
+import userData from "../../../util/Constants/User.js";
 import { MMKV } from "react-native-mmkv";
 
 const { height, width } = Dimensions.get("window");
@@ -64,7 +64,7 @@ function SignUp(): React.JSX.Element {
             if (!Email) setEmailError(true);
             return;
         }
-        if ( Number.length<13) {
+        if (Number.length < 13) {
             setErrorMessage(t("Mobile number must be 12 digits"));
             setNumberError(true);
             return;
@@ -97,9 +97,9 @@ function SignUp(): React.JSX.Element {
             password: Password,
             phoneNumber: Number,
         };
-    
+
         userData.push(newUser);
-        storage.set("Number",Number);
+        storage.set("Number", Number);
         navigation.navigate(ScreensName.OTPSignUp);
     };
 
@@ -119,7 +119,7 @@ function SignUp(): React.JSX.Element {
             <View style={styles.inputs}>
                 <View>
                     <Text style={styles.inputBoxLabel}>{t("Full Name")}</Text>
-                    <View style={[styles.passInputBox,{borderColor: NameError? colors.RED :colors.LIGHT_GRAY}]}>
+                    <View style={[styles.passInputBox, { borderColor: NameError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
                             placeholder={t("Full Name")}
@@ -133,7 +133,7 @@ function SignUp(): React.JSX.Element {
                     <Text style={styles.inputBoxLabel}>
                         {t("Email Address")}
                     </Text>
-                    <View style={[styles.passInputBox,{borderColor: EmailError? colors.RED :colors.LIGHT_GRAY}]}>
+                    <View style={[styles.passInputBox, { borderColor: EmailError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
                             placeholder={t("Email Address")}
@@ -145,7 +145,7 @@ function SignUp(): React.JSX.Element {
                 </View>
                 <View>
                     <Text style={styles.inputBoxLabel}>{t("Mobile No.")}</Text>
-                    <View style={[styles.passInputBox,{borderColor: NumberError? colors.RED :colors.LIGHT_GRAY}]}>
+                    <View style={[styles.passInputBox, { borderColor: NumberError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
                             placeholder={t("Mobile No.")}
@@ -159,7 +159,7 @@ function SignUp(): React.JSX.Element {
                 </View>
                 <View>
                     <Text style={styles.inputBoxLabel}>{t("Password")}</Text>
-                    <View style={[styles.passInputBox,{borderColor: passwordError? colors.RED :colors.LIGHT_GRAY}]}>
+                    <View style={[styles.passInputBox, { borderColor: passwordError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
                             placeholder={t("Password")}
@@ -182,7 +182,7 @@ function SignUp(): React.JSX.Element {
             </View>
 
             <View style={styles.options}>
-                
+
                 <View style={styles.RememberMe}>
                     <BouncyCheckbox
                         size={hp(2.5)}
@@ -202,12 +202,12 @@ function SignUp(): React.JSX.Element {
                 </View>
             </View>
             {errorMessage && (
-                    <View style={styles.errorBox}>
-                        <Text style={styles.error}>{errorMessage}</Text>
-                    </View>
-                )}
+                <View style={styles.errorBox}>
+                    <Text style={styles.error}>{errorMessage}</Text>
+                </View>
+            )}
             <View style={styles.button}>
-                
+
                 <CustomButton
                     MainText={t("Register")}
                     BgGiven={colors.GREEN}

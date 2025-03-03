@@ -1,14 +1,14 @@
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
-import colors from '../../../../../util/colors'
+import colors from '../../../../../util/Constants/colors'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomImageButton from '../../CustomComponent/CustomImageButton'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import ScreensName from '../../../../../util/ScreensName'
+import ScreensName from '../../../../../util/Constants/ScreensName'
 import Back from "../../../../assets/MainApp/Sidebar/Back.png";
 import Bell from "../../../../assets/MainApp/HomeScreen/Bell.png";
 import CustomButton from '../../../../components/CustomButton'
-import { fonts } from '../../../../../util/FontName'
+import { fonts } from '../../../../../util/Constants/FontName'
 import CustomBottomSheetExport from '../CustomComp/CustomBottomSheet'
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native'
@@ -19,13 +19,13 @@ const Profile = () => {
   const { t } = useTranslation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.WHITE }}>
-      <MandiNavbar/>
+      <MandiNavbar />
 
-      <View style={{ height:hp(15) }} >
-      <CustomNavigationMandi/>
+      <View style={{ height: hp(15) }} >
+        <CustomNavigationMandi />
 
       </View>
-      <ScrollView style={{marginBottom:hp(13)}}>
+      <ScrollView style={{ marginBottom: hp(13) }}>
 
         <View style={{ flex: 1 }}>
           <View style={{ flex: 0.4 }}>

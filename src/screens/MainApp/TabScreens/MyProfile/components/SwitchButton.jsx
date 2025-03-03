@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
-import colors from "../../../../../../util/colors";
+import colors from "../../../../../../util/Constants/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from "../../../../../../util/FontName";
+import { fonts } from "../../../../../../util/Constants/FontName";
 import { useTranslation } from "react-i18next";
 
-const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) => {
+const SwitchButtonCustom = ({ selectedOption = "Raast ID", setSelectedOption }) => {
   // const [selectedOption, setSelectedOption] = useState("Specific");
   const animationValue = useRef(new Animated.Value(0)).current;
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
 
   return (
     <View style={styles.container}>
-     
+
       <TouchableOpacity onPress={() => handlePress("Raast ID")} style={{ flex: 1 }}>
         <Animated.View
           style={[
@@ -53,7 +53,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
             {t('Raast ID')}
           </Text>
         </Animated.View>
-        
+
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("Bank Transfer")} style={{ flex: 1 }}>
         <Animated.View
@@ -74,7 +74,7 @@ const SwitchButtonCustom = ({ selectedOption="Raast ID", setSelectedOption }) =>
           </Text>
         </Animated.View>
       </TouchableOpacity>
-      
+
     </View>
   );
 };

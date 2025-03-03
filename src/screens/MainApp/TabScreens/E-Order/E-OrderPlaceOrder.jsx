@@ -5,7 +5,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 
 import {
     SafeAreaView,
@@ -17,8 +17,8 @@ import {
     View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import InventoryProduct from "../../CustomComponent/InventoryComponents/InventoryProduct.jsx";
@@ -29,7 +29,7 @@ import {
     machinery,
     fertilizers,
     herbicides,
-} from "../../../../../util/E-Order.js";
+} from "../../../../../util/Data/E-Order.js";
 import Crops from "../EMarketPlaceProducts/Crops.js";
 import Fertilizer from "../EMarketPlaceProducts/Fertilizer.js";
 import Herbicide from "../EMarketPlaceProducts/Herbicide.js";
@@ -38,12 +38,12 @@ import Medicine from "../EMarketPlaceProducts/Medicine.js";
 import SeedsProducts from "../EMarketPlaceProducts/SeedsProducts.js";
 import { MMKV } from "react-native-mmkv";
 
-const EOrderPlaceOrder=()=> {
+const EOrderPlaceOrder = () => {
     const { t } = useTranslation();
     const [selectedItem, setSelectedItem] = useState("Crop");
     const navigation = useNavigation();
-        const [cart, setCart] = useState([]);
-    
+    const [cart, setCart] = useState([]);
+
     const [qty, setqty] = useState(0);
     const [cost, setcost] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -107,19 +107,19 @@ const EOrderPlaceOrder=()=> {
         //     return newCost;
         // });
     };
-useFocusEffect(
-    useCallback(() => {
-        // console.log("opens")
-        const savedCart = storage.getString("cart");
-        if (savedCart) {
-            setCart(JSON.parse(savedCart));
-        }
-    }, []) 
-)
-const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+    useFocusEffect(
+        useCallback(() => {
+            // console.log("opens")
+            const savedCart = storage.getString("cart");
+            if (savedCart) {
+                setCart(JSON.parse(savedCart));
+            }
+        }, [])
+    )
+    const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
-const totalQuantity=cart.reduce((sum, item) => sum + item.quantity, 0)
-const totalCost=cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price.replace(/,/g, '')), 0)
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0)
+    const totalCost = cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price.replace(/,/g, '')), 0)
 
     return (
         <SafeAreaView style={styles.container}>
@@ -153,7 +153,7 @@ const totalCost=cart.reduce((sum, item) => sum + item.quantity * parseInt(item.p
                                     style={[
                                         styles.itemText,
                                         selectedItem === item &&
-                                            styles.selectedText,
+                                        styles.selectedText,
                                     ]}
                                 >
                                     {item}
@@ -183,7 +183,7 @@ const totalCost=cart.reduce((sum, item) => sum + item.quantity * parseInt(item.p
                     </View>
                 </View>
             </ScrollView>
-      <View style={styles.cartWrapper}>
+            <View style={styles.cartWrapper}>
                 <TouchableOpacity
                     style={styles.cartButton}
                     onPress={() => navigation.navigate(ScreensName.EOrderMainStack, { screen: ScreensName.EOrderCheckout })}

@@ -1,20 +1,20 @@
-import ScreensName from './ScreensName.ts';
+import ScreensName from '../Constants/ScreensName.ts';
 const EInventoryDet = [
 
     {
         screen: ScreensName.Inventory,
         title: "Inventory",
-        img: require('../src/assets/MainApp/E-Inventory/Inventory.png')
+        img: require('../../src/assets/MainApp/E-Inventory/Inventory.png')
     },
     {
         screen: ScreensName.Sales,
         title: "Sales & Purchase Orders",
-        img: require('../src/assets/MainApp/E-Inventory/Sales.png')
+        img: require('../../src/assets/MainApp/E-Inventory/Sales.png')
     },
     {
         screen: ScreensName.Suppliers,
         title: "Vendors",
-        img: require('../src/assets/MainApp/E-Inventory/Suppliers.png')
+        img: require('../../src/assets/MainApp/E-Inventory/Suppliers.png')
     },
     // {
     //     screen: ScreensName.Suppliers,
@@ -32,28 +32,28 @@ const InventoryDet = [
     {
         screen: ScreensName.PurchaseHistory,
         title: "Purchase History",
-        img: require('../src/assets/MainApp/E-Inventory/PurchaseHistory.png')
+        img: require('../../src/assets/MainApp/E-Inventory/PurchaseHistory.png')
     },
     {
         screen: ScreensName.InventoryMonitoring,
         title: "Inventory Monitoring",
-        img: require('../src/assets/MainApp/E-Inventory/InventoryMonitoring.png')
+        img: require('../../src/assets/MainApp/E-Inventory/InventoryMonitoring.png')
     },
-    
+
 ];
 
 const InventorySupplierDet = [
     {
         screen: ScreensName.EInventorySuppliersList,
         title: "Vendors List",
-        img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
+        img: require('../../src/assets/MainApp/E-Inventory/E-InventorySupplier/einventorysupplier.png')
     },
     {
         screen: ScreensName.EInventorySupplierReports,
         title: "Download Report",
-        img: require('../src/assets/MainApp/E-Inventory/E-InventorySupplier/pdfs.png')
+        img: require('../../src/assets/MainApp/E-Inventory/E-InventorySupplier/pdfs.png')
     },
-    
+
 ];
 
 const InventorySuppliersListDet = [

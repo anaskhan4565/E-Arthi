@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
-import colors from '../../../../../../util/colors';
+import colors from '../../../../../../util/Constants/colors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -19,7 +19,7 @@ const MyPieChart = ({
   legend2Population = 25000,
   legend1_color = colors.GREEN,
   legend2_color = colors.LIGHT_PURPLE,
-  datagiven=[
+  datagiven = [
     {
       name: "Total Loan Amount",
       population: 100000,
@@ -40,37 +40,37 @@ const MyPieChart = ({
   const data = datagiven
 
   return (
-      <View style={[styles.box, { width: containerWidth, height: containerHeight, alignItems: 'center', justifyContent: 'center' }]}>
-        <View style={{marginLeft:hp(8)}}>
-          <PieChart
-            data={data}
-            width={chartWidth}
-            height={chartHeight}
-            chartConfig={{
-              backgroundColor: '#1cc910',
-              backgroundGradientFrom: '#eff3ff',
-              backgroundGradientTo: '#efefef',
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            }}
-            accessor={'population'}
-            backgroundColor={'transparent'}
-            paddingLeft={'15'}
-            absolute
-            hasLegend={false}
-          />
-        </View>
-        <View style={styles.legendContainer}>
-          {data.map((item, index) => (
-            <View key={index} style={styles.legendItem}>
-              <View style={[styles.colorBox, { backgroundColor: item.color }]} />
-              <Text style={styles.legendText}>{t(item.name)}</Text>
-            </View>
-          ))}
-        </View>
+    <View style={[styles.box, { width: containerWidth, height: containerHeight, alignItems: 'center', justifyContent: 'center' }]}>
+      <View style={{ marginLeft: hp(8) }}>
+        <PieChart
+          data={data}
+          width={chartWidth}
+          height={chartHeight}
+          chartConfig={{
+            backgroundColor: '#1cc910',
+            backgroundGradientFrom: '#eff3ff',
+            backgroundGradientTo: '#efefef',
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          }}
+          accessor={'population'}
+          backgroundColor={'transparent'}
+          paddingLeft={'15'}
+          absolute
+          hasLegend={false}
+        />
       </View>
-    
+      <View style={styles.legendContainer}>
+        {data.map((item, index) => (
+          <View key={index} style={styles.legendItem}>
+            <View style={[styles.colorBox, { backgroundColor: item.color }]} />
+            <Text style={styles.legendText}>{t(item.name)}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+
   );
 };
 

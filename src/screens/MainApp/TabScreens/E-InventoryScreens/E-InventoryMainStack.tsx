@@ -9,7 +9,7 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -40,29 +40,29 @@ const slideFromLeftOptions: NativeStackNavigationOptions = {
     animationDuration: 300,
 };
 
-function EInventoryMainStack(): React.JSX.Element { 
+function EInventoryMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.EInventory} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name={ScreensName.EInventory} component={EInventory} />
-                    <Stack.Screen name={ScreensName.Inventory} component={Inventory} />
-                    <Stack.Screen name={ScreensName.Sales} component={Sales} />
-                    {/* <Stack.Screen name={ScreensName.Suppliers} component={Suppliers} /> */}
-                    <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
-                    <Stack.Screen name={ScreensName.PurchaseHistory} component={PurchaseHisotry} />
-                    <Stack.Screen name={ScreensName.EInventoryReminder} component={EInventoryReminder} />
-                    <Stack.Screen name={ScreensName.EInventoryAddNew} component={EInventoryAddNew} />
-                    <Stack.Screen name={ScreensName.EInventoryAddNewGroup} component={EInventoryAddNewGroup} />
-                    <Stack.Screen name={ScreensName.EInventoryManageGroup} component={EInventoryManageGroup} />
-                    <Stack.Screen name={ScreensName.EInventoryDetails} component={EInventoryDetails} />
+        <Stack.Navigator initialRouteName={ScreensName.EInventory} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreensName.EInventory} component={EInventory} />
+            <Stack.Screen name={ScreensName.Inventory} component={Inventory} />
+            <Stack.Screen name={ScreensName.Sales} component={Sales} />
+            {/* <Stack.Screen name={ScreensName.Suppliers} component={Suppliers} /> */}
+            <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
+            <Stack.Screen name={ScreensName.PurchaseHistory} component={PurchaseHisotry} />
+            <Stack.Screen name={ScreensName.EInventoryReminder} component={EInventoryReminder} />
+            <Stack.Screen name={ScreensName.EInventoryAddNew} component={EInventoryAddNew} />
+            <Stack.Screen name={ScreensName.EInventoryAddNewGroup} component={EInventoryAddNewGroup} />
+            <Stack.Screen name={ScreensName.EInventoryManageGroup} component={EInventoryManageGroup} />
+            <Stack.Screen name={ScreensName.EInventoryDetails} component={EInventoryDetails} />
 
-                    <Stack.Screen name={ScreensName.Suppliers} component={SupplersComp} />
-                    <Stack.Screen name={ScreensName.EInventorySupplierReports} component={SuppliersReport} />
-                    <Stack.Screen name={ScreensName.EInventorySuppliersList} component={InvetorySuppliersList} />
+            <Stack.Screen name={ScreensName.Suppliers} component={SupplersComp} />
+            <Stack.Screen name={ScreensName.EInventorySupplierReports} component={SuppliersReport} />
+            <Stack.Screen name={ScreensName.EInventorySuppliersList} component={InvetorySuppliersList} />
 
 
 
-                </Stack.Navigator>
+        </Stack.Navigator>
         // </I18nextProvider>
     );
 }

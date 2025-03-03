@@ -8,17 +8,17 @@ import {
     Text,
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
-import colors from '../../../util/colors';
-import ScreensName from '../../../util/ScreensName';
+import colors from '../../../util/Constants/colors';
+import ScreensName from '../../../util/Constants/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Location from '../../assets/LocationOpen/Location.png';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../../util/FontName';
+import { fonts } from '../../../util/Constants/FontName';
 
 const LocationSys = () => {
     const [isLocationEnabled, setIsLocationEnabled] = useState(false);
     const navigation = useNavigation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     // useEffect(() => {
     //     if (isLocationEnabled) {
@@ -30,19 +30,19 @@ const LocationSys = () => {
         setIsLocationEnabled(true);
         navigation.navigate(HomeScreen.MainTabNavigation)
     };
-    
+
     const justNavigate = () => {
         setIsLocationEnabled(true);
         navigation.navigate(ScreensName.MainTabNavigation)
     };
 
-    return ( 
+    return (
         <SafeAreaView style={styles.container}>
             {!isLocationEnabled ? (
                 <View style={{ alignItems: 'center', gap: 10 }}>
                     <Image source={Location} style={styles.errorMsg} />
-                    <Text style={{ fontSize: wp('7%'), fontFamily:fonts.SemiBold, }}>{t('Location')}</Text>
-                    <Text style={{ width: wp('80%'), textAlign: 'center', color: colors.BLACK,fontFamily:fonts.Light, }}>
+                    <Text style={{ fontSize: wp('7%'), fontFamily: fonts.SemiBold, }}>{t('Location')}</Text>
+                    <Text style={{ width: wp('80%'), textAlign: 'center', color: colors.BLACK, fontFamily: fonts.Light, }}>
                         {t('Allow maps to access your location while you use the app?')}
                     </Text>
                     <View style={{ marginTop: hp('3%'), gap: 8 }}>
@@ -59,7 +59,7 @@ const LocationSys = () => {
                             BgGiven={colors.WHITE}
                             name={ScreensName.Connect}
                             txColor={colors.GREEN}
-                            //isNavigation={ navigation.navigate(ScreensName.HomeScreen)}
+                        //isNavigation={ navigation.navigate(ScreensName.HomeScreen)}
                         />
                     </View>
                 </View>

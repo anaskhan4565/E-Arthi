@@ -12,12 +12,12 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import React, { useEffect, useState } from 'react'
 import CustomButton from '../../../../components/CustomButton'
-import colors from '../../../../../util/colors'
-import { fonts } from '../../../../../util/FontName';
+import colors from '../../../../../util/Constants/colors'
+import { fonts } from '../../../../../util/Constants/FontName';
 import HandImg from '../../../../assets/MainApp/E-Mandi/Hand.png'
 import { useTranslation } from 'react-i18next';
 const CustomTrade = ({ isExpanded, setIsExpanded }) => {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <View style={{
@@ -34,29 +34,29 @@ const CustomTrade = ({ isExpanded, setIsExpanded }) => {
                 <Text style={{ fontWeight: '800', fontSize: hp(2), color: colors.BLACK }}>{t('Holdings')}</Text>
             </View>
             <View style={{ flex: 0.6, flexDirection: 'row' }}>
-                <View style={{ flex: 0.3}}>
-                    <Image source={HandImg} style={{width:hp(8), height:hp(6)}}/>
+                <View style={{ flex: 0.3 }}>
+                    <Image source={HandImg} style={{ width: hp(8), height: hp(6) }} />
                 </View>
                 <View style={{ flex: 0.6 }}>
-                    <Text style={{fontWeight:'bold'}}>{t('Portfolio Holdings')}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{t('Portfolio Holdings')}</Text>
                     <View style={{ flexDirection: 'row', flex: 0.4 }}>
                         <View style={{ flex: 0.7 }}>
 
-                            <Text style={{fontWeight:'bold'}}>{t('Shr Holding:')}</Text>
+                            <Text style={{ fontWeight: 'bold' }}>{t('Shr Holding:')}</Text>
                         </View>
                         <View style={{ flex: 0.4 }}>
 
-                            <Text style={{fontFamily:fonts.Bold,fontSize:hp(1.6)}}>40</Text>
+                            <Text style={{ fontFamily: fonts.Bold, fontSize: hp(1.6) }}>40</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', flex: 0.4 }}>
                         <View style={{ flex: 0.7 }}>
 
-                            <Text style={{fontWeight:'bold'}}>{t('Avg Price:')}</Text>
+                            <Text style={{ fontWeight: 'bold' }}>{t('Avg Price:')}</Text>
                         </View>
                         <View style={{ flex: 0.4 }}>
 
-                            <Text style={{color:colors.GREEN,fontWeight:'bold'}}>10.2</Text>
+                            <Text style={{ color: colors.GREEN, fontWeight: 'bold' }}>10.2</Text>
                         </View>
                     </View>
                 </View>

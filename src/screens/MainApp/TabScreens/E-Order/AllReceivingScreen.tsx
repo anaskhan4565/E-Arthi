@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { Image } from 'react-native';
 import {
   SafeAreaView,
@@ -13,8 +13,8 @@ import {
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv';
@@ -177,7 +177,7 @@ function PaymentScreens(): React.JSX.Element {
             />
           </View>
           {/* NOTES SECTION */}
-          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center',justifyContent:"space-between", marginTop: hp(1) }}>
+          <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center', justifyContent: "space-between", marginTop: hp(1) }}>
             <View style={styles.newNotesContainer}>
               <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2), marginBottom: hp(2) }}>
                 {t('Notes')}

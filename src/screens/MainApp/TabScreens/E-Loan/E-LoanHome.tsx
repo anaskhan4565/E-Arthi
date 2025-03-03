@@ -1,11 +1,11 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
-import ECategories from '../../../../../util/E-Categories.js';
+import ECategories from '../../../../../util/Data/E-Categories.js';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
-import { EloanDet } from '../../../../../util/E-Loan.js';
+import colors from '../../../../../util/Constants/colors.js';
+import { EloanDet } from '../../../../../util/Data/E-Loan.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
 
 
@@ -19,14 +19,14 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 
 
 function EInventory(): React.JSX.Element {
     const { t } = useTranslation();
-    
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -54,7 +54,7 @@ function EInventory(): React.JSX.Element {
                                             screenName={Category.screen}
                                             navigationName={Category.screen}
                                             SourceGiven={Category.img}
-                                            SecondaryText={Category.SecondaryTitle?Category.SecondaryTitle:null}
+                                            SecondaryText={Category.SecondaryTitle ? Category.SecondaryTitle : null}
                                             isNavigation={1}
                                             w={wp("38%")}
                                             h={hp("16%")}
@@ -114,15 +114,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         // backgroundColor: 'red',
         width: wp(90),
-      },
-      itemBoxWrapper: {
+    },
+    itemBoxWrapper: {
         // width: "30%",
         marginBottom: hp("2%"),
         marginHorizontal: wp("0"),
         alignItems: "center",
         flexDirection: "row",
-    
-      },
+
+    },
     recommendedProducts: {
         marginTop: 20,
     },

@@ -1,11 +1,11 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
-import ECategories from '../../../../../util/E-Categories.js';
+import ECategories from '../../../../../util/Data/E-Categories.js';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
-import EWarehouseCrops from '../../../../../util/E-WarehouseCrops.js';
+import colors from '../../../../../util/Constants/colors.js';
+import EWarehouseCrops from '../../../../../util/Data/E-WarehouseCrops.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
 
 
@@ -19,8 +19,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import Categorybox from '../../CustomComponent/Categorybox';
 import EWarehouseMainStack from './E-WarehouseMainStack.tsx';
 
@@ -38,17 +38,17 @@ function CropSelect(): React.JSX.Element {
             <ScrollView style={styles.container}>
 
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t('Search in here')} /> 
+                    <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
                 <View style={styles.bodyContainer}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>{t('Select a Crop')}</Text>
-                </View>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.titleText}>{t('Select a Crop')}</Text>
+                    </View>
                     <View style={styles.scrollContainer}>
                         {EWarehouseCrops.map((Crop, index) => (
                             Crop.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <Categorybox name={Crop.title} SourceGiven={Crop.img} isNavigation={true} screenName={ScreensName.EWarehouseNewSpaceWarehouseSelect} navigationName={ScreensName.EWarehouseMainStack}w={wp(19)} h={hp(9)}/>
+                                    <Categorybox name={Crop.title} SourceGiven={Crop.img} isNavigation={true} screenName={ScreensName.EWarehouseNewSpaceWarehouseSelect} navigationName={ScreensName.EWarehouseMainStack} w={wp(19)} h={hp(9)} />
                                 </View>
                             )
                         ))}

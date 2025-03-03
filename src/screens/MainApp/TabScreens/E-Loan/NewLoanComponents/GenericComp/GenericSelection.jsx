@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import EInventoryBoxes from '../../../../CustomComponent/EInventoryBoxes'
-import ScreensName from '../../../../../../../util/ScreensName'
-import { ELoanBank } from '../../../../../../../util/E-Loan'
+import ScreensName from '../../../../../../../util/Constants/ScreensName'
+import { ELoanBank } from '../../../../../../../util/Data/E-Loan'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next'
 
@@ -23,7 +23,7 @@ const GenericSelection = () => {
                             w={wp('80%')}
                             h={hp('18%')}
                             isBold={false}
-                            isLightBold={true}  
+                            isLightBold={true}
                             img_size_w={hp(17)}
                             font_Size={hp(3)}
                             img_size_h={hp(11)}

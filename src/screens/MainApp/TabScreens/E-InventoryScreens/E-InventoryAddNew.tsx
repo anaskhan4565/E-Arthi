@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
-import { fonts } from '../../../../../util/FontName.js';
+import colors from '../../../../../util/Constants/colors.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import SwitchToggle from "react-native-switch-toggle";
 import {
@@ -20,7 +20,7 @@ const { height, width } = Dimensions.get("window");
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 function EInventoryAddNew(): React.JSX.Element {
     const { t } = useTranslation();

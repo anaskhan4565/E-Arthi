@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from '../../../../../components/CustomInput'
-import colors from '../../../../../../util/colors'
+import colors from '../../../../../../util/Constants/colors'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../../../util/FontName';
+import { fonts } from '../../../../../../util/Constants/FontName';
 import CustomButton from '../../../../../components/CustomButton';
 import { useTranslation } from 'react-i18next';
 import UplodPic from '../AssetsLoan/Upload.png';
@@ -50,7 +50,7 @@ const CustomUploadButton = ({ isCamera = false, NoPic = false, PlaceHolderGiven 
                 { backgroundColor: colors.GREEN, padding: 10 },
                 styles.Wrapper
             ]}>
-                <Text style={{ color: 'white', fontSize:hp('2.2%'), fontFamily: fonts.Regular }}>Upload</Text>
+                <Text style={{ color: 'white', fontSize: hp('2.2%'), fontFamily: fonts.Regular }}>Upload</Text>
             </TouchableOpacity>
             {fileName ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp(1) }}>

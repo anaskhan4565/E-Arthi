@@ -9,7 +9,7 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-import ScreensName from '../../../../../util/ScreensName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -42,28 +42,28 @@ const Stack = createNativeStackNavigator();
 function ELoanMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.ELoan} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name={ScreensName.ELoan} component={ELoan} />
-                    <Stack.Screen name={ScreensName.EloanOTP} component={ELoanOTP} />
-                    <Stack.Screen name={ScreensName.EloanIDVerify} component={EloanIDVerify} />
-                    <Stack.Screen name={ScreensName.EloanLandVerify} component={EloanLandVerify} />
-                    <Stack.Screen name={ScreensName.EloanPreviousLoan} component={EloanPreviousLoan} />
-                    <Stack.Screen name={ScreensName.ELoanNewLoan} component={ELoanNewLoan} />
-                    <Stack.Screen name={ScreensName.ELoanSuccessScr} component={ELoanSuccessScr} />
-                    <Stack.Screen name={ScreensName.ELoanNewBank} component={ELoanNewBank} />
-                    <Stack.Screen name={ScreensName.EloanHBL} component={EloanHBL} />
-                    <Stack.Screen name={ScreensName.EloanBOP} component={EloanBOP} />
-                    <Stack.Screen name={ScreensName.EloanZTBL} component={EloanZTBL} />
-                    <Stack.Screen name={ScreensName.EloanMeezan} component={EloanMeezan} />
-                    <Stack.Screen name={ScreensName.EloanCurrentLoan} component={ELoanCurrentLoan} />
-                    <Stack.Screen name={ScreensName.EloanSelectedLoan} component={EloanSelectedLoan} />
-                    <Stack.Screen name={ScreensName.ELoanFaisal} component={ELoanFaisal} />
-                    <Stack.Screen name={ScreensName.ELoanWoanScreen2} component={ELoanWoanScreen2} />
-                    <Stack.Screen name={ScreensName.ELoanPending} component={ELoanPending} />
-                    
-                    
+        <Stack.Navigator initialRouteName={ScreensName.ELoan} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreensName.ELoan} component={ELoan} />
+            <Stack.Screen name={ScreensName.EloanOTP} component={ELoanOTP} />
+            <Stack.Screen name={ScreensName.EloanIDVerify} component={EloanIDVerify} />
+            <Stack.Screen name={ScreensName.EloanLandVerify} component={EloanLandVerify} />
+            <Stack.Screen name={ScreensName.EloanPreviousLoan} component={EloanPreviousLoan} />
+            <Stack.Screen name={ScreensName.ELoanNewLoan} component={ELoanNewLoan} />
+            <Stack.Screen name={ScreensName.ELoanSuccessScr} component={ELoanSuccessScr} />
+            <Stack.Screen name={ScreensName.ELoanNewBank} component={ELoanNewBank} />
+            <Stack.Screen name={ScreensName.EloanHBL} component={EloanHBL} />
+            <Stack.Screen name={ScreensName.EloanBOP} component={EloanBOP} />
+            <Stack.Screen name={ScreensName.EloanZTBL} component={EloanZTBL} />
+            <Stack.Screen name={ScreensName.EloanMeezan} component={EloanMeezan} />
+            <Stack.Screen name={ScreensName.EloanCurrentLoan} component={ELoanCurrentLoan} />
+            <Stack.Screen name={ScreensName.EloanSelectedLoan} component={EloanSelectedLoan} />
+            <Stack.Screen name={ScreensName.ELoanFaisal} component={ELoanFaisal} />
+            <Stack.Screen name={ScreensName.ELoanWoanScreen2} component={ELoanWoanScreen2} />
+            <Stack.Screen name={ScreensName.ELoanPending} component={ELoanPending} />
 
-                </Stack.Navigator>
+
+
+        </Stack.Navigator>
         // </I18nextProvider>
     );
 }

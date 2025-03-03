@@ -2,8 +2,8 @@ import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
-import { fonts } from '../../../../../util/FontName.js';
+import colors from '../../../../../util/Constants/colors.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { TouchableOpacity, TextInput } from 'react-native';
@@ -16,7 +16,7 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 function EInventoryReminder(): React.JSX.Element {
     const { t } = useTranslation();
@@ -46,25 +46,25 @@ function EInventoryReminder(): React.JSX.Element {
                             style={styles.dropdown}
                             itemStyle={styles.pickerItem}
                         >
-                            <Picker.Item 
-                                label={t('search SKU item#')} 
-                                value="" 
-                                style={styles.pickerItemText} 
+                            <Picker.Item
+                                label={t('search SKU item#')}
+                                value=""
+                                style={styles.pickerItemText}
                             />
-                            <Picker.Item 
-                                label={t('All')} 
-                                value="all" 
-                                style={styles.pickerItemText} 
+                            <Picker.Item
+                                label={t('All')}
+                                value="all"
+                                style={styles.pickerItemText}
                             />
-                            <Picker.Item 
-                                label={t('Low Stock')} 
-                                value="low" 
-                                style={styles.pickerItemText} 
+                            <Picker.Item
+                                label={t('Low Stock')}
+                                value="low"
+                                style={styles.pickerItemText}
                             />
-                            <Picker.Item 
-                                label={t('Out of Stock')} 
-                                value="out" 
-                                style={styles.pickerItemText} 
+                            <Picker.Item
+                                label={t('Out of Stock')}
+                                value="out"
+                                style={styles.pickerItemText}
                             />
                         </Picker>
                     </View>
@@ -115,7 +115,7 @@ function EInventoryReminder(): React.JSX.Element {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <CustomButton 
+                    <CustomButton
                         MainText={t('Save')}
                         BgGiven={colors.GREEN}
                         name={ScreensName.InventoryMonitoring}
@@ -125,7 +125,7 @@ function EInventoryReminder(): React.JSX.Element {
                 </View>
                 <View style={styles.bodyContainer}>
                     <View style={styles.scrollContainer}>
-                        
+
                     </View>
                 </View>
             </ScrollView>

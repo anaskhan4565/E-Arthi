@@ -10,20 +10,20 @@ import {
   Image,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import colors from "../../../util/colors";
+import colors from "../../../util/Constants/colors";
 import CustomButton from "../../components/CustomButton";
-import ScreensName from "../../../util/ScreensName";
+import ScreensName from "../../../util/Constants/ScreensName";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import userData from "../../../util/User";
+import userData from "../../../util/Constants/User";
 
 const { height, width } = Dimensions.get("window");
 
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../util/FontName";
+import { fonts } from "../../../util/Constants/FontName";
 import CustomPicker from "../MainApp/EMandi/CustomComp/CustomPicker";
 import CustomInput from "../../components/CustomInput";
 
@@ -145,7 +145,7 @@ function SignIn() {
               placeholder={SwitchedButton ? t("@agri.pk") : t("Phone Number")}
               placeholderTextColor={usernameError ? colors.RED : colors.LIGHT_GRAY}
               value={username}
-              onChangeText={(value) =>handleTextChange(value)}
+              onChangeText={(value) => handleTextChange(value)}
             />
           </View>
         </View>

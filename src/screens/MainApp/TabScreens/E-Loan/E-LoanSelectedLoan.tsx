@@ -10,8 +10,8 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
-import LoanCategoryDetails from "../../../../../util/LoanCategoryDetails";
+import { fonts } from "../../../../../util/Constants/FontName";
+import LoanCategoryDetails from "../../../../../util/Data/LoanCategoryDetails";
 // import WomanFarmer from '../../../../assets/MainApp/E-Loan/';
 import ELoanPiChart from '../../../../assets/MainApp/E-Loan/ELoanPiChart.svg';
 import PiChartLegend from '../../../../assets/MainApp/E-Loan/PiChartLegend.svg';
@@ -21,7 +21,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import MyPieChart from "./CustomComponents/PiChart";
 
@@ -43,7 +43,7 @@ function CurrentLoan({ val1 = 10241, val2 = 5990 }): React.JSX.Element {
           </View>
           <ELoanPiChart style={styles.image} />
           <View >
-          <PiChartLegend style={styles.image} width={hp(45)} height={hp(35)}/>
+            <PiChartLegend style={styles.image} width={hp(45)} height={hp(35)} />
           </View>
           <View style={styles.headerRow}>
             <Text style={styles.headerText}>{t("Loan Payoff History")}</Text>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
     fontSize: hp(1.8),
   },
-  row: { 
+  row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -125,13 +125,13 @@ const styles = StyleSheet.create({
   },
   image: {
     width: wp(90),
-  
+
     height: hp(10),
     resizeMode: 'contain',
     marginVertical: hp(1.5),
     alignSelf: 'center',
   },
-  
+
   headerRow: {
     marginTop: hp(1),
     flexDirection: "row",

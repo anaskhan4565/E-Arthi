@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomImageButton from '../../CustomComponent/CustomImageButton';
-import ScreensName from '../../../../../util/ScreensName';
-import colors from '../../../../../util/colors';
-import { fonts } from '../../../../../util/FontName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
+import colors from '../../../../../util/Constants/colors';
+import { fonts } from '../../../../../util/Constants/FontName';
 import CustomPicker from './CustomPicker';
 
 const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) => {
@@ -20,45 +20,45 @@ const MandiNavbar = ({ NameStock, NameExchange, isNotification, navigateBack }) 
                         { label: "Cotton/MOK", value: "COTTON/MOK" },
                         { label: "WHEAT/MOK", value: "WHEAT/MOK" },
                         { label: "APPLES/MOK", value: "APPLES/MOK" },
-                       
+
                     ]} key={0} isheader={true}
-                    w_given={hp(20)}
-                    hp_given={hp(2)}
-                    placeholder='POTATO/MOK'
-                    min_given = {hp(20)}
+                        w_given={hp(20)}
+                        hp_given={hp(2)}
+                        placeholder='POTATO/MOK'
+                        min_given={hp(20)}
                     />
-                    </View>
-                    <CustomImageButton SourceGiven={require("../../../../assets/MainApp/HomeScreen/Bell.png")} h={hp("4%")} w={hp("4%")} />
                 </View>
+                <CustomImageButton SourceGiven={require("../../../../assets/MainApp/HomeScreen/Bell.png")} h={hp("4%")} w={hp("4%")} />
             </View>
-            );
+        </View>
+    );
 }
 
-            export default MandiNavbar;
+export default MandiNavbar;
 
-            const styles = StyleSheet.create({
-                header: {
-                marginTop: hp("2%"),
-            height:hp(7),
-            flexDirection: "row",
-            flex: 1,
-            justifyContent: "space-between",
-            backgroundColor: colors.LIGHT_GREEN,
-            alignItems:'center'
+const styles = StyleSheet.create({
+    header: {
+        marginTop: hp("2%"),
+        height: hp(7),
+        flexDirection: "row",
+        flex: 1,
+        justifyContent: "space-between",
+        backgroundColor: colors.LIGHT_GREEN,
+        alignItems: 'center'
     },
-            Heading: {
-                fontSize: hp("2.5%"),
-            alignSelf: "center",
-            fontFamily:fonts.ExtraBold,
-            margin:hp(0.4),
-            color: colors.BLACK,
+    Heading: {
+        fontSize: hp("2.5%"),
+        alignSelf: "center",
+        fontFamily: fonts.ExtraBold,
+        margin: hp(0.4),
+        color: colors.BLACK,
     },
-            StickyNavbar: {
-                position: 'absolute',  // Use absolute positioning
-            top: 0,
-            left: 0,
-            width: '100%',
-            zIndex: 10,
-            backgroundColor: colors.WHITE,
+    StickyNavbar: {
+        position: 'absolute',  // Use absolute positioning
+        top: 0,
+        left: 0,
+        width: '100%',
+        zIndex: 10,
+        backgroundColor: colors.WHITE,
     },
 });

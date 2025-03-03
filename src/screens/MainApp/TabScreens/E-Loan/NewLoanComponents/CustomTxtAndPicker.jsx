@@ -1,19 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CustomInput from '../../../../../components/CustomInput'
-import colors from '../../../../../../util/colors'
+import colors from '../../../../../../util/Constants/colors'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../../../util/FontName';
+import { fonts } from '../../../../../../util/Constants/FontName';
 import CustomPicker from '../../../EMandi/CustomComp/CustomPicker';
 import { useTranslation } from 'react-i18next';
 
-const CustomTxtAndPicker = ({ PlaceHolderGiven = "demo", itemPackage,Picker_Txt="Select" }) => {
+const CustomTxtAndPicker = ({ PlaceHolderGiven = "demo", itemPackage, Picker_Txt = "Select" }) => {
     const { t } = useTranslation();
     return (
         <View style={{ flex: 1, alignItems: 'flex-start', gap: hp(0.5) }}>
-            <Text style={{ fontSize: hp(2),paddingLeft:hp(0.1) }}>{t(PlaceHolderGiven)}</Text>
+            <Text style={{ fontSize: hp(2), paddingLeft: hp(0.1) }}>{t(PlaceHolderGiven)}</Text>
             <CustomPicker items={itemPackage}
-             key={0} isheader={false}
+                key={0} isheader={false}
                 w_given={wp(85)}
                 hp_given={hp(3.5)}
                 min_given={hp(39)}

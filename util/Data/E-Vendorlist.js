@@ -1,13 +1,13 @@
-import EngroPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/engro.png'
-import FaujiPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/Fauji.png'
-import EvyolPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/evyol.png'
-import WesternPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/WesternAgri.jpg'
-import FDPPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/FDP.jpg'
-import SunagroPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/sunagro.png'
-import ZaraeePic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/Zaraee.jpg'
-import HeeraPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/HeeraOrganic.jpg'
-import SyagentaPic from '../src/screens/MainApp/TabScreens/E-Vendors/Images/Syngenta.png'
-import FirstFounder from '../src/screens/MainApp/TabScreens/E-Vendors/Images/FirstFounder.jpg'
+import EngroPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/engro.png'
+import FaujiPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/Fauji.png'
+import EvyolPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/evyol.png'
+import WesternPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/WesternAgri.jpg'
+import FDPPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/FDP.jpg'
+import SunagroPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/sunagro.png'
+import ZaraeePic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/Zaraee.jpg'
+import HeeraPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/HeeraOrganic.jpg'
+import SyagentaPic from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/Syngenta.png'
+import FirstFounder from '../../src/screens/MainApp/TabScreens/E-Vendors/Images/FirstFounder.jpg'
 export default[
   {
     "VendorName": "Engro Fertilizers",

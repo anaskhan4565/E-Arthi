@@ -18,13 +18,13 @@ import { MMKV } from "react-native-mmkv";
 
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
-import colors from "../../../../../util/colors.js";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import colors from "../../../../../util/Constants/colors.js";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import PieChart from "react-native-pie-chart"
 import WarehouseIcon from "../../../../assets/warehouse.png";
 import CustomPicker from "../../EMandi/CustomComp/CustomPicker.jsx";
-import FoodSurveillanceItems from "../../../../../util/FoodSurveillanceItems.js";
+import FoodSurveillanceItems from "../../../../../util/Data/FoodSurveillanceItems.js";
 import ItemStatusBox from "./CustomStylesComp/ItemStatusBox.tsx";
 
 function FoodSurveillanceWarehouse(): React.JSX.Element {
@@ -32,13 +32,13 @@ function FoodSurveillanceWarehouse(): React.JSX.Element {
     const storage = new MMKV();
     const navigation = useNavigation();
 
-    const handlePress = (name: string,status: Number) => {
+    const handlePress = (name: string, status: Number) => {
         storage.set("itemName", name);
         storage.set("itemStatus", status);
         navigation.navigate(ScreensName.FoodSurveillanceItem)
     };
     const data = {
-      data: [0.75], // 75% progress
+        data: [0.75], // 75% progress
     };
     return (
         <SafeAreaView style={styles.container}>
@@ -70,7 +70,7 @@ function FoodSurveillanceWarehouse(): React.JSX.Element {
                                         <Text style={styles.DetailText}>
                                             {t("Item sent on: ")}
                                         </Text>
-                                        <Text style={[styles.DetailText, {fontFamily: fonts.Medium}]}>
+                                        <Text style={[styles.DetailText, { fontFamily: fonts.Medium }]}>
                                             {t("08-02-2025")}
                                         </Text>
                                     </View>
@@ -78,27 +78,27 @@ function FoodSurveillanceWarehouse(): React.JSX.Element {
                                         <Text style={styles.DetailText}>
                                             {t("Number of items: ")}
                                         </Text>
-                                        <Text style={[styles.DetailText, {fontFamily: fonts.Medium}]}>
+                                        <Text style={[styles.DetailText, { fontFamily: fonts.Medium }]}>
                                             {t("5")}
                                         </Text>
                                     </View>
                                 </View>
                                 <View style={styles.ItemSummary}>
-                                    <Text style={[styles.Subheading,{marginLeft: wp(2), marginTop: hp(.4)}]}>Items Summary</Text>
+                                    <Text style={[styles.Subheading, { marginLeft: wp(2), marginTop: hp(.4) }]}>Items Summary</Text>
                                     <View style={styles.ChartContainer}>
                                         <PieChart
                                             widthAndHeight={wp(11)}
-                                            series = {[{value: 70, color: "rgb(0, 169, 128)"},{value: 30, color: "rgb(235, 169, 40)"}]}
+                                            series={[{ value: 70, color: "rgb(0, 169, 128)" }, { value: 30, color: "rgb(235, 169, 40)" }]}
                                             cover={0.65}
                                             style={styles.Chart}
                                         />
                                         <View style={styles.ChartLegend}>
-                                            <View style={{flexDirection: "row", marginVertical: hp(.4)}}>
-                                                <Text style={[styles.LegendPercentage,{color: "rgb(0, 169, 128)"}]}>70%</Text>
+                                            <View style={{ flexDirection: "row", marginVertical: hp(.4) }}>
+                                                <Text style={[styles.LegendPercentage, { color: "rgb(0, 169, 128)" }]}>70%</Text>
                                                 <Text style={styles.LegendText}>crops are fresh</Text>
                                             </View>
-                                            <View style={{flexDirection: "row", marginVertical: hp(.4)}}>
-                                                <Text style={[styles.LegendPercentage,{color: "rgb(235, 169, 40)"}]}>30%</Text>
+                                            <View style={{ flexDirection: "row", marginVertical: hp(.4) }}>
+                                                <Text style={[styles.LegendPercentage, { color: "rgb(235, 169, 40)" }]}>30%</Text>
                                                 <Text style={[styles.LegendText]}>crops are almost ripe</Text>
                                             </View>
                                         </View>
@@ -106,41 +106,41 @@ function FoodSurveillanceWarehouse(): React.JSX.Element {
                                 </View>
                             </View>
                         </View>
-                        <View style = {styles.ItemsContainer}>
-                            <View style = {styles.ItemsHeader}>
+                        <View style={styles.ItemsContainer}>
+                            <View style={styles.ItemsHeader}>
                                 <Text style={styles.Subheading}>Items in Warehouse</Text>
-                                <CustomPicker items={[{label: "Vegetable", value: "Vegetables"}]}
+                                <CustomPicker items={[{ label: "Vegetable", value: "Vegetables" }]}
                                     key={0} isheader={false}
-                                        w_given={wp(35)}
-                                        hp_given={hp(1)}
-                                        min_given={wp(35)}
-                                        bg_color_on={true}
-                                        bd_give={true}
-                                        color_bd={colors.BLACK}
-                                        isThatColor={true}
-                                        placeholder={t("All items")}
-                                    />
+                                    w_given={wp(35)}
+                                    hp_given={hp(1)}
+                                    min_given={wp(35)}
+                                    bg_color_on={true}
+                                    bd_give={true}
+                                    color_bd={colors.BLACK}
+                                    isThatColor={true}
+                                    placeholder={t("All items")}
+                                />
                             </View>
-                            <View style = {styles.ItemsBody}>
-                            {FoodSurveillanceItems
-                                .filter((item) => item.name.trim() !== "") // Filter out empty names
-                                .map((item, index) => (
-                                    <ItemStatusBox
-                                    key={index}
-                                    name={item.name}
-                                    status={item.status}
-                                    bodyData={[
-                                        { label: "Quantity", data: item.qty },
-                                        { label: "Price", data: item.price },
-                                        { label: "Expiry date", data: item.date },
-                                    ]}
-                                    statusTrueText={"Fresh"}
-                                    statusFalseText={"Almost ripe"}
-                                    onPress={() => {handlePress(item.name,item.status)}}
-                                    />
-                                ))}
+                            <View style={styles.ItemsBody}>
+                                {FoodSurveillanceItems
+                                    .filter((item) => item.name.trim() !== "") // Filter out empty names
+                                    .map((item, index) => (
+                                        <ItemStatusBox
+                                            key={index}
+                                            name={item.name}
+                                            status={item.status}
+                                            bodyData={[
+                                                { label: "Quantity", data: item.qty },
+                                                { label: "Price", data: item.price },
+                                                { label: "Expiry date", data: item.date },
+                                            ]}
+                                            statusTrueText={"Fresh"}
+                                            statusFalseText={"Almost ripe"}
+                                            onPress={() => { handlePress(item.name, item.status) }}
+                                        />
+                                    ))}
                             </View>
-                            
+
                         </View>
                     </View>
                 </View>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         height: hp("7%"),
     },
     bodyContainer: {
-        
+
         alignItems: "center",
         alignSelf: "center",
     },
@@ -220,10 +220,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
     },
-    
-    ChartContainer:{
+
+    ChartContainer: {
         flexDirection: "row",
-        
+
         flex: 1,
     },
     ChartLegend: {
@@ -235,24 +235,24 @@ const styles = StyleSheet.create({
     },
     LegendText: {
         fontFamily: fonts.Regular,
-        width:hp(15)
+        width: hp(15)
     },
     DetailRow: {
-      flexDirection: "row",
-      margin: hp(.3)
+        flexDirection: "row",
+        margin: hp(.3)
     },
     DetailText: {
-      fontFamily: fonts.Regular,
-      fontSize: hp(1.5  )
+        fontFamily: fonts.Regular,
+        fontSize: hp(1.5)
     },
     Subheading: {
-      fontFamily: fonts.Medium,
-      fontSize: hp(1.8)
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.8)
     },
     ItemsContainer: {
         height: hp(60),
         width: wp(90),
-        marginTop: hp (3),
+        marginTop: hp(3),
     },
     ItemsHeader: {
         flex: 1,
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center"
     },
-    ItemsBody:{
+    ItemsBody: {
         // borderWidth: 1,
         flex: 9,
         flexWrap: "wrap",

@@ -8,20 +8,20 @@ import {
 } from "react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName.js";
 import CustomInputAndText from "../E-Loan/NewLoanComponents/CustomInputAndText.jsx";
 import CustomButton from "../../../../components/CustomButton.jsx";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 
 const RaastRecieving = () => {
-    const { t } = useTranslation();
-  
+  const { t } = useTranslation();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Wrapper}>

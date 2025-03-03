@@ -9,7 +9,7 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-import ScreensName from '../../../../../util/ScreensName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -27,12 +27,12 @@ const Stack = createNativeStackNavigator();
 function EVendorsMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.EVendors} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name={ScreensName.EVendors} component={EVendors} />
-                    <Stack.Screen name={ScreensName.EVendorsDetails} component={EVendorsDetails} />
-                    <Stack.Screen name={ScreensName.EVendorViewTranscations} component={EVendorViewTranscations} />
+        <Stack.Navigator initialRouteName={ScreensName.EVendors} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreensName.EVendors} component={EVendors} />
+            <Stack.Screen name={ScreensName.EVendorsDetails} component={EVendorsDetails} />
+            <Stack.Screen name={ScreensName.EVendorViewTranscations} component={EVendorViewTranscations} />
 
-                </Stack.Navigator>
+        </Stack.Navigator>
         // </I18nextProvider>
     );
 }

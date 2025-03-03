@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 
-import colors from '../../../../util/colors.js';
+import colors from '../../../../util/Constants/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
@@ -14,9 +14,9 @@ const CustomImageButton = ({ name, SourceGiven, isNavigation, w = wp('6.5%'), h 
   const navigation = useNavigation();
 
   const handleNavigation = () => {
-    if(name=='GoBack'){
+    if (name == 'GoBack') {
       navigation.goBack()
-    }else if(name){
+    } else if (name) {
       navigation.navigate(name);
 
     }
@@ -27,7 +27,7 @@ const CustomImageButton = ({ name, SourceGiven, isNavigation, w = wp('6.5%'), h 
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation?handleNavigation:handleSubmit} >
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation ? handleNavigation : handleSubmit} >
       <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
     </TouchableOpacity>
   );

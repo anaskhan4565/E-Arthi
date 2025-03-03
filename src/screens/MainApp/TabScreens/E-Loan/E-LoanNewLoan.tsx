@@ -7,16 +7,16 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomInput from "../../../../components/CustomInput";
 import CustomButton from "../../../../components/CustomButton";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/Constants/ScreensName";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 import Navbar from "../../Navbar/Navbar";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 
@@ -42,13 +42,13 @@ function ELoanNewLoan() {
             <Text style={styles.heading}>{t("Requested amount")}</Text>
           </View>
           <View style={styles.inputContainer}>
-            <Text style={[styles.inputLabel,{marginBottom: hp(1)}]}>{t("Loan Amount (in PKR)")}</Text>
+            <Text style={[styles.inputLabel, { marginBottom: hp(1) }]}>{t("Loan Amount (in PKR)")}</Text>
             <CustomInput
               placeholder={t("Amount")}
               h={hp("5.5%")}
               w={wp("85%")}
               b_radius={10}
-              
+
               bg_give={colors.WHITE}
               want={false}
 
@@ -90,7 +90,7 @@ function ELoanNewLoan() {
             name={ScreensName.EloanOTP}
             txColor={colors.WHITE}
             isNavigation={1}
-            
+
           />
         </View>
       </ScrollView>

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 
 import {
   SafeAreaView,
@@ -13,8 +13,8 @@ import {
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv';
@@ -24,7 +24,7 @@ import { MMKV } from 'react-native-mmkv';
 function PaymentConfirmation(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const [key, setKey] = useState(0); 
+  const [key, setKey] = useState(0);
   const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
   useFocusEffect(
@@ -33,9 +33,9 @@ function PaymentConfirmation(): React.JSX.Element {
     }, [])
   );
   const storage = new MMKV();
-    const PassedPayment = new MMKV();
-  
-  const finalPrice=storage.getString("FinalPrice")
+  const PassedPayment = new MMKV();
+
+  const finalPrice = storage.getString("FinalPrice")
   const passedName = PassedPayment.getString("PassedName");
 
   const savedCart = storage.getString("cart");
@@ -68,7 +68,7 @@ function PaymentConfirmation(): React.JSX.Element {
       <ScrollView style={styles.container}>
 
         <View style={{ marginBottom: hp(1.2), marginTop: hp(1), marginHorizontal: wp(5), }}>
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign:'center' }}>
+          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign: 'center' }}>
             {passedName?.toLocaleUpperCase()} {t('Transfers')}
           </Text>
         </View>
@@ -105,7 +105,7 @@ function PaymentConfirmation(): React.JSX.Element {
           </View>
 
           {/* PURPOSE */}
-          <View style={{ width: wp(85), marginTop:hp(1) }}>
+          <View style={{ width: wp(85), marginTop: hp(1) }}>
             <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5) }}>{t('Purpose')}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
@@ -115,7 +115,7 @@ function PaymentConfirmation(): React.JSX.Element {
           </View>
 
           {/* PURPOSE */}
-          <View style={{ width: wp(85), marginTop:hp(1) }}>
+          <View style={{ width: wp(85), marginTop: hp(1) }}>
             <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5) }}>{t('Notes')}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
@@ -123,15 +123,15 @@ function PaymentConfirmation(): React.JSX.Element {
               <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('First 100 Acres of Land')}</Text>
             </View>
           </View>
-          
-          <View style={{ marginTop: hp(2), gap:5 }}>
+
+          <View style={{ marginTop: hp(2), gap: 5 }}>
             <CustomButton MainText={t('Confirm')}
-              BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
+              BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
               txColor={colors.WHITE}
               bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
-              isNavigation={totalPrice === 0 ? 0 :1}
-              isdisabled={totalPrice === 0?true:false} 
-              name={totalPrice!==0?ScreensName.AllOTP:null} />
+              isNavigation={totalPrice === 0 ? 0 : 1}
+              isdisabled={totalPrice === 0 ? true : false}
+              name={totalPrice !== 0 ? ScreensName.AllOTP : null} />
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
         </View>
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     // elevation: 5,
   },
-  
+
 });
 
 export default PaymentConfirmation;

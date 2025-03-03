@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
-import colors from "../../../util/colors";
+import colors from "../../../util/Constants/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from "../../../util/FontName";
+import { fonts } from "../../../util/Constants/FontName";
 import { useTranslation } from "react-i18next";
-const SwitchButtonCoperate = ({ selectedOption="Individual",
-   setSelectedOption }) => {
+const SwitchButtonCoperate = ({ selectedOption = "Individual",
+  setSelectedOption }) => {
   // const [selectedOption, setSelectedOption] = useState("Specific");
   const animationValue = useRef(new Animated.Value(0)).current;
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ const SwitchButtonCoperate = ({ selectedOption="Individual",
 
   return (
     <View style={styles.container}>
-     
+
       <TouchableOpacity onPress={() => handlePress("Individual")} style={{ flex: 1 }}>
         <Animated.View
           style={[
@@ -52,7 +52,7 @@ const SwitchButtonCoperate = ({ selectedOption="Individual",
             {t('Individual')}
           </Text>
         </Animated.View>
-        
+
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("Corporate")} style={{ flex: 1 }}>
         <Animated.View
@@ -73,7 +73,7 @@ const SwitchButtonCoperate = ({ selectedOption="Individual",
           </Text>
         </Animated.View>
       </TouchableOpacity>
-      
+
     </View>
   );
 };
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: hp(3),
-    marginTop:hp(2),
+    marginTop: hp(2),
     backgroundColor: colors.fancy_BG,
     borderRadius: hp(1),
   },

@@ -3,9 +3,9 @@ import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
-import { InventoryDet } from '../../../../../util/E-Inventory.js';
+import { InventoryDet } from '../../../../../util/Data/E-Inventory.js';
 
 import {
     SafeAreaView,
@@ -17,8 +17,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 
 
@@ -42,7 +42,7 @@ function Inventory(): React.JSX.Element {
                         {InventoryDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={ScreensName.EInventoryMainStack}  SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={ScreensName.EInventoryMainStack} SourceGiven={Category.img} isNavigation={1} w={wp('80%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}

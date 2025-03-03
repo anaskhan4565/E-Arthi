@@ -2,18 +2,18 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'rea
 import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import ItemBox from '../../CustomComponent/ItemBox.jsx';
-import { SupplierReports } from '../../../../../util/E-Inventory.js';
+import { SupplierReports } from '../../../../../util/Data/E-Inventory.js';
 import ProductBox from '../../CustomComponent/ProductBox.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import pdf from '../../../../assets/pdf1.png';
 import { useNavigation } from '@react-navigation/native';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 //Need to edit this later, passing images literl
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 
 const SuppliersReport = () => {
   const { t } = useTranslation()

@@ -1,7 +1,7 @@
 export default [
     {
         title: "Seeds",
-        img: require('../src/assets/MainApp/E-Market/Seeds.png'),
+        img: require('../../src/assets/MainApp/E-Market/Seeds.png'),
         subcategories: [
             { name: "Rice Seeds" },
             { name: "Wheat Seeds" },
@@ -11,7 +11,7 @@ export default [
     },
     {
         title: "Fertilizers",
-        img: require('../src/assets/MainApp/E-Market/Fertilizer.png'),
+        img: require('../../src/assets/MainApp/E-Market/Fertilizer.png'),
         subcategories: [
             { name: "ENGRO-400 Fertilizer" },
             { name: "Potash-5800 Fertilizer" },
@@ -21,7 +21,7 @@ export default [
     },
     {
         title: "Pesticides",
-        img: require('../src/assets/MainApp/E-Market/Seeds2.png'),
+        img: require('../../src/assets/MainApp/E-Market/Seeds2.png'),
         subcategories: [
             { name: "Insecticide Spray" },
             { name: "Herbal Pesticide" },
@@ -31,7 +31,7 @@ export default [
     },
     {
         title: "Fungicides",
-        img: require('../src/assets/MainApp/E-Market/Fungicide.png'),
+        img: require('../../src/assets/MainApp/E-Market/Fungicide.png'),
         subcategories: [
             { name: "Powder Fungicide" },
             { name: "Liquid Fungicide" },
@@ -41,7 +41,7 @@ export default [
     },
     {
         title: "Herbicides",
-        img: require('../src/assets/MainApp/E-Market/Herbicide.png'),
+        img: require('../../src/assets/MainApp/E-Market/Herbicide.png'),
         subcategories: [
             { name: "Pre-Emergent Herbicide" },
             { name: "Post-Emergent Herbicide" },
@@ -51,7 +51,7 @@ export default [
     },
     {
         title: "Agricultural Tools",
-        img: require('../src/assets/MainApp/E-Market/Fertilizer2.png'),
+        img: require('../../src/assets/MainApp/E-Market/Fertilizer2.png'),
         subcategories: [
             { name: "Hand Plows" },
             { name: "Seed Planters" },
@@ -61,7 +61,7 @@ export default [
     },
     {
         title: "Animal Feed",
-        img: require('../src/assets/MainApp/E-Market/Fertilizer3.png'),
+        img: require('../../src/assets/MainApp/E-Market/Fertilizer3.png'),
         subcategories: [
             { name: "Cattle Feed" },
             { name: "Poultry Feed" },

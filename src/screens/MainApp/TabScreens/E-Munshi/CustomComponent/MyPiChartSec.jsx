@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
-import colors from '../../../../../../util/colors.js';
+import colors from '../../../../../../util/Constants/colors.js';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,

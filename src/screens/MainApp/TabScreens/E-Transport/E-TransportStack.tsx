@@ -9,7 +9,7 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-import ScreensName from '../../../../../util/ScreensName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -33,17 +33,17 @@ const Stack = createNativeStackNavigator();
 function ETransportStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.ETransportMain} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name={ScreensName.ETransportMain} component={ETransportMain} />
-                    <Stack.Screen name={ScreensName.ETransportAddDetails} component={ETransportAddDetails} />
-                    <Stack.Screen name={ScreensName.ETransportAir} component={ETransportAir} />
-                    <Stack.Screen name={ScreensName.ETransportAnalytics} component={ETransportAnalytics} />
-                    <Stack.Screen name={ScreensName.ETransportDeliveryHistory} component={ETransportDeliveryHistory} />
-                    <Stack.Screen name={ScreensName.ETransportNewTransport} component={ETransportNewTransport} />
-                    <Stack.Screen name={ScreensName.ETransportSelectVehicleType} component={ETransportSelectVehicleType} />
-                    <Stack.Screen name={ScreensName.ETransportShip} component={ETransportShip} />
-                    <Stack.Screen name={ScreensName.ETransportTruck} component={ETransportTruck} />
-                </Stack.Navigator>
+        <Stack.Navigator initialRouteName={ScreensName.ETransportMain} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreensName.ETransportMain} component={ETransportMain} />
+            <Stack.Screen name={ScreensName.ETransportAddDetails} component={ETransportAddDetails} />
+            <Stack.Screen name={ScreensName.ETransportAir} component={ETransportAir} />
+            <Stack.Screen name={ScreensName.ETransportAnalytics} component={ETransportAnalytics} />
+            <Stack.Screen name={ScreensName.ETransportDeliveryHistory} component={ETransportDeliveryHistory} />
+            <Stack.Screen name={ScreensName.ETransportNewTransport} component={ETransportNewTransport} />
+            <Stack.Screen name={ScreensName.ETransportSelectVehicleType} component={ETransportSelectVehicleType} />
+            <Stack.Screen name={ScreensName.ETransportShip} component={ETransportShip} />
+            <Stack.Screen name={ScreensName.ETransportTruck} component={ETransportTruck} />
+        </Stack.Navigator>
         // </I18nextProvider>
     );
 }

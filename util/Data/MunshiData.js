@@ -1,4 +1,4 @@
-import ScreensName from "./ScreensName";
+import ScreensName from "../Constants/ScreensName";
 const warehouseData = [
   { name: "Khairpur Warehouse", value: 25, color: "#FF69B4" },
   { name: "Kotri Warehouse", value: 20, color: "#FF6F61" },
@@ -9,7 +9,7 @@ const warehouseData = [
 
 const emunshiDet =
   [
-    { name: "Line Of Credit",screenname:ScreensName.EmunshiLineOfCredit },
-    { name: "Cash Flow",screenname:ScreensName.EMunshiCashFlow },
+    { name: "Line Of Credit", screenname: ScreensName.EmunshiLineOfCredit },
+    { name: "Cash Flow", screenname: ScreensName.EMunshiCashFlow },
   ];
-  export {warehouseData,emunshiDet}
+export { warehouseData, emunshiDet }

@@ -1,18 +1,18 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import colors from '../../../util/colors';
+import colors from '../../../util/Constants/colors.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from '../../assets/Icon/Logo-only.png';
 import Langsymb from '../../assets/Vector.svg';
 import GreenLangSymb from '../../assets/langgreen.svg';
 import CustomButton from '../../components/CustomButton';
-import ScreensName from '../../../util/ScreensName.ts';
+import ScreensName from '../../../util/Constants/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../../util/FontName.js';
+import { fonts } from '../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 
 const AboutMore = () => {
@@ -47,7 +47,7 @@ const AboutMore = () => {
                             {selectedCard === 'en' ? (
                                 <GreenLangSymb width={wp(10)} height={hp(5)} />
                             ) : (
-                                <Langsymb width={wp(10)} height={hp(4)}  />
+                                <Langsymb width={wp(10)} height={hp(4)} />
                             )}
                             <Text style={styles.cardText}>{t('English')}</Text>
                         </TouchableOpacity>
@@ -77,9 +77,9 @@ const AboutMore = () => {
                             onPress={() => handleCardPress('sin')}
                         >
                             {selectedCard === 'sin' ? (
-                                <GreenLangSymb width={wp(10)} height={hp(4)}  />
+                                <GreenLangSymb width={wp(10)} height={hp(4)} />
                             ) : (
-                                <Langsymb width={wp(10)} height={hp(4)}  />
+                                <Langsymb width={wp(10)} height={hp(4)} />
                             )}
                             <Text style={styles.cardText}>سنڌي</Text>
                         </TouchableOpacity>
@@ -92,9 +92,9 @@ const AboutMore = () => {
                             onPress={() => handleCardPress('psh')}
                         >
                             {selectedCard === 'psh' ? (
-                                <GreenLangSymb width={wp(10)} height={hp(4)}  />
+                                <GreenLangSymb width={wp(10)} height={hp(4)} />
                             ) : (
-                                <Langsymb width={wp(10)} height={hp(4)}  />
+                                <Langsymb width={wp(10)} height={hp(4)} />
                             )}
                             <Text style={styles.cardText}>پښتو</Text>
                         </TouchableOpacity>

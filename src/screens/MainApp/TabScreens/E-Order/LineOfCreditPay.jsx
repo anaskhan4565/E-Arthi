@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 
 import {
     SafeAreaView,
@@ -14,8 +14,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MMKV } from 'react-native-mmkv';
@@ -27,7 +27,7 @@ function LineOfCreditPay(): React.JSX.Element {
     const navigation = useNavigation();
     const [key, setKey] = useState(0);
     const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
-    const[MessageText,SetMessageText]=useState("")
+    const [MessageText, SetMessageText] = useState("")
     useFocusEffect(
         useCallback(() => {
             setKey(prevKey => prevKey + 1);
@@ -42,12 +42,12 @@ function LineOfCreditPay(): React.JSX.Element {
     const PassedPayment = new MMKV();
 
 
-    const NavigateAndSet=()=>{
-        PassedPayment.set("PassedName","Line Of Credit");
+    const NavigateAndSet = () => {
+        PassedPayment.set("PassedName", "Line Of Credit");
         navigation.navigate(ScreensName.AllOTP)
     }
 
-    const GetMessage=(e)=>{
+    const GetMessage = (e) => {
         SetMessageText(e)
     }
     return (
@@ -115,8 +115,8 @@ function LineOfCreditPay(): React.JSX.Element {
                                 placeholderTextColor={colors.LIGHT_GRAY}
                                 multiline
                                 numberOfLines={4}
-                                onChangeText={(e)=>GetMessage(e)}
-                                
+                                onChangeText={(e) => GetMessage(e)}
+
                             />
                         </View>
                     </View>
@@ -126,12 +126,12 @@ function LineOfCreditPay(): React.JSX.Element {
                     <View style={{ marginTop: hp(2), gap: 5 }}>
                         <CustomButton MainText={t('Confirm')}
                             BgGiven={MessageText.length > 5 ? colors.GREEN : colors.GRAY}
-                            txColor={MessageText.length > 5 ? colors.WHITE:colors.GREAT_WHITE}
-                            
+                            txColor={MessageText.length > 5 ? colors.WHITE : colors.GREAT_WHITE}
+
                             bordergiven={MessageText.length > 5 ? colors.GREEN : colors.GRAY}
                             isNavigation={MessageText.length > 5 ? true : false}
                             isDisabled={MessageText.length > 5 ? true : false}
-                            onPressG={MessageText.length > 5 ?NavigateAndSet:null}
+                            onPressG={MessageText.length > 5 ? NavigateAndSet : null}
                             name={MessageText.length > 5 ? ScreensName.AllOTP : null} />
                         <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
                     </View>

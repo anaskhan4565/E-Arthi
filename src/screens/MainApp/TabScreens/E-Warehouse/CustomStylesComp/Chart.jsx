@@ -5,8 +5,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../../util/colors.js";
-import { fonts } from "../../../../../../util/FontName.js";
+import colors from "../../../../../../util/Constants/colors.js";
+import { fonts } from "../../../../../../util/Constants/FontName.js";
 import { useTranslation } from "react-i18next";
 
 const CustomBarChart = ({

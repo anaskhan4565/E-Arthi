@@ -1,26 +1,26 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
-import Navbar from '../Navbar/Navbar.jsx';
-import CustomSearchApp from '../CustomComponent/CustomSearchApp.jsx';
-import colors from '../../../../util/colors.js';
-import ItemBox from '../CustomComponent/ItemBox.jsx';
+import Navbar from '../../Navbar/Navbar.jsx';
+import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
+import colors from '../../../../../util/Constants/colors.js';
+import ItemBox from '../../CustomComponent/ItemBox.jsx';
 // import Heart from '../../../assets/MainApp/HomeScreen/Heart.png';
-import allNames from '../../../../util/E-Offerings.js';
-import ProductBox from '../CustomComponent/ProductBox.jsx';
+import allNames from '../../../../../util/Data/E-Offerings.js';
+import ProductBox from '../../CustomComponent/ProductBox.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 
 
 //Need to edit this later, passing images literl
-import Image1 from '../../../assets/MainApp/EmarketPlace/Products/prod1.png'
-import Image2 from '../../../assets/MainApp/EmarketPlace/Products/prod2.png'
-import { fonts } from '../../../../util/FontName.js';
+import Image1 from '../../../../assets/MainApp/EmarketPlace/Products/prod1.png'
+import Image2 from '../../../../assets/MainApp/EmarketPlace/Products/prod2.png'
+import { fonts } from '../../../../../util/Constants/FontName.js';
 
 const Home = () => {
   const { t } = useTranslation()
-const JustADemoPreview=()=>{
-  console.log("Add the logic for prices here")
-}
+  const JustADemoPreview = () => {
+    console.log("Add the logic for prices here")
+  }
   return (
     <View style={{ flex: 1, backgroundColor: colors.WHITE }}>
       <View style={styles.navbarContainer}>
@@ -48,22 +48,22 @@ const JustADemoPreview=()=>{
                   )
                 ))}
               </View>
-              </View>
+            </View>
 
-              {/* Section for Recommended Products */}
-              <View style={styles.recommendedProducts}>
-                <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
-                <View style={styles.productRow}>
-                  <ProductBox name={"Agri-Protex"} AddIcon={false}  price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
-                  <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
-                </View>
-                <View style={styles.productRow}>
-                  <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
-                  <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
-                </View>
+            {/* Section for Recommended Products */}
+            <View style={styles.recommendedProducts}>
+              <Text style={styles.recommendedTitle}>{t('Recommended Products')}</Text>
+              <View style={styles.productRow}>
+                <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
+                <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
+              </View>
+              <View style={styles.productRow}>
+                <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image1} old={"3060"} />
+                <ProductBox name={"Agri-Protex"} AddIcon={false} price={"2050"} save={"1000"} SourceGiven={Image2} old={"3060"} />
               </View>
             </View>
           </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -112,10 +112,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
 
   },
-  scrollContainerMain:{
+  scrollContainerMain: {
 
-    paddingLeft:hp(1)
-},
+    paddingLeft: hp(1)
+  },
   itemBoxWrapper: {
     width: wp('30%'),
     marginBottom: hp('2%'),

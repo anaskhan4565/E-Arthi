@@ -1,15 +1,15 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
-import ECategories from '../../../../../util/E-Categories.js';
+import ECategories from '../../../../../util/Data/E-Categories.js';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import Categorybox from '../../CustomComponent/Categorybox.jsx';
 import ProductBox from '../../CustomComponent/ProductBox.jsx';
 import ItemBox from '../../CustomComponent/ItemBox.jsx';
-import { EInventoryDet } from '../../../../../util/E-Inventory.js';
+import { EInventoryDet } from '../../../../../util/Data/E-Inventory.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -24,8 +24,8 @@ import {
     Image,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 function EInventoryDetails(): React.JSX.Element {
     const { t } = useTranslation();
@@ -47,8 +47,8 @@ function EInventoryDetails(): React.JSX.Element {
                             <Text style={styles.headerText}>{t('Inventory Details')}</Text>
                         </View>
                         <View style={styles.reorderButtonWrapper}>
-                            <TouchableOpacity 
-                                style={styles.reorderButton} 
+                            <TouchableOpacity
+                                style={styles.reorderButton}
                                 onPress={() => { navigation.navigate(ScreensName.EInventoryDetails) }}>
                                 <Text style={styles.reorderButtonText}>{t('Re-order')}</Text>
                             </TouchableOpacity>
@@ -75,7 +75,7 @@ function EInventoryDetails(): React.JSX.Element {
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <CustomButton 
+                        <CustomButton
                             MainText={t('Add new inventory')}
                             BgGiven={colors.GREEN}
                             txColor={colors.WHITE}

@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-import colors from '../../../../util/colors.js';
+import colors from '../../../../util/Constants/colors.js';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../util/FontName.js';
+import { fonts } from '../../../../util/Constants/FontName.js';
 import Image4 from '../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,7 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
     customPress = 0,
     ThirdText = null,
     handlePress = null,
-    fGiven=hp(2.4)
+    fGiven = hp(2.4)
 }) => {
     const navigation = useNavigation();
     const { t } = useTranslation()
@@ -50,9 +50,9 @@ const InventoryProduct = ({ secTextWidth = hp(2.3)
                 <View style={[styles.textContainer, { marginLeft: !allowImg ? hp(2) : null }]}>
                     {ThirdText ?
                         <View style={{ flexDirection: 'row', gap: hp(1), alignItems: 'center' }}>
-                            <Text style={[styles.TextStyle,{fontSize:fGiven,width:hp(16)}]}>{t(name)}</Text>
+                            <Text style={[styles.TextStyle, { fontSize: fGiven, width: hp(16) }]}>{t(name)}</Text>
 
-                            <Text style={{width:hp(14),fontWeight:'bold',color:colors.HAZY_SKY}}>{ThirdText}</Text>
+                            <Text style={{ width: hp(14), fontWeight: 'bold', color: colors.HAZY_SKY }}>{ThirdText}</Text>
                         </View>
                         :
 

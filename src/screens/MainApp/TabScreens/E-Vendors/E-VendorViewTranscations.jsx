@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import {
   SafeAreaView,
@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
+import { fonts } from "../../../../../util/Constants/FontName.js";
 import { MMKV } from "react-native-mmkv";
 import { Picker } from "@react-native-picker/picker";
 import TranscationComponent from "./TranscationComponent.jsx";
@@ -95,11 +95,11 @@ const EVendorViewTranscations = () => {
               </Picker>
             </View>
           </View>
-          <View style={{ margin:hp(1.5), flex: 0.5,gap:hp(1.2),flexDirection:'row',flexWrap:'wrap' }}>
-            <TranscationComponent State = {1} Date={'09-02-2025'} Items = {5} Amount = {5000}/>
-            <TranscationComponent State = {3} Date={'09-02-2025'} Items = {5} Amount = {5000}/>
-            <TranscationComponent State = {2} Date={'09-02-2025'} Items = {5} Amount = {5000}/>
-            <TranscationComponent State = {1} Date={'09-02-2025'} Items = {5} Amount = {5000}/>
+          <View style={{ margin: hp(1.5), flex: 0.5, gap: hp(1.2), flexDirection: 'row', flexWrap: 'wrap' }}>
+            <TranscationComponent State={1} Date={'09-02-2025'} Items={5} Amount={5000} />
+            <TranscationComponent State={3} Date={'09-02-2025'} Items={5} Amount={5000} />
+            <TranscationComponent State={2} Date={'09-02-2025'} Items={5} Amount={5000} />
+            <TranscationComponent State={1} Date={'09-02-2025'} Items={5} Amount={5000} />
 
           </View>
         </View>
@@ -183,21 +183,21 @@ const styles = StyleSheet.create({
     marginHorizontal: hp("1%"),
     flex: 1,
   },
-  
+
   labelText: {
     fontSize: wp("5%"),
     fontFamily: fonts.SemiBold,
     color: colors.BLACK,
-    textAlign:'left'
+    textAlign: 'left'
 
   },
   infoText: {
     fontSize: wp("4.3%"),
     fontFamily: fonts.Bold,
-    width:hp(21),
+    width: hp(21),
     color: colors.GREEN,
-    textAlign:'left',
-    marginBottom:hp(0.4)
+    textAlign: 'left',
+    marginBottom: hp(0.4)
   },
   buttonContainer: {
     alignItems: "center",

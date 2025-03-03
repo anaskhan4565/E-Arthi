@@ -13,16 +13,16 @@ import {
   Image,
   Alert,
 } from "react-native";
-import colors from "../../../util/colors";
+import colors from "../../../util/Constants/colors.js";
 import CustomButton from "../../components/CustomButton";
-import ScreensName from "../../../util/ScreensName.ts";
+import ScreensName from "../../../util/Constants/ScreensName.ts";
 import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { launchCamera } from 'react-native-image-picker';
 
 const { height, width } = Dimensions.get("window");
 
-import { fonts } from "../../../util/FontName";
+import { fonts } from "../../../util/Constants/FontName.js";
 import { useTranslation } from "react-i18next";
 
 const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; textColor: string }> = ({ onPress, title, bgColor, textColor }) => (

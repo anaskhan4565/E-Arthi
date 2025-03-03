@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors';
+import colors from '../../../../../util/Constants/colors';
 import MandiNavbar from '../CustomComp/MandiNavbar';
 import CustomBottomSheetExport from '../CustomComp/CustomBottomSheet';
 import CustomNavigationMandi from '../CustomComp/CustomNavigation';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName';
+import { fonts } from '../../../../../util/Constants/FontName';
 const MarketDept = () => {
   const [marketData, setMarketData] = useState([]);
   const { t } = useTranslation();
@@ -52,7 +52,7 @@ const MarketDept = () => {
 
         <CustomNavigationMandi />
         <View style={{ marginHorizontal: hp(2) }} >
-          <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6),textAlign:'center' }}>E-Mandi Market Depth</Text>
+          <Text style={{ fontSize: hp(3.5), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6), textAlign: 'center' }}>E-Mandi Market Depth</Text>
         </View>
 
         <View style={styles.marketDeptContainer}>

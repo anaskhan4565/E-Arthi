@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import colors from '../../../../util/colors.js';
+import colors from '../../../../util/Constants/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../util/FontName.js';
-import ScreensName from '../../../../util/ScreensName.ts';
+import { fonts } from '../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../util/Constants/ScreensName.ts';
 // import ScreensName from '../../../../util/ScreensName.js';
 
 const EInventoryBoxes = ({
@@ -41,7 +41,7 @@ const EInventoryBoxes = ({
 
     return (
         <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
-            <View style={{marginTop:SecondaryText?hp(2):null,}}>
+            <View style={{ marginTop: SecondaryText ? hp(2) : null, }}>
                 <Image source={SourceGiven} style={[styles.ImageStyle, { width: img_size_w, height: img_size_h }]} />
                 <Text style={[styles.TextStyle, {
                     fontSize: font_Size,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     ImageStyle: {
         resizeMode: 'contain',
-        justifyContent:"center",alignContent:'center',alignSelf:'center',
+        justifyContent: "center", alignContent: 'center', alignSelf: 'center',
         marginBottom: hp(0.5), // Optional: Add a bottom margin to the image for consistent spacing
     },
 });

@@ -8,9 +8,9 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomImageButton from "../../CustomComponent/CustomImageButton";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/Constants/ScreensName";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
@@ -18,9 +18,9 @@ import {
 } from "react-native-responsive-screen";
 import Back from "../../../../assets/MainApp/Sidebar/Back.png";
 import ProfilePic from "../../../../assets/MainApp/HomeScreen/ProfilePic.png";
-import links from "../../../../../util/ProfileLinks";
+import links from "../../../../../util/Constants/ProfileLinks";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 import CustomButton from "../../../../components/CustomButton";
 
 function MyProfile() {
@@ -48,7 +48,7 @@ function MyProfile() {
           <Text style={{ fontSize: hp("2.75%"), fontFamily: fonts.Medium }}>
             {t("MAAZ NAVAID")}
           </Text>
-          <View style= {{alignSelf: "center"}}>
+          <View style={{ alignSelf: "center" }}>
             <CustomButton
               MainText={"Edit Profile"}
               BgGiven={colors.GREEN}
@@ -63,7 +63,7 @@ function MyProfile() {
       {links.map(
         (link, index) =>
           link.name.trim() !== "" && (
-            <TouchableOpacity style={styles.linkWrapper} key={index} onPress={()=>navigation.navigate(link.Screen)}>
+            <TouchableOpacity style={styles.linkWrapper} key={index} onPress={() => navigation.navigate(link.Screen)}>
               <Image source={link.icon} style={styles.Icons} />
               <Text style={styles.link}>{t(link.name)}</Text>
             </TouchableOpacity>

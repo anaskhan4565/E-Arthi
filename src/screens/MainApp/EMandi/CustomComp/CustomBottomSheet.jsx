@@ -4,10 +4,10 @@ import CustomBottomSheet from './CustomDownBar'
 import CustomTrade from './CustomTrade'
 import CustomPicker from './CustomPicker'
 import { TextInput } from 'react-native-paper'
-import colors from '../../../../../util/colors'
+import colors from '../../../../../util/Constants/colors'
 import CustomButton from '../../../../components/CustomButton'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../../util/FontName'
+import { fonts } from '../../../../../util/Constants/FontName'
 import { useTranslation } from 'react-i18next'
 
 const CustomBottomSheetExport = () => {
@@ -67,9 +67,9 @@ const CustomBottomSheetExport = () => {
                         </View>
                         <View style={{ flex: 0.2, width: hp(17) }}>
                             <TextInput placeholder={t('10.15')}
-                            keyboardType="number-pad" // Opens a numeric keypad
-                
-                            style={{ backgroundColor: colors.LIGHT_GRAY }} />
+                                keyboardType="number-pad" // Opens a numeric keypad
+
+                                style={{ backgroundColor: colors.LIGHT_GRAY }} />
                         </View>
 
                         <View style={[styles.passInputBox, { marginTop: hp(3) }]}>

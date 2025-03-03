@@ -4,8 +4,8 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../../util/colors";
-import { fonts } from "../../../../../../util/FontName";
+import colors from "../../../../../../util/Constants/colors";
+import { fonts } from "../../../../../../util/Constants/FontName";
 
 const ItemStatusBox = ({
     name,
@@ -20,11 +20,11 @@ const ItemStatusBox = ({
             <View style={styles.Header}>
                 <Text style={styles.ItemName}>{name}</Text>
                 {status ? (
-                    <View style={[styles.StatusWrapper,{backgroundColor: "rgb(14, 174, 45)"}]}>
+                    <View style={[styles.StatusWrapper, { backgroundColor: "rgb(14, 174, 45)" }]}>
                         <Text style={styles.statusText}>{statusTrueText}</Text>
                     </View>
                 ) : (
-                    <View style={[styles.StatusWrapper, {backgroundColor: "rgb(235, 169, 40)"}]}>
+                    <View style={[styles.StatusWrapper, { backgroundColor: "rgb(235, 169, 40)" }]}>
                         <Text style={styles.statusText}>{statusFalseText}</Text>
                     </View>
                 )}

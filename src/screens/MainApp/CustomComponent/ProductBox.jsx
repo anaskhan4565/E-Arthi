@@ -1,17 +1,17 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-import colors from '../../../../util/colors.js';
+import colors from '../../../../util/Constants/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../util/FontName.js';
-import ScreensName from '../../../../util/ScreensName.ts';
+import { fonts } from '../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../util/Constants/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
 import AddImg from './TempImages/AddImg.png';
 import { MMKV } from 'react-native-mmkv';
 
 const ProductBox = ({ AddIcon = true, name,
   price, save, old, SourceGiven,
-  backColor=colors.WHITE,
+  backColor = colors.WHITE,
   isNavigation, w = wp('40%'),
   h = hp('28%'), onPressG, iscentered = null
 
@@ -35,7 +35,7 @@ const ProductBox = ({ AddIcon = true, name,
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h ,backgroundColor:backColor}]} onPress={handlePress}>
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, backgroundColor: backColor }]} onPress={handlePress}>
       <View style={styles.imageContainer}>
         <Image source={SourceGiven} style={styles.ImageStyle} />
         {AddIcon && (
@@ -45,19 +45,19 @@ const ProductBox = ({ AddIcon = true, name,
         )}
       </View>
       <View style={[styles.textContainer, { alignItems: iscentered ? 'center' : null }]}>
-        <Text style={[styles.TextStyle2,,{ fontSize: iscentered ? hp(2) : null ,fontFamily: iscentered ?fonts.Bold:null}]} numberOfLines={2} ellipsizeMode="tail">
+        <Text style={[styles.TextStyle2, , { fontSize: iscentered ? hp(2) : null, fontFamily: iscentered ? fonts.Bold : null }]} numberOfLines={2} ellipsizeMode="tail">
           {t(name)}
         </Text>
         <View style={[styles.priceContainer]}>
-          <Text style={[styles.TextStyle, styles.price,{ textAlign: iscentered ? 'center' : null, fontSize: iscentered ? hp(1.4) : hp(1) }]}>{t('Price')}: PKR {price}</Text>
+          <Text style={[styles.TextStyle, styles.price, { textAlign: iscentered ? 'center' : null, fontSize: iscentered ? hp(1.4) : hp(1) }]}>{t('Price')}: PKR {price}</Text>
           {old != null ?
 
-          <Text style={[styles.TextStyle, styles.save]}>{t('PKR')}{t(old)}</Text>
-          :null}
-          </View>
+            <Text style={[styles.TextStyle, styles.save]}>{t('PKR')}{t(old)}</Text>
+            : null}
+        </View>
         {save != null ?
           <Text style={styles.TextStyle}>{t('Save')}: {t(save)}</Text>
-          :null
+          : null
         }
       </View>
     </TouchableOpacity>

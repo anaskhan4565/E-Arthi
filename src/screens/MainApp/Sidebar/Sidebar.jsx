@@ -8,9 +8,9 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import colors from "../../../../util/colors";
+import colors from "../../../../util/Constants/colors";
 import CustomImageButton from "../CustomComponent/CustomImageButton";
-import ScreensName from "../../../../util/ScreensName";
+import ScreensName from "../../../../util/Constants/ScreensName";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
@@ -20,9 +20,9 @@ import Bell from "../../../assets/MainApp/HomeScreen/Bell.png";
 import Back from "../../../assets/MainApp/Sidebar/Back.png";
 import ProfilePic from "../../../assets/MainApp/HomeScreen/ProfilePic.png";
 import Power from "../../../assets/MainApp/Sidebar/Power.png";
-import links from "../../../../util/SidebarLinks";
+import links from "../../../../util/Data/SidebarLinks";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../util/FontName";
+import { fonts } from "../../../../util/Constants/FontName";
 
 
 function Sidebar() {
@@ -36,24 +36,24 @@ function Sidebar() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={'GoBack'}  />
+        <CustomImageButton SourceGiven={Back} h={hp("4%")} w={hp("4%")} isNavigation={1} name={'GoBack'} />
         <Text style={styles.Heading}>{t('My Account')}</Text>
         <CustomImageButton SourceGiven={Bell} h={hp("4%")} w={hp("4%")} />
       </View>
       <View style={styles.User}>
         <Image source={ProfilePic} style={styles.Profile} />
         <View style={styles.UserInfo}>
-          <Text style={{ fontSize: hp("2.75%"),fontFamily:fonts.SemiBold, }}>
+          <Text style={{ fontSize: hp("2.75%"), fontFamily: fonts.SemiBold, }}>
             {t('MAAZ NAVAID')}
           </Text>
-          <Text style={{ fontSize: hp("1.95%"),fontFamily:fonts.Regular, }}>{t('maaznavaid@gmail.com')}</Text>
+          <Text style={{ fontSize: hp("1.95%"), fontFamily: fonts.Regular, }}>{t('maaznavaid@gmail.com')}</Text>
         </View>
       </View>
       {/* <View style={styles.body}></View> */}
       {links.map(
         (link, index) =>
           link.name.trim() !== "" && (
-            <TouchableOpacity style={styles.linkWrapper} key={index} onPress={()=>navigation.navigate(link.screenName)}>
+            <TouchableOpacity style={styles.linkWrapper} key={index} onPress={() => navigation.navigate(link.screenName)}>
               <Image source={link.icon} style={styles.Icons} />
               <Text style={styles.link}>{t(link.name)}</Text>
             </TouchableOpacity>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   Heading: {
     fontSize: hp("2.5%"),
     alignSelf: "center",
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
   },
   User: {
     flexDirection: "row",
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontSize: hp("2%"),
-    fontFamily:fonts.Regular,
+    fontFamily: fonts.Regular,
     marginLeft: wp("2%"),
   },
   logout: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     fontSize: hp("1.9%"),
-    fontFamily:fonts.Medium,
+    fontFamily: fonts.Medium,
     color: colors.WHITE,
     marginLeft: wp("3.1%"),
   },

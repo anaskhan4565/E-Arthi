@@ -9,13 +9,13 @@ import {
     TextInput,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 import Navbar from "../../Navbar/Navbar";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 
 const transaction =

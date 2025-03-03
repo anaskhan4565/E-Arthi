@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 
 import {
     SafeAreaView,
@@ -15,8 +15,8 @@ import {
 
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
 
@@ -25,7 +25,7 @@ import { useNavigation } from '@react-navigation/native';
 function ETransportAddDetails(): React.JSX.Element {
     const { t } = useTranslation();
     const [selectedItem, setSelectedItem] = useState('Crop');
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
     const items = ['Crop', 'Seeds', 'Medicines', 'Machinery', 'Fertilizers', 'Herbicide'];
 
@@ -75,7 +75,7 @@ function ETransportAddDetails(): React.JSX.Element {
                             <Text style={styles.label}>{t('Weight')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
@@ -109,7 +109,7 @@ function ETransportAddDetails(): React.JSX.Element {
                             <Text style={styles.label}>{t('City')}</Text>
                             <TextInput
                                 placeholder={t('Enter Here')}
-                                 style={[styles.value, {paddingHorizontal: wp(2)}]}
+                                style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
                         <View style={styles.detailRow}>
@@ -133,8 +133,8 @@ function ETransportAddDetails(): React.JSX.Element {
                                 style={[styles.value, { paddingHorizontal: wp(2) }]}
                             />
                         </View>
-                        <View style={{marginTop:hp(3)}}>
-                            <CustomButton MainText={"Add Transport"} BgGiven={colors.GREEN} txColor={colors.WHITE} onPressG={()=>navigation.goBack()} />
+                        <View style={{ marginTop: hp(3) }}>
+                            <CustomButton MainText={"Add Transport"} BgGiven={colors.GREEN} txColor={colors.WHITE} onPressG={() => navigation.goBack()} />
                         </View>
                     </View>
 

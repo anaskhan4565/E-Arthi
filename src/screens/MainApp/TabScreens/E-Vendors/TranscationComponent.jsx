@@ -4,8 +4,8 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors';
-import { fonts } from '../../../../../util/FontName';
+import colors from '../../../../../util/Constants/colors';
+import { fonts } from '../../../../../util/Constants/FontName';
 
 const TransactionComponent = ({
     State = 2,
@@ -22,8 +22,8 @@ const TransactionComponent = ({
                     styles.comp,
                     { backgroundColor: State === 1 ? '#0EAE2D' : State === 2 ? '#1B7ED4' : State === 3 ? '#e0ff63' : '#ccc' }
                 ]}>
-                    <Text style={[styles.statusText,{color:State==3?colors.BLACK:colors.WHITE}]}>
-                        {State === 1 ? 'Completed' : State === 2 ? 'Active' : State === 3 ?  'Pending':null}
+                    <Text style={[styles.statusText, { color: State == 3 ? colors.BLACK : colors.WHITE }]}>
+                        {State === 1 ? 'Completed' : State === 2 ? 'Active' : State === 3 ? 'Pending' : null}
                     </Text>
                 </View>
             </View>
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     statusText: {
         color: colors.GREAT_WHITE,
         textAlign: 'center',
-        fontSize:hp(1.2),
-        fontFamily:fonts.SemiBold
+        fontSize: hp(1.2),
+        fontFamily: fonts.SemiBold
     },
     details: {
         marginLeft: hp(1),

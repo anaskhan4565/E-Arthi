@@ -3,10 +3,10 @@ import { useIsFocused } from '@react-navigation/native';
 import { View, TextInput, StyleSheet, Button, Text, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomButton from '../../components/CustomButton';
-import colors from '../../../util/colors';
-import ScreensName from '../../../util/ScreensName';
+import colors from '../../../util/Constants/colors';
+import ScreensName from '../../../util/Constants/ScreensName';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../../util/FontName';
+import { fonts } from '../../../util/Constants/FontName';
 import { MMKV } from 'react-native-mmkv';
 
 const OTPSignUp = () => {

@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import ECategories from "../../../../util/E-Categories.js";
-import Navbar from "../Navbar/Navbar.jsx";
-import CustomSearchApp from "../CustomComponent/CustomSearchApp.jsx";
+import ECategories from "../../../../../util/Data/E-Categories.js";
+import Navbar from "../../Navbar/Navbar.jsx";
+import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../util/colors.js";
-import Categorybox from "../CustomComponent/Categorybox.jsx";
-import ProductBox from "../CustomComponent/ProductBox.jsx";
+import colors from "../../../../../util/Constants/colors.js";
+import Categorybox from "../../CustomComponent/Categorybox.jsx";
+import ProductBox from "../../CustomComponent/ProductBox.jsx";
 
 import {
     SafeAreaView,
@@ -19,12 +19,12 @@ import {
     View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../util/FontName.js";
+import { fonts } from "../../../../../util/Constants/FontName.js";
 import { MMKV } from "react-native-mmkv";
 
-import TopProducts from "./EMarketPlaceProducts/TopProducts.js";
+import TopProducts from "../EMarketPlaceProducts/TopProducts.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import ScreensName from "../../../../util/ScreensName.ts";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 
 const EMarket = () => {
     const [cart, setCart] = useState([]);
@@ -35,13 +35,13 @@ const EMarket = () => {
     const Navigation = useNavigation();
 
     const categoryFiles = {
-        Herbicide: () => import("./EMarketPlaceProducts/Herbicide.js"),
-        Labour: () => import("./EMarketPlaceProducts/Labour.js"),
-        Machinery: () => import("./EMarketPlaceProducts/Machinery.js"),
-        Seeds: () => import("./EMarketPlaceProducts/SeedsProducts.js"),
-        Fertilizer: () => import("./EMarketPlaceProducts/Fertilizer.js"),
-        Crops: () => import("./EMarketPlaceProducts/Crops.js"),
-        Fungicide: () => import("./EMarketPlaceProducts/Fungicide.js"),
+        Herbicide: () => import("../EMarketPlaceProducts/Herbicide.js"),
+        Labour: () => import("../EMarketPlaceProducts/Labour.js"),
+        Machinery: () => import("../EMarketPlaceProducts/Machinery.js"),
+        Seeds: () => import("../EMarketPlaceProducts/SeedsProducts.js"),
+        Fertilizer: () => import("../EMarketPlaceProducts/Fertilizer.js"),
+        Crops: () => import("../EMarketPlaceProducts/Crops.js"),
+        Fungicide: () => import("../EMarketPlaceProducts/Fungicide.js"),
     };
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const EMarket = () => {
 
     const { t } = useTranslation();
 
-        // useEffect(() => {
+    // useEffect(() => {
     //     const savedCart = storage.getString("cart");
     //     if (savedCart) {
     //         setCart(JSON.parse(savedCart));
@@ -83,20 +83,20 @@ const EMarket = () => {
         });
     };
 
-useFocusEffect(
-    useCallback(() => {
-        // console.log("opens")
-        const savedCart = storage.getString("cart");
-        if (savedCart) {
-            setCart(JSON.parse(savedCart));
-        }
-    }, []) 
-)
-const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+    useFocusEffect(
+        useCallback(() => {
+            // console.log("opens")
+            const savedCart = storage.getString("cart");
+            if (savedCart) {
+                setCart(JSON.parse(savedCart));
+            }
+        }, [])
+    )
+    const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
-        const totalQuantity=cart.reduce((sum, item) => sum + item.quantity, 0)
-        const totalCost=cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price.replace(/,/g, '')), 0)
-        
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0)
+    const totalCost = cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price.replace(/,/g, '')), 0)
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>

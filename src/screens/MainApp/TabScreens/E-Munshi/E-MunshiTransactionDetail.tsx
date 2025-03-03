@@ -8,16 +8,16 @@ import {
     View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 import Navbar from "../../Navbar/Navbar";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/Constants/ScreensName";
 
 const transaction =
 {
@@ -109,7 +109,7 @@ function EmunshiTransactionDetail({ val1 = 10241, val2 = 5990, route }): React.J
                     Dispute the transaction if you did not make it. Your dispute will be investigated by the team.
                 </Text>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(ScreensName.EmunshiDisputeTransaction,{transactiondata:transactiondata})}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(ScreensName.EmunshiDisputeTransaction, { transactiondata: transactiondata })}>
                         <Text style={styles.buttonText}>Dispute Transaction</Text>
                     </TouchableOpacity>
                 </View>

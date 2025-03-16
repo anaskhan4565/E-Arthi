@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import { useTranslation } from "react-i18next";
 import { Picker } from "@react-native-picker/picker";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 
 const CustomPicker = ({
   w_given = hp(8),
@@ -18,13 +18,13 @@ const CustomPicker = ({
   color_bd,
   isThatColor = false,
   bd_give,
-  placeholder = "Select", 
+  placeholder = "Select",
   isheader,
   hp_given = hp(5),
   min_given = wp(50),
   padding_f = false,
-  defaultValue=null,
-  placeholderFontSize = hp(2), 
+  defaultValue = null,
+  placeholderFontSize = hp(2),
 }) => {
   const { t } = useTranslation();
   const [selectedValue, setSelectedValue] = useState(defaultValue);
@@ -52,7 +52,7 @@ const CustomPicker = ({
         allow_shadow ? styles.shadowStyle : null,
       ]}
     >
-      <View style={[styles.pickerContainer, {borderColor:colors.RED, height: hp_given, minWidth: min_given, marginLeft: isThatColor ? hp(-1.5) : null }]}
+      <View style={[styles.pickerContainer, { borderColor: colors.RED, height: hp_given, minWidth: min_given, marginLeft: isThatColor ? hp(-1.5) : null }]}
       >
         <Picker
           selectedValue={selectedValue}
@@ -68,8 +68,8 @@ const CustomPicker = ({
           <Picker.Item
             label={t(placeholder)}
             value={null}
-            enabled={false} 
-            style={[styles.pickerItem, { color: colors.Text_Fancy, fontSize: placeholderFontSize, paddingLeft: hp(1) }]} 
+            enabled={false}
+            style={[styles.pickerItem, { color: colors.Text_Fancy, fontSize: placeholderFontSize, paddingLeft: hp(1) }]}
           />
           {items.map((item, index) => (
             <Picker.Item
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
     borderRadius: hp(0.4),
-    elevation: hp(0.3), 
+    elevation: hp(0.3),
   },
   pickerContainer: {
     // borderColor: colors.LIGHT_GRAY,
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pickerItem: {
-    height: hp(7), 
-    fontSize: hp(2.5), 
+    height: hp(7),
+    fontSize: hp(2.5),
     paddingVertical: hp(1),
     paddingLeft: hp(1), // Added left padding
   },

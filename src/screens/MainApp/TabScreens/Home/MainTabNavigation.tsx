@@ -2,20 +2,20 @@ import { StyleSheet, View, Image, Dimensions } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import ScreensName from '../../../../util/ScreensName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 import Home from './HomeScr';
 import EMarket from './E-Market';
-import EMunshi from './E-Munshi/E-Munshi';
-import colors from '../../../../util/colors';
+import EMunshi from '../E-Munshi/E-Munshi';
+import colors from '../../../../../util/Constants/colors';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../util/FontName';
-import EInventoryMainStack from './E-InventoryScreens/E-InventoryMainStack';
-import ELoanMainStack from "./E-Loan/E-LoanMainStack"
-import EWarehouseMainStack from "./E-Warehouse/E-WarehouseMainStack"
-import TopNavigator from '../EMandi/MainNavigator/TopNavigator';
-import EInventory from '../../../screens/MainApp/TabScreens/E-Loan/E-LoanHome'
-import EMunshiMainStack from './E-Munshi/E-MunshiMainStack';
-import HomeScreenMainStack from '../HomeScreenMainStack';
+import { fonts } from '../../../../../util/Constants/FontName';
+import EInventoryMainStack from '../E-InventoryScreens/E-InventoryMainStack';
+import ELoanMainStack from "../E-Loan/E-LoanMainStack"
+import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack"
+import TopNavigator from '../../EMandi/MainNavigator/TopNavigator';
+import EInventory from '../E-Loan/E-LoanHome'
+import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
+import HomeScreenMainStack from './HomeScreenMainStack';
 const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -47,7 +47,7 @@ export default function MainTabNavigation() {
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../assets/MainApp/TabIcons/Home.png')}
+                                source={require('../../../../assets/MainApp/TabIcons/Home.png')}
                                 style={[
                                     styles.icon,
                                     { tintColor: focused ? colors.GREEN : 'gray' },
@@ -63,7 +63,7 @@ export default function MainTabNavigation() {
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../assets/MainApp/TabIcons/E-Inventory.png')}
+                                source={require('../../../../assets/MainApp/TabIcons/E-Inventory.png')}
                                 style={[
                                     styles.icon,
                                     { tintColor: focused ? colors.GREEN : 'gray' },
@@ -79,7 +79,7 @@ export default function MainTabNavigation() {
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../assets/MainApp/TabIcons/E-Market.png')}
+                                source={require('../../../../assets/MainApp/TabIcons/E-Market.png')}
                                 style={[
                                     styles.icon,
                                     { tintColor: focused ? colors.GREEN : 'gray' },
@@ -95,7 +95,7 @@ export default function MainTabNavigation() {
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../assets/MainApp/TabIcons/E-Munshi.png')}
+                                source={require('../../../../assets/MainApp/TabIcons/E-Munshi.png')}
                                 style={[
                                     styles.icon,
                                     { tintColor: focused ? colors.GREEN : 'gray' },
@@ -111,7 +111,7 @@ export default function MainTabNavigation() {
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../assets/MainApp/TabIcons/E-Loan.png')}
+                                source={require('../../../../assets/MainApp/TabIcons/E-Loan.png')}
                                 style={[
                                     styles.icon,
                                     { tintColor: focused ? colors.GREEN : 'gray' },

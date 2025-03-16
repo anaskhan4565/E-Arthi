@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../../util/colors';
-import { fonts } from '../../../../../../util/FontName';
+import colors from '../../../../../../util/Constants/colors';
+import { fonts } from '../../../../../../util/Constants/FontName';
 import Pen from '../../../../../assets/MainApp/E-Inventory/E-Inventory-ManageGroup/Pen.png'
 import Demo from '../../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png';
 import { t } from 'i18next';
 
-const CustomGroupComponent = ({MainHeading,typ1,typ2,typ3,val1,val2,val3}) => {
-    const data = [
-        { type: typ1, value: val1 },
-        { type: typ2, value: val2 },
-        { type: typ3, value: val3 },
-      ];
-      return (
+const CustomGroupComponent = ({ MainHeading, typ1, typ2, typ3, val1, val2, val3 }) => {
+  const data = [
+    { type: typ1, value: val1 },
+    { type: typ2, value: val2 },
+    { type: typ3, value: val3 },
+  ];
+  return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerTextContainer}>
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 0.3,
     flexDirection: 'row',
-   marginHorizontal:hp(1.5),
-   marginTop:hp(1.5)
+    marginHorizontal: hp(1.5),
+    marginTop: hp(1.5)
   },
   headerTextContainer: {
     flex: 0.8,

@@ -2,13 +2,13 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import { EOrderMainBoxDet } from '../../../../../util/E-Order.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import { EOrderMainBoxDet } from '../../../../../util/Data/E-Order.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 
 const EOrderManager = () => {

@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Animated } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import colors from '../../../../../util/colors';
+import colors from '../../../../../util/Constants/colors.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Success from './TempImgsOrder/Success.png';
 import CustomButton from '../../../../components/CustomButton';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../../../../util/FontName';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import { MMKV } from 'react-native-mmkv';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,11 +24,11 @@ const AboutMore = () => {
     const passedName = PassedPayment.getString("PassedName");
 
     const translateY = useRef(new Animated.Value(hp(20))).current;
-    const opacity = useRef(new Animated.Value(0)).current; 
+    const opacity = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         Animated.timing(translateY, {
-            toValue: 0, 
+            toValue: 0,
             duration: 1000,
             useNativeDriver: true,
         }).start();
@@ -40,12 +40,12 @@ const AboutMore = () => {
         }).start();
     }, []);
 
-const ResetDefaultsStore=()=>{
-    storage.clearAll()
-    PassedPayment.clearAll()
-    navigation.navigate(ScreensName.MainTabNavigation
-      );
-}
+    const ResetDefaultsStore = () => {
+        storage.clearAll()
+        PassedPayment.clearAll()
+        navigation.navigate(ScreensName.MainTabNavigation
+        );
+    }
 
     return (
         <SafeAreaView style={styles.MainContainer}>
@@ -65,7 +65,7 @@ const ResetDefaultsStore=()=>{
             </View>
             <View style={{ flex: 0.3, alignItems: 'center' }}>
                 <CustomButton BgGiven={colors.GREEN}
-                onPressG={ResetDefaultsStore}
+                    onPressG={ResetDefaultsStore}
                     MainText={t('Continue')}
                     txColor={colors.WHITE}
                     isNavigation={true}

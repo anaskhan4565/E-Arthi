@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import {
   SafeAreaView,
@@ -17,9 +17,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import ScreensName from "../../../../../util/ScreensName.ts";
-import { fonts } from "../../../../../util/FontName.js";
-import VendorOrders from "../../../../../util/E-VendorOrders.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import VendorOrders from "../../../../../util/Data/E-VendorOrders.js";
 import { useNavigation } from "@react-navigation/native";
 import ProductBox from "../../CustomComponent/ProductBox.jsx";
 import Image2 from '../../../../assets/MainApp/EmarketPlace/Products/prod2.png'
@@ -67,12 +67,12 @@ const EVendorsDetails = () => {
               </View>
             </View>
             <CustomButton MainText={"View Transactions"}
-             wgiven={hp(20)} hgiven={hp(3.5)} 
-             tx_size={hp(1.7)} txColor={colors.WHITE} 
-             BgGiven={colors.GREEN} 
-             isSelected={true} 
-             isNavigation={true}
-             name={ScreensName.EVendorViewTranscations} />
+              wgiven={hp(20)} hgiven={hp(3.5)}
+              tx_size={hp(1.7)} txColor={colors.WHITE}
+              BgGiven={colors.GREEN}
+              isSelected={true}
+              isNavigation={true}
+              name={ScreensName.EVendorViewTranscations} />
 
           </View>
           <View style={styles.imageContainer}>

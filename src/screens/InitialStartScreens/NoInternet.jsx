@@ -3,12 +3,12 @@ import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaView, StyleSheet, View, Image, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
-import colors from '../../../util/colors';
-import ScreensName from '../../../util/ScreensName';
+import colors from '../../../util/Constants/colors';
+import ScreensName from '../../../util/Constants/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import InternetErr from '../../assets/NoInternet/Internet_sn.png';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../../util/FontName';
+import { fonts } from '../../../util/Constants/FontName';
 
 const NoInternet = () => {
     const [isConnected, setIsConnected] = useState(null);

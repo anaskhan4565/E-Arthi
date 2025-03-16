@@ -5,7 +5,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 import { Animated, Image, TouchableOpacity } from "react-native";
 import {
     SafeAreaView,
@@ -15,8 +15,8 @@ import {
     View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
 
@@ -183,7 +183,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                             <TouchableOpacity
                                 onPress={() => NavigateToPayment(each)}
                                 key={index}
-                                style={[styles.imageButton,{elevation:selected=="Card"?5:0}]}
+                                style={[styles.imageButton, { elevation: selected == "Card" ? 5 : 0 }]}
                             >
                                 <View style={styles.imageWrapper}>
                                     {typeof each.image === "function" ? (

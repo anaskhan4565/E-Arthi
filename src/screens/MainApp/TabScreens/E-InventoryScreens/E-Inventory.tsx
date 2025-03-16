@@ -1,14 +1,14 @@
 import React from "react";
 import type { PropsWithChildren } from "react";
-import ECategories from "../../../../../util/E-Categories.js";
+import ECategories from "../../../../../util/Data/E-Categories.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
-import { EInventoryDet } from "../../../../../util/E-Inventory.js";
+import colors from "../../../../../util/Constants/colors.js";
+import { EInventoryDet } from "../../../../../util/Data/E-Inventory.js";
 import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
 
 import {
@@ -22,41 +22,41 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 
 function EInventory(): React.JSX.Element {
   const { t } = useTranslation();
 
-    return (
-        <SafeAreaView style={styles.container}>
+  return (
+    <SafeAreaView style={styles.container}>
 
-            <View style={styles.navbarContainer}>
-                <Navbar />
-            </View>
-            <ScrollView style={styles.container}>
+      <View style={styles.navbarContainer}>
+        <Navbar />
+      </View>
+      <ScrollView style={styles.container}>
 
-                <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t('Search in here')} />
-                </View>
-                <View style={{ marginHorizontal: hp(1) }} >
-                    <Text style={{ fontSize: hp(3.5), fontFamily: fonts.SemiBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>{t('E-Inventory')}</Text>
-                </View>
-                <View style={styles.bodyContainer}>
+        <View style={styles.searchContainer}>
+          <CustomSearchApp placeholder={t('Search in here')} />
+        </View>
+        <View style={{ marginHorizontal: hp(1) }} >
+          <Text style={{ fontSize: hp(3.5), fontFamily: fonts.SemiBold, marginLeft: hp(2), letterSpacing: hp(0.6) }}>{t('E-Inventory')}</Text>
+        </View>
+        <View style={styles.bodyContainer}>
 
-                    <View style={styles.scrollContainer}>
-                        {EInventoryDet.map((Category, index) => (
-                            Category.title.trim() !== '' && (
-                                <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
-                                </View>
-                            )
-                        ))}
-                    </View>
+          <View style={styles.scrollContainer}>
+            {EInventoryDet.map((Category, index) => (
+              Category.title.trim() !== '' && (
+                <View style={styles.itemBoxWrapper} key={index}>
+                  <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('85%')} h={hp('18%')} />
                 </View>
-            </ScrollView>
-        </SafeAreaView >
-    );
+              )
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView >
+  );
 }
 
 const styles = StyleSheet.create({

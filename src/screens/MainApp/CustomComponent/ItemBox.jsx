@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import colors from '../../../../util/colors.js';
+import colors from '../../../../util/Constants/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../util/FontName.js';
+import { fonts } from '../../../../util/Constants/FontName.js';
 
-const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('23%'), h = hp('8.7') }) => {
+const ItemBox = ({ name, SourceGiven, isNavigation, screen, w = wp('23%'), h = hp('8.7') }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const handleNavigation = () => {
@@ -20,7 +20,7 @@ const ItemBox = ({ name, SourceGiven, isNavigation,screen, w = wp('23%'), h = hp
   };
 
   return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation ? handleNavigation:handleSubmit}>
+    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h }]} onPress={isNavigation ? handleNavigation : handleSubmit}>
       <Image source={SourceGiven} style={[styles.ImageStyle, { width: w / 2, height: h / 2 }]} />
       <Text style={styles.TextStyle}>{t(name)}</Text>
     </TouchableOpacity>
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  TextStyle:{
-    fontFamily:fonts.Medium,
-    fontSize:hp('1.3%') ,
+  TextStyle: {
+    fontFamily: fonts.Medium,
+    fontSize: hp('1.3%'),
   },
   ImageStyle: {
     resizeMode: 'contain',

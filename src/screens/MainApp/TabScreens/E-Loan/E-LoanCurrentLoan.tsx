@@ -11,16 +11,16 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
-import LoanCategoryDetails from "../../../../../util/LoanCategoryDetails";
-import LoanVendorDetails from "../../../../../util/LoanVendorDetails";
+import { fonts } from "../../../../../util/Constants/FontName";
+import LoanCategoryDetails from "../../../../../util/Data/LoanCategoryDetails";
+import LoanVendorDetails from "../../../../../util/Data/LoanVendorDetails";
 
 import Navbar from "../../Navbar/Navbar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import MyPieChart from "./CustomComponents/PiChart";
 import CustomPicker from "../../EMandi/CustomComp/CustomPicker";

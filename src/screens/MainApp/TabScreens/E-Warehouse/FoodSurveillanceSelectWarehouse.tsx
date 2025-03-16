@@ -7,10 +7,10 @@ import { MMKV } from "react-native-mmkv";
 
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
-import colors from "../../../../../util/colors.js";
-import {fonts} from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
-import SurveiledWarehouses from "../../../../../util/SurveiledWarehouses.js";
+import colors from "../../../../../util/Constants/colors.js";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
+import SurveiledWarehouses from "../../../../../util/Data/SurveiledWarehouses.js";
 import WarehouseIcon from "../../../../assets/warehouse.png";
 import Back from "../../../../assets/MainApp/Sidebar/Back.png";
 
@@ -20,7 +20,7 @@ function FoodSurveillanceSelectWarehouse(): React.JSX.Element {
   const storage = new MMKV();
   const navigation = useNavigation();
 
-  const handlePress = (name : string) => {
+  const handlePress = (name: string) => {
     storage.set("SurveilledWarehouse", name);
     navigation.navigate(ScreensName.FoodSurveillanceWarehouse)
   }
@@ -54,7 +54,7 @@ function FoodSurveillanceSelectWarehouse(): React.JSX.Element {
                   >
                     <TouchableOpacity style={styles.WarehouseBox} onPress={() => handlePress(warehouse.name)}>
                       <View style={styles.leftContainer}>
-                        <Image source={WarehouseIcon} style={styles.WhIcon}/>
+                        <Image source={WarehouseIcon} style={styles.WhIcon} />
                         <Text style={styles.WarehouseName}>
                           {warehouse.name}
                         </Text>
@@ -62,7 +62,7 @@ function FoodSurveillanceSelectWarehouse(): React.JSX.Element {
                       <View>
                         <Image
                           source={Back}
-                          style={[styles.WhIcon,{transform: [{ scaleX: -1 },],},]}
+                          style={[styles.WhIcon, { transform: [{ scaleX: -1 },], },]}
                         />
                       </View>
                     </TouchableOpacity>

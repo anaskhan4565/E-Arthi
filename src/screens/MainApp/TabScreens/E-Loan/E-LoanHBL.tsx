@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import {
     SafeAreaView,
     ScrollView,
@@ -12,13 +12,13 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import CustomInputAndText from './NewLoanComponents/CustomInputAndText.jsx';
 import CustomTxtAndPicker from './NewLoanComponents/CustomTxtAndPicker';
 import CustomUploadButton from './NewLoanComponents/CustomUploadButton';
 import TickBox from './NewLoanComponents/TickBox';
 import CustomButton from '../../../../components/CustomButton';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 
@@ -39,7 +39,7 @@ function ELoanHBL(): React.JSX.Element {
             }
         });
     };
-    
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -54,7 +54,7 @@ function ELoanHBL(): React.JSX.Element {
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginBottom: hp(2), gap: hp(3), marginTop: hp(1) }}>
                     <CustomTxtAndPicker PlaceHolderGiven={"Employment Type"} itemPackage={[{ label: "Salaried", value: "Salaried" }, { label: "Self-Employed", value: "Self Employed" }, { label: "Business Owner", value: "Business Owner" }]} Picker_Txt={"Select Employment Type"} />
-                    <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Personal Loan", value: "Personal Loan" },  { label: "Agricultural Loan", value: "Agricultural Loan" }]} Picker_Txt={"Select Loan Type"} />
+                    <CustomTxtAndPicker PlaceHolderGiven={"Loan Type"} itemPackage={[{ label: "Personal Loan", value: "Personal Loan" }, { label: "Agricultural Loan", value: "Agricultural Loan" }]} Picker_Txt={"Select Loan Type"} />
                     <CustomTxtAndPicker PlaceHolderGiven={"Title"} itemPackage={[{ label: "Mr.", value: "mr" }, { label: "Ms.", value: "ms" }, { label: "Mrs.", value: "mrs" }]} Picker_Txt={"Select Title"} />
                     <CustomInputAndText PlaceHolderGiven={"First Name"} InputHolder={"Enter First Name"} />
                     <CustomInputAndText PlaceHolderGiven={"Last Name"} InputHolder={"Enter Last Name"} />
@@ -84,7 +84,7 @@ function ELoanHBL(): React.JSX.Element {
                     <TickBox TextGiven={'I have a valid government-issued ID.'} givePadding={true} />
                     <TickBox TextGiven={'I understand that this application does not guarantee loan approval.'} givePadding={true} />
                     <TickBox TextGiven={'I consent to receive communication via email and phone regarding my loan application.'} givePadding={true} />
-                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr}/>
+                    <CustomButton MainText={"Submit Your Form"} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={true} name={ScreensName.ELoanSuccessScr} />
 
                 </View>
             </ScrollView>

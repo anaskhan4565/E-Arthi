@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import Image4 from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.DARK_GREEN,
         fontWeight: 'bold',
-        fontFamily:fonts.Bold,
+        fontFamily: fonts.Bold,
         fontSize: hp(1.6),
     },
     addIconImage: {

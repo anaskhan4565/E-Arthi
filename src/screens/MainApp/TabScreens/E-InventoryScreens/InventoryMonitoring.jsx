@@ -2,15 +2,15 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'rea
 import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import AddBox from '../../../MainApp/CustomComponent/InventoryComponents/AddBox.jsx'
 import Image3 from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/image.png'
 import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
 
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 const InventoryMonitoring = () => {
     const { t } = useTranslation()
@@ -28,23 +28,23 @@ const InventoryMonitoring = () => {
                     </View>
 
                     <View style={styles.bodyContainer}>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('New Inventory')} navigateName={ScreensName.EInventoryAddNew}/>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('New Group')} navigateName={ScreensName.EInventoryAddNewGroup}/>
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Inventory Reminder')} navigateName={ScreensName.EInventoryReminder}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('New Inventory')} navigateName={ScreensName.EInventoryAddNew} />
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('New Group')} navigateName={ScreensName.EInventoryAddNewGroup} />
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Inventory Reminder')} navigateName={ScreensName.EInventoryReminder} />
 
-                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Manage Inventory')}  navigateName={ScreensName.EInventoryManageGroup}/>
+                        <AddBox SourceGiven={Image3} w={wp('45%')} h={hp('8%')} name={t('Manage Inventory')} navigateName={ScreensName.EInventoryManageGroup} />
                     </View>
 
-                 
+
                     <View style={styles.recommendedProducts}>
                         <Text style={styles.recommendedTitle}>{t('Inventory')}</Text>
                         <View style={styles.productRow}>
-                            <InventoryProduct name={'Fresh Vegetables'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Leather Products'} price={4562}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Canned Goods '} price={1500}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Farm Fresh Juices'} price={1400}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Flowers '} price={1394}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
-                            <InventoryProduct name={'Fertilizers'} price={1412}  isNavigation={1} navigateTo={ScreensName.EInventoryDetails}/>
+                            <InventoryProduct name={'Fresh Vegetables'} price={1280} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
+                            <InventoryProduct name={'Leather Products'} price={4562} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
+                            <InventoryProduct name={'Canned Goods '} price={1500} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
+                            <InventoryProduct name={'Farm Fresh Juices'} price={1400} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
+                            <InventoryProduct name={'Flowers '} price={1394} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
+                            <InventoryProduct name={'Fertilizers'} price={1412} isNavigation={1} navigateTo={ScreensName.EInventoryDetails} />
 
                         </View>
 
@@ -58,7 +58,7 @@ const InventoryMonitoring = () => {
 export default InventoryMonitoring;
 
 const styles = StyleSheet.create({
-   
+
     navbarContainer: {
         height: hp('8.5%'),
         backgroundColor: 'white',

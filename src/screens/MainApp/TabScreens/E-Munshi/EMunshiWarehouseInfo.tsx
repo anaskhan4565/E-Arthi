@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import EWarehouse from "../../../../../util/E-WarehouseProducts.js";
+import EWarehouse from "../../../../../util/Data/E-WarehouseProducts.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
-import { EInventoryDet } from "../../../../../util/E-Inventory.js";
+import colors from "../../../../../util/Constants/colors.js";
+import { EInventoryDet } from "../../../../../util/Data/E-Inventory.js";
 import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
 import warehouseImg from "../../../../assets/warehouse.png";
 import WarehouseProduct from "../../CustomComponent/WarehouseProduct.jsx";
@@ -22,8 +22,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { LineChart } from "react-native-chart-kit";
 import { MMKV } from 'react-native-mmkv';
 
@@ -38,7 +38,7 @@ const chartConfig = {
     strokeWidth: "2",
     stroke: colors.GREEN,
   },
-  
+
 };
 
 function EMunshiWarehouseInfo(): React.JSX.Element {

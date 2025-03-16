@@ -9,7 +9,7 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
-import ScreensName from '../../../../../util/ScreensName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -30,13 +30,13 @@ const Stack = createNativeStackNavigator();
 function EWarehouseMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-                <Stack.Navigator initialRouteName={ScreensName.MyProfile} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
-                    <Stack.Screen name={ScreensName.BankRecieving} component={BankRecieving} />
-                    <Stack.Screen name={ScreensName.ProfileChangeLanguage} component={ProfileChangeLanguage} />
-                    <Stack.Screen name={ScreensName.RaastRecieving} component={RaastRecieving} />
-                    <Stack.Screen name={ScreensName.Recieving} component={Recieving} />
-                </Stack.Navigator>
+        <Stack.Navigator initialRouteName={ScreensName.MyProfile} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
+            <Stack.Screen name={ScreensName.BankRecieving} component={BankRecieving} />
+            <Stack.Screen name={ScreensName.ProfileChangeLanguage} component={ProfileChangeLanguage} />
+            <Stack.Screen name={ScreensName.RaastRecieving} component={RaastRecieving} />
+            <Stack.Screen name={ScreensName.Recieving} component={Recieving} />
+        </Stack.Navigator>
         // </I18nextProvider>
     );
 }

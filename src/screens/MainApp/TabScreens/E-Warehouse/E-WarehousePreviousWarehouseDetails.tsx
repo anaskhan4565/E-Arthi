@@ -5,8 +5,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
-import WarehouseItems from "../../../../../util/WarehouseItems.js";
+import colors from "../../../../../util/Constants/colors.js";
+import WarehouseItems from "../../../../../util/Data/WarehouseItems.js";
 import CustomInput from "../../../../components/CustomInput.jsx";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import {
@@ -20,8 +20,8 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { MMKV } from "react-native-mmkv";
 import EWarehouseMainStack from "./E-WarehouseMainStack.tsx";
 
@@ -60,23 +60,23 @@ function ConfrimWarehouse(): React.JSX.Element {
             <Text style={styles.HeaderCol}>{t("Space Reserved")}</Text>
           </View>
           {items.map(
-                      (data, index) =>
-                        data.type.trim() !== "" && (
-                          <View
-                            style={styles.row}
-                            key={index}
-                            onPress={() => {
-                              setType(data.type);
-                            }}
-                          >
-                            <View style={styles.typeCol}>
-                              <Text style={styles.typeText}>{t(data.type)}</Text>
-                            </View>
-                            
-                            <Text style={styles.space}>{data.space}</Text>
-                          </View>
-                        )
-                    )}
+            (data, index) =>
+              data.type.trim() !== "" && (
+                <View
+                  style={styles.row}
+                  key={index}
+                  onPress={() => {
+                    setType(data.type);
+                  }}
+                >
+                  <View style={styles.typeCol}>
+                    <Text style={styles.typeText}>{t(data.type)}</Text>
+                  </View>
+
+                  <Text style={styles.space}>{data.space}</Text>
+                </View>
+              )
+          )}
         </View>
         {Type && (
           <View>
@@ -91,20 +91,20 @@ function ConfrimWarehouse(): React.JSX.Element {
                 b_radius={10}
                 bg_give={colors.WHITE}
                 hide={false}
-               editable = {false}
-                value= {Units}
+                editable={false}
+                value={Units}
               />
             </View>
             <View style={styles.buttonContainer}>
-          <CustomButton
-            MainText={t("Go Back")}
-            BgGiven={colors.GREEN}
-            name={ScreensName.EWarehouse}
-            txColor={colors.WHITE}
-            isNavigation={true}
-            wgiven = {wp("90%")}
-          />
-        </View>
+              <CustomButton
+                MainText={t("Go Back")}
+                BgGiven={colors.GREEN}
+                name={ScreensName.EWarehouse}
+                txColor={colors.WHITE}
+                isNavigation={true}
+                wgiven={wp("90%")}
+              />
+            </View>
           </View>
         )}
       </ScrollView>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SemiBold,
     fontSize: hp(3),
   },
-  bodyTextContainer:{
+  bodyTextContainer: {
     paddingTop: wp(2),
     paddingLeft: wp(2),
     alignSelf: "flex-start",

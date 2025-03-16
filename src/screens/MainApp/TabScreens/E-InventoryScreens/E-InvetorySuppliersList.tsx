@@ -10,16 +10,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
-import { InventorySuppliersListDet } from '../../../../../util/E-Inventory.js';
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import { InventorySuppliersListDet } from '../../../../../util/Data/E-Inventory.js';
 import Navbar from "../../Navbar/Navbar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors.js";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from '@react-navigation/native';
 
 function InvetorySuppliersList(): React.JSX.Element {
@@ -50,8 +50,8 @@ function InvetorySuppliersList(): React.JSX.Element {
             onChangeText={setSearchTerm}
           />
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: hp(1.2), marginTop: hp(0),  gap: wp(23) }}>
-          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(4),marginRight:wp(4) }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: hp(1.2), marginTop: hp(0), gap: wp(23) }}>
+          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(4), marginRight: wp(4) }}>
             {t('Vendors')}
           </Text>
           <TouchableOpacity

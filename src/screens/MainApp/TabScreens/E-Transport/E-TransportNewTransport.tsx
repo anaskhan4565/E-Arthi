@@ -3,9 +3,9 @@ import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
-import { ETransportNewTrans } from '../../../../../util/E-Transport.js';
+import { ETransportNewTrans } from '../../../../../util/Data/E-Transport.js';
 
 import {
     SafeAreaView,
@@ -17,8 +17,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 
 

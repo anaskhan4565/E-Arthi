@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text, Dimensions, Image, Alert, TouchableOpacity } from 'react-native';
-import colors from '../../../../../util/colors';
+import colors from '../../../../../util/Constants/colors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomButton from '../../../../components/CustomButton';
-import ScreensName from '../../../../../util/ScreensName';
-import { fonts } from '../../../../../util/FontName';
+import ScreensName from '../../../../../util/Constants/ScreensName';
+import { fonts } from '../../../../../util/Constants/FontName';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';

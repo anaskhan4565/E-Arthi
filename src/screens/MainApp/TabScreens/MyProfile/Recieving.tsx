@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import type { PropsWithChildren } from "react";
-import ECategories from "../../../../../util/E-Categories.js";
+import ECategories from "../../../../../util/Data/E-Categories.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
-import { EInventoryDet } from "../../../../../util/E-Inventory.js";
+import colors from "../../../../../util/Constants/colors.js";
+import { EInventoryDet } from "../../../../../util/Data/E-Inventory.js";
 import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
-import { ELoanBank } from "../../../../../util/E-Loan.js";
+import { ELoanBank } from "../../../../../util/Data/E-Loan.js";
 
 import {
   SafeAreaView,
@@ -22,8 +22,8 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import SwitchButtonCustom from "./components/SwitchButton.jsx";
 import RaastRecieving from "./Raastrecieving.tsx";
 import CustomInputAndText from "../E-Loan/NewLoanComponents/CustomInputAndText.jsx";

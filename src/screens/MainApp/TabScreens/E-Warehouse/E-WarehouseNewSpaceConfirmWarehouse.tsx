@@ -5,8 +5,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
-import WarehouseItems from "../../../../../util/WarehouseItems.js";
+import colors from "../../../../../util/Constants/colors.js";
+import WarehouseItems from "../../../../../util/Data/WarehouseItems.js";
 import CustomInput from "../../../../components/CustomInput.jsx";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import {
@@ -20,8 +20,8 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { MMKV } from "react-native-mmkv";
 
 function ConfrimWarehouse(): React.JSX.Element {
@@ -29,7 +29,7 @@ function ConfrimWarehouse(): React.JSX.Element {
   const storage = new MMKV();
   const StorageType = storage.getString("StorageType");
   const [items, setItems] = useState(WarehouseItems[StorageType]);
-  
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,44 +63,44 @@ function ConfrimWarehouse(): React.JSX.Element {
                 <View
                   style={styles.row}
                   key={index}
-                  
+
                 >
                   <View style={styles.typeCol}>
                     <Text style={styles.typeText}>{t(data.type)}</Text>
                   </View>
-                  
+
                   <Text style={styles.space}>{data.space}</Text>
                 </View>
               )
           )}
         </View>
-        
-          <View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>
-                {t('Enter the number of ')}{t(' units you want to reserve')}
-              </Text>
-              <CustomInput
-                placeholder={t("Units")}
-                h={hp("5.5%")}
-                w={wp("90%")}
-                b_radius={10}
-                bg_give={colors.WHITE}
-                hide={false}
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-          <CustomButton
-            MainText={t("Reserve")}
-            BgGiven={colors.GREEN}
-            name={ScreensName.EWarehouse}
-            txColor={colors.WHITE}
-            isNavigation={1}
-            wgiven = {wp("90%")}
-          />
-        </View>
+
+        <View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              {t('Enter the number of ')}{t(' units you want to reserve')}
+            </Text>
+            <CustomInput
+              placeholder={t("Units")}
+              h={hp("5.5%")}
+              w={wp("90%")}
+              b_radius={10}
+              bg_give={colors.WHITE}
+              hide={false}
+            />
           </View>
-        
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              MainText={t("Reserve")}
+              BgGiven={colors.GREEN}
+              name={ScreensName.EWarehouse}
+              txColor={colors.WHITE}
+              isNavigation={1}
+              wgiven={wp("90%")}
+            />
+          </View>
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );

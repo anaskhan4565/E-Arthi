@@ -17,7 +17,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import { MMKV } from "react-native-mmkv";
 const FoodSurveillanceItem = () => {
   const { t } = useTranslation();
@@ -27,20 +27,20 @@ const FoodSurveillanceItem = () => {
   const handlePriceUpdate = () => {
     console.log(`New price set: ${price} Rupees/Kg`);
 
-  }; 
+  };
   const storage = new MMKV();
   useEffect(() => {
-    if(storage.getNumber("itemStatus")){
+    if (storage.getNumber("itemStatus")) {
       setstatusText("Fresh")
       setstatusColor("rgb(0, 169, 128)")
     }
-    else{
+    else {
       setstatusText("Almost Ripe")
       setstatusColor("rgb(235, 169, 40)")
     }
-  
+
   }, [])
-  
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,21 +55,21 @@ const FoodSurveillanceItem = () => {
           <CustomSearchApp placeholder={"Search in here"} />
         </View>
 
-     
+
         <View style={styles.headerRow}>
           <Text style={styles.productTitle}>{storage.getString("itemName")}</Text>
-          <View style={[styles.statusBadge,{backgroundColor: statusColor}]}>
+          <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
             <Text style={styles.statusText}>{statusText}</Text>
           </View>
         </View>
 
-       
+
         <View style={styles.imageContainer}>
           <View style={styles.imagePlaceholder} />
           <Text style={styles.imageDate}>Image updated on: 08-02-2025</Text>
         </View>
 
-    
+
         <View style={styles.detailsContainer}>
           <Text style={styles.detailText}>
             <Text style={styles.boldText}>Quantity:</Text> 1 Kg

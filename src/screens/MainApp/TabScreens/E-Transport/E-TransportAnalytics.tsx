@@ -13,18 +13,18 @@ import {
     Button,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName.js";
 import Navbar from "../../Navbar/Navbar";
 import { Picker } from '@react-native-picker/picker';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors.js";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
-import { AnalyticsDet } from "../../../../../util/E-Transport.js";
+import { AnalyticsDet } from "../../../../../util/Data/E-Transport.js";
 import TransportAnalyticsBox from "../../CustomComponent/TransportAnalyticsBox.jsx";
 import Icon from "react-native-vector-icons/FontAwesome";
 

@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 import {
   SafeAreaView,
   ScrollView,
@@ -15,9 +15,9 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName";
-import VendorList from "../../../../../util/E-Vendorlist.js";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
+import VendorList from "../../../../../util/Data/E-Vendorlist.js";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
 
@@ -47,7 +47,7 @@ function EVendors(): React.JSX.Element {
   const storage = new MMKV();
 
   const HandleEachVendor = (data) => {
-    storage.set("VendorDetail", JSON.stringify(data)); 
+    storage.set("VendorDetail", JSON.stringify(data));
     navigation.navigate(ScreensName.EVendorsDetails)
   }
   return (

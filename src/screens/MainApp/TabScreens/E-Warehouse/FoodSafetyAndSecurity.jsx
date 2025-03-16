@@ -7,16 +7,16 @@ import { MMKV } from "react-native-mmkv";
 
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
-import colors from "../../../../../util/colors.js";
-import {fonts} from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import colors from "../../../../../util/Constants/colors.js";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import UnderDev from './TempImages/UnderDev.webp'
 
-const FoodSafetyAndSecuirty=()=> {
+const FoodSafetyAndSecuirty = () => {
   const { t } = useTranslation();
   const storage = new MMKV();
   const navigation = useNavigation();
-  
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +38,7 @@ const FoodSafetyAndSecuirty=()=> {
         </View>
         <View style={styles.bodyContainer}>
           <View style={styles.scrollContainer}>
-            <Image source={UnderDev} style={{ width:hp(50),height:hp(40)}}/>
+            <Image source={UnderDev} style={{ width: hp(50), height: hp(40) }} />
           </View>
         </View>
       </ScrollView>
@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
   titleText: {
     fontFamily: fonts.Bold,
     fontSize: hp(2.9),
-    textDecorationLine:'underline',
-    textAlign:'center'
+    textDecorationLine: 'underline',
+    textAlign: 'center'
   },
   scrollContainer: {
     justifyContent: "center",
     paddingVertical: hp("2%"),
-    height:hp(40),
+    height: hp(40),
     alignItems: "center",
   },
   itemBoxWrapper: {

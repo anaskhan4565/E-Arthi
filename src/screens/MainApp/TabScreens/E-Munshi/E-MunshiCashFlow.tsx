@@ -7,16 +7,16 @@ import {
     View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 import Navbar from "../../Navbar/Navbar";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/Constants/ScreensName";
 
 const transactions = [
     {
@@ -105,7 +105,7 @@ function CashFlow(): React.JSX.Element {
                 </View>
                 <View style={styles.gridContainer}>
                     {transactions.map((transaction, index) => (
-                        <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => { navigation.navigate(ScreensName.EmunshiTransactionDetail,{transactiondata:transactions[index]}) }}>
+                        <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => { navigation.navigate(ScreensName.EmunshiTransactionDetail, { transactiondata: transactions[index] }) }}>
                             <View style={styles.RectangleheaderRow}>
                                 <Text style={[styles.transactionText, styles.transactionLabel]}>
                                     Transaction {index + 1}

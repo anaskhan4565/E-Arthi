@@ -3,9 +3,9 @@ import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
-import { InventorySupplierDet } from '../../../../../util/E-Inventory.js';
+import { InventorySupplierDet } from '../../../../../util/Data/E-Inventory.js';
 
 import {
     SafeAreaView,
@@ -17,8 +17,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 
 
@@ -30,7 +30,7 @@ function SupplersComp(): React.JSX.Element {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.navbarContainer}>
-            <Navbar  />
+                <Navbar />
             </View>
             <ScrollView style={styles.container}>
 
@@ -43,12 +43,12 @@ function SupplersComp(): React.JSX.Element {
                         {InventorySupplierDet.map((Category, index) => (
                             Category.title.trim() !== '' && (
                                 <View style={styles.itemBoxWrapper} key={index}>
-                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)}  SourceGiven={Category.img} isNavigation={1} w={wp('88%')} h={hp('18%')} />
+                                    <EInventoryBoxes name={t(Category.title)} screenName={Category.screen} navigationName={t(ScreensName.EInventoryMainStack)} SourceGiven={Category.img} isNavigation={1} w={wp('88%')} h={hp('18%')} />
                                 </View>
                             )
                         ))}
                     </View>
-                    <CustomButton MainText={'Add New Vendor'} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EInventoryAddSuppliers}/>
+                    <CustomButton MainText={'Add New Vendor'} BgGiven={colors.GREEN} txColor={colors.WHITE} isNavigation={1} name={ScreensName.EInventoryAddSuppliers} />
                 </View>
             </ScrollView>
         </SafeAreaView >
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexWrap: 'wrap',
-        flexDirection:'column',
+        flexDirection: 'column',
         justifyContent: 'center',
         paddingVertical: hp('2%'),
         // backgroundColor: 'red',

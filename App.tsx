@@ -2,7 +2,7 @@ import React, { Children } from "react";
 import {
   StyleSheet,
 } from 'react-native';
-import ScreensName from './util/ScreensName.ts';
+import ScreensName from "./util/Constants/ScreensName.ts";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import Connect from './src/screens/InitialStartScreens/Connect.tsx';
@@ -10,10 +10,10 @@ import ForgotPassword from './src/screens/InitialStartScreens/ForgotPassword.tsx
 import OTP from './src/screens/InitialStartScreens/OTP.tsx';
 import SignIn from './src/screens/InitialStartScreens/SignIn.jsx';
 import SignUp from './src/screens/InitialStartScreens/SignUp.tsx';
-import SplashScreen from './src/SplashScreen/SplashScreen';
+import SplashScreen from './src/screens/SplashScreen/SplashScreen.tsx';
 import AboutMore from './src/screens/InitialStartScreens/Profile.jsx';
-import HomeScr from './src/screens/MainApp/TabScreens/HomeScr.jsx';
-import MainTabNavigation from './src/screens/MainApp/TabScreens/MainTabNavigation.tsx';
+import HomeScr from './src/screens/MainApp/TabScreens/Home/HomeScr.jsx';
+import MainTabNavigation from './src/screens/MainApp/TabScreens/Home/MainTabNavigation.tsx';
 import LocationSys from './src/screens/InitialStartScreens/LocationEnable.jsx';
 import NoInternet from './src/screens/InitialStartScreens/NoInternet.jsx';
 import Sidebar from './src/screens/MainApp/Sidebar/Sidebar.jsx';
@@ -50,7 +50,7 @@ import MyProfile from "./src/screens/MainApp/TabScreens/MyProfile/MyProfile.tsx"
 import EMunshiMainStack from "./src/screens/MainApp/TabScreens/E-Munshi/E-MunshiMainStack.tsx";
 import SelectLangSideBar from "./src/screens/MainApp/Sidebar/SomeDemoNavigations/SelectLangSidebar.jsx";
 import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventoryMainStack.tsx";
-import EMarket from "./src/screens/MainApp/TabScreens/E-Market.jsx";
+import EMarket from "./src/screens/MainApp/TabScreens/Home/E-Market.jsx";
 import EOrderMainStack from "./src/screens/MainApp/TabScreens/E-Order/E-OrderMainStack.tsx";
 import OTPSignUp from "./src/screens/InitialStartScreens/OTPSignup.jsx";
 

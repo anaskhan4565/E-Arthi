@@ -3,10 +3,10 @@ import { useIsFocused } from '@react-navigation/native';
 import { View, TextInput, StyleSheet, Button, Text, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomButton from '../../../../components/CustomButton';
-import colors from '../../../../../util/colors';
-import ScreensName from '../../../../../util/ScreensName';
+import colors from '../../../../../util/Constants/colors';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 import { useTranslation } from "react-i18next";
-import { fonts } from '../../../../../util/FontName';
+import { fonts } from '../../../../../util/Constants/FontName';
 
 const AllOTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -21,7 +21,7 @@ const AllOTP = () => {
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 
     };
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (isFocused) {
@@ -112,13 +112,13 @@ const styles = StyleSheet.create({
     title: {
         marginTop: hp('10%'),
         fontSize: hp('3%'),
-        fontFamily:fonts.SemiBold,
+        fontFamily: fonts.SemiBold,
         marginBottom: hp('1.5%'),
         marginRight: wp('36%'),
     },
     subtitle: {
         fontSize: hp('1.8%'),
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         marginBottom: hp('1.9%'),
         alignSelf: "flex-start",
         marginTop: hp('1%'),
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         borderRadius: hp('1.5%'),
         textAlign: "center",
         fontSize: hp('2.5%'),
-        fontFamily:fonts.Regular,
+        fontFamily: fonts.Regular,
         backgroundColor: "#FFF",
         marginHorizontal: hp('0.5%'),
         color: colors.BLACK
@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         // marginRight: wp("43%"),
         marginBottom: hp('3%'),
-        marginHorizontal:hp(2)
+        marginHorizontal: hp(2)
 
     },
     autocapturetext: {
         fontSize: hp('1.5%'),
-        fontFamily:fonts.Light,
+        fontFamily: fonts.Light,
         fontWeight: '300',
         marginLeft: wp('3%'),
         marginRight: wp('33%'),
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
 
     },
     timetext: {
-        fontSize:hp('2%'),
-        fontFamily:fonts.Regular,
+        fontSize: hp('2%'),
+        fontFamily: fonts.Regular,
     },
 });
 

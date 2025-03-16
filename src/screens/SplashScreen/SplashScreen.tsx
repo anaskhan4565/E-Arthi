@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { CommonActions, NavigationProp } from '@react-navigation/native';
-import ScreensName from '../../util/ScreensName';
-import colors from '../../util/colors';
-import ArthiLogo from '../assets/Icon/E-Agri.png';
+import ScreensName from '../../../util/Constants/ScreensName';
+import colors from '../../../util/Constants/colors';
+import ArthiLogo from '../../assets/Icon/E-Agri.png';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 type RootStackParamList = {
@@ -16,10 +16,10 @@ type SplashScreenProps = {
 const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.dispatch( 
+      navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: ScreensName.MainTabNavigation  }],
+          routes: [{ name: ScreensName.LanguageSelect }],
         }),
       );
     }, 3000);
@@ -27,7 +27,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
     return () => clearTimeout(timer);
   }, [navigation]);
 
-  return ( 
+  return (
     <View style={styles.container}>
       <Image source={ArthiLogo} style={styles.logo} />
     </View>

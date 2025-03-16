@@ -11,17 +11,17 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
-import allNames from "../../../../../util/AvailableWarehouses";
+import { fonts } from "../../../../../util/Constants/FontName";
+import allNames from "../../../../../util/Data/AvailableWarehouses";
 import Navbar from "../../Navbar/Navbar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 import { useNavigation } from "@react-navigation/native";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/Constants/ScreensName";
 import WarehousePic from './TempImages/WarehouseBG.jpg'
 import InventoryProduct from "../../CustomComponent/WarehouseProduct";
 import { MMKV } from "react-native-mmkv";
@@ -61,7 +61,7 @@ function PurchaseHisotry(): React.JSX.Element {
 
           <Text style={styles.HeaderCol}>{t("Distance from You")}</Text>
         </View>
-        <View style={{ flex: 1,justifyContent:'center',alignItems:'center',alignContent:'center',alignSelf:'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}>
           {allNames.map(
             (data, index) =>
               data.name.trim() !== "" && (
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: wp(3),
     height: hp(10),
-    borderBottomWidth:hp(0.2)
+    borderBottomWidth: hp(0.2)
   },
   HeaderCol: {
     fontFamily: fonts.SemiBold,

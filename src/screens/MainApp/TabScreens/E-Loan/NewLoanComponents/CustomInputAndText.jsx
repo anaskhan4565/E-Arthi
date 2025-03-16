@@ -2,19 +2,19 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CustomInput from '../../../../../components/CustomInput'
 import { Input } from '@ant-design/react-native'
-import colors from '../../../../../../util/colors'
+import colors from '../../../../../../util/Constants/colors'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../../../util/FontName';
+import { fonts } from '../../../../../../util/Constants/FontName';
 import { useTranslation } from 'react-i18next';
 
-const CustomInputAndText = ({PlaceHolderGiven="demo",InputHolder="Enter Detail",OnlyNN=false,borderRadius = 3, value}) => {
+const CustomInputAndText = ({ PlaceHolderGiven = "demo", InputHolder = "Enter Detail", OnlyNN = false, borderRadius = 3, value }) => {
   const { t } = useTranslation();
   return (
-    <View style={{flex:1,alignItems:'flex-start',gap:hp(0.5)}}>
-      <Text style={{fontSize:hp(2),fontFamily:fonts.Regular,paddingLeft:hp(0.3)}}>{t(PlaceHolderGiven)}</Text>
-      <CustomInput placeholder={t(InputHolder)} bg_give={colors.WHITE}  placeholder_color={colors.Text_Fancy} AllowNumberOnly={OnlyNN} b_radius={borderRadius} value={value} />
+    <View style={{ flex: 1, alignItems: 'flex-start', gap: hp(0.5) }}>
+      <Text style={{ fontSize: hp(2), fontFamily: fonts.Regular, paddingLeft: hp(0.3) }}>{t(PlaceHolderGiven)}</Text>
+      <CustomInput placeholder={t(InputHolder)} bg_give={colors.WHITE} placeholder_color={colors.Text_Fancy} AllowNumberOnly={OnlyNN} b_radius={borderRadius} value={value} />
 
-    
+
     </View>
   )
 }

@@ -1,11 +1,11 @@
 import { StyleSheet, TextInput } from 'react-native';
 import React from 'react';
-import colors from '../../util/colors';
+import colors from '../../util/Constants/colors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from '../../util/FontName';
+import { fonts } from '../../util/Constants/FontName';
 import { useTranslation } from 'react-i18next';
 
 const CustomInput = ({
@@ -17,11 +17,11 @@ const CustomInput = ({
   b_radius = 3,
   editable = true,
   value,
-  fntGiven=wp('3.5%'),
+  fntGiven = wp('3.5%'),
   placeholder_color = colors.LIGHT_GRAY,
-  onChangeText = () => {},
+  onChangeText = () => { },
   numericOnly = false,
-  AllowNumberOnly=false,
+  AllowNumberOnly = false,
   borderColor = colors.LIGHT_GRAY,
 }) => {
   const handleTextChange = (text) => {
@@ -39,7 +39,7 @@ const CustomInput = ({
     <TextInput
       style={[
         styles.textInputStyle,
-        { 
+        {
           paddingLeft: wp(2),
           fontSize: fntGiven,
           width: w,
@@ -53,11 +53,11 @@ const CustomInput = ({
       placeholder={t(placeholder)}
       placeholderTextColor={colors.Text_Fancy} // Ensure placeholder remains gray
       secureTextEntry={hide}
-      keyboardType={AllowNumberOnly?'phone-pad':'default'}
+      keyboardType={AllowNumberOnly ? 'phone-pad' : 'default'}
       editable={editable}
       value={value}
       onChangeText={handleTextChange}
-           // keyboardType={numericOnly ? 'numeric' : 'default'}
+    // keyboardType={numericOnly ? 'numeric' : 'default'}
     />
   );
 };

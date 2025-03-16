@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
-import { fonts } from '../../../../../util/FontName.js';
+import colors from '../../../../../util/Constants/colors.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import {
     SafeAreaView,
@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 function EInventoryAddNewGroup(): React.JSX.Element {
     const { t } = useTranslation();
@@ -40,7 +40,7 @@ function EInventoryAddNewGroup(): React.JSX.Element {
 
                 <View style={styles.itemDetailsContainer}>
                     <View style={styles.imageContainer}>
-                        <Image 
+                        <Image
                             source={require('../../../../assets/MainApp/E-Inventory/placeholder.jpg')}
                             style={styles.itemImage}
                         />
@@ -48,7 +48,7 @@ function EInventoryAddNewGroup(): React.JSX.Element {
                     <View style={styles.detailsContainer}>
                         <View style={styles.detailRow}>
                             <Text style={styles.labelText}>{t('Item Name')}</Text>
-                            <TextInput 
+                            <TextInput
                                 style={styles.input}
                                 placeholder={t('Enter item name')}
                             />
@@ -61,19 +61,19 @@ function EInventoryAddNewGroup(): React.JSX.Element {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item 
-                                        label={t('Select place')} 
-                                        value="" 
+                                    <Picker.Item
+                                        label={t('Select place')}
+                                        value=""
                                         style={styles.pickerItem}
                                     />
-                                    <Picker.Item 
+                                    <Picker.Item
                                         label={t('Place 1')}
-                                        value="1" 
+                                        value="1"
                                         style={styles.pickerItem}
                                     />
-                                    <Picker.Item 
-                                        label={t('Place 2')} 
-                                        value="2" 
+                                    <Picker.Item
+                                        label={t('Place 2')}
+                                        value="2"
                                         style={styles.pickerItem}
                                     />
                                 </Picker>
@@ -85,7 +85,7 @@ function EInventoryAddNewGroup(): React.JSX.Element {
                                 isOn={isToggled}
                                 onColor={colors.GREEN}
                                 offColor={colors.LIGHT_GRAY}
-                                size={toggleSize} 
+                                size={toggleSize}
                                 onToggle={isOn => setIsToggled(isOn)}
                             />
                         </View>
@@ -100,7 +100,7 @@ function EInventoryAddNewGroup(): React.JSX.Element {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <CustomButton 
+                    <CustomButton
                         MainText={t('Save')}
                         BgGiven={colors.GREEN}
                         name={ScreensName.InventoryMonitoring}

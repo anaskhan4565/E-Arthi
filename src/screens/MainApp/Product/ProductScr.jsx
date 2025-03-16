@@ -10,17 +10,17 @@ import {
 import Prod2 from "../../../assets/MainApp/EmarketPlace/Products/prod2.png";
 import ButtonLess from "../../../assets/MainApp/EmarketPlace/Products/Buttons/LessButton.png";
 import ButtonPlus from "../../../assets/MainApp/EmarketPlace/Products/Buttons/MoreButton.png";
-import colors from "../../../../util/colors";
+import colors from "../../../../util/Constants/colors.js";
 import Cart from "../../../assets/MainApp/ProductScreen/Cart.png";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fonts } from "../../../../util/FontName";
+import { fonts } from "../../../../util/Constants/FontName.js";
 import img1 from "../../../assets/MainApp/ProductScreen/product1.png";
 import img2 from "../../../assets/MainApp/ProductScreen/product2.png";
 import img3 from "../../../assets/MainApp/ProductScreen/product3.png";
-import ScreensName from "../../../../util/ScreensName.ts";
+import ScreensName from "../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../Navbar/Navbar";
 import { MMKV } from "react-native-mmkv";

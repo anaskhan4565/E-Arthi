@@ -8,20 +8,20 @@ import {
   View,
 
 } from "react-native";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomButton from "../../../../components/CustomButton";
-import ScreensName from "../../../../../util/ScreensName";
+import ScreensName from "../../../../../util/Constants/ScreensName";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
+import { fonts } from "../../../../../util/Constants/FontName";
 
 
 function ELoanSuccessScr() {
   //for translation
-  const {t}=useTranslation();
+  const { t } = useTranslation();
 
   //
   return (
@@ -30,7 +30,7 @@ function ELoanSuccessScr() {
         <Text style={styles.Heading}>{t('You have Applied for a new Loan!')}</Text>
         <Text style={styles.SubHeading}>{t('We will notify you when your loan application is Approved!. Till then stay connected with us.')}</Text>
       </View>
-      
+
       <View style={styles.button}>
         <CustomButton
           MainText={t('Continue')}
@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
   },
   Heading: {
     fontSize: height / 25,
-    fontFamily:fonts.SemiBold,
+    fontFamily: fonts.SemiBold,
     marginLeft: wp('1.5%'),
     color: colors.BLACK,
   },
   SubHeading: {
     fontSize: height / 45,
-    fontFamily:fonts.Regular,
+    fontFamily: fonts.Regular,
     marginTop: height / 100,
     marginLeft: wp('1.5%'),
   },

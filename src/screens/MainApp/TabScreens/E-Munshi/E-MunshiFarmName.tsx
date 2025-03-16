@@ -11,13 +11,13 @@ import {
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { BarChart } from "react-native-chart-kit";
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useNavigation } from '@react-navigation/native';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import { MMKV } from 'react-native-mmkv';
 import MyPieChartSec from './CustomComponent/MyPiChartSec.jsx';
 
@@ -193,12 +193,12 @@ const EMunshiFarmName = () => {
 
                 <View style={styles.piechatcontainer}>
                     <MyPieChartSec
-                    data={[
-                        { name: "Pending Cash: PKR 12500", value: 100000, color: "#693efe" },
-                        { name: "Cash Paid PKR 150000", value: 25000, color: "#D3FE3E"}
-                    ]}
-                    paddingLeft={hp(9)}
-                        
+                        data={[
+                            { name: "Pending Cash: PKR 12500", value: 100000, color: "#693efe" },
+                            { name: "Cash Paid PKR 150000", value: 25000, color: "#D3FE3E" }
+                        ]}
+                        paddingLeft={hp(9)}
+
                         chartWidth={wp(75)}
                         chartHeight={hp(26)}
                         containerWidth={wp(80)}
@@ -238,10 +238,10 @@ const EMunshiFarmName = () => {
                     <Text style={styles.recievingmethodtext}>{t(' Receiving Method')}</Text>
                     <Image style={styles.raastimage} source={require('../../../../../src/assets/raast.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.recievingbutton} onPress={()=>navigation.navigate(ScreensName.Recieving)}>
+                <TouchableOpacity style={styles.recievingbutton} onPress={() => navigation.navigate(ScreensName.Recieving)}>
                     <Text style={styles.recievingmethodtext}>{t(' Change Receiving Method')}</Text>
                     <Image style={styles.forwardimage} source={require('../../../../../src/assets/forward.png')} />
-                </TouchableOpacity> 
+                </TouchableOpacity>
 
                 <View style={styles.farmcontactcontainer}>
                     <Text style={styles.farmcontacttext}>{t('Farm Contact Information')}</Text>

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { Image } from 'react-native';
 
 import {
@@ -15,8 +15,8 @@ import {
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import InventoryProduct from '../../CustomComponent/InventoryComponents/InventoryProduct.jsx';
@@ -58,7 +58,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
     }
   };
   const totalPrice = parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13;
-  storage.set('FinalPrice',JSON.stringify(totalPrice))
+  storage.set('FinalPrice', JSON.stringify(totalPrice))
 
   return (
     <SafeAreaView style={styles.container}>
@@ -134,12 +134,12 @@ function EOrderPlaceOrder(): React.JSX.Element {
           </View>
 
           <CustomButton MainText={t('Proceed')}
-            BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN} 
+            BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
             txColor={colors.WHITE}
             bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
-            isNavigation={totalPrice === 0 ? 0 :1}
-            isdisabled={totalPrice === 0?true:false} 
-            name={totalPrice!==0?ScreensName.EOrderPaymentMethod:null} />
+            isNavigation={totalPrice === 0 ? 0 : 1}
+            isdisabled={totalPrice === 0 ? true : false}
+            name={totalPrice !== 0 ? ScreensName.EOrderPaymentMethod : null} />
           <View style={{ marginTop: hp(2) }}>
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>

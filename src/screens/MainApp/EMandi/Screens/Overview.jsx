@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { LineChart } from 'react-native-chart-kit';
@@ -8,7 +8,7 @@ import FarmerHand from '../../../../assets/MainApp/E-Mandi/FarmerHand.png';
 import MandiNavbar from '../CustomComp/MandiNavbar.jsx';
 import CustomNavigationMandi from '../CustomComp/CustomNavigation.jsx';
 import CustomBottomSheetExport from '../CustomComp/CustomBottomSheet.jsx';
-import { fonts } from '../../../../../util/FontName.js';
+import { fonts } from '../../../../../util/Constants/FontName.js';
 const Overview = () => {
     const { t } = useTranslation();
     const [price, setPrice] = useState(10.15);
@@ -56,7 +56,7 @@ const Overview = () => {
             <MandiNavbar />
             <ScrollView>
                 <CustomNavigationMandi />
-                <View style={{ marginHorizontal: hp(2),marginVertical:hp(1.5) }} >
+                <View style={{ marginHorizontal: hp(2), marginVertical: hp(1.5) }} >
                     <Text style={{ fontSize: hp(3), fontFamily: fonts.ExtraBold, marginLeft: hp(1), letterSpacing: hp(0.6) }}>{t('E-Mandi Overview')}</Text>
                 </View>
 

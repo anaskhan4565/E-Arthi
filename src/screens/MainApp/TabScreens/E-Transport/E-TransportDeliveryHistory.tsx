@@ -9,56 +9,56 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName";
-import { DeliveryHist } from "../../../../../util/E-Transport";
+import { fonts } from "../../../../../util/Constants/FontName";
+import { DeliveryHist } from "../../../../../util/Data/E-Transport";
 import Navbar from "../../Navbar/Navbar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors";
+import colors from "../../../../../util/Constants/colors";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp";
 
 
 
 function ETransportDeliveryHistory(): React.JSX.Element {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.navbarContainer}>
-          <Navbar />
-        </View>      
-        <View style={{ flex: 7 }}>
-          <View style={styles.searchbar}>
-            <CustomSearchApp placeholder={"Search in here"} />
-          </View>
-          <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
-            <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
-              {t('Delivery History')}
-            </Text>
-          </View>
-          <View style={styles.Header}>
-            <Text style={styles.HeaderCol}>{t('Item')} {'\n'}{t('Description')} {'\n'}{t('& Qty')}</Text>
-            <Text style={[styles.HeaderCol, { textAlign: "center" }]}>{t('Cost')}</Text>
-            <Text style={styles.HeaderCol}>{t('Date Order Placed')}</Text>
-          </View>
-          {DeliveryHist.map(
-            (data, index) =>
-              data.desc.trim() !== "" && (
-                <View style={styles.row} key={index}>
-                  <View style={styles.decsAndQty}>
-                    <Text style={styles.decs}>{t(data.desc)}</Text>
-                    <Text style={styles.decs}>{data.qty}</Text>
-                  </View>
-                  <Text style={styles.cost}>{data.cost}</Text>
-                  <Text style={styles.date}>{data.date}</Text>
-                </View>
-              )
-          )}
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.navbarContainer}>
+        <Navbar />
+      </View>
+      <View style={{ flex: 7 }}>
+        <View style={styles.searchbar}>
+          <CustomSearchApp placeholder={"Search in here"} />
         </View>
-      </SafeAreaView>
-    );
+        <View style={{ marginBottom: hp(1.2), marginTop: hp(0), marginHorizontal: wp(5), }}>
+          <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.4) }}>
+            {t('Delivery History')}
+          </Text>
+        </View>
+        <View style={styles.Header}>
+          <Text style={styles.HeaderCol}>{t('Item')} {'\n'}{t('Description')} {'\n'}{t('& Qty')}</Text>
+          <Text style={[styles.HeaderCol, { textAlign: "center" }]}>{t('Cost')}</Text>
+          <Text style={styles.HeaderCol}>{t('Date Order Placed')}</Text>
+        </View>
+        {DeliveryHist.map(
+          (data, index) =>
+            data.desc.trim() !== "" && (
+              <View style={styles.row} key={index}>
+                <View style={styles.decsAndQty}>
+                  <Text style={styles.decs}>{t(data.desc)}</Text>
+                  <Text style={styles.decs}>{data.qty}</Text>
+                </View>
+                <Text style={styles.cost}>{data.cost}</Text>
+                <Text style={styles.date}>{data.date}</Text>
+              </View>
+            )
+        )}
+      </View>
+    </SafeAreaView>
+  );
 }
 
 

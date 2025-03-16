@@ -7,9 +7,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 import EInventoryBoxes from "../../CustomComponent/EInventoryBoxes.jsx";
-import { ETransportMaindet } from "../../../../../util/E-Transport.js";
+import { ETransportMaindet } from "../../../../../util/Data/E-Transport.js";
 
 import {
   SafeAreaView,
@@ -21,8 +21,8 @@ import {
   View,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import CustomButton from "../../../../components/CustomButton.jsx";
 import MyPieChart from "../../../../screens/MainApp/TabScreens/E-Loan/CustomComponents/PiChart.jsx";
 import { Dimensions } from "react-native";
@@ -30,7 +30,7 @@ import { useNavigation } from "@react-navigation/native";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MMKV } from 'react-native-mmkv';
 
-const farmData = { 
+const farmData = {
   Item: [
     { name: "Lasbela Farm" },
     { name: "Umerkot Farm" },
@@ -47,7 +47,7 @@ function EMunshiItem(): React.JSX.Element {
   const storage = new MMKV();
 
 
-  const handleNavigation = async (name : string) =>{
+  const handleNavigation = async (name: string) => {
     storage.set("farm", name);
     navigation.navigate(ScreensName.EMunshiFarmName);
   }

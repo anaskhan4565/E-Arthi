@@ -4,9 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from '../../Navbar/Navbar';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp';
 import { useTranslation } from 'react-i18next';
-import colors from '../../../../../util/colors';
+import colors from '../../../../../util/Constants/colors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../../util/FontName';
+import { fonts } from '../../../../../util/Constants/FontName';
 import Pen from '../../../../assets/MainApp/E-Inventory/E-Inventory-ManageGroup/Pen.png'
 import Demo from '../../../../assets/MainApp/E-Inventory/E-Inventory-Monitoring/blank.png'
 import CustomGroupComponent from '../../CustomComponent/InventoryComponents/ManageGroup/CustomGroupComponent';

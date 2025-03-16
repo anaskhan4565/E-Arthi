@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import colors from '../../../../util/colors.js';
+import colors from '../../../../util/Constants/colors.js';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from '../../../../util/FontName.js';
+import { fonts } from '../../../../util/Constants/FontName.js';
 
 const TransportAnalyticsBox = ({ icon, title, value, graph, percentage, w = wp('40%'), h = hp('15') }) => {
     const navigation = useNavigation();

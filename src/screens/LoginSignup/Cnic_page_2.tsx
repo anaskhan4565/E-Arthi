@@ -12,10 +12,10 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import colors from "../../../util/colors";
+import colors from "../../../util/Constants/colors";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import ScreensName from "../../../util/ScreensName";
+import ScreensName from "../../../util/Constants/ScreensName";
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -23,7 +23,7 @@ const { height, width } = Dimensions.get("window");
 
 import i18next from "../../../services/i18next";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../util/FontName";
+import { fonts } from "../../../util/Constants/FontName";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 

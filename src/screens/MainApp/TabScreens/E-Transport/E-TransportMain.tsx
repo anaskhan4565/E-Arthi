@@ -3,9 +3,9 @@ import React from 'react';
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import colors from '../../../../../util/colors.js';
+import colors from '../../../../../util/Constants/colors.js';
 import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx'
-import { ETransportMaindet } from '../../../../../util/E-Transport.js';
+import { ETransportMaindet } from '../../../../../util/Data/E-Transport.js';
 
 import {
     SafeAreaView,
@@ -17,8 +17,8 @@ import {
     View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { fonts } from '../../../../../util/FontName.js';
-import ScreensName from '../../../../../util/ScreensName.ts';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../components/CustomButton.jsx';
 
 function ETransportMain(): React.JSX.Element {
@@ -73,12 +73,12 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginTop: hp('3.2%'),
         height: hp('7%'),
-        alignSelf:'flex-start',
-        marginLeft:hp(1)
+        alignSelf: 'flex-start',
+        marginLeft: hp(1)
     },
     bodyContainer: {
         alignItems: 'flex-start',
-        marginHorizontal:hp(3)
+        marginHorizontal: hp(3)
 
     },
     titleContainer: {
@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red',
         alignSelf: "center",
         alignItems: "center",
-      },
-      itemBoxWrapper: {
+    },
+    itemBoxWrapper: {
         width: "30%",
         marginBottom: hp("2%"),
         marginHorizontal: wp("-3%"),
         alignItems: "center",
-      },
+    },
     recommendedProducts: {
         marginTop: 20,
     },

@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
-import colors from "../../../../../../util/colors";
+import colors from "../../../../../../util/Constants/colors";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { fonts } from "../../../../../../util/FontName";
+import { fonts } from "../../../../../../util/Constants/FontName";
 import { useTranslation } from "react-i18next";
-const SwitchButtonCustom = ({ selectedOption="Generic",
-   setSelectedOption }) => {
+const SwitchButtonCustom = ({ selectedOption = "Generic",
+  setSelectedOption }) => {
   // const [selectedOption, setSelectedOption] = useState("Specific");
   const animationValue = useRef(new Animated.Value(0)).current;
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
 
   return (
     <View style={styles.container}>
-     
+
       <TouchableOpacity onPress={() => handlePress("Generic")} style={{ flex: 1 }}>
         <Animated.View
           style={[
@@ -52,7 +52,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
             {t('Generic')}
           </Text>
         </Animated.View>
-        
+
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("Specific")} style={{ flex: 1 }}>
         <Animated.View
@@ -73,7 +73,7 @@ const SwitchButtonCustom = ({ selectedOption="Generic",
           </Text>
         </Animated.View>
       </TouchableOpacity>
-      
+
     </View>
   );
 };

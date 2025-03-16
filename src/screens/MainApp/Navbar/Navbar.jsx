@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import ProfilePic from "../../../assets/MainApp/HomeScreen/ProfilePic.png";
 import Earthi from "../../../assets/MainApp/HomeScreen/Earthi.png";
-import colors from "../../../../util/colors";
+import colors from "../../../../util/Constants/colors";
 import bellIcon from "../../../assets/MainApp/HomeScreen/Bell.png";
 import Hamburger from "../../../assets/MainApp/HomeScreen/Hamburger.png";
 import CustomImageButton from "../CustomComponent/CustomImageButton";
-import ScreensName from "../../../../util/ScreensName";
+import ScreensName from "../../../../util/Constants/ScreensName.ts";
 import backImg from '../../../assets/MainApp/Sidebar/Back.png'
 import {
   widthPercentageToDP as wp,
@@ -15,8 +15,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 
-const Navbar = ({isbackSet=false,isBackTo=ScreensName.MainTabNavigation,gobackOnly}) => {
-  const navigation=useNavigation()
+const Navbar = ({ isbackSet = false, isBackTo = ScreensName.MainTabNavigation, gobackOnly }) => {
+  const navigation = useNavigation()
   return (
     <View
       style={{
@@ -27,8 +27,8 @@ const Navbar = ({isbackSet=false,isBackTo=ScreensName.MainTabNavigation,gobackOn
         backgroundColor: colors.LIGHT_GREEN,
       }}
     >
-      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={()=>navigation.navigate(ScreensName.MyProfileMainStack)}>
-        <Image source={isbackSet?backImg:ProfilePic} style={isbackSet?styles.BackIMG:styles.Profile} />
+      <TouchableOpacity style={{ flex: 0.3, paddingLeft: 10, justifyContent: "center" }} onPress={() => navigation.navigate(ScreensName.MyProfileMainStack)}>
+        <Image source={isbackSet ? backImg : ProfilePic} style={isbackSet ? styles.BackIMG : styles.Profile} />
       </TouchableOpacity>
       <View
         style={{ justifyContent: "center", alignItems: "center", flex: 0.4 }}
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
     height: hp('7%'),
     borderRadius: hp('1%'),
     resizeMode: 'contain',
-    marginLeft:hp(2)
+    marginLeft: hp(2)
   },
-  BackIMG:{
+  BackIMG: {
     width: wp('10%'),
     height: hp('7%'),
     resizeMode: 'contain',
-    
+
 
   },
   Icon: {

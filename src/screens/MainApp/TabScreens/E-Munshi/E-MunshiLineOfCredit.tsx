@@ -3,10 +3,10 @@ import { SafeAreaView, ScrollView, View, Text, StyleSheet, Dimensions } from "re
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
-import colors from "../../../../../util/colors.js";
+import colors from "../../../../../util/Constants/colors.js";
 import { useTranslation } from "react-i18next";
-import { fonts } from "../../../../../util/FontName.js";
-import ScreensName from "../../../../../util/ScreensName.ts";
+import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import GreenGraph from "../../../../../src/assets/MainApp/E-Munshi/green.svg";
 import OrangeGraph from "../../../../../src/assets/MainApp/E-Munshi/orange.svg";
 import PurpleGraph from "../../../../../src/assets/MainApp/E-Munshi/purple.svg";

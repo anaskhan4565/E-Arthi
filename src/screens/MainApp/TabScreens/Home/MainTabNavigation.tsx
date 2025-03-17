@@ -16,6 +16,7 @@ import TopNavigator from '../../EMandi/MainNavigator/TopNavigator';
 import EInventory from '../E-Loan/E-LoanHome'
 import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
 import HomeScreenMainStack from './HomeScreenMainStack';
+import DashBoardMainStack from './DashBoardMainStack';
 const { height, width } = Dimensions.get("window");
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
@@ -42,8 +43,8 @@ export default function MainTabNavigation() {
                 }}
             >
                 <Tab.Screen
-                    name={t(ScreensName.HomeScreenMainStack)}
-                    component={HomeScreenMainStack}
+                    name={t(ScreensName.DashBoardMainStack)}
+                    component={DashBoardMainStack}  
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image

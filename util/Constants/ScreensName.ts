@@ -139,7 +139,6 @@ export default {
     PaymentSuccess: "PaymentSuccess",
     AllOTP: "AllOTP",
     LineOfCreditPay: "LineOfCreditPay",
-    EVendorViewTranscations: "EVendorViewTranscations",
 
     ELoanNew: "ELoanNew",
     EENewLoan: "EENewLoan",
@@ -155,4 +154,9 @@ export default {
     ELoanMadadgarS2: "ELoanMadadgarS2",
     ELoanMadadgarS3: "ELoanMadadgarS3",
     ELoanMadadgarSuccess: "ELoanMadadgarSuccess",
+    EVendorViewTranscations: "EVendorViewTranscations",
+
+
+    DashBoardMainStack:"DashBoardMainStack",
+    DashBoardScreen:"DashBoardScreen",
 }

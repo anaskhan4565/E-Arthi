@@ -139,5 +139,14 @@ export default {
     PaymentSuccess: "PaymentSuccess",
     AllOTP: "AllOTP",
     LineOfCreditPay: "LineOfCreditPay",
-    EVendorViewTranscations: "EVendorViewTranscations"
+    EVendorViewTranscations: "EVendorViewTranscations",
+
+    ELoanNew: "ELoanNew",
+    EENewLoan: "EENewLoan",
+    ELoanRequestNewLoan: "ELoanRequestNewLoan",
+    ELoanRequest2: "ELoanRequest2",
+    ELoanRequest3: "ELoanRequest3",
+    ELoanSuccess: "ELoanSuccess",
+    ELoanHistory: "ELoanHistory",
+
 }

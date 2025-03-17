@@ -139,5 +139,9 @@ export default {
     PaymentSuccess: "PaymentSuccess",
     AllOTP: "AllOTP",
     LineOfCreditPay: "LineOfCreditPay",
-    EVendorViewTranscations: "EVendorViewTranscations"
+    EVendorViewTranscations: "EVendorViewTranscations",
+
+
+    DashBoardMainStack:"DashBoardMainStack",
+    DashBoardScreen:"DashBoardScreen",
 }

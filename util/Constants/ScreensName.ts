@@ -157,6 +157,24 @@ export default {
     EVendorViewTranscations: "EVendorViewTranscations",
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     NewHomeMainStack:"NewHomeMainStack",
     NewHomeScreen:"NewHomeScreen",
     DashboardScreen:"DashboardScreen",

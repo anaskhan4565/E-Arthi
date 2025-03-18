@@ -9,15 +9,13 @@ import EMunshi from '../E-Munshi/E-Munshi';
 import colors from '../../../../../util/Constants/colors';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/Constants/FontName';
-import EInventoryMainStack from '../E-InventoryScreens/E-InventoryMainStack';
-import ELoanMainStack from "../E-Loan/E-LoanMainStack"
-import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack"
-import TopNavigator from '../../EMandi/MainNavigator/TopNavigator';
-import EInventory from '../E-Loan/E-LoanHome'
+import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack";
 import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
-import HomeScreenMainStack from './HomeScreenMainStack';
-import DashBoardMainStack from './DashBoardMainStack';
+import NewHomeMainStack from './NewHomeMainStack';
+import DashboardScreen from './DashBoard';
+
 const { height, width } = Dimensions.get("window");
+
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
     const { t } = useTranslation();
@@ -26,106 +24,108 @@ export default function MainTabNavigation() {
             <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: colors.GREEN,
-                    tabBarInactiveTintColor: 'gray',
+                    tabBarInactiveTintColor: colors.GREEN,
                     headerShown: false,
-
                     tabBarStyle: {
                         backgroundColor: colors.LIGHT_GREEN,
                         height: hp('9%'),
                         borderTopWidth: 1,
                         borderTopColor: '#ccc',
-                        borderBottomLeftRadius: hp('1.5%'),
-                        borderBottomRightRadius: 15,
                         overflow: 'hidden',
                     },
                     tabBarLabelStyle: styles.labelStyle,
-                    tabBarIconStyle: { width: wp('5%'), height: hp('5%'), justifyContent: 'center', alignItems: 'center' },
+                    tabBarIconStyle: {
+                        width: wp('6%'),
+                        height: hp('6%'),
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    },
                 }}
             >
                 <Tab.Screen
-                    name={t(ScreensName.DashBoardMainStack)}
-                    component={DashBoardMainStack}  
+                    name="Dashboard"
+                    component={DashboardScreen}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../../assets/MainApp/TabIcons/Home.png')}
+                                source={require('../../../../assets/MainApp/NewTabIcons/DashBoardIcon.png')}
                                 style={[
                                     styles.icon,
-                                    { tintColor: focused ? colors.GREEN : 'gray' },
+                                    { tintColor: colors.GREEN },
                                 ]}
                             />
                         ),
-                        tabBarLabel: t('Home'),
+                        tabBarLabel: t('Dashboard'),
                     }}
                 />
-                <Tab.Screen
-                    name={t(ScreensName.EInventoryMainStack)}
-                    component={EInventoryMainStack}
-                    options={{
-                        tabBarIcon: ({ focused }) => (
-                            <Image
-                                source={require('../../../../assets/MainApp/TabIcons/E-Inventory.png')}
-                                style={[
-                                    styles.icon,
-                                    { tintColor: focused ? colors.GREEN : 'gray' },
-                                ]}
-                            />
-                        ),
-                        tabBarLabel: t('E-Inventory'),
-                    }}
-                />
-                <Tab.Screen
-                    name={t(ScreensName.EMarket)}
-                    component={EMarket}
-                    options={{
-                        tabBarIcon: ({ focused }) => (
-                            <Image
-                                source={require('../../../../assets/MainApp/TabIcons/E-Market.png')}
-                                style={[
-                                    styles.icon,
-                                    { tintColor: focused ? colors.GREEN : 'gray' },
-                                ]}
-                            />
-                        ),
-                        tabBarLabel: t('E-Market'),
-                    }}
-                />
+
                 <Tab.Screen
                     name={t(ScreensName.EMunshiMainStack)}
                     component={EMunshiMainStack}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../../assets/MainApp/TabIcons/E-Munshi.png')}
-                                style={[
-                                    styles.icon,
-                                    { tintColor: focused ? colors.GREEN : 'gray' },
-                                ]}
+                                source={require('../../../../assets/MainApp/NewTabIcons/EMunshiIcon.png')}
+                                // style={[
+                                //     styles.icon,
+                                //     { tintColor: colors.GREEN },
+                                // ]}
                             />
                         ),
                         tabBarLabel: t('E-Munshi'),
                     }}
                 />
+
                 <Tab.Screen
-                    name={t(ScreensName.ELoanMainStack)}
-                    component={ELoanMainStack}
+                    name={t(ScreensName.NewHomeMainStack)}
+                    component={NewHomeMainStack}
                     options={{
                         tabBarIcon: ({ focused }) => (
                             <Image
-                                source={require('../../../../assets/MainApp/TabIcons/E-Loan.png')}
+                                source={require('../../../../assets/MainApp/NewTabIcons/HomeIcon.png')}
                                 style={[
                                     styles.icon,
-                                    { tintColor: focused ? colors.GREEN : 'gray' },
+                                    { tintColor: colors.GREEN },
                                 ]}
                             />
                         ),
-                        tabBarLabel: t('E-Loan'),
+                        tabBarLabel: t('Home'),
                     }}
                 />
-                {/* <Tab.Screen
+
+                <Tab.Screen
                     name={t(ScreensName.EWarehouseMainStack)}
                     component={EWarehouseMainStack}
-                /> */}
+                    options={{
+                        tabBarIcon: ({ focused }) => (
+                            <Image
+                                source={require('../../../../assets/MainApp/NewTabIcons/EWarehouseIcon.png')}
+                                style={[
+                                    styles.icon,
+                                    { tintColor: colors.GREEN },
+                                ]}
+                            />
+                        ),
+                        tabBarLabel: t('E-Warehouse'),
+                    }}
+                />
+
+                <Tab.Screen
+                    name={t(ScreensName.EMarket)}
+                    component={EMarket}
+                    options={{
+                        tabBarIcon: ({ focused }) => (
+                            <Image
+                                source={require('../../../../assets/MainApp/NewTabIcons/EMarketIcon.png')}
+                                style={[
+                                    styles.icon,
+                                    { tintColor: colors.GREEN },
+                                ]}
+                            />
+                        ),
+                        tabBarLabel: t('E-Market'),
+                    }}
+                />
             </Tab.Navigator>
         </View>
     );
@@ -136,13 +136,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     icon: {
-        width: wp('6%'),
-        height: hp('3%'),
+        width: wp('8%'),
+        height: hp('4%'),
         resizeMode: 'contain',
-        marginRight: width > 600 ? wp('1.5%') : wp('0%'),
     },
     labelStyle: {
         fontSize: hp('1.3%'),
         fontFamily: fonts.Medium,
+        marginTop: -hp(0.5),
+        color: colors.GRAY,
     },
 });

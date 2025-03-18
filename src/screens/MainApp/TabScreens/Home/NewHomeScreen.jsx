@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 
-const DashboardScreen = () => {
+const NewHomeScreen = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
 
@@ -53,7 +53,7 @@ const DashboardScreen = () => {
     );
 };
 
-export default DashboardScreen;
+export default NewHomeScreen;
 
 const styles = StyleSheet.create({
     navbarContainer: {

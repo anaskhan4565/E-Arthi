@@ -35,6 +35,13 @@ import EloanMeezan from "./E-LoanMeezan";
 import ELoanFaisal from "./E-LoanAskari";
 import ELoanWoanScreen2 from "./E-LoanWomanScreen2";
 import ELoanPending from "./E-LoanPending";
+import ELoanHome from "../E-LoanNew/NewLoan/ELoanHome";
+import EENewLoan from "../E-LoanNew/NewLoan/ELoanNewLoan";
+import ELoanRequestNewLoan from "../E-LoanNew/NewLoan/ELoanRequestNewLoan";
+import ELoanRequest2 from "../E-LoanNew/NewLoan/ELoanRequest2";
+import ELoanRequest3 from "../E-LoanNew/NewLoan/ELoanRequest3";
+import ELoanSuccess from "../E-LoanNew/NewLoan/ELoanSuccess";
+import ELoanHistory from "../E-LoanNew/History/ELoanHistory";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +49,7 @@ const Stack = createNativeStackNavigator();
 function ELoanMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-        <Stack.Navigator initialRouteName={ScreensName.ELoan} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.ELoanNew} screenOptions={{ headerShown: false }}>
             <Stack.Screen name={ScreensName.ELoan} component={ELoan} />
             <Stack.Screen name={ScreensName.EloanOTP} component={ELoanOTP} />
             <Stack.Screen name={ScreensName.EloanIDVerify} component={EloanIDVerify} />
@@ -60,6 +67,15 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanFaisal} component={ELoanFaisal} />
             <Stack.Screen name={ScreensName.ELoanWoanScreen2} component={ELoanWoanScreen2} />
             <Stack.Screen name={ScreensName.ELoanPending} component={ELoanPending} />
+
+            {/* //New screens */}
+            <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
+            <Stack.Screen name={ScreensName.EENewLoan} component={EENewLoan} />
+            <Stack.Screen name={ScreensName.ELoanRequestNewLoan} component={ELoanRequestNewLoan} />
+            <Stack.Screen name={ScreensName.ELoanRequest2} component={ELoanRequest2} />
+            <Stack.Screen name={ScreensName.ELoanRequest3} component={ELoanRequest3} />
+            <Stack.Screen name={ScreensName.ELoanSuccess} component={ELoanSuccess} />
+            <Stack.Screen name={ScreensName.ELoanHistory} component={ELoanHistory} />
 
 
 

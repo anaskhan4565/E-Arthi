@@ -12,7 +12,7 @@ import MarketDept from "../../EMandi/Screens/MarketDept";
 import Profile from "../../EMandi/Screens/Profile";
 import EVendorsMainStack from "../E-Vendors/E-VendorsMainStack";
 import Home from "./HomeScr";
-import DashboardScreen from "./DashBoardScreen";
+import NewHomeScreen from "./NewHomeScreen";
 import ScreensName from "../../../../../util/Constants/ScreensName";
 
 
@@ -20,10 +20,10 @@ import ScreensName from "../../../../../util/Constants/ScreensName";
 
 const Stack = createNativeStackNavigator();
 
-function DashBoardMainStack() {
+function NewHomeMainStack() {
   return (
-    <Stack.Navigator initialRouteName={ScreensName.DashBoardScreen} screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={ScreensName.DashBoardScreen} component={DashboardScreen} />
+    <Stack.Navigator initialRouteName={ScreensName.NewHomeScreen} screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={ScreensName.NewHomeScreen} component={NewHomeScreen} />
       <Stack.Screen name={ScreensName.Home} component={Home} />
       <Stack.Screen name={ScreensName.EMandi} component={Overview} />
       <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashBoardMainStack;
+export default NewHomeMainStack;

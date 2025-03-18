@@ -53,6 +53,7 @@ import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScr
 import EMarket from "./src/screens/MainApp/TabScreens/Home/E-Market.jsx";
 import EOrderMainStack from "./src/screens/MainApp/TabScreens/E-Order/E-OrderMainStack.tsx";
 import OTPSignUp from "./src/screens/InitialStartScreens/OTPSignup.jsx";
+import PlantDoctorMainStack from "./src/screens/MainApp/TabScreens/Plant-Doctor/PlantDoctorMainStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -123,6 +124,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
           <Stack.Screen name={ScreensName.Profile} component={Profile} />
           <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
+          <Stack.Screen name={ScreensName.PlantDoctorMainStack} component={PlantDoctorMainStack} />
 
         </Stack.Navigator>
       </NavigationContainer>

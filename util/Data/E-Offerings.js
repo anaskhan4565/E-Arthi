@@ -11,7 +11,7 @@ const allNames = [
   { name: "E-WareHouse", screen: ScreensName.EWarehouseMainStack, source: require("../../src/assets/MainApp/HomeScreen/warehouse.png"), },
   { name: "E-Mandi", screen: ScreensName.EMandi, source: require("../../src/assets/MainApp/HomeScreen/market.png"), },
   { name: "E-Transport", screen: ScreensName.ETransportStack, source: require("../../src/assets/MainApp/HomeScreen/market.png"), },
-  { name: "Others", screen: "", source: require("../../src/assets/MainApp/HomeScreen/market.png"), },
+  { name: "Others", screen: ScreensName.PlantDoctorMainStack, source: require("../../src/assets/MainApp/HomeScreen/market.png"), },
 
 
 ];

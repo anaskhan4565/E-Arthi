@@ -139,5 +139,18 @@ export default {
     PaymentSuccess: "PaymentSuccess",
     AllOTP: "AllOTP",
     LineOfCreditPay: "LineOfCreditPay",
-    EVendorViewTranscations: "EVendorViewTranscations"
+    EVendorViewTranscations: "EVendorViewTranscations",
+
+    PlantDoctorMainStack: "PlantDoctorMainStack",
+    AddCrop: "AddCrop",
+    Diagnosis: "Diagnosis",
+    DosageCalculator: "DosageCalculator",
+    FertilizerCalculator: "FertilizerCalculator",
+    HealCropImageCapture: "HealCropImageCapture",
+    Pest: "Pest",
+    Prevent: "Prevent",
+    Treatment: "Treatment",
+    TreatmentProductDescription: "TreatmentProductDescription",
+    TreatNow: "TreatNow",
+    PlantDoctor: "PlantDoctor",
 }

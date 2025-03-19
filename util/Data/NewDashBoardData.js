@@ -25,7 +25,7 @@ const NewDrawerData = [
         id: 'loan',
         title: 'Loan',
         svgImage: LoanIcon,
-        screen: ScreensName.LoanScr,
+        screen: ScreensName.ELoanMainStack,
         isNavigation: true,
     },
     {

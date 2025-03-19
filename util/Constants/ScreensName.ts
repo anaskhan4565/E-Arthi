@@ -141,7 +141,12 @@ export default {
     LineOfCreditPay: "LineOfCreditPay",
     EVendorViewTranscations: "EVendorViewTranscations",
 
-    EBroker:"EBroker",
-    EBrokerPage:"EBrokerPage",
-    EBrokerMainStack: "EBrokerMainStack"
+    ELoanNew: "ELoanNew",
+    EENewLoan: "EENewLoan",
+    ELoanRequestNewLoan: "ELoanRequestNewLoan",
+    ELoanRequest2: "ELoanRequest2",
+    ELoanRequest3: "ELoanRequest3",
+    ELoanSuccess: "ELoanSuccess",
+    ELoanHistory: "ELoanHistory",
+
 }

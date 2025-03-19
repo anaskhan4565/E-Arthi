@@ -53,11 +53,7 @@ import EInventoryMainStack from "./src/screens/MainApp/TabScreens/E-InventoryScr
 import EMarket from "./src/screens/MainApp/TabScreens/Home/E-Market.jsx";
 import EOrderMainStack from "./src/screens/MainApp/TabScreens/E-Order/E-OrderMainStack.tsx";
 import OTPSignUp from "./src/screens/InitialStartScreens/OTPSignup.jsx";
-
-
-import EBrokerMainStack from "./src/screens/MainApp/TabScreens/E-Broker/E-BrokerMainStack.tsx";
-import EBroker from "./src/screens/MainApp/TabScreens/E-Broker/E-Broker.tsx";
-import EBrokerPage from "./src/screens/MainApp/TabScreens/E-Broker/E-BrokerPage.tsx";
+import ELoanHome from "./src/screens/MainApp/TabScreens/E-LoanNew/NewLoan/ELoanHome.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -128,12 +124,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
           <Stack.Screen name={ScreensName.Profile} component={Profile} />
           <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
-
-
-          <Stack.Screen name={ScreensName.EBrokerMainStack} component={EBrokerMainStack} />
-          <Stack.Screen name={ScreensName.EBroker} component={EBroker} />
-          <Stack.Screen name={ScreensName.EBrokerPage} component={EBrokerPage} />
-
+          <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
         </Stack.Navigator>
       </NavigationContainer>
     </I18nextProvider>

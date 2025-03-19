@@ -23,8 +23,9 @@ const loanData = [
         date: '09-02-2024',
         bank: 'Askari Bank',
         amount: '5,000',
-        status: 'Completed',
+        status: 'Document REQ',
         location: 'AgriFarm',
+        color: '#FFA412',
         time: '9:00 AM'
     },
     {
@@ -32,7 +33,8 @@ const loanData = [
         date: '09-02-2024',
         bank: 'Habib Bank',
         amount: '10,000',
-        status: 'Completed',
+        status: 'Under Review',
+        color: '#1B7ED4',
         location: 'AgriFarm',
         time: '6:00 PM'
     },
@@ -41,8 +43,9 @@ const loanData = [
         date: '09-02-2024',
         bank: 'Askari Bank',
         amount: '44,700',
-        status: 'Completed',
+        status: 'Processed',
         location: 'AgriFarm',
+        color: '#52DC18',
         time: '4:00 PM'
     },
     {
@@ -50,7 +53,8 @@ const loanData = [
         date: '09-02-2024',
         bank: 'Askari Bank',
         amount: '9,800',
-        status: 'Completed',
+        status: 'Rejected',
+        color: '#F62919CC',
         location: 'AgriFarm',
         time: '9:00 AM'
     },
@@ -59,7 +63,8 @@ const loanData = [
         date: '09-02-2024',
         bank: 'Askari Bank',
         amount: '54,000',
-        status: 'Completed',
+        status: 'Rejected',
+        color: '#F62919CC',
         location: 'AgriFarm',
         time: '11:00 AM'
     },
@@ -79,7 +84,7 @@ const banks = [
     "Bank of Punjab",
     "Zarai Tarakiyati Bank"
 ];
-const ELoanHistory = () => {
+const PendingLoan = () => {
     const { t } = useTranslation();
     
     const StatusButton = ({ status }) => (
@@ -107,7 +112,7 @@ const ELoanHistory = () => {
                 <CustomSearchApp placeholder="Search in here" />
             </View>
 
-            <Text style={styles.mainTitle}>Loan History</Text>
+            <Text style={styles.mainTitle}>Pending Loan</Text>
             {/* Updated dropdown container */}
             
             <View style={styles.container2}>
@@ -130,7 +135,7 @@ const ELoanHistory = () => {
                     {loanData.map((loan, index) => (
                         <View key={index} style={styles.columnItem}>
                             <ItemStatusBox
-                                onPress={() => { navigation.navigate(ScreensName.ELoanEach, { loanId: loan.id, status: loan.status, bank: loan.bank, amount: loan.amount, date: loan.date, location: loan.location, time: loan.time }) }}
+                                onPress={() => { navigation.navigate(ScreensName.ELoanEach, { loanId: loan.id, status: loan.status, bank: loan.bank, amount: loan.amount, date: loan.date, location: loan.location, time: loan.time, statusColor: loan.color }) }}
                                 bodyData={[
                                     { label: "Date", data: loan.date },
                                     { label: "Bank", data: loan.bank },
@@ -138,6 +143,7 @@ const ELoanHistory = () => {
                                 ]}
                                 name={"Loan: " + loan.id}
                                 status={loan.status}
+                                bgGiven={loan.color}
                                 statusTrueText={loan.status}
                                 statusFalseText={loan.status}
                             />
@@ -255,4 +261,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanHistory;
+export default PendingLoan;

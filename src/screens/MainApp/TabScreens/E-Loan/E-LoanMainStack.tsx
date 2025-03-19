@@ -42,6 +42,13 @@ import ELoanRequest2 from "../E-LoanNew/NewLoan/ELoanRequest2";
 import ELoanRequest3 from "../E-LoanNew/NewLoan/ELoanRequest3";
 import ELoanSuccess from "../E-LoanNew/NewLoan/ELoanSuccess";
 import ELoanHistory from "../E-LoanNew/History/ELoanHistory";
+import ELoanEach from "../E-LoanNew/History/ELoanEach";
+import PendingLoan from "../E-LoanNew/PendingLoan/PendingLoan";
+import CurrentLoanNew from "../E-LoanNew/CurrentLoan/CurrentLoanNew";
+import MadadgarHome from "../E-LoanNew/Madadgar/MadadgarHome";
+import MadadgarS2 from "../E-LoanNew/Madadgar/MadadgarS2";
+import MadadgarS3 from "../E-LoanNew/Madadgar/MadadgarS3";
+import MadadgarSuccess from "../E-LoanNew/Madadgar/MadadgarSuccess";
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +83,13 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanRequest3} component={ELoanRequest3} />
             <Stack.Screen name={ScreensName.ELoanSuccess} component={ELoanSuccess} />
             <Stack.Screen name={ScreensName.ELoanHistory} component={ELoanHistory} />
+            <Stack.Screen name={ScreensName.ELoanEach} component={ELoanEach} />
+            <Stack.Screen name={ScreensName.ELoanPendingScreen} component={PendingLoan} />
+            <Stack.Screen name={ScreensName.ELoanCurrentLoan} component={CurrentLoanNew} />
+            <Stack.Screen name={ScreensName.ELoanMadadgar} component={MadadgarHome} />
+            <Stack.Screen name={ScreensName.ELoanMadadgarS2} component={MadadgarS2} />
+            <Stack.Screen name={ScreensName.ELoanMadadgarS3} component={MadadgarS3} />
+            <Stack.Screen name={ScreensName.ELoanMadadgarSuccess} component={MadadgarSuccess} />
 
 
 

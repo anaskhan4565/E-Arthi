@@ -56,6 +56,7 @@ const specialPrograms = [
     {
         id: 2,
         title: 'Madadgar',
+        screen: ScreensName.ELoanMadadgar,
         icon: require('../../../../../assets/ELoanNew/TakeLoan/2.png')
     },
     {
@@ -121,6 +122,7 @@ const NewLoan = () => {
                             <TouchableOpacity
                                 key={index}
                                 style={styles.programItem}
+                                onPress={() => navigation.navigate(program.screen)}
                             >
                                 <Image
                                     source={program.icon}

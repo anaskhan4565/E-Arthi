@@ -25,7 +25,7 @@ const loanOptions = [
     },
     {
         title: "Current Loan",
-        screen: "CurrentLoan",
+        screen: ScreensName.ELoanCurrentLoan,
         img: require("../../../../../assets/ELoanNew/2.png"),
     },
     {
@@ -35,7 +35,7 @@ const loanOptions = [
     },
     {
         title: "Pending Loan",
-        screen: "PendingLoan",
+        screen: ScreensName.ELoanPendingScreen,
         img: require("../../../../../assets/ELoanNew/4.png"),
     }
 ];

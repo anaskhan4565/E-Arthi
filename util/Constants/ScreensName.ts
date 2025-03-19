@@ -148,5 +148,11 @@ export default {
     ELoanRequest3: "ELoanRequest3",
     ELoanSuccess: "ELoanSuccess",
     ELoanHistory: "ELoanHistory",
-
+    ELoanEach: "ELoanEach",
+    ELoanPendingScreen: "ELoanPendingScreen",
+    ELoanCurrentLoan: "ELoanCurrentLoan",
+    ELoanMadadgar: "ELoanMadadgar",
+    ELoanMadadgarS2: "ELoanMadadgarS2",
+    ELoanMadadgarS3: "ELoanMadadgarS3",
+    ELoanMadadgarSuccess: "ELoanMadadgarSuccess",
 }

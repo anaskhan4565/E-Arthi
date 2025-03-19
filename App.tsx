@@ -54,6 +54,8 @@ import EMarket from "./src/screens/MainApp/TabScreens/Home/E-Market.jsx";
 import EOrderMainStack from "./src/screens/MainApp/TabScreens/E-Order/E-OrderMainStack.tsx";
 import OTPSignUp from "./src/screens/InitialStartScreens/OTPSignup.jsx";
 import ELoanHome from "./src/screens/MainApp/TabScreens/E-LoanNew/NewLoan/ELoanHome.jsx";
+import NewHomeMainStack from "./src/screens/MainApp/TabScreens/Home/NewHomeMainStack.jsx";
+import ELoanMainStack from "./src/screens/MainApp/TabScreens/E-Loan/E-LoanMainStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -125,6 +127,8 @@ function App(): React.JSX.Element {
           <Stack.Screen name={ScreensName.Profile} component={Profile} />
           <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
           <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
+          <Stack.Screen name={ScreensName.NewHomeMainStack} component={NewHomeMainStack} />
+          <Stack.Screen name={ScreensName.ELoanMainStack} component={ELoanMainStack} />
         </Stack.Navigator>
       </NavigationContainer>
     </I18nextProvider>

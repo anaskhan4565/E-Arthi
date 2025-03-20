@@ -40,6 +40,7 @@ function HomeScreenMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
             <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
             <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
+            <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
 
         </Stack.Navigator>
         // </I18nextProvider>

@@ -140,6 +140,10 @@ export default {
     AllOTP: "AllOTP",
     LineOfCreditPay: "LineOfCreditPay",
 
+    EVendorViewTranscations: "EVendorViewTranscations",
+    NewHomeMainStack:"NewHomeMainStack",
+    NewHomeScreen:"NewHomeScreen",
+    DashboardScreen:"DashboardScreen",
     ELoanNew: "ELoanNew",
     EENewLoan: "EENewLoan",
     ELoanRequestNewLoan: "ELoanRequestNewLoan",

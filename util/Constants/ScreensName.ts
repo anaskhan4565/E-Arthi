@@ -153,4 +153,24 @@ export default {
     TreatmentProductDescription: "TreatmentProductDescription",
     TreatNow: "TreatNow",
     PlantDoctor: "PlantDoctor",
+    NewHomeMainStack:"NewHomeMainStack",
+    NewHomeScreen:"NewHomeScreen",
+    DashboardScreen:"DashboardScreen",
+    ELoanNew: "ELoanNew",
+    EENewLoan: "EENewLoan",
+    ELoanRequestNewLoan: "ELoanRequestNewLoan",
+    ELoanRequest2: "ELoanRequest2",
+    ELoanRequest3: "ELoanRequest3",
+    ELoanSuccess: "ELoanSuccess",
+    ELoanHistory: "ELoanHistory",
+    ELoanEach: "ELoanEach",
+    ELoanPendingScreen: "ELoanPendingScreen",
+    ELoanCurrentLoan: "ELoanCurrentLoan",
+    ELoanMadadgar: "ELoanMadadgar",
+    ELoanMadadgarS2: "ELoanMadadgarS2",
+    ELoanMadadgarS3: "ELoanMadadgarS3",
+    ELoanMadadgarSuccess: "ELoanMadadgarSuccess",
+   
+
+
 }

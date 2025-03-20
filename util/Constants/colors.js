@@ -7,6 +7,7 @@ export default{
     OLD_MILL_BLUE: '#6f7185',
     GREAT_WHITE: '#F3F6FE',
     LIGHT_PURPLE: '#b7bbd8',
+    PURPLE: '#666699',
     RED: '#FF0000',
     ORANGE: '#FFA412',
     EOrderHistGray: '#ADADAD',

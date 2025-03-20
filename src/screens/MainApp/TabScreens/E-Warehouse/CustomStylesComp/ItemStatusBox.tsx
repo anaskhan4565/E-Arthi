@@ -14,13 +14,14 @@ const ItemStatusBox = ({
     statusTrueText,
     statusFalseText,
     onPress,
+    bgGiven
 }) => {
     return (
         <TouchableOpacity style={styles.ItemBox} onPress={() => onPress()}>
             <View style={styles.Header}>
                 <Text style={styles.ItemName}>{name}</Text>
                 {status ? (
-                    <View style={[styles.StatusWrapper, { backgroundColor: "rgb(14, 174, 45)" }]}>
+                    <View style={[styles.StatusWrapper, { backgroundColor: bgGiven?bgGiven:"rgb(14, 174, 45)"}]}>
                         <Text style={styles.statusText}>{statusTrueText}</Text>
                     </View>
                 ) : (
@@ -44,7 +45,7 @@ const ItemStatusBox = ({
 
 const styles = StyleSheet.create({
     ItemBox: {
-        width: wp(40),
+        width: wp(44),
         height: hp(12), // Increased height for better spacing
         backgroundColor: colors.LIGHT_GREEN,
         padding: hp(1),
@@ -69,16 +70,16 @@ const styles = StyleSheet.create({
     },
     StatusWrapper: {
         height: hp(2),
-        marginRight: hp(0.5),
+        marginLeft: hp(0.5),
         alignSelf: "center",
         justifyContent: "center",
         borderRadius: hp(0.7),
     },
     statusText: {
-        fontSize: hp(1),
-        fontFamily: fonts.Light,
+        fontSize: hp(1.2),
+        fontFamily: fonts.SemiBold,
         color: colors.WHITE,
-        padding: hp(0.3),
+        padding: hp(0.2),
         paddingHorizontal: wp(2)
     },
 });

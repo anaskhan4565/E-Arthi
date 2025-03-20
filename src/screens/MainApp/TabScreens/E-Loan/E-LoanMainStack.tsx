@@ -35,6 +35,20 @@ import EloanMeezan from "./E-LoanMeezan";
 import ELoanFaisal from "./E-LoanAskari";
 import ELoanWoanScreen2 from "./E-LoanWomanScreen2";
 import ELoanPending from "./E-LoanPending";
+import ELoanHome from "../E-LoanNew/NewLoan/ELoanHome";
+import EENewLoan from "../E-LoanNew/NewLoan/ELoanNewLoan";
+import ELoanRequestNewLoan from "../E-LoanNew/NewLoan/ELoanRequestNewLoan";
+import ELoanRequest2 from "../E-LoanNew/NewLoan/ELoanRequest2";
+import ELoanRequest3 from "../E-LoanNew/NewLoan/ELoanRequest3";
+import ELoanSuccess from "../E-LoanNew/NewLoan/ELoanSuccess";
+import ELoanHistory from "../E-LoanNew/History/ELoanHistory";
+import ELoanEach from "../E-LoanNew/History/ELoanEach";
+import PendingLoan from "../E-LoanNew/PendingLoan/PendingLoan";
+import CurrentLoanNew from "../E-LoanNew/CurrentLoan/CurrentLoanNew";
+import MadadgarHome from "../E-LoanNew/Madadgar/MadadgarHome";
+import MadadgarS2 from "../E-LoanNew/Madadgar/MadadgarS2";
+import MadadgarS3 from "../E-LoanNew/Madadgar/MadadgarS3";
+import MadadgarSuccess from "../E-LoanNew/Madadgar/MadadgarSuccess";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +56,7 @@ const Stack = createNativeStackNavigator();
 function ELoanMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-        <Stack.Navigator initialRouteName={ScreensName.ELoan} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.ELoanNew} screenOptions={{ headerShown: false }}>
             <Stack.Screen name={ScreensName.ELoan} component={ELoan} />
             <Stack.Screen name={ScreensName.EloanOTP} component={ELoanOTP} />
             <Stack.Screen name={ScreensName.EloanIDVerify} component={EloanIDVerify} />
@@ -60,6 +74,22 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanFaisal} component={ELoanFaisal} />
             <Stack.Screen name={ScreensName.ELoanWoanScreen2} component={ELoanWoanScreen2} />
             <Stack.Screen name={ScreensName.ELoanPending} component={ELoanPending} />
+
+            {/* //New screens */}
+            <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
+            <Stack.Screen name={ScreensName.EENewLoan} component={EENewLoan} />
+            <Stack.Screen name={ScreensName.ELoanRequestNewLoan} component={ELoanRequestNewLoan} />
+            <Stack.Screen name={ScreensName.ELoanRequest2} component={ELoanRequest2} />
+            <Stack.Screen name={ScreensName.ELoanRequest3} component={ELoanRequest3} />
+            <Stack.Screen name={ScreensName.ELoanSuccess} component={ELoanSuccess} />
+            <Stack.Screen name={ScreensName.ELoanHistory} component={ELoanHistory} />
+            <Stack.Screen name={ScreensName.ELoanEach} component={ELoanEach} />
+            <Stack.Screen name={ScreensName.ELoanPendingScreen} component={PendingLoan} />
+            <Stack.Screen name={ScreensName.ELoanCurrentLoan} component={CurrentLoanNew} />
+            <Stack.Screen name={ScreensName.ELoanMadadgar} component={MadadgarHome} />
+            <Stack.Screen name={ScreensName.ELoanMadadgarS2} component={MadadgarS2} />
+            <Stack.Screen name={ScreensName.ELoanMadadgarS3} component={MadadgarS3} />
+            <Stack.Screen name={ScreensName.ELoanMadadgarSuccess} component={MadadgarSuccess} />
 
 
 

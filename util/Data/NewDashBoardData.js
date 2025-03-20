@@ -60,7 +60,7 @@ const NewDrawerData = [
         id: 'plantdoctor',
         title: 'Plant Doctor',
         svgImage: PlantDoctorIcon,
-        screen: ScreensName.PlantDoctorScr,
+        screen: ScreensName.PlantDoctorMainStack,
         isNavigation: true,
     },
     {

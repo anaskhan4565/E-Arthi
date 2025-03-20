@@ -14,6 +14,7 @@ import EVendorsMainStack from "../E-Vendors/E-VendorsMainStack";
 import Home from "./HomeScr";
 import NewHomeScreen from "./NewHomeScreen";
 import ScreensName from "../../../../../util/Constants/ScreensName";
+import ELoanMainStack from "../E-Loan/E-LoanMainStack";
 
 
 
@@ -31,7 +32,8 @@ function NewHomeMainStack() {
       <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
       <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
       <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
-  
+      <Stack.Screen name={ScreensName.ETransportStack} component={ETransportMain} />
+      <Stack.Screen name={ScreensName.ELoanMainStack} component={ELoanMainStack} />
     </Stack.Navigator>
   );
 }

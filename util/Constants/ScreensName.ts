@@ -153,9 +153,9 @@ export default {
     TreatmentProductDescription: "TreatmentProductDescription",
     TreatNow: "TreatNow",
     PlantDoctor: "PlantDoctor",
-    NewHomeMainStack:"NewHomeMainStack",
-    NewHomeScreen:"NewHomeScreen",
-    DashboardScreen:"DashboardScreen",
+    NewHomeMainStack: "NewHomeMainStack",
+    NewHomeScreen: "NewHomeScreen",
+    DashboardScreen: "DashboardScreen",
     ELoanNew: "ELoanNew",
     EENewLoan: "EENewLoan",
     ELoanRequestNewLoan: "ELoanRequestNewLoan",
@@ -170,7 +170,11 @@ export default {
     ELoanMadadgarS2: "ELoanMadadgarS2",
     ELoanMadadgarS3: "ELoanMadadgarS3",
     ELoanMadadgarSuccess: "ELoanMadadgarSuccess",
-   
 
+    // Settlements screens
+    SettlementsMainStack: 'SettlementsMainStack',
+    SettlementsScr: 'SettlementsScr',
+    SummaryOfSpendingsScr: 'SummaryOfSpendingsScr',
+    RaastPaymentScr: 'RaastPaymentScr',
 
 }

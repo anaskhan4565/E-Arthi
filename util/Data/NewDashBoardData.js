@@ -109,7 +109,7 @@ const NewDrawerData = [
         id: 'settlements',
         title: 'Settlements',
         svgImage: SettelmentsIcon,
-        screen: ScreensName.SettlementsScr,
+        screen: ScreensName.SettlementsMainStack,
         isNavigation: true,
     },
     {

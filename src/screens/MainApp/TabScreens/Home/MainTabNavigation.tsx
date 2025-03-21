@@ -22,6 +22,7 @@ export default function MainTabNavigation() {
     return (
         <View style={styles.container}>
             <Tab.Navigator
+              initialRouteName={t(ScreensName.NewHomeMainStack)}
                 screenOptions={{
                     tabBarActiveTintColor: colors.GREEN,
                     tabBarInactiveTintColor: colors.GREEN,

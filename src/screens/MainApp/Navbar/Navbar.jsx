@@ -55,7 +55,7 @@ export default Navbar;
 const styles = StyleSheet.create({
   Profile: {
     width: wp('9%'),
-    height: hp('7%'),
+    height: hp('4%'),
     borderRadius: hp('1%'),
     resizeMode: 'contain',
     marginLeft: hp(2)

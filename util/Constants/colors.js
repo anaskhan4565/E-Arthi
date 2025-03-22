@@ -20,6 +20,10 @@ export default{
     LIGHT_GRAY:'rgba(0, 0, 0, 0.2)',
     GRAY:'rgba(0, 0, 0, 0.5)',
     DARK_GRAY:'rgba(0, 0, 0, 0.8)',
+    SILO_GREEN:'#78A55A',
+    TEMP_RED:'#D16D6A',
+    COLD_STORAGE_BLUE:'#80A4AE',
+    DRY_BEDS_GRAY:'#999999',
 
 
     //For HomeScreen in mainApp

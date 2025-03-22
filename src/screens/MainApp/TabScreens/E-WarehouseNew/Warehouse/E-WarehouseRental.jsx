@@ -1,0 +1,139 @@
+import React from 'react';
+import {
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+} from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
+
+import Navbar from '../../../Navbar/Navbar.jsx';
+import CustomSearchApp from '../../../CustomComponent/CustomSearchApp.jsx';
+import EInventoryBoxes from '../../../CustomComponent/EInventoryBoxes.jsx';
+import { fonts } from '../../../../../../util/Constants/FontName.js';
+import colors from '../../../../../../util/Constants/colors.js';
+import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
+
+const rentalOptions = [
+    {
+        title: "Silo",
+        screen: "Silo",
+        img: require("../../../../../assets/Warehouse/silo.png"),
+    },
+    {
+        title: "Temperature Controlled",
+        screen: "Temperature Controlled",
+        img: require("../../../../../assets/Warehouse/temperatureControl.png"),
+    },
+    {
+        title: "Cold Storage",
+        screen: "Cold Storage",
+        img: require("../../../../../assets/Warehouse/coldStorage.png"),
+    },
+    {
+        title: "Dry Beds",
+        screen: "DryBeds",
+        img: require("../../../../../assets/Warehouse/dryBeds.png"),
+    }
+];
+
+function EWarehouseRental() {
+    const { t } = useTranslation();
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.navbarContainer}>
+                <Navbar />
+            </View>
+            
+            <ScrollView style={styles.container}>
+                <View style={styles.searchContainer}>
+                    <CustomSearchApp placeholder={t('Search in here')} />
+                </View>
+
+                <View style={styles.titleWrapper}>
+                    <Text style={styles.titleText}>{t('E-Warehouse')}</Text>
+                    <Text style={styles.subTitleText}>{t('Choose the warehouse you need')}</Text>
+                </View>
+
+                <View style={styles.bodyContainer}>
+                    <View style={styles.scrollContainer}>
+                        {rentalOptions.map((option, index) => (
+                            <View style={styles.itemBoxWrapper} key={index}>
+                                <EInventoryBoxes
+                                    name={t(option.title)}
+                                    screenName={option.screen}
+                                    navigationName={ScreensName.ELoanMainStack}
+                                    SourceGiven={option.img}
+                                    isNavigation={1}
+                                    w={wp("35%")}
+                                    h={hp("15%")}
+                                    img_size_h={hp(6)}
+                                    img_size_w={hp(6)}
+                                    font_Size={hp('1.8%')}
+                                    isLightBold={true}
+                                    fontcolor={colors.BLACK}
+                                    backgroundColor={colors.WHITE}
+                                    elevation={0}
+                                    borderRadius={hp(2)}
+                                />
+                            </View>
+                        ))}
+                    </View>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.WHITE,
+    },
+    navbarContainer: {
+        height: hp('8.5%'),
+        backgroundColor: colors.WHITE,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.LIGHT_GRAY,
+    },
+    searchContainer: {
+        marginTop: hp('2%'),
+        height: hp('7%'),
+        marginHorizontal: hp(2),
+    },
+    titleWrapper: {
+        marginHorizontal: hp(4),
+        marginTop: hp(1),
+        marginBottom: hp(2),
+    },
+    titleText: {
+        fontSize: hp(3.2),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
+        letterSpacing: hp(0.1),
+    },subTitleText: {
+        fontSize: hp(2),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
+    },
+    bodyContainer: {
+        marginHorizontal: hp(2),
+    },
+    scrollContainer: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        paddingVertical: hp("1%"),
+        width: wp(92),
+    },
+    itemBoxWrapper: {
+        marginBottom: hp("2%"),
+        width: wp(44),
+    },
+});
+
+export default EWarehouseRental;

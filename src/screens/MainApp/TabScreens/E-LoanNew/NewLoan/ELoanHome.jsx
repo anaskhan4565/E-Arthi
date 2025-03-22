@@ -5,43 +5,24 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
+    TouchableOpacity,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import Navbar from '../../../Navbar/Navbar';
+import CustomSearchApp from '../../../CustomComponent/CustomSearchApp';
+import { fonts } from '../../../../../../util/Constants/FontName';
+import colors from '../../../../../../util/Constants/colors';
 
-import Navbar from '../../../Navbar/Navbar.jsx';
-import CustomSearchApp from '../../../CustomComponent/CustomSearchApp.jsx';
-import EInventoryBoxes from '../../../CustomComponent/EInventoryBoxes.jsx';
-import { fonts } from '../../../../../../util/Constants/FontName.js';
-import colors from '../../../../../../util/Constants/colors.js';
-import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
-
-const loanOptions = [
-    {
-        title: "New Loan",
-        screen: ScreensName.EENewLoan,
-        img: require("../../../../../assets/ELoanNew/1.png"),
-    },
-    {
-        title: "Current Loan",
-        screen: "CurrentLoan",
-        img: require("../../../../../assets/ELoanNew/2.png"),
-    },
-    {
-        title: "History",
-        screen: ScreensName.ELoanHistory,
-        img: require("../../../../../assets/ELoanNew/3.png"),
-    },
-    {
-        title: "Pending Loan",
-        screen: "PendingLoan",
-        img: require("../../../../../assets/ELoanNew/4.png"),
-    }
-];
-
-function ELoanHome() {
+const SiloRental = () => {
     const { t } = useTranslation();
+    
+    // Calculate the fill percentage
+    const totalSpace = 10000;
+    const remainingSpace = 8000;
+    const usedSpace = totalSpace - remainingSpace;
+    const fillPercentage = (usedSpace / totalSpace) * 100;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -54,39 +35,61 @@ function ELoanHome() {
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
 
-                <View style={styles.titleWrapper}>
-                    <Text style={styles.titleText}>{t('E-Loan')}</Text>
-                </View>
-
-                <View style={styles.bodyContainer}>
-                    <View style={styles.scrollContainer}>
-                        {loanOptions.map((option, index) => (
-                            <View style={styles.itemBoxWrapper} key={index}>
-                                <EInventoryBoxes
-                                    name={t(option.title)}
-                                    screenName={option.screen}
-                                    navigationName={ScreensName.ELoanMainStack}
-                                    SourceGiven={option.img}
-                                    isNavigation={1}
-                                    w={wp("35%")}
-                                    h={hp("15%")}
-                                    img_size_h={hp(6)}
-                                    img_size_w={hp(6)}
-                                    font_Size={hp('1.8%')}
-                                    isLightBold={true}
-                                    fontcolor={colors.BLACK}
-                                    backgroundColor={colors.WHITE}
-                                    elevation={0}
-                                    borderRadius={hp(2)}
-                                />
-                            </View>
-                        ))}
+                <View style={styles.contentContainer}>
+                    <Text style={styles.title}>Silo Rental</Text>
+                    
+                    {/* Total Space Circle Progress */}
+                    <View style={styles.spaceContainer}>
+                        <AnimatedCircularProgress
+                            size={wp(60)}
+                            width={15}
+                            fill={fillPercentage}
+                            tintColor="#00B087"
+                            backgroundColor="#E8F5F1"
+                            rotation={0}
+                            lineCap="round"
+                        >
+                            {() => (
+                                <View style={styles.circleContent}>
+                                    <Text style={styles.totalSpaceText}>
+                                        {totalSpace} KG
+                                    </Text>
+                                    <Text style={styles.totalSpaceLabel}>
+                                        Total space
+                                    </Text>
+                                    <Text style={styles.remainingSpaceText}>
+                                        {remainingSpace} KG
+                                    </Text>
+                                    <Text style={styles.remainingSpaceLabel}>
+                                        Remaining Space
+                                    </Text>
+                                </View>
+                            )}
+                        </AnimatedCircularProgress>
                     </View>
+
+                    {/* Storage Information */}
+                    <View style={styles.storageInfoContainer}>
+                        <View style={styles.storageItem}>
+                            <Text style={styles.storageTitle}>Wheat</Text>
+                            <Text style={styles.storageValue}>1000 KG stored</Text>
+                        </View>
+                        <View style={styles.storageDivider} />
+                        <View style={styles.storageItem}>
+                            <Text style={styles.storageTitle}>Rice</Text>
+                            <Text style={styles.storageValue}>1000 KG stored</Text>
+                        </View>
+                    </View>
+
+                    {/* Reserve Button */}
+                    <TouchableOpacity style={styles.reserveButton}>
+                        <Text style={styles.reserveButtonText}>Reserve The Silo</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -104,31 +107,85 @@ const styles = StyleSheet.create({
         height: hp('7%'),
         marginHorizontal: hp(2),
     },
-    titleWrapper: {
-        marginHorizontal: hp(4),
-        marginTop: hp(1),
-        marginBottom: hp(2),
+    contentContainer: {
+        padding: hp(2),
     },
-    titleText: {
-        fontSize: hp(3.2),
+    title: {
+        fontSize: hp(2.8),
+        fontFamily: fonts.SemiBold,
+        marginBottom: hp(3),
+    },
+    spaceContainer: {
+        alignItems: 'center',
+        marginBottom: hp(3),
+    },
+    circleContent: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    totalSpaceText: {
+        fontSize: hp(2.4),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
-        letterSpacing: hp(0.1),
+        marginBottom: hp(0.5),
     },
-    bodyContainer: {
-        marginHorizontal: hp(2),
+    totalSpaceLabel: {
+        fontSize: hp(1.6),
+        color: colors.BLACK,
+        opacity: 0.7,
+        marginBottom: hp(1),
     },
-    scrollContainer: {
-        flexWrap: 'wrap',
+    remainingSpaceText: {
+        fontSize: hp(2.2),
+        fontFamily: fonts.SemiBold,
+        color: '#00B087',
+    },
+    remainingSpaceLabel: {
+        fontSize: hp(1.6),
+        color: colors.BLACK,
+        opacity: 0.7,
+    },
+    storageInfoContainer: {
         flexDirection: 'row',
-        justifyContent: "space-between",
-        paddingVertical: hp("1%"),
-        width: wp(92),
+        backgroundColor: colors.WHITE,
+        borderRadius: hp(2),
+        padding: hp(2),
+        marginBottom: hp(3),
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
     },
-    itemBoxWrapper: {
-        marginBottom: hp("2%"),
-        width: wp(44),
+    storageItem: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    storageDivider: {
+        width: 1,
+        backgroundColor: colors.LIGHT_GRAY,
+    },
+    storageTitle: {
+        fontSize: hp(2),
+        fontFamily: fonts.SemiBold,
+        marginBottom: hp(1),
+    },
+    storageValue: {
+        fontSize: hp(1.8),
+        color: colors.BLACK,
+        opacity: 0.7,
+    },
+    reserveButton: {
+        backgroundColor: '#00B087',
+        borderRadius: hp(1),
+        padding: hp(2),
+        alignItems: 'center',
+    },
+    reserveButtonText: {
+        color: colors.WHITE,
+        fontSize: hp(2),
+        fontFamily: fonts.SemiBold,
     },
 });
 
-export default ELoanHome;
+export default SiloRental;

@@ -106,20 +106,20 @@ function SignUp(): React.JSX.Element {
                 last_name: Name,
                 password2: Password,
             });
-      
+
             if (response.status === 201) {
                 const newUser = {
                     username: Email,
                     password: Password,
                     phoneNumber: Number,
                 };
-        
+
                 userData.push(newUser);
                 storage.set("Number", Number);
                 navigation.navigate(ScreensName.OTPSignUp);
             }
         } catch (error) {
- 
+
             console.log(error);
             setErrorMessage(t(error.response?.data?.message || "Signup failed"));
             setNameError(true);
@@ -232,21 +232,18 @@ function SignUp(): React.JSX.Element {
                 </View>
             )}
             <View style={styles.button}>
-
-                <CustomButton
-                    MainText={t("Register")}
-                    BgGiven={colors.GREEN}
-                    name={ScreensName.OTPSignUp}
-                    txColor={colors.WHITE}
-                    isNavigation={0}
-                    onPressG={validateInput}
-                />
+                <TouchableOpacity
+                    style={[styles.customButton, { backgroundColor: colors.GREEN }]}
+                    onPress={validateInput}
+                    disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <ActivityIndicator size="small" color={colors.WHITE} />
+                    ) : (
+                        <Text style={styles.buttonText}>{t("Register")}</Text>
+                    )}
+                </TouchableOpacity>
             </View>
-            {isLoading && (
-
-                <ActivityIndicator size="large" color={colors.GREEN} />
-
-            )}
 
             <View style={styles.terms}>
                 <Text style={styles.infoText}>
@@ -493,6 +490,18 @@ const styles = StyleSheet.create({
         fontSize: hp(2),
         fontFamily: fonts.Medium,
         color: colors.GREEN
+    },
+    customButton: {
+        width: wp("85%"),
+        height: hp("5.5%"),
+        borderRadius: hp("1.2%"),
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    buttonText: {
+        color: colors.WHITE,
+        fontSize: hp("2%"),
+        fontFamily: fonts.Medium,
     },
 });
 

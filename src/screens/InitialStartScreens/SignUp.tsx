@@ -9,12 +9,14 @@ import {
     TextInput,
     Image,
     ScrollView,
+    ActivityIndicator,
 } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import colors from "../../../util/Constants/colors.js";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ScreensName from "../../../util/Constants/ScreensName.ts";
+import axios from "axios";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -27,6 +29,7 @@ import SwitchButtonCoperate from "./SwitchButtonCoperate.jsx";
 import { useNavigation } from "@react-navigation/native";
 import userData from "../../../util/Constants/User.js";
 import { MMKV } from "react-native-mmkv";
+import Routes from "../../../util/Constants/Routes.js";
 
 const { height, width } = Dimensions.get("window");
 
@@ -45,12 +48,13 @@ function SignUp(): React.JSX.Element {
     const [selectedOption, setSelectedOption] = useState("Individual");
     const navigation = useNavigation(); // Added navigation instance
     const storage = new MMKV();
+    const [isLoading, setIsLoading] = useState(false);
     const handleNumberChange = (value: string) => {
         //value = value.replace(/[^0-9]/g, "");
         setNumber(value);
     };
 
-    const validateInput = () => {
+    const validateInput = async () => {
         setErrorMessage(null);
         setNameError(false);
         setPasswordError(false);
@@ -91,16 +95,37 @@ function SignUp(): React.JSX.Element {
             return;
         }
 
-        // Add the new user (simulated, since modifying JSON directly is not possible)
-        const newUser = {
-            username: Email,
-            password: Password,
-            phoneNumber: Number,
-        };
-
-        userData.push(newUser);
-        storage.set("Number", Number);
-        navigation.navigate(ScreensName.OTPSignUp);
+        setIsLoading(true);
+        try {
+            const response = await axios.post(Routes.signup, {
+                username: Email,
+                password: Password,
+                phone_number: Number,
+                email: Email,
+                first_name: Name,
+                last_name: Name,
+                password2: Password,
+            });
+      
+            if (response.status === 201) {
+                const newUser = {
+                    username: Email,
+                    password: Password,
+                    phoneNumber: Number,
+                };
+        
+                userData.push(newUser);
+                storage.set("Number", Number);
+                navigation.navigate(ScreensName.OTPSignUp);
+            }
+        } catch (error) {
+ 
+            console.log(error);
+            setErrorMessage(t(error.response?.data?.message || "Signup failed"));
+            setNameError(true);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -213,10 +238,15 @@ function SignUp(): React.JSX.Element {
                     BgGiven={colors.GREEN}
                     name={ScreensName.OTPSignUp}
                     txColor={colors.WHITE}
-                    isNavigation={1}
+                    isNavigation={0}
                     onPressG={validateInput}
                 />
             </View>
+            {isLoading && (
+
+                <ActivityIndicator size="large" color={colors.GREEN} />
+
+            )}
 
             <View style={styles.terms}>
                 <Text style={styles.infoText}>
@@ -445,6 +475,24 @@ const styles = StyleSheet.create({
         borderColor: colors.RED,
         borderWidth: 1,
         marginTop: hp(1)
+    },
+    loadingOverlay: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        zIndex: 1000,
+        elevation: 3,
+    },
+    loadingText: {
+        marginTop: hp(1),
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.GREEN
     },
 });
 

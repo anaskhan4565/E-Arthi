@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     SafeAreaView,
     StyleSheet,
@@ -7,7 +7,7 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import { RNCamera } from "react-native-camera";
+import { Camera, useCameraDevices } from "react-native-vision-camera";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -20,9 +20,65 @@ import captureButton from './AssetsPlantDr/HealCrop/button.png';
 import galleryButton from './AssetsPlantDr/HealCrop/gallery.png';
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
+
 const HealCropImageCapture = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const devices = useCameraDevices();
+    const device = devices.back;
+    const cameraRef = useRef(null);
+
+    const [hasPermission, setHasPermission] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const status = await Camera.requestCameraPermission();
+                setHasPermission(status === 'authorized');
+            } catch (error) {
+                console.error("Error requesting camera permission:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        })();
+    }, []);
+
+    const takePicture = async () => {
+        if (cameraRef.current) {
+            try {
+                const photo = await cameraRef.current.takePhoto();
+                console.log("Photo taken:", photo);
+                navigation.navigate(ScreensName.Diagnosis, { imageUri: photo.path });
+            } catch (error) {
+                console.error("Error taking photo:", error);
+            }
+        }
+    };
+
+    if (isLoading) return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.navbarContainer}>
+                <Navbar gobackOnly={true} />
+            </View>
+            <View style={[styles.contentContainer, styles.centerContent]}>
+                <Text style={styles.loadingText}>Loading camera...</Text>
+            </View>
+        </SafeAreaView>
+    );
+
+    if (!device || !hasPermission) return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.navbarContainer}>
+                <Navbar gobackOnly={true} />
+            </View>
+            <View style={[styles.contentContainer, styles.centerContent]}>
+                <Text style={styles.errorText}>
+                    {!hasPermission ? "Camera permission denied. Please enable camera access in settings." : "Camera not available on this device."}
+                </Text>
+            </View>
+        </SafeAreaView>
+    );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,22 +88,29 @@ const HealCropImageCapture = () => {
 
             <View style={styles.contentContainer}>
                 <View style={styles.titleContainer}>
-                <Text style={styles.title}>Heal Your Crop</Text>
-                <Text style={styles.subtitle}>Fit the damaged crop within the frame:</Text>
+                    <Text style={styles.title}>Heal Your Crop</Text>
+                    <Text style={styles.subtitle}>Fit the damaged crop within the frame:</Text>
                 </View>
+
                 <View style={styles.cameraContainer}>
-                    <RNCamera
-                        style={styles.camera}
-                        type={RNCamera.Constants.Type.back}
-                        captureAudio={false}
-                    />
+                    {hasPermission ? (
+                        <Camera
+                            ref={cameraRef}
+                            style={styles.camera}
+                            device={device}
+                            isActive={true}
+                            photo={true}
+                        />
+                    ) : (
+                        <Text>No Camera Permission</Text>
+                    )}
                 </View>
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.galleryButton}>
                         <Image style={styles.galleryButtonImage} source={galleryButton} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.captureButton} onPress={() => navigation.navigate(ScreensName.Diagnosis)}>
+                    <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
                         <Image source={captureButton} style={styles.captureButtonImage} />
                     </TouchableOpacity>
                 </View>
@@ -79,16 +142,12 @@ const styles = StyleSheet.create({
     galleryButtonImage: {
         width: wp('15%'),
         height: wp('15%'),
-        justifyContent: 'center',
         resizeMode: 'contain',
-
     },
-    
     captureButtonImage: {
         width: wp('15%'),
         height: wp('15%'),
         resizeMode: 'contain',
-        justifyContent: 'center',
     },
     title: {
         fontSize: hp('2.5%'),
@@ -114,30 +173,37 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        width: hp(10),
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        gap: wp('10%'),
+        width: wp('60%'),
     },
     galleryButton: {
         width: wp('15%'),
         height: wp('15%'),
-        borderRadius: wp('7.5%'),
         justifyContent: 'center',
         alignItems: 'center',
     },
     captureButton: {
         width: wp('15%'),
         height: wp('15%'),
-        
-        borderRadius: wp('7.5%'),
-        // backgroundColor: colors.GREEN,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    buttonText: {
-        fontSize: hp('2.5%'),
-        color: colors.WHITE,
+    centerContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        fontSize: hp('2%'),
+        fontFamily: fonts.Regular,
+        textAlign: 'center',
+    },
+    errorText: {
+        fontSize: hp('2%'),
+        fontFamily: fonts.Regular,
+        textAlign: 'center',
+        color: colors.RED,
+        padding: wp('5%'),
     },
 });
 

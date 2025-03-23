@@ -95,7 +95,7 @@ const PlantDoctor = () => {
 
           <TouchableOpacity 
             style={styles.featureItem}
-            onPress={() => navigation.navigate(ScreensName.Pest)}>
+            onPress={() => navigation.navigate(ScreensName.PestsAndDiseases)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Worm.png')} style={styles.featureIcon} />
             <Text style={styles.featureText}>Pests and Diseases</Text>
           </TouchableOpacity>

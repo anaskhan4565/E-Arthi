@@ -19,12 +19,14 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { fonts } from "../../../../../util/Constants/FontName.js";
+import ScreensName from "../../../../../util/Constants/ScreensName.ts";
+import { useNavigation } from "@react-navigation/native";
 
 const DosageCalculator = () => {
     const [areaSize, setAreaSize] = useState('');
     const [areaUnit, setAreaUnit] = useState('acre');
     const [pumpSize, setPumpSize] = useState('noPump');
-
+    const navigation = useNavigation();
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -135,7 +137,7 @@ const DosageCalculator = () => {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.calculateButton}>
+                <TouchableOpacity style={styles.calculateButton} onPress={()=>{navigation.navigate(ScreensName.FertilizerCalculator)}}>
                     <Text style={styles.calculateButtonText}>Calculate</Text>
                 </TouchableOpacity>
             </ScrollView>

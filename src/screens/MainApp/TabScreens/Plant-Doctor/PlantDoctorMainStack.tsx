@@ -20,6 +20,9 @@ import Treatment from "./Treatment.tsx"
 import TreatmentProductDescription from "./TreatmentProductDescription.tsx"
 import TreatNow from "./TreatNow.tsx"
 import PlantDoctor from "./PlantDoctor.tsx"
+import PestsAndDiseases from "./PestsAndDiseases.tsx";
+import FertilizerCombinations from "./FertilizerCombinations.tsx";
+import MopTspUrea from "./MopTspUrea.tsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +37,9 @@ function PlantDoctorMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.FertilizerCalculator} component={FertilizerCalculator} />
             <Stack.Screen name={ScreensName.HealCropImageCapture} component={HealCropImageCapture} />
             <Stack.Screen name={ScreensName.Pest} component={Pest} />
+            <Stack.Screen name={ScreensName.PestsAndDiseases} component={PestsAndDiseases} />
+            <Stack.Screen name={ScreensName.FertilizerCombinations} component={FertilizerCombinations} />
+            <Stack.Screen name={ScreensName.MOPTSP} component={MopTspUrea} />
             <Stack.Screen name={ScreensName.Prevent} component={Prevent} />
             <Stack.Screen name={ScreensName.Treatment} component={Treatment} />
             <Stack.Screen name={ScreensName.TreatmentProductDescription} component={TreatmentProductDescription} />

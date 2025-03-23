@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import colors from "../../../util/Constants/colors";
@@ -19,31 +20,37 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import userData from "../../../util/Constants/User";
+import { MMKV } from 'react-native-mmkv';
 
 const { height, width } = Dimensions.get("window");
-
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../util/Constants/FontName";
 import CustomPicker from "../MainApp/EMandi/CustomComp/CustomPicker";
 import CustomInput from "../../components/CustomInput";
+import Routes from "../../../util/Constants/Routes";
+
+
+export const storage = new MMKV();
 
 function SignIn() {
   const { t } = useTranslation();
 
   const [passwordVisible, setPasswordVisible] = useState(true);
   const navigation = useNavigation();
-  const [SwitchedButton, SetSwitchedButton] = useState(false); // isEmail === SwitchedButton
+  const [SwitchedButton, SetSwitchedButton] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [number, setNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState();
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setUsername("");
   }, [SwitchedButton]);
 
-  const validateInput = () => {
+  const validateInput = async () => {
     setErrorMessage(null);
     setUsernameError(false);
     setPasswordError(false);
@@ -55,22 +62,36 @@ function SignIn() {
       return;
     }
 
-    // Check if user exists in the userData array
-    const matchedUser = userData.find(user =>
-      (SwitchedButton ? user.username === username : user.phoneNumber === username) &&
-      user.password === password
-    );
+    setLoading(true);
+    try {
+      const response = await axios.post(Routes.login, {
+        username: username,
+        password: password,
+      })
+      if (response.status === 200) {
+        const data = response.data;
 
-    if (!matchedUser) {
-      setErrorMessage(t("Invalid username, phone number, or password"));
-      setUsernameError(true);
-      setPasswordError(true);
-      return;
+        if (data.userId) {
+          storage.set('userId', data.userId.toString());
+        }
+
+        if (data.token) {
+          storage.set('token', data.token);
+        }
+
+        navigation.navigate(ScreensName.MainTabNavigation);
+      }
+    } catch (error) {
+      console.log(error);
+
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage(t("Login failed. Please check your credentials."));
+      }
+    } finally {
+      setLoading(false);
     }
-
-    // Successful login
-    console.log("Login successful!", matchedUser);
-    navigation.navigate(ScreensName.MainTabNavigation); // Navigate to the home screen
   };
   const handleTextChange = (text) => {
     if (!SwitchedButton) {
@@ -178,8 +199,16 @@ function SignIn() {
         </View>}
       </View>
       <View style={styles.buttonWrapper}>
-        <TouchableOpacity style={styles.button} onPress={validateInput}>
-          <Text style={styles.buttonText}>{t("Login")}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={validateInput}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color={colors.WHITE} size="small" />
+          ) : (
+            <Text style={styles.buttonText}>{t("Login")}</Text>
+          )}
         </TouchableOpacity>
       </View>
       <View style={styles.options}>

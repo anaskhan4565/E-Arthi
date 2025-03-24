@@ -38,7 +38,7 @@ const ProductBox = ({ AddIcon = true, name,
     <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, backgroundColor: backColor }]} onPress={handlePress}>
       <View style={styles.imageContainer}>
         <Image
-          source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/default.png')}
+          source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/AddImg.png')}
           style={styles.ImageStyle}
         />      {AddIcon && (
           <TouchableOpacity style={styles.addIcon} onPress={HandleAddPress}>

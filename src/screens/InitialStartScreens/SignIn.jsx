@@ -39,35 +39,72 @@ function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(true);
   const navigation = useNavigation();
   const [SwitchedButton, SetSwitchedButton] = useState(false);
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [number, setNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
-  const [usernameError, setUsernameError] = useState(false);
+  const [inputError, setInputError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+92');
+
   useEffect(() => {
-    setUsername("");
+    setEmail('');
+    setPhoneNumber('');
+    setPassword('');
+    setErrorMessage(null);
+    setInputError(false);
+    setPasswordError(false);
   }, [SwitchedButton]);
 
   const validateInput = async () => {
     setErrorMessage(null);
-    setUsernameError(false);
+    setInputError(false);
     setPasswordError(false);
 
-    if (!username || !password) {
-      setErrorMessage(t("Please fill all fields"));
-      if (!username) setUsernameError(true);
-      if (!password) setPasswordError(true);
-      return;
+    if (SwitchedButton) {
+      if (!email || !password) {
+        setErrorMessage(t("Please fill all fields"));
+        if (!email) setInputError(true);
+        if (!password) setPasswordError(true);
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setErrorMessage(t("Please enter a valid email"));
+        setInputError(true);
+        return;
+      }
+    } else {
+      if (!phoneNumber || !password) {
+        setErrorMessage(t("Please fill all fields"));
+        if (!phoneNumber) setInputError(true);
+        if (!password) setPasswordError(true);
+        return;
+      }
     }
 
     setLoading(true);
     try {
-      const response = await axios.post(Routes.login, {
-        username: username,
-        password: password,
-      })
+      const formattedPhone = selectedCountryCode + phoneNumber;
+      console.log("Sending phone number:", formattedPhone);
+
+      const endpoint = SwitchedButton ? Routes.login : Routes.phoneLogin;
+      const payload = SwitchedButton
+        ? {
+          email: email,
+          password: password,
+        }
+        : {
+          phone_number: formattedPhone,
+          password: password,
+        };
+
+      console.log("Payload:", payload);
+      console.log("Endpoint:", endpoint);
+
+      const response = await axios.post(endpoint, payload);
+
       if (response.status === 200) {
         const data = response.data;
 
@@ -77,10 +114,7 @@ function SignIn() {
 
         if (data?.data?.token) {
           storage.set('token', data.data.token);
-          console.log(data.data.token);   
         }
-        console.log(data.data.token);
-
 
         navigation.navigate(ScreensName.MainTabNavigation);
       }
@@ -89,6 +123,7 @@ function SignIn() {
 
       if (error.response && error.response.data && error.response.data.message) {
         setErrorMessage(error.response.data.message);
+        console.log(error.response.data.message);
       } else {
         setErrorMessage(t("Login failed. Please check your credentials."));
       }
@@ -96,13 +131,14 @@ function SignIn() {
       setLoading(false);
     }
   };
-  const handleTextChange = (text) => {
-    if (!SwitchedButton) {
-      const numericText = text.replace(/[^0-9]/g, '');
-      setUsername(numericText);
-    } else {
-      setUsername(text);
-    }
+
+  const handlePhoneChange = (text) => {
+    const numericText = text.replace(/[^0-9]/g, '');
+    setPhoneNumber(numericText);
+  };
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
   };
 
   return (
@@ -142,36 +178,47 @@ function SignIn() {
           }}
         >
           {!SwitchedButton ? (
-            <View style={{ width: hp(10) }}>
-              <CustomPicker
-                items={[
-                  { label: "+92", value: "+92" },
-                  { label: "+91", value: "+91" },
-                  { label: "+86", value: "+86" },
-                ]}
-                isheader={true}
-                padding_f={true}
-                placeholder={"+92"}
-                w_given={hp(10)}
-                min_given={hp(11)}
+            <>
+              <View style={{ width: hp(10) }}>
+                <CustomPicker
+                  items={[
+                    { label: "+92", value: "+92" },
+                    { label: "+91", value: "+91" },
+                    { label: "+86", value: "+86" },
+                  ]}
+                  isheader={true}
+                  padding_f={true}
+                  placeholder={"+92"}
+                  w_given={hp(10)}
+                  min_given={hp(11)}
+                  onValueChange={(value) => setSelectedCountryCode(value)}
+                  selectedValue={selectedCountryCode}
+                />
+              </View>
+              <View style={[styles.passInputBox, { borderColor: inputError ? colors.RED : colors.LIGHT_GRAY, width: wp(60) }]}>
+                <TextInput
+                  style={styles.passInput}
+                  placeholder={t("Phone Number")}
+                  placeholderTextColor={inputError ? colors.RED : colors.LIGHT_GRAY}
+                  value={phoneNumber}
+                  onChangeText={handlePhoneChange}
+                  keyboardType="numeric"
+                />
+              </View>
+            </>
+          ) : (
+            <View style={[styles.passInputBox, { borderColor: inputError ? colors.RED : colors.LIGHT_GRAY, width: wp(84) }]}>
+              <TextInput
+                style={styles.passInput}
+                placeholder={t("Email")}
+                placeholderTextColor={inputError ? colors.RED : colors.LIGHT_GRAY}
+                value={email}
+                onChangeText={handleEmailChange}
+                keyboardType="email-address"
+                autoCapitalize="none"
               />
             </View>
-          ) : null}
-          <View
-            style={[
-              styles.passInputBox,
-              { borderColor: usernameError ? colors.RED : colors.LIGHT_GRAY, width: SwitchedButton ? wp(84) : wp(60) },
-            ]}
-          >
-
-            <TextInput
-              style={[styles.passInput]}
-              placeholder={SwitchedButton ? t("@agri.pk") : t("Phone Number")}
-              placeholderTextColor={usernameError ? colors.RED : colors.LIGHT_GRAY}
-              value={username}
-              onChangeText={(value) => handleTextChange(value)}
-            />
-          </View>
+          )}
         </View>
         <View
           style={[

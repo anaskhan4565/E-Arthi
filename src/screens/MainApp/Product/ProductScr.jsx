@@ -107,7 +107,7 @@ const ProductScr = () => {
                     <View style={styles.topSection}>
                         <View style={styles.imageContainer}>
                             <Image
-                                source={ProductInfo.SourceGiven}
+                                source={{ uri: ProductInfo.SourceGiven }}
                                 style={styles.productImage}
                             />
                         </View>

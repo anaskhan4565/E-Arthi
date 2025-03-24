@@ -10,7 +10,7 @@ export default [
         ]
     },
     {
-        title: "Fertilizer",
+        title: "Fertilizers",
         img:require('../../src/assets/MainApp/E-Market/Fertilizer.png'),
         subcategories: [
             { name: "ENGRO-400 Fertilizer" },

@@ -71,13 +71,16 @@ function SignIn() {
       if (response.status === 200) {
         const data = response.data;
 
-        if (data.userId) {
-          storage.set('userId', data.userId.toString());
+        if (data?.data?.userId) {
+          storage.set('userId', data.data.userId.toString());
         }
 
-        if (data.token) {
-          storage.set('token', data.token);
+        if (data?.data?.token) {
+          storage.set('token', data.data.token);
+          console.log(data.data.token);   
         }
+        console.log(data.data.token);
+
 
         navigation.navigate(ScreensName.MainTabNavigation);
       }

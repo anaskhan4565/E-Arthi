@@ -5,42 +5,41 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 
-import Navbar from '../../../Navbar/Navbar.jsx';
-import CustomSearchApp from '../../../CustomComponent/CustomSearchApp.jsx';
-import EInventoryBoxes from '../../../CustomComponent/EInventoryBoxes.jsx';
-import { fonts } from '../../../../../../util/Constants/FontName.js';
-import colors from '../../../../../../util/Constants/colors.js';
-import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
+import Navbar from '../../Navbar/Navbar.jsx';
+import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
+import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import colors from '../../../../../util/Constants/colors.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
-const loanOptions = [
+const warehouseOptions = [
     {
-        title: "New Loan",
-        screen: ScreensName.EENewLoan,
-        img: require("../../../../../assets/ELoanNew/1.png"),
+        title: "Warehouse Rental",
+        screen: ScreensName.EWarehouseRental,
+        img: require("../../../../assets/MainApp/E-Warehouse/Warehouse.png"),
     },
     {
-        title: "Current Loan",
-        screen: ScreensName.ELoanCurrentLoan,
-        img: require("../../../../../assets/ELoanNew/2.png"),
+        title: "Security",
+        screen: ScreensName.FoodSafetyAndSecurity,
+        img: require("../../../../assets/MainApp/E-Warehouse/SecurityShield.png"),
     },
     {
-        title: "History",
-        screen: ScreensName.ELoanHistory,
-        img: require("../../../../../assets/ELoanNew/3.png"),
+        title: "Monitoring",
+        screen: ScreensName.InventoryMonitoring,
+        img: require("../../../../assets/MainApp/E-Warehouse/Monitoring.png"),
     },
     {
-        title: "Pending Loan",
-        screen: ScreensName.ELoanPendingScreen,
-        img: require("../../../../../assets/ELoanNew/4.png"),
+        title: "Existing Rentals",
+        screen: ScreensName.EWarehousePreviousWarehouses,
+        img: require("../../../../assets/MainApp/E-Warehouse/Rentals.png"),
     }
 ];
 
-function ELoanHome() {
+function EWarehouseHomeScreen() {
     const { t } = useTranslation();
 
     return (
@@ -48,29 +47,29 @@ function ELoanHome() {
             <View style={styles.navbarContainer}>
                 <Navbar />
             </View>
-            
+
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
 
                 <View style={styles.titleWrapper}>
-                    <Text style={styles.titleText}>{t('E-Loan')}</Text>
+                    <Text style={styles.titleText}>{t('E-Warehouse')}</Text>
                 </View>
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.scrollContainer}>
-                        {loanOptions.map((option, index) => (
+                        {warehouseOptions.map((option, index) => (
                             <View style={styles.itemBoxWrapper} key={index}>
                                 <EInventoryBoxes
                                     name={t(option.title)}
                                     screenName={option.screen}
-                                    navigationName={ScreensName.ELoanMainStack}
+                                    navigationName={ScreensName.EWarehouseMainStack}
                                     SourceGiven={option.img}
                                     isNavigation={1}
-                                    w={wp("23%")}
+                                    w={wp("24%")}
                                     h={hp("14%")}
-                                    img_size_h={hp(7.5)}
+                                    img_size_h={hp(7)}
                                     img_size_w={wp(16)}
                                     font_Size={hp('1.8%')}
                                     isLightBold={true}
@@ -116,7 +115,8 @@ const styles = StyleSheet.create({
         letterSpacing: hp(0.1),
     },
     bodyContainer: {
-        // marginLeft: hp(3),
+        // marginHorizontal: hp(2),
+        // marginLeft: hp(2),
     },
     scrollContainer: {
         flexWrap: 'wrap',
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanHome;
+export default EWarehouseHomeScreen; 

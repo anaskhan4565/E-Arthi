@@ -21,7 +21,8 @@ const EInventoryBoxes = ({
     give_top_margin = 0,
     fontcolor = "black",
     amount,
-    SecondaryText = null
+    SecondaryText = null,
+    elevation = 5,
 
 }) => {
     const navigation = useNavigation();
@@ -40,7 +41,7 @@ const EInventoryBoxes = ({
     };
 
     return (
-        <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h }]}>
+        <TouchableOpacity onPress={handleNavigation} style={[styles.Wrapper, { width: w, height: h,elevation: elevation }]}>
             <View style={{ marginTop: SecondaryText ? hp(2) : null, }}>
                 <Image source={SourceGiven} style={[styles.ImageStyle, { width: img_size_w, height: img_size_h }]} />
                 <Text style={[styles.TextStyle, {
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         borderRadius: hp('1.3%'),
         backgroundColor: colors.WHITE,
         marginHorizontal: hp('1.4%'),
-        elevation: 5,
+     
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,

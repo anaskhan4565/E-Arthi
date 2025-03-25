@@ -19,6 +19,10 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from "i18next";
 
 import EWarehouse from "./E-Warehouse"
+import EWarehouseHomeScreen from "./EWarehouseHomeScreen"
+import EWarehouseRental from "./EWarehouseRental"
+import ESiloRental from "./ESiloRental"
+import EColdStorageRental from "./EColdStorageRental"
 import EWarehouseNewSpaceCropSelect from "./E-WarehouseNewSpaceCropSelect"
 import EWarehouseNewSpaceWarehouseSelect from "./E-WarehouseNewSpaceWarehouseSelect"
 import EWarehouseNewSpaceConfirmWarehouse from "./E-WarehouseNewSpaceConfirmWarehouse"
@@ -28,14 +32,22 @@ import FoodSurveillanceSelectWarehouse from "./FoodSurveillanceSelectWarehouse"
 import FoodSurveillanceWarehouse from "./FoodSurveillanceWarehouse"
 import FoodSurveillanceItem from "./FoodSurveillanceItem"
 import FoodSafetyAndSecurity from "./FoodSafetyAndSecurity";
+import EWarehouseSuccess from "./EWarehouseSuccess";
+import ESiloRental2 from "./EsiloRental2";
 const Stack = createNativeStackNavigator();
 
 
 function EWarehouseMainStack(): React.JSX.Element {
     return (
         //  <I18nextProvider i18n={i18next}>
-        <Stack.Navigator initialRouteName={ScreensName.EWarehouse} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={ScreensName.EWarehouseHomeScreen} screenOptions={{ headerShown: false }}>
             <Stack.Screen name={ScreensName.EWarehouse} component={EWarehouse} />
+            <Stack.Screen name={ScreensName.EWarehouseHomeScreen} component={EWarehouseHomeScreen} />
+            <Stack.Screen name={ScreensName.EWarehouseSuccess} component={EWarehouseSuccess} />
+            <Stack.Screen name={ScreensName.EWarehouseRental} component={EWarehouseRental} />
+            <Stack.Screen name={ScreensName.ESiloRental} component={ESiloRental} />
+            <Stack.Screen name={ScreensName.ESiloRental2} component={ESiloRental2} />
+            <Stack.Screen name={ScreensName.EColdStorageRental} component={EColdStorageRental} />
             <Stack.Screen name={ScreensName.EWarehouseNewSpaceCropSelect} component={EWarehouseNewSpaceCropSelect} />
             <Stack.Screen name={ScreensName.EWarehouseNewSpaceWarehouseSelect} component={EWarehouseNewSpaceWarehouseSelect} />
             <Stack.Screen name={ScreensName.EWarehouseNewSpaceConfirmWarehouse} component={EWarehouseNewSpaceConfirmWarehouse} />

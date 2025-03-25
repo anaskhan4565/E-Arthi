@@ -5,42 +5,42 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
-import Navbar from '../../../Navbar/Navbar.jsx';
-import CustomSearchApp from '../../../CustomComponent/CustomSearchApp.jsx';
-import EInventoryBoxes from '../../../CustomComponent/EInventoryBoxes.jsx';
-import { fonts } from '../../../../../../util/Constants/FontName.js';
-import colors from '../../../../../../util/Constants/colors.js';
-import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
+import Navbar from '../../Navbar/Navbar.jsx';
+import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
+import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx';
+import { fonts } from '../../../../../util/Constants/FontName.js';
+import colors from '../../../../../util/Constants/colors.js';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
-const loanOptions = [
+const warehouseTypes = [
     {
-        title: "New Loan",
-        screen: ScreensName.EENewLoan,
-        img: require("../../../../../assets/ELoanNew/1.png"),
+        title: "Silo",
+        screen: ScreensName.ESiloRental2,
+        img: require("../../../../assets/MainApp/E-Warehouse/Silo.png"),
     },
     {
-        title: "Current Loan",
-        screen: ScreensName.ELoanCurrentLoan,
-        img: require("../../../../../assets/ELoanNew/2.png"),
+        title: "Temperature Controlled",
+        screen: ScreensName.EWarehouseNewSpaceConfirmWarehouse,
+        img: require("../../../../assets/MainApp/E-Warehouse/TemperatureInside.png"),
     },
     {
-        title: "History",
-        screen: ScreensName.ELoanHistory,
-        img: require("../../../../../assets/ELoanNew/3.png"),
+        title: "Cold Storage",
+        screen: ScreensName.EColdStorageRental,
+        img: require("../../../../assets/MainApp/E-Warehouse/ColdStorage.png"),
     },
     {
-        title: "Pending Loan",
-        screen: ScreensName.ELoanPendingScreen,
-        img: require("../../../../../assets/ELoanNew/4.png"),
+        title: "Dry Beds",
+        screen: ScreensName.EWarehouseNewSpaceConfirmWarehouse,
+        img: require("../../../../assets/MainApp/E-Warehouse/DryBeds.png"),
     }
 ];
 
-function ELoanHome() {
+function EWarehouseRental() {
     const { t } = useTranslation();
 
     return (
@@ -48,30 +48,34 @@ function ELoanHome() {
             <View style={styles.navbarContainer}>
                 <Navbar />
             </View>
-            
+
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
                     <CustomSearchApp placeholder={t('Search in here')} />
                 </View>
 
                 <View style={styles.titleWrapper}>
-                    <Text style={styles.titleText}>{t('E-Loan')}</Text>
+                    <Text style={styles.titleText}>{t('Warehouse Rental')}</Text>
+                </View>
+
+                <View style={styles.subtitleWrapper}>
+                    <Text style={styles.subtitleText}>{t('Choose the warehouse you need')}</Text>
                 </View>
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.scrollContainer}>
-                        {loanOptions.map((option, index) => (
+                        {warehouseTypes.map((type, index) => (
                             <View style={styles.itemBoxWrapper} key={index}>
                                 <EInventoryBoxes
-                                    name={t(option.title)}
-                                    screenName={option.screen}
-                                    navigationName={ScreensName.ELoanMainStack}
-                                    SourceGiven={option.img}
+                                    name={t(type.title)}
+                                    screenName={type.screen}
+                                    navigationName={ScreensName.EWarehouseMainStack}
+                                    SourceGiven={type.img}
                                     isNavigation={1}
-                                    w={wp("23%")}
+                                    w={wp("26%")}
                                     h={hp("14%")}
-                                    img_size_h={hp(7.5)}
-                                    img_size_w={wp(16)}
+                                    img_size_h={hp(6.5)}
+                                    img_size_w={wp(14)}
                                     font_Size={hp('1.8%')}
                                     isLightBold={true}
                                     fontcolor={colors.BLACK}
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
     titleWrapper: {
         marginHorizontal: hp(4),
         marginTop: hp(1),
-        marginBottom: hp(2),
+        marginBottom: hp(0.5),
     },
     titleText: {
         fontSize: hp(3.2),
@@ -115,8 +119,18 @@ const styles = StyleSheet.create({
         color: colors.BLACK,
         letterSpacing: hp(0.1),
     },
+    subtitleWrapper: {
+        marginHorizontal: hp(4),
+        marginBottom: hp(2),
+    },
+    subtitleText: {
+        fontSize: hp(2),
+        fontFamily: fonts.Regular,
+        color: colors.DARK_GRAY,
+    },
     bodyContainer: {
-        // marginLeft: hp(3),
+        // marginHorizontal: hp(2),
+        // marginLeft: hp(2),
     },
     scrollContainer: {
         flexWrap: 'wrap',
@@ -133,4 +147,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanHome;
+export default EWarehouseRental; 

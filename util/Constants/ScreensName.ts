@@ -50,6 +50,9 @@ export default {
 
     EWarehouseMainStack: "EWarehouseMainStack",
     EWarehouse: "EWarehouse",
+    EWarehouseHomeScreen: "EWarehouseHomeScreen",
+    EWarehouseRental: "EWarehouseRental",
+    ESiloRental: "ESiloRental",
     EWarehouseNewSpaceCropSelect: "EWarehouseNewSpaceCropSelect",
     EWarehouseNewSpaceWarehouseSelect: "EWarehouseNewSpaceWarehouseSelect",
     EWarehouseNewSpaceConfirmWarehouse: "EWarehouseNewSpaceConfirmWarehouse",
@@ -180,4 +183,7 @@ export default {
     SummaryOfSpendingsScr: 'SummaryOfSpendingsScr',
     RaastPaymentScr: 'RaastPaymentScr',
 
+    EWarehouseSuccess: 'EWarehouseSuccess',
+    ESiloRental2:"ESiloRental2",
+    EColdStorageRental: 'EColdStorageRental',
 }

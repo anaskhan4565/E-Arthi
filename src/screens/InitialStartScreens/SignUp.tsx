@@ -63,9 +63,10 @@ function SignUp(): React.JSX.Element {
         setPasswordError(false);
         setNumberError(false);
 
-        if (!Name || !Email || !Password || !Number) {
+        if (!FirstName || !LastName || !Email || !Password || !Number) {
             setErrorMessage(t("Please fill all fields"));
-            if (!Name) setNameError(true);
+            if (!FirstName) setNameError(true);
+            if (!LastName) setNameError(true);
             if (!Password) setPasswordError(true);
             if (Number === "+92" || !Number) setNumberError(true);
             if (!Email) setEmailError(true);
@@ -105,8 +106,8 @@ function SignUp(): React.JSX.Element {
                 password: Password,
                 phone_number: Number,
                 email: Email,
-                first_name: Name,
-                last_name: Name,
+                first_name: FirstName,
+                last_name: LastName,
                 password2: Password,
             });
 
@@ -152,8 +153,8 @@ function SignUp(): React.JSX.Element {
                             style={styles.Input}
                             placeholder={t("First Name")}
                             placeholderTextColor={NameError ? colors.RED : colors.Text_Fancy}
-                            value={Name}
-                            onChangeText={(value) => setName(value)}
+                            value={FirstName}
+                            onChangeText={(value) => setFirstName(value)}
                         />
                     </View>
 
@@ -165,9 +166,8 @@ function SignUp(): React.JSX.Element {
                             style={styles.Input}
                             placeholder={t("Last Name")}
                             placeholderTextColor={NameError ? colors.RED : colors.Text_Fancy}
-                            value={Name}
-                            // onChangeText={(value) => setName(value)}
-                            //this needs to be resolved !
+                            value={LastName}
+                            onChangeText={(value) => setLastName(value)}
                         />
                     </View>
 

@@ -21,6 +21,7 @@ import {
 } from "react-native-responsive-screen";
 import userData from "../../../util/Constants/User";
 import { MMKV } from 'react-native-mmkv';
+import { Picker } from '@react-native-picker/picker';
 
 const { height, width } = Dimensions.get("window");
 import axios from "axios";
@@ -189,7 +190,7 @@ function SignIn() {
                   isheader={true}
                   padding_f={true}
                   placeholder={"+92"}
-                  w_given={hp(10)}
+                  w_given={hp(9.5)}
                   min_given={hp(11)}
                   onValueChange={(value) => setSelectedCountryCode(value)}
                   selectedValue={selectedCountryCode}

@@ -35,6 +35,9 @@ const { height, width } = Dimensions.get("window");
 
 function SignUp(): React.JSX.Element {
     const [Name, setName] = useState("");
+    const [LastName, setLastName] = useState("");
+    const [FirstName, setFirstName] = useState("");
+
     const [Email, setEmail] = useState("");
     const [Number, setNumber] = useState("+92");
     const [Password, setPassword] = useState("");
@@ -143,16 +146,31 @@ function SignUp(): React.JSX.Element {
 
             <View style={styles.inputs}>
                 <View>
-                    <Text style={styles.inputBoxLabel}>{t("Full Name")}</Text>
+                    <Text style={styles.inputBoxLabel}>{t("First Name")}</Text>
                     <View style={[styles.passInputBox, { borderColor: NameError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
-                            placeholder={t("Full Name")}
+                            placeholder={t("First Name")}
                             placeholderTextColor={NameError ? colors.RED : colors.Text_Fancy}
                             value={Name}
                             onChangeText={(value) => setName(value)}
                         />
                     </View>
+
+                </View>
+                <View>
+                    <Text style={styles.inputBoxLabel}>{t("Last Name")}</Text>
+                    <View style={[styles.passInputBox, { borderColor: NameError ? colors.RED : colors.LIGHT_GRAY }]}>
+                        <TextInput
+                            style={styles.Input}
+                            placeholder={t("Last Name")}
+                            placeholderTextColor={NameError ? colors.RED : colors.Text_Fancy}
+                            value={Name}
+                            // onChangeText={(value) => setName(value)}
+                            //this needs to be resolved !
+                        />
+                    </View>
+
                 </View>
                 <View>
                     <Text style={styles.inputBoxLabel}>

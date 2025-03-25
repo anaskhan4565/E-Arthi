@@ -43,7 +43,7 @@ function Connect(): React.JSX.Element {
             BgGiven={colors.GREEN}
             txColor={colors.WHITE}
             isNavigation={true}
-            name={ScreensName.MorePage}
+            name={ScreensName.SignUp} 
           />
           <CustomButton
             MainText={t('Login')}

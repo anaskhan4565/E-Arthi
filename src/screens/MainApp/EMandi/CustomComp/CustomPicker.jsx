@@ -59,9 +59,10 @@ const CustomPicker = ({
           mode="dropdown"
           onValueChange={(e) => checkVal(e)}
           style={{
-            color: selectedValue === null ? colors.Text_Fancy : colors.BLACK, // Gray until selected
+            color: selectedValue === null ? colors.WHITE : colors.WHITE, // Gray until selected
             fontSize: hp(2.5),
-            // paddingLeft: hp(4), // Added left padding
+            fontFamily: fonts.Regular,
+            borderRadius: hp(0.5),
           }}
           itemStyle={[styles.pickerItem, { fontSize: placeholderFontSize }]}
         >

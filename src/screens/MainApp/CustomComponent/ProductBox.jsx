@@ -40,15 +40,16 @@ const ProductBox = ({ AddIcon = true, name,
         <Image
           source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/AddImg.png')}
           style={styles.ImageStyle}
-        />      {AddIcon && (
+        />     
+         AddIcon &&{ (
           <TouchableOpacity style={styles.addIcon} onPress={HandleAddPress}>
             <Image source={AddImg} style={styles.addIconImage} />
           </TouchableOpacity>
         )}
       </View>
       <View style={[styles.textContainer, { alignItems: iscentered ? 'center' : null }]}>
-        <Text style={[styles.TextStyle2, , { fontSize: iscentered ? hp(2) : null, fontFamily: iscentered ? fonts.Bold : null }]} numberOfLines={2} ellipsizeMode="tail">
-          {t(name)}
+      <Text style={[styles.TextStyle2, { fontSize: iscentered ? hp(2) : null, fontFamily: iscentered ? fonts.Bold : null }]} numberOfLines={2} ellipsizeMode="tail">
+      {t(name)}
         </Text>
         <View style={[styles.priceContainer]}>
           <Text style={[styles.TextStyle, styles.price, { textAlign: iscentered ? 'center' : null, fontSize: iscentered ? hp(1.4) : hp(1) }]}>{t('Price')}: PKR {price}</Text>
@@ -58,7 +59,7 @@ const ProductBox = ({ AddIcon = true, name,
             : null}
         </View>
         {save != null ?
-          <Text style={styles.TextStyle}>{t('Save')}: {t(save)}</Text>
+          <Text style={styles.TextStyle1}>{t('Save')}: PKR {t(save)}</Text>
           : null
         }
       </View>
@@ -106,8 +107,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   TextStyle: {
-    fontFamily: fonts.Medium,
+    fontFamily: fonts.SemiBold,
     textAlign: 'left',
+    fontSize: hp('1%'),
+  },
+  TextStyle1: {
+    fontFamily: fonts.SemiBold,
+    textAlign: 'left',
+    color: colors.GREEN,
     fontSize: hp('1%'),
   },
   TextStyle2: {

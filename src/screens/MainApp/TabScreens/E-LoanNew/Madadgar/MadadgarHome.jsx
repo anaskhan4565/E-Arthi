@@ -40,7 +40,7 @@ const MadadgarHome = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request For Madadgar Grant</Text>
+                <Text style={styles.mainTitle}>Request for Madadgar Grant</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}

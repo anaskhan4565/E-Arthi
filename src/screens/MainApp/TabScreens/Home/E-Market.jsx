@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import ECategories from "../../../../../util/Data/E-Categories.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
@@ -9,7 +9,6 @@ import {
 import colors from "../../../../../util/Constants/colors.js";
 import Categorybox from "../../CustomComponent/Categorybox.jsx";
 import ProductBox from "../../CustomComponent/ProductBox.jsx";
-
 import {
     SafeAreaView,
     ScrollView,
@@ -22,116 +21,92 @@ import {
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
 import { MMKV } from "react-native-mmkv";
-
 import TopProducts from "../EMarketPlaceProducts/TopProducts.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsThunk } from '../../../../redux/emarketThunks.js';
+import { setSelectedCategory, addToCart, setCart, setProducts } from '../../../../redux/emarketSlice';
 
 const EMarket = () => {
-    const [cart, setCart] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [productData, setProductData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
-
+    const dispatch = useDispatch();
+    const {
+        products,
+        loading: isLoading,
+        selectedCategory,
+        cart
+    } = useSelector(state => state.emarket);
+    const categoryEndpoints = {
+        Seeds: "Seeds",
+        Fertilizer: "Fertilizers",
+        Herbicide: "Herbicides",
+        Labour: "Labour",
+        Machinery: "Machinery",
+        Crops: "Crops",
+        Fungicide: "Fungicides"
+    };
     const storage = new MMKV();
     const Navigation = useNavigation();
-    const DefaultEndPoint = "https://eagri-backend.vercel.app/e_market/products/";
-    
-    const fetchProducts = async (url) => {
-        setIsLoading(true);
-        try {
-            // Get the authentication token from storage
-            const token = storage.getString('token');
-            console.log("the token is ",token)
-            // Set up headers with authorization token
-            const headers = {
-                'Content-Type': 'application/json',
-            };
-            
-            // Add Authorization header if token exists
-            if (token) {
-                headers['Authorization'] = `Token ${token}`;
-            }
-            console.log("Request Headers:", headers);
-
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: headers
-            });
-            console.log("the response is ",response)
-            if(response.status === 200){
-                const data = await response.json();
-                setProductData(data);
-                console.log("the data is ",data)
-            }
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            // Use TopProducts as fallback if API fails
-            setProductData(TopProducts);
-        } finally {
-            setIsLoading(false);
-            console.log("the error is ",error)
-        }
-    };
-
-    // Initial fetch when component mounts
-    useEffect(() => {
-        fetchProducts(DefaultEndPoint);
-    }, []);
-
-    // Fetch products when category changes
-    useEffect(() => {
-        if (selectedCategory) {
-            const categoryEndpoint = `https://eagri-backend.vercel.app/e_market/products/by-category/?category=${selectedCategory}`;
-            fetchProducts(categoryEndpoint);
-        } else {
-            fetchProducts(DefaultEndPoint);
-        }
-    }, [selectedCategory]);
-
     const { t } = useTranslation();
+    const DefaultEndPoint = "https://eagri-backend.vercel.app/e_market/products/";
+
+    React.useEffect(() => {
+        const token = storage.getString("token");
+        let endpoint = DefaultEndPoint;
+
+        if (selectedCategory && categoryEndpoints[selectedCategory]) {
+            endpoint = `https://eagri-backend.vercel.app/e_market/products/by-category/?category=${categoryEndpoints[selectedCategory]}`;
+        }
+
+        dispatch(fetchProductsThunk(endpoint, token));
+    }, [selectedCategory, dispatch]);
+
+    const handleCategorySelect = (category) => {
+        if (selectedCategory === category) {
+            dispatch(setProducts([]));
+            dispatch(setSelectedCategory(""));
+            return;
+        }
+        
+        dispatch(setProducts([]));
+        dispatch(setSelectedCategory(category));
+    };
 
     const handleAddItem = (product) => {
-        setCart((prevCart) => {
-            const existingItem = prevCart.find((item) => item.name === product.name);
-            let updatedCart;
-            if (existingItem) {
-                updatedCart = prevCart.map((item) =>
-                    item.name === product.name ? { ...item, quantity: item.quantity + 1 } : item
-                );
-            } else {
-                updatedCart = [...prevCart, { ...product, quantity: 1 }];
-            }
-
-            storage.set("cart", JSON.stringify(updatedCart)); // Save to MMKV
-            return updatedCart;
-        });
+        dispatch(addToCart(product));
+        // Save to MMKV
+        const updatedCart = [...cart, { ...product, quantity: 1 }];
+        storage.set("cart", JSON.stringify(updatedCart));
     };
 
-    // Load cart data when screen gains focus
     useFocusEffect(
         useCallback(() => {
             const savedCart = storage.getString("cart");
             if (savedCart) {
-                setCart(JSON.parse(savedCart));
+                dispatch(setCart(JSON.parse(savedCart)));
             }
-        }, [])
+        }, [dispatch])
     );
 
     const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
 
     const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalCost = cart.reduce((sum, item) => sum + item.quantity * parseInt(item.price?.replace(/,/g, '') || 0), 0);
+    const totalCost = cart.reduce((sum, item) =>
+        sum + item.quantity * parseInt(item.price?.replace(/,/g, '') || 0), 0
+    );
 
-    // Filter products based on search query
-    const filteredProducts = productData.filter((product) => 
+    const filteredProducts = products.filter((product) =>
         product.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleSearch = (query) => {
         setSearchQuery(query);
     };
+
+    // const handleCategorySelect = (category) => {
+    //     dispatch(setSelectedCategory(category));
+    // };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -140,8 +115,8 @@ const EMarket = () => {
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp 
-                        placeholder={t("Search in here")} 
+                    <CustomSearchApp
+                        placeholder={t("Search in here")}
                         onChangeText={handleSearch}
                         value={searchQuery}
                     />
@@ -163,7 +138,7 @@ const EMarket = () => {
                                             SourceGiven={Category.img}
                                             isNavigation={false}
                                             selectedCategory={selectedCategory}
-                                            setSelectedCategory={setSelectedCategory}
+                                            setSelectedCategory={(category) => handleCategorySelect(Category.title)} // Use the exact category title
                                             OnpressCustom={true}
                                         />
                                     </View>
@@ -188,7 +163,7 @@ const EMarket = () => {
                                         <ProductBox
                                             name={product.name}
                                             price={product.discounted_price}
-                                            save={(product.discounted_price) - product.price}
+                                            save={formatNumber(product.price - (product.discounted_price))}
                                             SourceGiven={product.image_url}
                                             old={product.price}
                                             isNavigation={0}
@@ -221,6 +196,7 @@ const EMarket = () => {
         </SafeAreaView>
     );
 };
+
 const styles = StyleSheet.create({
     productContainer: {
         flexDirection: "row",

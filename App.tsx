@@ -57,6 +57,8 @@ import PlantDoctorMainStack from "./src/screens/MainApp/TabScreens/Plant-Doctor/
 import ELoanHome from "./src/screens/MainApp/TabScreens/E-LoanNew/NewLoan/ELoanHome.jsx";
 import NewHomeMainStack from "./src/screens/MainApp/TabScreens/Home/NewHomeMainStack.jsx";
 import ELoanMainStack from "./src/screens/MainApp/TabScreens/E-Loan/E-LoanMainStack.tsx";
+import { Provider } from "react-redux";
+import store from "./src/redux/store.js";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -68,73 +70,75 @@ const slideFromLeftOptions: NativeStackNavigationOptions = {
 
 function App(): React.JSX.Element {
   return (
-    <I18nextProvider i18n={i18next}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
-          <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
-          <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
-          <Stack.Screen name={ScreensName.Connect} component={Connect} />
-          <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
-          <Stack.Screen name={ScreensName.LanguageSelect} component={LanguageSelect} />
+    <Provider store={store}>
+      <I18nextProvider i18n={i18next}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
+            <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
+            <Stack.Screen name={ScreensName.Connect} component={Connect} />
+            <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />
+            <Stack.Screen name={ScreensName.LanguageSelect} component={LanguageSelect} />
 
-          <Stack.Screen name={ScreensName.SelectLangSideBar} component={SelectLangSideBar} />
-
-
-          <Stack.Screen name={ScreensName.OTP} component={OTP} />
-          <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
-          <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
-          <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
-          <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
-          <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
-          <Stack.Screen name={ScreensName.Sidebar}
-            options={slideFromLeftOptions} component={Sidebar} />
-          <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
-          <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
-          <Stack.Screen name={ScreensName.Cnic_page_1} component={Cnic_page_1} />
-          <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2} />
-          <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification} />
-          <Stack.Screen name={ScreensName.BiometricSuccess} component={BiometricSuccess} />
+            <Stack.Screen name={ScreensName.SelectLangSideBar} component={SelectLangSideBar} />
 
 
-          {/* Specific to changing Lang */}
-          <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
-
-          <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
-          <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
-          <Stack.Screen name={ScreensName.EInventoryMainStack} component={EInventoryMainStack} />
-          <Stack.Screen name={ScreensName.EMarket} component={EMarket} />
-
-          <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
-          <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
-          <Stack.Screen name={ScreensName.EInventorySupplier} component={EInventorySupplier} />
-          <Stack.Screen name={ScreensName.EInventorySuppliersList} component={EInventorySuppliersList} />
-          <Stack.Screen name={ScreensName.EInventoryAddSuppliers} component={EInventoryAddSuppliers} />
-          <Stack.Screen name={ScreensName.EInventorySupplierReports} component={EInventorySupplierReports} />
-
-          <Stack.Screen name={ScreensName.MyProfileMainStack} component={MyProfileMainStack} />
+            <Stack.Screen name={ScreensName.OTP} component={OTP} />
+            <Stack.Screen name={ScreensName.SignIn} component={SignIn} />
+            <Stack.Screen name={ScreensName.MorePage} component={AboutMore} />
+            <Stack.Screen name={ScreensName.SignUp} component={SignUp} />
+            <Stack.Screen name={ScreensName.MainTabNavigation} component={MainTabNavigation} />
+            <Stack.Screen name={ScreensName.LocationPermission} component={LocationSys} />
+            <Stack.Screen name={ScreensName.Sidebar}
+              options={slideFromLeftOptions} component={Sidebar} />
+            <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
+            <Stack.Screen name={ScreensName.HomeScreen} component={HomeScr} />
+            <Stack.Screen name={ScreensName.Cnic_page_1} component={Cnic_page_1} />
+            <Stack.Screen name={ScreensName.Cnic_page_2} component={Cnic_page_2} />
+            <Stack.Screen name={ScreensName.BiometricVerification} component={BiometricVerification} />
+            <Stack.Screen name={ScreensName.BiometricSuccess} component={BiometricSuccess} />
 
 
-          <Stack.Screen name={ScreensName.BankRecieving} component={BankRecieving} />
-          <Stack.Screen name={ScreensName.RaastRecieving} component={RaastRecieving} />
-          <Stack.Screen name={ScreensName.Recieving} component={Recieving} />
-          <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
-          <Stack.Screen name={ScreensName.OTPSignUp} component={OTPSignUp} />
+            {/* Specific to changing Lang */}
+            <Stack.Screen name={ScreensName.ChangeLanguage} component={ChangeLanguage} />
+
+            <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
+            <Stack.Screen name={ScreensName.EVendorsMainStack} component={EVendorsMainStack} />
+            <Stack.Screen name={ScreensName.EInventoryMainStack} component={EInventoryMainStack} />
+            <Stack.Screen name={ScreensName.EMarket} component={EMarket} />
+
+            <Stack.Screen name={ScreensName.ETransportStack} component={ETransportStack} />
+            <Stack.Screen name={ScreensName.InventoryMonitoring} component={InventoryMonitoring} />
+            <Stack.Screen name={ScreensName.EInventorySupplier} component={EInventorySupplier} />
+            <Stack.Screen name={ScreensName.EInventorySuppliersList} component={EInventorySuppliersList} />
+            <Stack.Screen name={ScreensName.EInventoryAddSuppliers} component={EInventoryAddSuppliers} />
+            <Stack.Screen name={ScreensName.EInventorySupplierReports} component={EInventorySupplierReports} />
+
+            <Stack.Screen name={ScreensName.MyProfileMainStack} component={MyProfileMainStack} />
 
 
-          <Stack.Screen name={ScreensName.EMunshiMainStack} component={EMunshiMainStack} />
+            <Stack.Screen name={ScreensName.BankRecieving} component={BankRecieving} />
+            <Stack.Screen name={ScreensName.RaastRecieving} component={RaastRecieving} />
+            <Stack.Screen name={ScreensName.Recieving} component={Recieving} />
+            <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
+            <Stack.Screen name={ScreensName.OTPSignUp} component={OTPSignUp} />
 
-          <Stack.Screen name={ScreensName.EMandi} component={Overview} />
-          <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
-          <Stack.Screen name={ScreensName.Profile} component={Profile} />
-          <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
-          <Stack.Screen name={ScreensName.PlantDoctorMainStack} component={PlantDoctorMainStack} />
 
-          <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
-          <Stack.Screen name={ScreensName.NewHomeMainStack} component={NewHomeMainStack} />
-          <Stack.Screen name={ScreensName.ELoanMainStack} component={ELoanMainStack} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </I18nextProvider>
+            <Stack.Screen name={ScreensName.EMunshiMainStack} component={EMunshiMainStack} />
+
+            <Stack.Screen name={ScreensName.EMandi} component={Overview} />
+            <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
+            <Stack.Screen name={ScreensName.Profile} component={Profile} />
+            <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />
+            <Stack.Screen name={ScreensName.PlantDoctorMainStack} component={PlantDoctorMainStack} />
+
+            <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
+            <Stack.Screen name={ScreensName.NewHomeMainStack} component={NewHomeMainStack} />
+            <Stack.Screen name={ScreensName.ELoanMainStack} component={ELoanMainStack} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </I18nextProvider>
+    </Provider>
   );
 }
 

@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar.jsx";
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import colors from "../../../../../util/Constants/colors.js";
 
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
@@ -23,8 +23,13 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 
 import CloudSun from "../../../../assets/MainApp/PlantDoctor/CloudSun.png";
+
+
 const PlantDoctor = () => {
   const navigation = useNavigation();
+
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,7 +40,7 @@ const PlantDoctor = () => {
         <View style={styles.Title}>
           <Text style={styles.TitleText}>Plant Doctor</Text>
         </View>
-        
+
         {/* Weather and Spraying Section */}
         <View style={styles.Header}>
           <View style={styles.HeaderSection}>
@@ -57,16 +62,16 @@ const PlantDoctor = () => {
         {/* Crops Section */}
         <View style={styles.cropsContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/carrot.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/banana.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/cabage.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/strawberry.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/carrot.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/banana.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/cabage.png')} style={styles.cropIcon} />
-          <Image source={require('../../../../assets/MainApp/PlantDoctor/strawberry.png')} style={styles.cropIcon} />         
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/carrot.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/banana.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/cabage.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/strawberry.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/carrot.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/banana.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/cabage.png')} style={styles.cropIcon} />
+            <Image source={require('../../../../assets/MainApp/PlantDoctor/strawberry.png')} style={styles.cropIcon} />
           </ScrollView>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.addCropButton}
             onPress={() => navigation.navigate(ScreensName.AddCrop)}>
             <Text style={styles.addCropText}>Add more crops</Text>
@@ -77,7 +82,7 @@ const PlantDoctor = () => {
         <View style={styles.healSection}>
           <Text style={styles.sectionTitle}>Heal Your Crop</Text>
           <Text style={styles.sectionSubtitle}>Take a picture to see diagnosis and get a medicine</Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.takePictureButton}
             onPress={() => navigation.navigate(ScreensName.HealCropImageCapture)}>
             <Text style={styles.buttonText}>Take picture</Text>
@@ -86,14 +91,14 @@ const PlantDoctor = () => {
 
         {/* Features Grid */}
         <View style={styles.featuresGrid}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.featureItem}
             onPress={() => navigation.navigate(ScreensName.FertilizerCalculator)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Fertilizer.png')} style={styles.featureIcon} />
             <Text style={styles.featureText}>Fertilizer Calculator</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.featureItem}
             onPress={() => navigation.navigate(ScreensName.PestsAndDiseases)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Worm.png')} style={styles.featureIcon} />
@@ -124,13 +129,13 @@ export default PlantDoctor;
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: colors.WHITE,
+    flex: 1,
+    backgroundColor: colors.WHITE,
   },
   navbarContainer: {
-      height: hp("8.2%"),
-      backgroundColor: "white",
-      marginTop: hp("0.14%"),
+    height: hp("8.2%"),
+    backgroundColor: "white",
+    marginTop: hp("0.14%"),
   },
   Title: {
     marginHorizontal: hp("4%"),

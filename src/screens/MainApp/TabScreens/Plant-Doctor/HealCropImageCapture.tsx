@@ -21,6 +21,8 @@ import { fonts } from "../../../../../util/Constants/FontName.js";
 import captureButton from './AssetsPlantDr/HealCrop/button.png';
 import galleryButton from './AssetsPlantDr/HealCrop/gallery.png';
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
+import axios from 'axios';
+import { PLANTIX_API_KEY } from '@env';
 
 const HealCropImageCapture = () => {
     const { t } = useTranslation();
@@ -89,9 +91,70 @@ const HealCropImageCapture = () => {
     };
 
     const handleProceed = () => {
-        //just remove !
         if (!selectedImage) {
             navigation.navigate(ScreensName.Diagnosis, { imageUri: selectedImage });
+        }
+    };
+
+    const analyzePlantImage = async () => {
+        const apiKey = PLANTIX_API_KEY
+     
+        const testImagePath = Image.resolveAssetSource(require('./AssetsPlantDr/Diagnosis/wheat.png')).uri;
+
+        const formData = new FormData();
+
+        formData.append('image', {
+            uri: testImagePath,
+            type: 'image/png',
+            name: 'plant_image.png'
+        });
+        formData.append('application_used_image_gallery', 'false');
+
+        formData.append('crop', 'wheat');
+
+        formData.append('application_id', 'YourAppName');
+        formData.append('application_end_user_id', 'TestUser001');
+
+        try {
+            console.log('Sending API request...');
+
+            console.log('FormData entries:');
+            for (const pair of formData._parts) {
+                console.log(pair[0] + ': ' + JSON.stringify(pair[1]));
+            }
+
+            const response = await fetch('https://api.plantix.net/v2/image_analysis', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Accept-Language': 'en'
+                },
+                body: formData
+            });
+
+            const responseText = await response.text();
+            console.log('Response status:', response.status);
+            console.log('Response text:', responseText);
+
+            if (!response.ok) {
+                throw new Error(`Server responded with ${response.status}: ${responseText}`);
+            }
+
+            const responseData = JSON.parse(responseText);
+            console.log('Crop health:', responseData.crop_health);
+            console.log('Detected crops:', responseData.crops);
+
+            if (responseData.predicted_diagnoses && responseData.predicted_diagnoses.length > 0) {
+                console.log('Diagnosis:', responseData.predicted_diagnoses[0].common_name);
+                console.log('Likelihood:', responseData.predicted_diagnoses[0].diagnosis_likelihood);
+            }
+
+            return responseData;
+        } catch (error) {
+            console.error('Fetch error:', error);
+            throw error;
         }
     };
 
@@ -126,7 +189,7 @@ const HealCropImageCapture = () => {
                 <View style={styles.actionButtonsContainer}>
                     <TouchableOpacity
                         style={styles.iconButton}
-                        onPress={handleGalleryLaunch}
+                        onPress={analyzePlantImage}
                     >
                         <Image
                             source={galleryButton}
@@ -151,7 +214,7 @@ const HealCropImageCapture = () => {
                         !selectedImage && styles.proceedButtonDisabled
                     ]}
                     onPress={handleProceed}
-                    disabled={selectedImage}    //just add !
+                    disabled={selectedImage}
                 >
                     <Text style={styles.proceedButtonText}>Proceed</Text>
                 </TouchableOpacity>

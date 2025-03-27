@@ -49,13 +49,13 @@ const NewDrawerData = [
         screen: ScreensName.EInventoryMainStack,
         isNavigation: true,
     },
-    {
-        id: 'orders',
-        title: 'E-Orders',
-        svgImage: EOrdersIcon,
-        screen: ScreensName.EOrderMainStack,
-        isNavigation: true,
-    },
+    // {
+    //     id: 'orders',
+    //     title: 'E-Orders',
+    //     svgImage: EOrdersIcon,
+    //     screen: ScreensName.EOrderMainStack,
+    //     isNavigation: true,
+    // },
     {
         id: 'plantdoctor',
         title: 'Plant Doctor',

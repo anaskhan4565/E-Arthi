@@ -34,7 +34,7 @@ const warehouseOptions = [
     },
     {
         title: "Existing Rentals",
-        screen: ScreensName.EWarehousePreviousWarehouses,
+        screen: ScreensName.ExistingRentals,
         img: require("../../../../assets/MainApp/E-Warehouse/Rentals.png"),
     }
 ];

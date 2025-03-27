@@ -50,11 +50,9 @@ function EColdStorageRental() {
                 </View>
 
                 <View style={styles.infoBox}>
-                    <View style={styles.iconContainer}>
-                        <ColdStorageSVG width={hp(5)} height={hp(5)} />
-                    </View>
+                        <ColdStorageSVG width={wp(20)} height={hp(10)} />
                     <View style={styles.locationInfo}>
-                        <Text style={styles.locationLabel}>{t('Located:')}</Text>
+                        <Text style={styles.locationLabel}>Located:</Text>
                         <Text style={styles.locationValue}>{t('120 Km away')}</Text>
                     </View>
                 </View>
@@ -82,12 +80,12 @@ function EColdStorageRental() {
                                 onChangeText={setReservingAmount}
                                 keyboardType="numeric"
                             />
-                            <Text style={styles.dropdownIcon}>▼</Text>
+                            
                         </View>
                     </View>
 
                     <View style={styles.inputGroup}>
-                        <Text style={styles.inputLabel}>{t('Grading:')}</Text>
+                        <Text style={styles.inputLabel}>Grading</Text>
                         <View style={styles.dropdownContainer}>
                             <TextInput
                                 style={styles.textInput}
@@ -95,7 +93,7 @@ function EColdStorageRental() {
                                 value={grading}
                                 onChangeText={setGrading}
                             />
-                            <Text style={styles.dropdownIcon}>▼</Text>
+                            
                         </View>
                     </View>
 
@@ -108,7 +106,7 @@ function EColdStorageRental() {
                                 value={expirationDate}
                                 onChangeText={setExpirationDate}
                             />
-                            <Text style={styles.dropdownIcon}>▼</Text>
+                            
                         </View>
                     </View>
 
@@ -156,33 +154,38 @@ const styles = StyleSheet.create({
     infoBox: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginHorizontal: hp(2),
         marginVertical: hp(2),
         padding: hp(2),
-        backgroundColor: colors.LIGHT_GRAY_BG,
+        backgroundColor: colors.LIGHT_GREEN,
         borderRadius: hp(1),
+        elevation: 5,
     },
     iconContainer: {
         marginRight: hp(2),
     },
     locationInfo: {
-        flex: 1,
+        justifyContent: 'center',
+        marginRight: wp(10),
     },
     locationLabel: {
-        fontSize: hp(1.8),
-        fontFamily: fonts.Medium,
+        fontSize: hp(2.2),
+        fontFamily: fonts.Regular,
         color: colors.BLACK,
+        textAlign: 'center',
     },
     locationValue: {
-        fontSize: hp(2.2),
+        fontSize: hp(2.5),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
+        marginTop: hp(2),
     },
     formContainer: {
         marginHorizontal: hp(2),
     },
     sectionTitle: {
-        fontSize: hp(2.2),
+        fontSize: hp(2),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(2),

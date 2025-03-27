@@ -39,7 +39,7 @@ const NewHomeScreen = () => {
                                         svgImage={<item.svgImage width={wp(16)} height={hp(8)} />}
                                         onPress={() => handleNavigate(item.screen)}
                                         isNavigation={item.isNavigation}
-                                        w={wp('28%')}
+                                        w={wp('33%')}
                                         h={hp('15%')}
                                         style={styles.dashboardBox}
                                     />
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        paddingHorizontal: hp('2%'),
+        // paddingHorizontal: hp('2%'),
         justifyContent: 'center',
     },
     bodyContainer: {
@@ -83,14 +83,15 @@ const styles = StyleSheet.create({
         marginTop: hp(2),
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start',
-        marginHorizontal: -hp('0.7%'),
+        justifyContent: 'space-between',
+        // marginHorizontal: -hp('0.7%'),
     },
     boxWrapper: {
         // width: wp('31'),
         // marginBottom: hp('1%'),
         alignItems: 'center',
         marginBottom: hp('-1%'),
+        // backgroundColor: 'red',
     },
     dashboardBox: {
         backgroundColor: colors.WHITE,

@@ -22,8 +22,8 @@ const DashboardBox = ({
     style,
     onPress,
     isNavigation = false,
-    w = wp('23%'),
-    h = hp('12%')
+    w ,
+    h 
 }) => {
     const { t } = useTranslation();
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         // padding: hp('1%'),
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: hp('0.7%'),
+        // marginHorizontal: hp('0.7%'),
         // marginVertical: hp('0.7%'),
         flex: 1,
     },

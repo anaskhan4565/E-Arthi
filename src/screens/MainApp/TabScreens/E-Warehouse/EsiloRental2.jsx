@@ -25,6 +25,36 @@ function ESiloRental2() {
     const { t } = useTranslation();
     const navigation = useNavigation();
 
+    // Add data object to store dynamic values
+    const siloData = {
+        location: {
+            distance: '120',
+            unit: 'Km'
+        },
+        details: {
+            crop: 'Rice',
+            grade: 'A+'
+        },
+        space: {
+            total: 10000,
+            remaining: 8000,
+            unit: 'KG',
+            usagePercentage: 60
+        },
+        riceTypes: [
+            {
+                name: 'Basmati Rice',
+                stored: 1000,
+                image: require('../../../../assets/MainApp/E-Warehouse/Crop.png')
+            },
+            {
+                name: 'Brown Rice',
+                stored: 1000,
+                image: require('../../../../assets/MainApp/E-Warehouse/Crop.png')
+            }
+        ]
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -41,24 +71,25 @@ function ESiloRental2() {
                 </View>
 
                 <View style={styles.infoCard}>
-                    <View style={styles.infoCardLeft}>
-                        <SiloSVG width={wp(15)} height={hp(10)} style={styles.siloIcon} />
-                    </View>
+
+                    <SiloSVG width={wp(23)} height={hp(14)} style={styles.siloIcon} />
+
                     <View style={styles.infoCardRight}>
                         <View style={styles.locationContainer}>
-                            <Text style={styles.locationLabel}>{t('Located:')}</Text>
-                            <Text style={styles.locationValue}>{t('120 Km away')}</Text>
+                            <Text style={styles.locationLabel}>Located:</Text>
+                            <Text style={styles.locationValue}>
+                                {`${siloData.location.distance} ${siloData.location.unit} away`}
+                            </Text>
                         </View>
-                        <View style={styles.dividerHorizontal} />
                         <View style={styles.detailsContainer}>
                             <View style={styles.detailColumn}>
                                 <Text style={styles.detailLabel}>{t('Crop')}</Text>
-                                <Text style={styles.detailValue}>{t('Rice')}</Text>
+                                <Text style={styles.detailValue}>{t(siloData.details.crop)}</Text>
                             </View>
                             <View style={styles.verticalDivider} />
                             <View style={styles.detailColumn}>
                                 <Text style={styles.detailLabel}>{t('Grade')}</Text>
-                                <Text style={styles.detailValue}>{t('A+')}</Text>
+                                <Text style={styles.detailValue}>{siloData.details.grade}</Text>
                             </View>
                         </View>
                     </View>
@@ -66,53 +97,54 @@ function ESiloRental2() {
 
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}>{t('Total Space')}</Text>
-                    
+
                     <View style={styles.circularProgressContainer}>
                         <AnimatedCircularProgress
                             size={wp(25)}
-                            width={wp(3)}
-                            fill={80}
-                            tintColor={colors.PRIMARY}
-                            backgroundColor="#e8f5e9"
+                            width={wp(4)}
+                            fill={siloData.space.usagePercentage}
+                            tintColor={colors.GREEN}
+                            backgroundColor={'#B4F8B4'}
                             rotation={0}
                             lineCap="round"
                         />
                         <View style={styles.spaceInfoContainer}>
                             <View style={styles.spaceInfoRow}>
-                                <Text style={styles.totalSpaceValue}>{t('10000 KG')}</Text>
+                                <Text style={styles.totalSpaceValue}>
+                                    {`${siloData.space.total} ${siloData.space.unit}`}
+                                </Text>
                                 <Text style={styles.spaceLabel}>{t('Total space')}</Text>
                             </View>
                             <View style={styles.spaceInfoRow}>
-                                <Text style={styles.remainingSpaceValue}>{t('8000 KG')}</Text>
+                                <Text style={styles.remainingSpaceValue}>
+                                    {`${siloData.space.remaining} ${siloData.space.unit}`}
+                                </Text>
                                 <Text style={styles.spaceLabel}>{t('Remaining space')}</Text>
                             </View>
                         </View>
                     </View>
-                    
+
                     <View style={styles.dividerHorizontal} />
-                    
+
                     <View style={styles.riceTypesContainer}>
-                        <View style={styles.riceTypeColumn}>
-                            <Text style={styles.riceTypeTitle}>{t('Basmati Rice')}</Text>
-                            <Image 
-                                source={require('../../../../assets/MainApp/E-Warehouse/Crop.png')} 
-                                style={styles.cropImage} 
-                                resizeMode="contain"
-                            />
-                            <Text style={styles.riceTypeValue}>{t('1000 KG stored')}</Text>
-                        </View>
-                        
-                        <View style={styles.verticalDivider} />
-                        
-                        <View style={styles.riceTypeColumn}>
-                            <Text style={styles.riceTypeTitle}>{t('Brown Rice')}</Text>
-                            <Image 
-                                source={require('../../../../assets/MainApp/E-Warehouse/Crop.png')} 
-                                style={styles.cropImage} 
-                                resizeMode="contain"
-                            />
-                            <Text style={styles.riceTypeValue}>{t('1000 KG stored')}</Text>
-                        </View>
+                        {siloData.riceTypes.map((riceType, index) => (
+                            <React.Fragment key={riceType.name}>
+                                <View style={styles.riceTypeColumn}>
+                                    <Text style={styles.riceTypeTitle}>{t(riceType.name)}</Text>
+                                    <Image
+                                        source={riceType.image}
+                                        style={styles.cropImage}
+                                        resizeMode="contain"
+                                    />
+                                    <Text style={styles.riceTypeValue}>
+                                        {`${riceType.stored} ${siloData.space.unit} stored`}
+                                    </Text>
+                                </View>
+                                {index < siloData.riceTypes.length - 1 && (
+                                    <View style={styles.verticalDivider} />
+                                )}
+                            </React.Fragment>
+                        ))}
                     </View>
                 </View>
             </ScrollView>
@@ -151,13 +183,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: wp(4),
         marginBottom: hp(3),
-        backgroundColor: colors.LIGHT_GRAY_BG || '#f5f5f5',
-        borderRadius: hp(1.5),
+        backgroundColor: colors.LIGHT_GREEN || '#f5f5f5',
+        borderRadius: 8,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        elevation: 2,
+        elevation: 5,
     },
     infoCardLeft: {
         width: wp(20),
@@ -174,20 +206,24 @@ const styles = StyleSheet.create({
     },
     locationContainer: {
         marginBottom: hp(1),
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: wp(11),
     },
     locationLabel: {
-        fontSize: hp(1.8),
-        fontFamily: fonts.Medium,
-        color: colors.DARK_GRAY,
+        fontSize: hp(1.9),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
     },
     locationValue: {
-        fontSize: hp(2.2),
-        fontFamily: fonts.SemiBold,
+        fontSize: hp(1.9),
+        fontFamily: fonts.Medium,
         color: colors.BLACK,
+        marginLeft: wp(3),
     },
     dividerHorizontal: {
         height: 1,
-        backgroundColor: colors.LIGHT_GRAY,
+        backgroundColor: colors.GREEN,
         marginVertical: hp(1.5),
     },
     detailsContainer: {
@@ -210,12 +246,12 @@ const styles = StyleSheet.create({
     },
     verticalDivider: {
         width: 1,
-        backgroundColor: colors.LIGHT_GRAY,
+        backgroundColor: colors.GREEN,
         marginHorizontal: wp(2),
     },
     sectionContainer: {
         marginHorizontal: wp(4),
-        backgroundColor: colors.LIGHT_GRAY_BG || '#f5f5f5',
+        backgroundColor: colors.LIGHT_GREEN || '#f5f5f5',
         borderRadius: hp(1.5),
         padding: wp(4),
         marginBottom: hp(4),
@@ -238,6 +274,8 @@ const styles = StyleSheet.create({
     },
     spaceInfoRow: {
         marginBottom: hp(1),
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     totalSpaceValue: {
         fontSize: hp(2),
@@ -245,14 +283,15 @@ const styles = StyleSheet.create({
         color: colors.PRIMARY,
     },
     remainingSpaceValue: {
-        fontSize: hp(2),
+        fontSize: hp(1.8),
         fontFamily: fonts.SemiBold,
-        color: '#8bc34a',  // Light green
+        color: colors.COMPLETE_GREEN,
     },
     spaceLabel: {
-        fontSize: hp(1.6),
+        fontSize: hp(1.8),
         fontFamily: fonts.Regular,
         color: colors.DARK_GRAY,
+        marginLeft: wp(3),
     },
     riceTypesContainer: {
         flexDirection: 'row',
@@ -264,19 +303,19 @@ const styles = StyleSheet.create({
         padding: wp(3),
     },
     riceTypeTitle: {
-        fontSize: hp(1.8),
-        fontFamily: fonts.SemiBold,
+        fontSize: hp(2.3),
+        fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(1.5),
         textAlign: 'center',
     },
     cropImage: {
-        width: wp(15),
-        height: hp(10),
+        width: wp(25),
+        height: hp(14),
         marginBottom: hp(1.5),
     },
     riceTypeValue: {
-        fontSize: hp(1.6),
+        fontSize: hp(1.8),
         fontFamily: fonts.Medium,
         color: colors.DARK_GRAY,
         textAlign: 'center',

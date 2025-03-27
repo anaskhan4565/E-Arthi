@@ -184,6 +184,8 @@ export default {
     RaastPaymentScr: 'RaastPaymentScr',
 
     EWarehouseSuccess: 'EWarehouseSuccess',
-    ESiloRental2:"ESiloRental2",
+    ESiloRental2: "ESiloRental2",
     EColdStorageRental: 'EColdStorageRental',
+    ExistingRentals: 'ExistingRentals',
+    RentalDetails: 'RentalDetails',
 }

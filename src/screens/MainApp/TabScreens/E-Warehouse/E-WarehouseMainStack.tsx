@@ -34,6 +34,8 @@ import FoodSurveillanceItem from "./FoodSurveillanceItem"
 import FoodSafetyAndSecurity from "./FoodSafetyAndSecurity";
 import EWarehouseSuccess from "./EWarehouseSuccess";
 import ESiloRental2 from "./EsiloRental2";
+import ExistingRentals from "./ExistingRentals";
+import RentalDetails from "./RentalDetails";
 const Stack = createNativeStackNavigator();
 
 
@@ -57,7 +59,8 @@ function EWarehouseMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.FoodSurveillanceWarehouse} component={FoodSurveillanceWarehouse} />
             <Stack.Screen name={ScreensName.FoodSurveillanceItem} component={FoodSurveillanceItem} />
             <Stack.Screen name={ScreensName.FoodSafetyAndSecurity} component={FoodSafetyAndSecurity} />
-
+            <Stack.Screen name={ScreensName.ExistingRentals} component={ExistingRentals} />
+            <Stack.Screen name={ScreensName.RentalDetails} component={RentalDetails} />
         </Stack.Navigator>
         // </I18nextProvider>
     );

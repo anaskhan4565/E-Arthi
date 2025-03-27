@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     Header: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignContent: "center",
+        alignItems: "center",
     },
     ItemName: {
         fontSize: hp(1.5),
@@ -64,22 +64,23 @@ const styles = StyleSheet.create({
         marginBottom: hp(0.5),
     },
     bodyText: {
-        fontSize: hp(1),
+        fontSize: hp(1.4),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
+ 
     },
     StatusWrapper: {
-        height: hp(2),
         marginLeft: hp(0.5),
         alignSelf: "center",
         justifyContent: "center",
         borderRadius: hp(0.7),
+        marginBottom: hp(0.8),
     },
     statusText: {
-        fontSize: hp(1.2),
+        fontSize: hp(1.1),
         fontFamily: fonts.SemiBold,
         color: colors.WHITE,
-        padding: hp(0.2),
+        margin: hp(0.2),
         paddingHorizontal: wp(2)
     },
 });

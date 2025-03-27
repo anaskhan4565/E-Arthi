@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
     SafeAreaView,
     StyleSheet,
@@ -6,12 +6,14 @@ import {
     View,
     Image,
     TouchableOpacity,
+    Alert,
 } from "react-native";
-import { Camera, useCameraDevices } from "react-native-vision-camera";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import colors from "../../../../../util/Constants/colors.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import { useTranslation } from "react-i18next";
@@ -19,66 +21,79 @@ import { fonts } from "../../../../../util/Constants/FontName.js";
 import captureButton from './AssetsPlantDr/HealCrop/button.png';
 import galleryButton from './AssetsPlantDr/HealCrop/gallery.png';
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
-import { useNavigation } from "@react-navigation/native";
 
 const HealCropImageCapture = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
-    const devices = useCameraDevices();
-    const device = devices.back;
-    const cameraRef = useRef(null);
+    const [selectedImage, setSelectedImage] = useState(null);
 
-    const [hasPermission, setHasPermission] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const handleCameraLaunch = () => {
+        const options = {
+            mediaType: 'photo',
+            quality: 1,
+            includeBase64: false,
+            saveToPhotos: false,
+        };
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const status = await Camera.requestCameraPermission();
-                setHasPermission(status === 'authorized');
-            } catch (error) {
-                console.error("Error requesting camera permission:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        })();
-    }, []);
+        launchCamera(options)
+            .then(response => {
+                if (response.didCancel) {
+                    console.log('User cancelled camera');
+                    return;
+                }
 
-    const takePicture = async () => {
-        if (cameraRef.current) {
-            try {
-                const photo = await cameraRef.current.takePhoto();
-                console.log("Photo taken:", photo);
-                navigation.navigate(ScreensName.Diagnosis, { imageUri: photo.path });
-            } catch (error) {
-                console.error("Error taking photo:", error);
-            }
-        }
+                if (response.errorCode) {
+                    console.error('ImagePicker Error:', response.errorMessage);
+                    Alert.alert('Error', 'Failed to capture image. Please try again.');
+                    return;
+                }
+
+                if (response.assets && response.assets[0]?.uri) {
+                    setSelectedImage(response.assets[0].uri);
+                }
+            })
+            .catch(error => {
+                console.error('Camera launch failed:', error);
+                Alert.alert('Error', 'Failed to launch camera. Please try again.');
+            });
     };
 
-    if (isLoading) return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.navbarContainer}>
-                <Navbar gobackOnly={true} />
-            </View>
-            <View style={[styles.contentContainer, styles.centerContent]}>
-                <Text style={styles.loadingText}>Loading camera...</Text>
-            </View>
-        </SafeAreaView>
-    );
+    const handleGalleryLaunch = () => {
+        const options = {
+            mediaType: 'photo',
+            quality: 1,
+            includeBase64: false,
+        };
 
-    if (!device || !hasPermission) return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.navbarContainer}>
-                <Navbar gobackOnly={true} />
-            </View>
-            <View style={[styles.contentContainer, styles.centerContent]}>
-                <Text style={styles.errorText}>
-                    {!hasPermission ? "Camera permission denied. Please enable camera access in settings." : "Camera not available on this device."}
-                </Text>
-            </View>
-        </SafeAreaView>
-    );
+        launchImageLibrary(options)
+            .then(response => {
+                if (response.didCancel) {
+                    console.log('User cancelled gallery picker');
+                    return;
+                }
+
+                if (response.errorCode) {
+                    console.error('ImagePicker Error:', response.errorMessage);
+                    Alert.alert('Error', 'Failed to pick image. Please try again.');
+                    return;
+                }
+
+                if (response.assets && response.assets[0]?.uri) {
+                    setSelectedImage(response.assets[0].uri);
+                }
+            })
+            .catch(error => {
+                console.error('Gallery launch failed:', error);
+                Alert.alert('Error', 'Failed to open gallery. Please try again.');
+            });
+    };
+
+    const handleProceed = () => {
+        //just remove !
+        if (!selectedImage) {
+            navigation.navigate(ScreensName.Diagnosis, { imageUri: selectedImage });
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -92,28 +107,54 @@ const HealCropImageCapture = () => {
                     <Text style={styles.subtitle}>Fit the damaged crop within the frame:</Text>
                 </View>
 
-                <View style={styles.cameraContainer}>
-                    {hasPermission ? (
-                        <Camera
-                            ref={cameraRef}
-                            style={styles.camera}
-                            device={device}
-                            isActive={true}
-                            photo={true}
+                <View style={styles.imagePreviewContainer}>
+                    {selectedImage ? (
+                        <Image
+                            source={{ uri: selectedImage }}
+                            style={styles.previewImage}
+                            resizeMode="contain"
                         />
                     ) : (
-                        <Text>No Camera Permission</Text>
+                        <View style={styles.placeholderContainer}>
+                            <Text style={styles.placeholderText}>
+                                Take a photo or select from gallery
+                            </Text>
+                        </View>
                     )}
                 </View>
 
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.galleryButton}>
-                        <Image style={styles.galleryButtonImage} source={galleryButton} />
+                <View style={styles.actionButtonsContainer}>
+                    <TouchableOpacity
+                        style={styles.iconButton}
+                        onPress={handleGalleryLaunch}
+                    >
+                        <Image
+                            source={galleryButton}
+                            style={styles.buttonIcon}
+                        />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
-                        <Image source={captureButton} style={styles.captureButtonImage} />
+
+                    <TouchableOpacity
+                        style={styles.iconButton}
+                        onPress={handleCameraLaunch}
+                    >
+                        <Image
+                            source={captureButton}
+                            style={styles.buttonIcon}
+                        />
                     </TouchableOpacity>
                 </View>
+
+                <TouchableOpacity
+                    style={[
+                        styles.proceedButton,
+                        !selectedImage && styles.proceedButtonDisabled
+                    ]}
+                    onPress={handleProceed}
+                    disabled={selectedImage}    //just add !
+                >
+                    <Text style={styles.proceedButtonText}>Proceed</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -126,7 +167,7 @@ const styles = StyleSheet.create({
     },
     navbarContainer: {
         height: hp("8.2%"),
-        backgroundColor: "white",
+        backgroundColor: colors.WHITE,
         marginTop: hp("0.14%"),
     },
     contentContainer: {
@@ -135,75 +176,80 @@ const styles = StyleSheet.create({
         padding: wp('4%'),
     },
     titleContainer: {
-        width: wp('80%'),
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-    },
-    galleryButtonImage: {
-        width: wp('15%'),
-        height: wp('15%'),
-        resizeMode: 'contain',
-    },
-    captureButtonImage: {
-        width: wp('15%'),
-        height: wp('15%'),
-        resizeMode: 'contain',
+        width: wp('90%'),
+        marginBottom: hp('2%'),
     },
     title: {
-        fontSize: hp('2.5%'),
+        fontSize: hp('2.8%'),
         fontFamily: fonts.SemiBold,
-        marginVertical: hp('1%'),
+        color: colors.BLACK,
+        marginBottom: hp('1%'),
     },
     subtitle: {
-        fontSize: hp('1.7%'),
+        fontSize: hp('1.8%'),
         fontFamily: fonts.Regular,
-        marginBottom: hp('2%'),
+        color: colors.GRAY,
     },
-    cameraContainer: {
-        width: wp('80%'),
-        height: hp('40%'),
+    imagePreviewContainer: {
+        width: wp('90%'),
+        height: hp('45%'),
         backgroundColor: colors.LIGHT_GRAY,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: hp('2%'),
+        borderRadius: wp('4%'),
+        overflow: 'hidden',
+        marginBottom: hp('3%'),
     },
-    camera: {
+    previewImage: {
         width: '100%',
         height: '100%',
     },
-    buttonContainer: {
+    placeholderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: wp('4%'),
+    },
+    placeholderText: {
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Regular,
+        color: colors.GRAY,
+        textAlign: 'center',
+    },
+    actionButtonsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        width: wp('60%'),
+        width: wp('90%'),
+        marginBottom: hp('3%'),
+        gap: wp('10%'),
     },
-    galleryButton: {
+    iconButton: {
         width: wp('15%'),
         height: wp('15%'),
         justifyContent: 'center',
         alignItems: 'center',
     },
-    captureButton: {
-        width: wp('15%'),
-        height: wp('15%'),
+    buttonIcon: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
+    },
+    proceedButton: {
+        width: wp('90%'),
+        height: hp('6%'),
+        backgroundColor: colors.COMPLETE_GREEN,
+        borderRadius: wp('2%'),
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: hp('2%'),
     },
-    centerContent: {
-        justifyContent: 'center',
-        alignItems: 'center',
+    proceedButtonDisabled: {
+        backgroundColor: colors.GRAY,
+        opacity: 0.5,
     },
-    loadingText: {
+    proceedButtonText: {
         fontSize: hp('2%'),
-        fontFamily: fonts.Regular,
-        textAlign: 'center',
-    },
-    errorText: {
-        fontSize: hp('2%'),
-        fontFamily: fonts.Regular,
-        textAlign: 'center',
-        color: colors.RED,
-        padding: wp('5%'),
+        fontFamily: fonts.SemiBold,
+        color: colors.WHITE,
     },
 });
 

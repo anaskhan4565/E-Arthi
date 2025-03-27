@@ -17,11 +17,14 @@ import Navbar from "../../Navbar/Navbar.jsx";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const Diagnosis = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const route = useRoute();
+    const imageUri = route.params?.imageUri;
+    console.log(imageUri);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -39,7 +42,7 @@ const Diagnosis = () => {
                 </View>
 
                 <View style={styles.imageContainer}>
-                   <Image source={require('./AssetsPlantDr/Diagnosis/Plant.png')} style={styles.image} />
+                   <Image source={{ uri: imageUri }} style={styles.image} />
                 </View>
 
                 <View style={styles.symptomsContainer}>

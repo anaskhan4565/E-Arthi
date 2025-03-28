@@ -23,10 +23,13 @@ import galleryButton from './AssetsPlantDr/HealCrop/gallery.png';
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import axios from 'axios';
 import { PLANTIX_API_KEY } from '@env';
+import { MMKV } from "react-native-mmkv";
 
 const HealCropImageCapture = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const PlantDiagnosisData=new MMKV();
+
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleCameraLaunch = () => {
@@ -147,8 +150,22 @@ const HealCropImageCapture = () => {
             console.log('Detected crops:', responseData.crops);
 
             if (responseData.predicted_diagnoses && responseData.predicted_diagnoses.length > 0) {
+                PlantDiagnosisData.set("Diagnosis", responseData.predicted_diagnoses[0].common_name);
+                PlantDiagnosisData.set("Likelihood", responseData.predicted_diagnoses[0].diagnosis_likelihood);
+                
+                // Convert array to a JSON string
+                PlantDiagnosisData.set("Preventive Measures", JSON.stringify(responseData.predicted_diagnoses[0].preventive_measures));
+                
+                // Convert object to string
+                PlantDiagnosisData.set("Treatment", JSON.stringify(responseData.predicted_diagnoses[0].treatment_chemical));
+                PlantDiagnosisData.set("Symptoms", JSON.stringify(responseData.predicted_diagnoses[0].symptoms));
+
                 console.log('Diagnosis:', responseData.predicted_diagnoses[0].common_name);
                 console.log('Likelihood:', responseData.predicted_diagnoses[0].diagnosis_likelihood);
+                console.log("Preventive Measures:", responseData.predicted_diagnoses[0].preventive_measures);
+                console.log("Treatment:",responseData.predicted_diagnoses[0].treatment_chemical)
+                console.log("Symptoms:",responseData.predicted_diagnoses[0].symptoms);
+                console.log("Treatment Organic:",responseData.predicted_diagnoses[0].treatment_organic);
             }
 
             return responseData;

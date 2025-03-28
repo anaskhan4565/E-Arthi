@@ -18,8 +18,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Navbar from "../../Navbar/Navbar.jsx";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
+import { MMKV } from "react-native-mmkv";
 const Treatment = () => {
     const navigation = useNavigation();
+    const PlantDiagnosisData=new MMKV();
+    const Likelihood=PlantDiagnosisData.getString("Likelihood");
+    const PreventiveMeasures=PlantDiagnosisData.getString("Preventive Measures");
+    const Treatment=PlantDiagnosisData.getString("Treatment");
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>

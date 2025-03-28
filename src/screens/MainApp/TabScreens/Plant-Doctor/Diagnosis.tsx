@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { MMKV } from "react-native-mmkv";
 
 const Diagnosis = () => {
     const { t } = useTranslation();
@@ -25,6 +26,10 @@ const Diagnosis = () => {
     const route = useRoute();
     const imageUri = route.params?.imageUri;
     console.log(imageUri);
+    const PlantDiagnosisData=new MMKV();
+    const Diagnosis=PlantDiagnosisData.getString("Diagnosis");
+  
+    const Symptoms=PlantDiagnosisData.getString("Symptoms");
 
     return (
         <SafeAreaView style={styles.container}>
@@ -35,7 +40,7 @@ const Diagnosis = () => {
                 <Text style={styles.title}>Diagnosis</Text>
 
                 <View style={styles.diagnosisContainer}>
-                    <Text style={styles.diagnosisTitle}>Fall Armyworm</Text>
+                    <Text style={styles.diagnosisTitle}>{Diagnosis}</Text>
                     <TouchableOpacity style={styles.insectButton}>
                         <Text style={styles.insectButtonText}>Insect</Text>
                     </TouchableOpacity>
@@ -48,15 +53,14 @@ const Diagnosis = () => {
                 <View style={styles.symptomsContainer}>
                     <Text style={styles.symptomsTitle}>Symptoms:</Text>
                     <Text style={styles.symptomsText}>
-                        1. Feeding damage on all plant parts{"\n"}
-                        2. Frass can be found on leaves{"\n"}
-                        3. Caterpillar has a Y-like pattern on the forehead and 4 dots on the back{"\n\n"}
-                        The larvae of the fall armyworm cause damage by feeding on all plant parts. Young larvae initially eat one side of the surface of the leaf tissue, leaving the opposite layer intact.
+                    {
+                        Symptoms
+                    }
                     </Text>
                 </View>
 
                 <View style={styles.moreInfoContainer}>
-                    <Text style={styles.moreInfoTitle}>More Info:</Text>
+                    <Text style={styles.moreInfoTitle}>Prevention Measures:</Text>
                     <Text style={styles.moreInfoText}>
                         Scientific Name: <Text style={styles.boldText}>Spodoptera Frugiperda</Text>{"\n"}
                         Also found in: Bean, Capsicum, Cucumber, Tomato, Cabbage, Lettuce

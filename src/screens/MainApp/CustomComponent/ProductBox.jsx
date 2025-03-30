@@ -13,6 +13,7 @@ const ProductBox = ({ AddIcon = true, name,
   price, save, old, SourceGiven,
   backColor = colors.WHITE,
   isNavigation, w = wp('40%'),
+  weight,Description,category,
   h = hp('28%'), onPressG, iscentered = null
 
 }) => {
@@ -22,7 +23,7 @@ const ProductBox = ({ AddIcon = true, name,
 
   const handlePress = () => {
     if (name) {
-      const productData = JSON.stringify({ name, price, save, old, SourceGiven });
+      const productData = JSON.stringify({ name, price, save, old, SourceGiven,weight,Description,category });
       ProductClickInfo.set('selectedProduct', productData);
       navigation.navigate(ScreensName.ProductScr);
     }

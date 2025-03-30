@@ -23,6 +23,13 @@ import PlantDoctor from "./PlantDoctor.tsx"
 import PestsAndDiseases from "./PestsAndDiseases.tsx";
 import FertilizerCombinations from "./FertilizerCombinations.tsx";
 import MopTspUrea from "./MopTspUrea.tsx";
+import CultivationTips from "./CultivationTips.jsx";
+import SeedlingStage from "./SeedlingStage.jsx";
+import FertilizationChemical from "./FertilizationChemical.jsx";
+import BasalFertilization from "./BasalFertilization.jsx";
+import PestAndDiseasesAlert from "./PestAndDiseasesAlert.tsx";
+import PlantDrCommunity from "./PlantDrCommunity.jsx";
+import DrPostDetail from "./DrCommunity2.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,10 +48,17 @@ function PlantDoctorMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.FertilizerCombinations} component={FertilizerCombinations} />
             <Stack.Screen name={ScreensName.MOPTSP} component={MopTspUrea} />
             <Stack.Screen name={ScreensName.Prevent} component={Prevent} />
+            <Stack.Screen name={ScreensName.PestAndDiseasesAlert} component={PestAndDiseasesAlert} />
             <Stack.Screen name={ScreensName.Treatment} component={Treatment} />
+            <Stack.Screen name={ScreensName.PlantDrCommunity} component={PlantDrCommunity} />
+            <Stack.Screen name={ScreensName.DrPostDetail} component={DrPostDetail} />
             <Stack.Screen name={ScreensName.TreatmentProductDescription} component={TreatmentProductDescription} />
             <Stack.Screen name={ScreensName.TreatNow} component={TreatNow} />
             <Stack.Screen name={ScreensName.PlantDoctor} component={PlantDoctor} />
+            <Stack.Screen name={ScreensName.CultivationTips} component={CultivationTips} />
+            <Stack.Screen name={ScreensName.SeedlingStage} component={SeedlingStage} />
+            <Stack.Screen name={ScreensName.FertilizationChemical} component={FertilizationChemical} />
+            <Stack.Screen name={ScreensName.BasalFertilization} component={BasalFertilization} />
         </Stack.Navigator>
         // </I18nextProvider>
     );

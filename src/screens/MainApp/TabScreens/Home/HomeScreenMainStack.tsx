@@ -21,6 +21,7 @@ import Profile from "../../EMandi/Screens/Profile";
 import EVendorsMainStack from "../E-Vendors/E-VendorsMainStack";
 import Home from "./HomeScr";
 import ETransportStack from "../E-Transport/E-TransportStack";
+import ProductScr from "../../Product/ProductScr";
 
 
 
@@ -36,6 +37,7 @@ function HomeScreenMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.Home} component={Home} />
             <Stack.Screen name={ScreensName.EMandi} component={Overview} />
             <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
+            <Stack.Screen name={ScreensName.ProductScr} component={ProductScr} />
             <Stack.Screen name={ScreensName.Profile} component={Profile} />
             <Stack.Screen name={ScreensName.EWarehouseMainStack} component={EWarehouseMainStack} />
             <Stack.Screen name={ScreensName.EOrderMainStack} component={EOrderMainStack} />

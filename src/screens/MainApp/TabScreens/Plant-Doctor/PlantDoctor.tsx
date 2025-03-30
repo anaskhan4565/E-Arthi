@@ -105,17 +105,17 @@ const PlantDoctor = () => {
             <Text style={styles.featureText}>Pests and Diseases</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.featureItem}>
+          <TouchableOpacity style={styles.featureItem} onPress={() => navigation.navigate(ScreensName.CultivationTips)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Seedling.png')} style={styles.featureIcon} />
             <Text style={styles.featureText}>Cultivation Tips</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.featureItem}>
+          <TouchableOpacity style={styles.featureItem} onPress={() => navigation.navigate(ScreensName.PestAndDiseasesAlert)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Warning.png')} style={styles.featureIcon} />
             <Text style={styles.featureText}>Pests and Disease Alert</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.featureItem}>
+          <TouchableOpacity style={styles.featureItem} onPress={() => navigation.navigate(ScreensName.PlantDrCommunity)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Chat.png')} style={styles.featureIcon} />
             <Text style={styles.featureText}>Community</Text>
           </TouchableOpacity>

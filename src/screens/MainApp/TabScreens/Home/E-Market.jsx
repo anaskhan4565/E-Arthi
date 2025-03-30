@@ -107,7 +107,6 @@ const EMarket = () => {
     // const handleCategorySelect = (category) => {
     //     dispatch(setSelectedCategory(category));
     // };
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -166,7 +165,10 @@ const EMarket = () => {
                                             save={formatNumber(product.price - (product.discounted_price))}
                                             SourceGiven={product.image_url}
                                             old={product.price}
+                                            category={product.category}
+                                            Description={product.description}
                                             isNavigation={0}
+                                            weight={product.weight}
                                             onPressG={() => handleAddItem(product)}
                                         />
                                     </View>

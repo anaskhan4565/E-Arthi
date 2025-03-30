@@ -21,6 +21,7 @@ import { fonts } from "../../../../../util/Constants/FontName.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
+import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 
 const FertilizerCombinations = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -34,17 +35,7 @@ const FertilizerCombinations = () => {
                 <Navbar gobackOnly={true} />
             </View>
             <View style={styles.searchContainer}>
-                <View style={styles.searchInputContainer}>
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Search in here"
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                    />
-                    <TouchableOpacity style={styles.searchIcon}>
-                        <Ionicons name="search" size={wp("5%")} color="#888" />
-                    </TouchableOpacity>
-                </View>
+               <CustomSearchApp placeholder={"Search in here"}/>
             </View>
 
             <ScrollView style={styles.contentContainer}>

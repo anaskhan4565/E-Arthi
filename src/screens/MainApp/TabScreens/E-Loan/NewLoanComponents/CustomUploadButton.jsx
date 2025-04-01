@@ -41,13 +41,13 @@ const CustomUploadButton = ({ isCamera = false, NoPic = false, PlaceHolderGiven 
     };
 
     return (
-        <View style={{ flex: 1, alignItems: 'flex-start', gap: hp(0.5) }}>
+        <View style={{ flex: 1, alignItems: 'flex-start', gap: hp(0.5),alignSelf:'center' }}>
             <View style={{ flex: 1, flexDirection: 'row', gap: hp(1) }}>
                 <Text style={{ fontSize: hp(2), fontFamily: fonts.Regular }}>{t(PlaceHolderGiven)}</Text>
                 <Image source={isCamera ? CameraPic : !NoPic ? UplodPic : null} style={{ width: hp(3.5), height: hp(3.1), resizeMode: 'contain' }} />
             </View>
             <TouchableOpacity onPress={handleButtonPress} style={[
-                { backgroundColor: colors.GREEN, padding: 10 },
+                { backgroundColor: colors.GREEN, padding: 10},
                 styles.Wrapper
             ]}>
                 <Text style={{ color: 'white', fontSize: hp('2.2%'), fontFamily: fonts.Regular }}>Upload</Text>

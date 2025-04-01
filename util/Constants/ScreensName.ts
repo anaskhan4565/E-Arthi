@@ -184,6 +184,24 @@ export default {
     ELoanMadadgarS3: "ELoanMadadgarS3",
     ELoanMadadgarSuccess: "ELoanMadadgarSuccess",
 
+    // Minority Loan screens
+    ELoanMinority: "ELoanMinority",
+    ELoanMinorityS2: "ELoanMinorityS2",
+    ELoanMinorityS3: "ELoanMinorityS3",
+    ELoanMinoritySuccess: "ELoanMinoritySuccess",
+
+    // Women Loan screens
+    ELoanWomen: "ELoanWomen",
+    ELoanWomenS2: "ELoanWomenS2",
+    ELoanWomenS3: "ELoanWomenS3",
+    ELoanWomenSuccess: "ELoanWomenSuccess",
+
+    // Micro Finance screens
+    ELoanMicroF: "ELoanMicroF",
+    ELoanMicroFS2: "ELoanMicroFS2",
+    ELoanMicroFS3: "ELoanMicroFS3",
+    ELoanMicroFSuccess: "ELoanMicroFSuccess",
+
     // Settlements screens
     SettlementsMainStack: 'SettlementsMainStack',
     SettlementsScr: 'SettlementsScr',

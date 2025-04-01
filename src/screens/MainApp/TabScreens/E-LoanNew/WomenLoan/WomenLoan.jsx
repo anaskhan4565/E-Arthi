@@ -27,8 +27,7 @@ const userInfo = {
     city: 'Karachi'
 };
 
-
-const MadadgarHome = () => {
+const WomenLoan = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [loanType, setLoanType] = useState('');
@@ -36,7 +35,7 @@ const MadadgarHome = () => {
     const [repaymentPeriod, setRepaymentPeriod] = useState('');
     const { height } = Dimensions.get("window");
 
-    return (
+  return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
                 <Navbar />
@@ -46,7 +45,7 @@ const MadadgarHome = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request for Madadgar Grant</Text>
+                <Text style={styles.mainTitle}>Request for Women Loan</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
@@ -170,10 +169,10 @@ const MadadgarHome = () => {
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMadadgarS2)}>
+                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanWomenS2)}>
                         <Text style={styles.continueButtonText}>Continue</Text>
                     </TouchableOpacity>
-                </View>
+    </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -281,4 +280,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MadadgarHome;
+export default WomenLoan;

@@ -16,7 +16,7 @@ import colors from '../../../../../../util/Constants/colors.js';
 import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
-import CustomUploadButton from '../../../../MainApp/TabScreens/E-Loan/NewLoanComponents/CustomUploadButton.jsx';
+import CustomButton from '../../../../../components/CustomButton.jsx';
 
 const userInfo = {
     name: 'ABC',
@@ -26,8 +26,7 @@ const userInfo = {
     city: 'Karachi'
 };
 
-
-const ELoanRequest2 = () => {
+const MinorityLS2 = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
 
@@ -41,7 +40,7 @@ const ELoanRequest2 = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request a New Loan</Text>
+                <Text style={styles.mainTitle}>Request For Minority Loan</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
@@ -51,32 +50,40 @@ const ELoanRequest2 = () => {
                     {/* Form Section */}
                     <View style={styles.formContainer}>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Recent Photograph" NoPic={true} />
+                            <Text style={styles.label}>Recent Photograph:</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Salary Certificate" NoPic={true} />
+                            <Text style={styles.label}>Salary Certificate:</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Bank Statement" NoPic={true} />
+                            <Text style={styles.label}>Bank Statement:</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Charge of Agriculture Land" NoPic={true} />
+                            <Text style={styles.label}>Charge of Agriculture Land:</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Mortgage of Property" NoPic={true} />
+                            <Text style={styles.label}>Mortgage of Property:</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="CNIC Image (Front)" NoPic={true} />
+                            <Text style={styles.label}>CNIC Image (Front):</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="CNIC Image (Back)" NoPic={true} />
+                            <Text style={styles.label}>CNIC Image (Back):</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Agricultural Passbook" NoPic={true} />
+                            <Text style={styles.label}>Agricultural Passbook:</Text>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanRequest3)}>
+                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMinorityS3)}>
                         <Text style={styles.continueButtonText}>Continue</Text>
                     </TouchableOpacity>
                 </View>
@@ -138,6 +145,26 @@ const styles = StyleSheet.create({
     },
     inputWrapper: {
         marginBottom: hp('2%'),
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    label: {
+        fontSize: hp('1.8%'),
+        width: wp('44%'),
+        marginBottom: hp('0.5%'),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+    },
+    input: {
+        height: hp('6%'),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        borderRadius: hp('1%'),
+        paddingHorizontal: wp('3%'),
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
     },
     continueButton: {
         backgroundColor: colors.GREEN,
@@ -154,4 +181,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanRequest2;
+export default MinorityLS2; 

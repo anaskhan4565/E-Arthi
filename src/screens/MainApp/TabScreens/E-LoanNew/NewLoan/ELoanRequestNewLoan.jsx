@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -7,6 +7,7 @@ import {
     View,
     TextInput,
     TouchableOpacity,
+    Dimensions,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +17,7 @@ import colors from '../../../../../../util/Constants/colors.js';
 import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
+import { Picker } from '@react-native-picker/picker';
 
 const userInfo = {
     name: 'ABC',
@@ -29,6 +31,10 @@ const userInfo = {
 const ELoanRequestNewLoan = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const [loanType, setLoanType] = useState('');
+    const [title, setTitle] = useState('');
+    const [repaymentPeriod, setRepaymentPeriod] = useState('');
+    const { height } = Dimensions.get("window");
 
     return (
         <SafeAreaView style={styles.container}>
@@ -97,20 +103,40 @@ const ELoanRequestNewLoan = () => {
 
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Loan Type:</Text>
-                            <TextInput 
-                                style={styles.input}
-                                placeholder="Select loan type"
-                                placeholderTextColor={colors.GRAY}
-                            />
+                            <View style={styles.pickerContainer}>
+                                <Picker
+                                    selectedValue={loanType}
+                                    onValueChange={(value) => setLoanType(value)}
+                                    style={styles.picker}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
+                                >
+                                    <Picker.Item label="Select loan type" value="" style={styles.pickerItem} />
+                                    <Picker.Item label="Personal" value="personal" style={styles.pickerItem} />
+                                    <Picker.Item label="Agriculture" value="agriculture" style={styles.pickerItem} />
+                                    <Picker.Item label="Mortgage" value="mortgage" style={styles.pickerItem} />
+                                    <Picker.Item label="Business" value="business" style={styles.pickerItem} />
+                                </Picker>
+                            </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Title:</Text>
-                            <TextInput 
-                                style={styles.input}
-                                placeholder="Select title"
-                                placeholderTextColor={colors.GRAY}
-                            />
+                            <View style={styles.pickerContainer}>
+                                <Picker
+                                    selectedValue={title}
+                                    onValueChange={(value) => setTitle(value)}
+                                    style={styles.picker}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
+                                >
+                                    <Picker.Item label="Select title" value="" style={styles.pickerItem} />
+                                    <Picker.Item label="Mr." value="mr" style={styles.pickerItem} />
+                                    <Picker.Item label="Mrs." value="mrs" style={styles.pickerItem} />
+                                    <Picker.Item label="Miss" value="miss" style={styles.pickerItem} />
+                                    <Picker.Item label="Dr." value="dr" style={styles.pickerItem} />
+                                </Picker>
+                            </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
@@ -125,11 +151,22 @@ const ELoanRequestNewLoan = () => {
 
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Desired Loan Repayment Period:</Text>
-                            <TextInput 
-                                style={styles.input}
-                                placeholder="Select duration"
-                                placeholderTextColor={colors.GRAY}
-                            />
+                            <View style={styles.pickerContainer}>
+                                <Picker
+                                    selectedValue={repaymentPeriod}
+                                    onValueChange={(value) => setRepaymentPeriod(value)}
+                                    style={styles.picker}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
+                                >
+                                    <Picker.Item label="Select period" value="" style={styles.pickerItem} />
+                                    <Picker.Item label="1 Year" value="1" style={styles.pickerItem} />
+                                    <Picker.Item label="2 Years" value="2" style={styles.pickerItem} />
+                                    <Picker.Item label="3 Years" value="3" style={styles.pickerItem} />
+                                    <Picker.Item label="4 Years" value="4" style={styles.pickerItem} />
+                                    <Picker.Item label="5 Years" value="5" style={styles.pickerItem} />
+                                </Picker>
+                            </View>
                         </View>
                     </View>
 
@@ -211,6 +248,23 @@ const styles = StyleSheet.create({
         fontSize: hp('1.8%'),
         fontFamily: fonts.Regular,
         color: colors.BLACK,
+    },
+    pickerContainer: {
+        height: hp('6%'),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        borderRadius: hp('1%'),
+        justifyContent: 'center',
+        overflow: 'hidden',
+    },
+    picker: {
+        height: hp('6%'),
+        color: colors.BLACK,
+        fontFamily: fonts.Regular,
+    },
+    pickerItem: {
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Regular,
     },
     continueButton: {
         backgroundColor: colors.GREEN,

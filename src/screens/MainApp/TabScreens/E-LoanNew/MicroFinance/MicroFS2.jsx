@@ -26,8 +26,7 @@ const userInfo = {
     city: 'Karachi'
 };
 
-
-const ELoanRequest2 = () => {
+const MicroFS2 = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
 
@@ -41,7 +40,7 @@ const ELoanRequest2 = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request a New Loan</Text>
+                <Text style={styles.mainTitle}>Request For Micro Finance</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
@@ -51,32 +50,26 @@ const ELoanRequest2 = () => {
                     {/* Form Section */}
                     <View style={styles.formContainer}>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Recent Photograph" NoPic={true} />
+                            <CustomUploadButton PlaceHolderGiven="Business Registration Certificate" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Salary Certificate" NoPic={true} />
+                            <CustomUploadButton PlaceHolderGiven="Tax Returns (Last 3 Years)" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Bank Statement" NoPic={true} />
+                            <CustomUploadButton PlaceHolderGiven="Bank Statements (Last 6 Months)" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Charge of Agriculture Land" NoPic={true} />
+                            <CustomUploadButton PlaceHolderGiven="Business Plan" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Mortgage of Property" NoPic={true} />
+                            <CustomUploadButton PlaceHolderGiven="Collateral Documents" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="CNIC Image (Front)" NoPic={true} />
-                        </View>
-                        <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="CNIC Image (Back)" NoPic={true} />
-                        </View>
-                        <View style={styles.inputWrapper}>
-                            <CustomUploadButton PlaceHolderGiven="Agricultural Passbook" NoPic={true} />
+                            <CustomUploadButton PlaceHolderGiven="Additional Supporting Documents" NoPic={true} />
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanRequest3)}>
+                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMicroFS3)}>
                         <Text style={styles.continueButtonText}>Continue</Text>
                     </TouchableOpacity>
                 </View>
@@ -154,4 +147,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanRequest2;
+export default MicroFS2;

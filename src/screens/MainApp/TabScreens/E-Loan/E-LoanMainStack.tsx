@@ -50,6 +50,24 @@ import MadadgarS2 from "../E-LoanNew/Madadgar/MadadgarS2";
 import MadadgarS3 from "../E-LoanNew/Madadgar/MadadgarS3";
 import MadadgarSuccess from "../E-LoanNew/Madadgar/MadadgarSuccess";
 
+// Import Minority Loan screens
+import MinorityL from "../E-LoanNew/MinorityLoan/MinorityL";
+import MinorityLS2 from "../E-LoanNew/MinorityLoan/MinorityLS2";
+import MinorityLS3 from "../E-LoanNew/MinorityLoan/MinorityLS3";
+import MinorityLSuccess from "../E-LoanNew/MinorityLoan/MinorityLSuccess";
+
+// Import Women Loan screens
+import WomenLoan from "../E-LoanNew/WomenLoan/WomenLoan";
+import WomenLoanS2 from "../E-LoanNew/WomenLoan/WomenLoanS2";
+import WomenLoanS3 from "../E-LoanNew/WomenLoan/WomenLoanS3";
+import WomenLoanSuccess from "../E-LoanNew/WomenLoan/WomenLoanSuccess";
+
+// Import Micro Finance screens
+import MicroF from "../E-LoanNew/MicroFinance/MicroF";
+import MicroFS2 from "../E-LoanNew/MicroFinance/MicroFS2";
+import MicroFS3 from "../E-LoanNew/MicroFinance/MicroFS3";
+import MicroFSuccess from "../E-LoanNew/MicroFinance/MicroFSuccess";
+
 const Stack = createNativeStackNavigator();
 
 
@@ -91,7 +109,23 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanMadadgarS3} component={MadadgarS3} />
             <Stack.Screen name={ScreensName.ELoanMadadgarSuccess} component={MadadgarSuccess} />
 
+            {/* Minority Loan screens */}
+            <Stack.Screen name={ScreensName.ELoanMinority} component={MinorityL} />
+            <Stack.Screen name={ScreensName.ELoanMinorityS2} component={MinorityLS2} />
+            <Stack.Screen name={ScreensName.ELoanMinorityS3} component={MinorityLS3} />
+            <Stack.Screen name={ScreensName.ELoanMinoritySuccess} component={MinorityLSuccess} />
 
+            {/* Women Loan screens */}
+            <Stack.Screen name={ScreensName.ELoanWomen} component={WomenLoan} />
+            <Stack.Screen name={ScreensName.ELoanWomenS2} component={WomenLoanS2} />
+            <Stack.Screen name={ScreensName.ELoanWomenS3} component={WomenLoanS3} />
+            <Stack.Screen name={ScreensName.ELoanWomenSuccess} component={WomenLoanSuccess} />
+
+            {/* Micro Finance screens */}
+            <Stack.Screen name={ScreensName.ELoanMicroF} component={MicroF} />
+            <Stack.Screen name={ScreensName.ELoanMicroFS2} component={MicroFS2} />
+            <Stack.Screen name={ScreensName.ELoanMicroFS3} component={MicroFS3} />
+            <Stack.Screen name={ScreensName.ELoanMicroFSuccess} component={MicroFSuccess} />
 
         </Stack.Navigator>
         // </I18nextProvider>

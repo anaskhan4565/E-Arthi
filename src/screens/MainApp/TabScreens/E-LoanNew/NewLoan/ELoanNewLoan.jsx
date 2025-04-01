@@ -43,7 +43,8 @@ const bankData = [
         id: 5,
         name: "Askari Bank",
         image: require('../../../../../assets/ELoanNew/TakeLoan/BanksImgs/AskariBank.png')
-    }
+    },
+
 ];
 
 
@@ -51,6 +52,7 @@ const specialPrograms = [
     {
         id: 1,
         title: 'Women Loan\nProgram',
+        screen: ScreensName.ELoanWomen,
         icon: require('../../../../../assets/ELoanNew/TakeLoan/1.png')
     },
     {
@@ -62,7 +64,15 @@ const specialPrograms = [
     {
         id: 3,
         title: 'Minority Loan\nProgram',
+        screen: ScreensName.ELoanMinority,
         icon: require('../../../../../assets/ELoanNew/TakeLoan/3.png')
+    },
+    {
+        id: 4,
+        title: 'Microfinance Bank',
+        screen: ScreensName.ELoanMicroF,
+        icon: require('../TempImgs/MFinance.png')
+
     }
 ];
 
@@ -233,9 +243,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp('3%'),
         backgroundColor: colors.LIGHT_GREEN,
         padding: hp('3%'),
+        flexWrap: 'wrap',
+        paddingVertical: hp('2%'),
     },
     programItem: {
         width: wp('28%'),
+        marginBottom: hp('2%'),
         alignItems: 'center',
     },
     programIcon: {

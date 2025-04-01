@@ -14,7 +14,7 @@ import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
 
-const ELoanSuccess = () => {
+const MinorityLSuccess = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const scaleAnim = useRef(new Animated.Value(0)).current;
@@ -31,7 +31,7 @@ const ELoanSuccess = () => {
     return (
         <View style={styles.container}>
             <Animated.Image
-                source={require('./Success.png')}
+                source={require('../NewLoan/Success.png')}
                 style={[
                     styles.successImage,
                     {
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanSuccess;
+export default MinorityLSuccess; 

@@ -14,7 +14,7 @@ import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
 
-const ELoanSuccess = () => {
+const MicroFSuccess = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const scaleAnim = useRef(new Animated.Value(0)).current;
@@ -39,7 +39,7 @@ const ELoanSuccess = () => {
                     },
                 ]}
             />
-            <Text style={styles.successText}>Your loan request has been successfully submitted!</Text>
+            <Text style={styles.successText}>Your Micro Finance loan request has been successfully submitted!</Text>
             <Text style={styles.subText}>We will review your application and get back to you soon.</Text>
 
             <TouchableOpacity
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanSuccess;
+export default MicroFSuccess; 

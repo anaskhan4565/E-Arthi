@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -17,6 +17,8 @@ import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
 import CustomButton from '../../../../../components/CustomButton.jsx';
+import { MMKV } from 'react-native-mmkv';
+import Routes from '../../../../../../util/Constants/Routes';
 
 const userInfo = {
     name: 'ABC',
@@ -30,6 +32,9 @@ const userInfo = {
 const ELoanRequest2 = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const storage = new MMKV();
+
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -44,43 +49,43 @@ const ELoanRequest2 = () => {
                 <Text style={styles.mainTitle}>Request a New Loan</Text>
 
                 <View style={styles.contentContainer}>
-                    {/* User Info Section */}
+
 
                     <Text style={styles.subTitle}>Upload the following documents:</Text>
 
-                    {/* Form Section */}
+
                     <View style={styles.formContainer}>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Recent Photograph:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Salary Certificate:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Bank Statement:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Charge of Agriculture Land:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Mortgage of Property:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>CNIC Image (Front):</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>CNIC Image (Back):</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Agricultural Passbook:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)} />
                         </View>
                     </View>
 

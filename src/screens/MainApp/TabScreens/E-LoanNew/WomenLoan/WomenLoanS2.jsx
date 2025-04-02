@@ -26,8 +26,7 @@ const userInfo = {
     city: 'Karachi'
 };
 
-
-const ELoanRequest2 = () => {
+const WomenLoanS2 = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
 
@@ -41,7 +40,7 @@ const ELoanRequest2 = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request a New Loan</Text>
+                <Text style={styles.mainTitle}>Request For Women Loan</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
@@ -76,7 +75,7 @@ const ELoanRequest2 = () => {
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanRequest3)}>
+                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanWomenS3)}>
                         <Text style={styles.continueButtonText}>Continue</Text>
                     </TouchableOpacity>
                 </View>
@@ -154,4 +153,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ELoanRequest2;
+export default WomenLoanS2; 

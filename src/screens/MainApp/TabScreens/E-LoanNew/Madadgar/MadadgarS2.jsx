@@ -16,7 +16,7 @@ import colors from '../../../../../../util/Constants/colors.js';
 import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
-import CustomButton from '../../../../../components/CustomButton.jsx';
+import CustomUploadButton from '../../../../MainApp/TabScreens/E-Loan/NewLoanComponents/CustomUploadButton.jsx';
 
 const userInfo = {
     name: 'ABC',
@@ -25,7 +25,6 @@ const userInfo = {
     email: 'abc@gmail.com',
     city: 'Karachi'
 };
-
 
 const MadadgarS2 = () => {
     const { t } = useTranslation();
@@ -51,36 +50,28 @@ const MadadgarS2 = () => {
                     {/* Form Section */}
                     <View style={styles.formContainer}>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Recent Photograph:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="Recent Photograph" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Salary Certificate:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="Salary Certificate" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Bank Statement:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="Bank Statement" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Charge of Agriculture Land:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="Charge of Agriculture Land" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Mortgage of Property:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="Mortgage of Property" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>CNIC Image (Front):</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="CNIC Image (Front)" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>CNIC Image (Back):</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="CNIC Image (Back)" NoPic={true} />
                         </View>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Agricultural Passbook:</Text>
-                            <CustomButton BgGiven={colors.GREEN} MainText="Upload" txColor={colors.WHITE} wgiven={wp(50)} hgiven={hp(4)}/>
+                            <CustomUploadButton PlaceHolderGiven="Agricultural Passbook" NoPic={true} />
                         </View>
                     </View>
 
@@ -143,29 +134,11 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         marginBottom: hp('3%'),
+        
     },
     inputWrapper: {
         marginBottom: hp('2%'),
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    label: {
-        fontSize: hp('1.8%'),
-        width: wp('44%'),
-        marginBottom: hp('0.5%'),
-        fontFamily: fonts.Medium,
-        color: colors.BLACK,
-    },
-    input: {
-        height: hp('6%'),
-        borderWidth: 1,
-        borderColor: colors.LIGHT_GRAY,
-        borderRadius: hp('1%'),
-        paddingHorizontal: wp('3%'),
-        fontSize: hp('1.8%'),
-        fontFamily: fonts.Regular,
-        color: colors.BLACK,
+        // alignItems: 'center',
     },
     continueButton: {
         backgroundColor: colors.GREEN,

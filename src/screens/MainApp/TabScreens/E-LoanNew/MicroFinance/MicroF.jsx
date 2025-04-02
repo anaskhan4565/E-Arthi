@@ -27,22 +27,16 @@ const userInfo = {
     city: 'Karachi'
 };
 
+
 const MicroF = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
-    const [loanType, setLoanType] = useState('Personal');
-    const [title, setTitle] = useState('Mr.');
-    const [repaymentPeriod, setRepaymentPeriod] = useState('1 Year');
-    const [loanAmount, setLoanAmount] = useState('');
-    const [purpose, setPurpose] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [cnic, setCnic] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
+    const [loanType, setLoanType] = useState('');
+    const [title, setTitle] = useState('');
+    const [repaymentPeriod, setRepaymentPeriod] = useState('');
     const { height } = Dimensions.get("window");
 
-  return (
+    return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
                 <Navbar />
@@ -52,35 +46,76 @@ const MicroF = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request For Micro Finance</Text>
+                <Text style={styles.mainTitle}>Request for Micro Finance</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
                     <View style={styles.infoSection}>
                         <Text style={styles.infoText}>Name: {userInfo.name}</Text>
                         <Text style={styles.infoText}>CNIC: {userInfo.cnic}</Text>
-                        <Text style={styles.infoText}>Contact: {userInfo.contact}</Text>
+                        <Text style={styles.infoText}>Contact Number: {userInfo.contact}</Text>
                         <Text style={styles.infoText}>Email: {userInfo.email}</Text>
                         <Text style={styles.infoText}>City: {userInfo.city}</Text>
                     </View>
 
-                    <Text style={styles.subTitle}>Loan Details</Text>
+                    <Text style={styles.subTitle}>Enter the following details:</Text>
 
                     {/* Form Section */}
                     <View style={styles.formContainer}>
+                        <View style={styles.inputWrapper}>
+                            <Text style={styles.label}>Entity Name:</Text>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder="Enter entity name"
+                                placeholderTextColor={colors.GRAY}
+                            />
+                        </View>
+
+                        <View style={styles.inputWrapper}>
+                            <Text style={styles.label}>Yearly Crop Revenue:</Text>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder="Enter yearly crop revenue"
+                                placeholderTextColor={colors.GRAY}
+                                keyboardType="numeric"
+                            />
+                        </View>
+
+                        <View style={styles.inputWrapper}>
+                            <Text style={styles.label}>Yearly Yield:</Text>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder="Enter yearly yield"
+                                placeholderTextColor={colors.GRAY}
+                                keyboardType="numeric"
+                            />
+                        </View>
+
+                        <View style={styles.inputWrapper}>
+                            <Text style={styles.label}>Monthly Net Income:</Text>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder="Enter monthly income"
+                                placeholderTextColor={colors.GRAY}
+                                keyboardType="numeric"
+                            />
+                        </View>
+
                         <View style={styles.inputWrapper}>
                             <Text style={styles.label}>Loan Type:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={loanType}
-                                    onValueChange={(itemValue) => setLoanType(itemValue)}
+                                    onValueChange={(value) => setLoanType(value)}
                                     style={styles.picker}
-                                    dropdownIconColor={colors.GRAY}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Personal" value="Personal" />
-                                    <Picker.Item label="Agriculture" value="Agriculture" />
-                                    <Picker.Item label="Mortgage" value="Mortgage" />
-                                    <Picker.Item label="Business" value="Business" />
+                                    <Picker.Item label="Select loan type" value="" style={styles.pickerItem} />
+                                    <Picker.Item label="Personal" value="personal" style={styles.pickerItem} />
+                                    <Picker.Item label="Agriculture" value="agriculture" style={styles.pickerItem} />
+                                    <Picker.Item label="Mortgage" value="mortgage" style={styles.pickerItem} />
+                                    <Picker.Item label="Business" value="business" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
@@ -90,25 +125,26 @@ const MicroF = () => {
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={title}
-                                    onValueChange={(itemValue) => setTitle(itemValue)}
+                                    onValueChange={(value) => setTitle(value)}
                                     style={styles.picker}
-                                    dropdownIconColor={colors.GRAY}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Mr." value="Mr." />
-                                    <Picker.Item label="Mrs." value="Mrs." />
-                                    <Picker.Item label="Miss" value="Miss" />
-                                    <Picker.Item label="Dr." value="Dr." />
+                                    <Picker.Item label="Select title" value="" style={styles.pickerItem} />
+                                    <Picker.Item label="Mr." value="mr" style={styles.pickerItem} />
+                                    <Picker.Item label="Mrs." value="mrs" style={styles.pickerItem} />
+                                    <Picker.Item label="Miss" value="miss" style={styles.pickerItem} />
+                                    <Picker.Item label="Dr." value="dr" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Loan Amount (PKR):</Text>
-                            <TextInput
-                                style={[styles.input, { width: wp('44%') }]}
-                                onChangeText={setLoanAmount}
-                                value={loanAmount}
+                            <Text style={styles.label}>Loan Amount:</Text>
+                            <TextInput 
+                                style={styles.input}
                                 placeholder="Enter loan amount"
+                                placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                             />
                         </View>
@@ -118,96 +154,26 @@ const MicroF = () => {
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={repaymentPeriod}
-                                    onValueChange={(itemValue) => setRepaymentPeriod(itemValue)}
+                                    onValueChange={(value) => setRepaymentPeriod(value)}
                                     style={styles.picker}
-                                    dropdownIconColor={colors.GRAY}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="1 Year" value="1 Year" />
-                                    <Picker.Item label="2 Years" value="2 Years" />
-                                    <Picker.Item label="3 Years" value="3 Years" />
-                                    <Picker.Item label="4 Years" value="4 Years" />
-                                    <Picker.Item label="5 Years" value="5 Years" />
+                                    <Picker.Item label="Select period" value="" style={styles.pickerItem} />
+                                    <Picker.Item label="1 Year" value="1" style={styles.pickerItem} />
+                                    <Picker.Item label="2 Years" value="2" style={styles.pickerItem} />
+                                    <Picker.Item label="3 Years" value="3" style={styles.pickerItem} />
+                                    <Picker.Item label="4 Years" value="4" style={styles.pickerItem} />
+                                    <Picker.Item label="5 Years" value="5" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
-
-                        <View style={[styles.inputWrapper, { flexDirection: 'column' }]}>
-                            <Text style={[styles.label, { width: '100%' }]}>Purpose of Loan:</Text>
-                            <TextInput
-                                style={[styles.input, { width: '100%', height: hp('10%'), textAlignVertical: 'top', paddingTop: hp('1%') }]}
-                                onChangeText={setPurpose}
-                                value={purpose}
-                                placeholder="Enter purpose of loan"
-                                multiline={true}
-                            />
-                        </View>
                     </View>
 
-                    <Text style={styles.subTitle}>Personal Information</Text>
-
-                    <View style={styles.formContainer}>
-                        <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Full Name:</Text>
-                            <TextInput
-                                style={[styles.input, { width: wp('44%') }]}
-                                onChangeText={setFullName}
-                                value={fullName}
-                                placeholder="Enter full name"
-                            />
-                        </View>
-
-                        <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>CNIC:</Text>
-                            <TextInput
-                                style={[styles.input, { width: wp('44%') }]}
-                                onChangeText={setCnic}
-                                value={cnic}
-                                placeholder="Enter CNIC"
-                                keyboardType="numeric"
-                            />
-                        </View>
-
-                        <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Mobile Number:</Text>
-                            <TextInput
-                                style={[styles.input, { width: wp('44%') }]}
-                                onChangeText={setMobileNumber}
-                                value={mobileNumber}
-                                placeholder="Enter mobile number"
-                                keyboardType="phone-pad"
-                            />
-                        </View>
-
-                        <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Email:</Text>
-                            <TextInput
-                                style={[styles.input, { width: wp('44%') }]}
-                                onChangeText={setEmail}
-                                value={email}
-                                placeholder="Enter email"
-                                keyboardType="email-address"
-                            />
-                        </View>
-
-                        <View style={[styles.inputWrapper, { flexDirection: 'column' }]}>
-                            <Text style={[styles.label, { width: '100%' }]}>Address:</Text>
-                            <TextInput
-                                style={[styles.input, { width: '100%', height: hp('10%'), textAlignVertical: 'top', paddingTop: hp('1%') }]}
-                                onChangeText={setAddress}
-                                value={address}
-                                placeholder="Enter address"
-                                multiline={true}
-                            />
-                        </View>
-                    </View>
-
-                    <TouchableOpacity 
-                        style={styles.continueButton} 
-                        onPress={() => navigation.navigate(ScreensName.ELoanMicroFS2)}
-                    >
+                    <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMicroFS2)}>
                         <Text style={styles.continueButtonText}>Continue</Text>
                     </TouchableOpacity>
-    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -266,13 +232,9 @@ const styles = StyleSheet.create({
     },
     inputWrapper: {
         marginBottom: hp('2%'),
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
     },
     label: {
         fontSize: hp('1.8%'),
-        width: wp('44%'),
         marginBottom: hp('0.5%'),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
@@ -289,17 +251,19 @@ const styles = StyleSheet.create({
     },
     pickerContainer: {
         height: hp('6%'),
-        width: wp('44%'),
         borderWidth: 1,
         borderColor: colors.LIGHT_GRAY,
         borderRadius: hp('1%'),
         justifyContent: 'center',
-        overflow: 'hidden',
+        overflow: 'scroll',
     },
     picker: {
         height: hp('6%'),
-        width: wp('44%'),
         color: colors.BLACK,
+        fontFamily: fonts.Regular,
+    },
+    pickerItem: {
+        fontSize: hp('1.6%'),
         fontFamily: fonts.Regular,
     },
     continueButton: {

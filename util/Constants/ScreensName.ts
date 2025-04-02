@@ -166,6 +166,7 @@ export default {
     SeedlingStage: "SeedlingStage",
     FertilizationChemical: "FertilizationChemical",
     BasalFertilization: "BasalFertilization",
+    Fetch1: "Fetch1",
     NewHomeMainStack: "NewHomeMainStack",
     NewHomeScreen: "NewHomeScreen",
     DashboardScreen: "DashboardScreen",

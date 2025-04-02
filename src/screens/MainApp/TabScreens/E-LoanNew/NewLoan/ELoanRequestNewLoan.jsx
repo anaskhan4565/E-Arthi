@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
     },
     pickerItem: {
-        fontSize: hp('1.8%'),
+        fontSize: hp('1.6%'),
         fontFamily: fonts.Regular,
     },
     continueButton: {

@@ -81,6 +81,9 @@ const NewLoan = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
 
+    const handleApplyToAllBanks = () => {
+        navigation.navigate(ScreensName.ELoanRequestNewLoan, { bankName: 'All' });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -99,7 +102,11 @@ const NewLoan = () => {
 
                     <View style={styles.banksGrid}>
                         {bankData.map((bank, index) => (
-                            <TouchableOpacity key={index} style={styles.bankItem} onPress={() => navigation.navigate(ScreensName.ELoanRequestNewLoan)}>
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.bankItem}
+                                onPress={() => navigation.navigate(ScreensName.ELoanRequestNewLoan, { bankName: bank.name })}
+                            >
                                 <View style={styles.bankLogoContainer}>
                                     <Image
                                         source={bank.image}
@@ -121,9 +128,19 @@ const NewLoan = () => {
                             style={styles.checkbox}
                             textComponent={true}
                             innerIconStyle={{ borderRadius: 5 }}
+                            isChecked={isSelected}
+                            onPress={() => setSelection(!isSelected)}
                         />
                         <Text style={styles.checkboxLabel}>Apply to all banks</Text>
                     </View>
+
+                    <TouchableOpacity
+                        style={[styles.applyButton, !isSelected && styles.disabledButton]}
+                        onPress={handleApplyToAllBanks}
+                        disabled={!isSelected}
+                    >
+                        <Text style={styles.applyButtonText}>Apply to All Banks</Text>
+                    </TouchableOpacity>
 
                     <Text style={styles.specialProgramsTitle}>Special Programs</Text>
 
@@ -261,7 +278,23 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#000000',
         fontFamily: fonts.Medium
-    }
+    },
+    applyButton: {
+        backgroundColor: colors.GREEN,
+        paddingVertical: hp('2%'),
+        paddingHorizontal: wp('4%'),
+        borderRadius: 8,
+        alignItems: 'center',
+        marginBottom: hp('3%'),
+    },
+    disabledButton: {
+        backgroundColor: colors.LIGHT_GRAY,
+    },
+    applyButtonText: {
+        color: colors.WHITE,
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.SemiBold,
+    },
 });
 
 export default NewLoan;

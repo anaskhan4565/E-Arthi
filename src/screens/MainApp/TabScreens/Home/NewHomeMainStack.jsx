@@ -17,6 +17,8 @@ import ScreensName from "../../../../../util/Constants/ScreensName";
 import ELoanMainStack from "../E-Loan/E-LoanMainStack";
 import PlantDoctorMainStack from "../Plant-Doctor/PlantDoctorMainStack";
 import SettlementsMainStack from "../Settlements/SettlementsMainStack";
+import EMarketMainStack from "./EMarketMainStack";
+import EMandiMainStack from "../E-Mandi/EMandiMainStack";
 
 
 
@@ -38,6 +40,9 @@ function NewHomeMainStack() {
       <Stack.Screen name={ScreensName.ELoanMainStack} component={ELoanMainStack} />
       <Stack.Screen name={ScreensName.PlantDoctorMainStack} component={PlantDoctorMainStack} />
       <Stack.Screen name={ScreensName.SettlementsMainStack} component={SettlementsMainStack} />
+      <Stack.Screen name={ScreensName.EMarketMainStack} component={EMarketMainStack} />
+      <Stack.Screen name={ScreensName.EMandiMainStack} component={EMandiMainStack} />
+      
     </Stack.Navigator>
   );
 }

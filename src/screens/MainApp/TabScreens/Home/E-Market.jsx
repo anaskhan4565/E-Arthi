@@ -359,7 +359,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingHorizontal: wp(3),
 
-
     },
     container: {
         flex: 1,

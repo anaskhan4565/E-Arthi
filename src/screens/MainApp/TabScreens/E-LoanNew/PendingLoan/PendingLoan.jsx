@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -6,6 +6,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -17,58 +18,28 @@ import ItemStatusBox from '../../E-Warehouse/CustomStylesComp/ItemStatusBox';
 import CustomDropdown from '../CustomComp/Dropdown.jsx';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
-const loanData = [
-    {
-        id: 1,
-        date: '09-02-2024',
-        bank: 'Askari Bank',
-        amount: '5,000',
-        status: 'Document REQ',
-        location: 'AgriFarm',
-        color: '#FFA412',
-        time: '9:00 AM'
-    },
-    {
-        id: 2,
-        date: '09-02-2024',
-        bank: 'Habib Bank',
-        amount: '10,000',
-        status: 'Under Review',
-        color: '#1B7ED4',
-        location: 'AgriFarm',
-        time: '6:00 PM'
-    },
-    {
-        id: 3,
-        date: '09-02-2024',
-        bank: 'Askari Bank',
-        amount: '44,700',
-        status: 'Processed',
-        location: 'AgriFarm',
-        color: '#52DC18',
-        time: '4:00 PM'
-    },
-    {
-        id: 4,
-        date: '09-02-2024',
-        bank: 'Askari Bank',
-        amount: '9,800',
-        status: 'Rejected',
-        color: '#F62919CC',
-        location: 'AgriFarm',
-        time: '9:00 AM'
-    },
-    {
-        id: 5,
-        date: '09-02-2024',
-        bank: 'Askari Bank',
-        amount: '54,000',
-        status: 'Rejected',
-        color: '#F62919CC',
-        location: 'AgriFarm',
-        time: '11:00 AM'
-    },
-];
+import Routes from '../../../../../../util/Constants/Routes';
+import axios from 'axios';
+import { storage } from '../../../../../screens/InitialStartScreens/SignIn.jsx';
+
+// Mapping for status colors
+const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+        case 'pending':
+            return '#FFA412';
+        case 'approved':
+            return '#52DC18';
+        case 'rejected':
+            return '#F62919CC';
+        case 'under review':
+            return '#1B7ED4';
+        case 'document req':
+            return '#FFA412';
+        default:
+            return '#1B7ED4';
+    }
+};
+
 const categories = [
     "All Categories",
     "Personal Loan",
@@ -86,7 +57,10 @@ const banks = [
 ];
 const PendingLoan = () => {
     const { t } = useTranslation();
-    
+    const [loanData, setLoanData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const StatusButton = ({ status }) => (
         <TouchableOpacity
             style={[
@@ -97,11 +71,65 @@ const PendingLoan = () => {
             <Text style={styles.statusText}>{status}</Text>
         </TouchableOpacity>
     );
-   
-    
+
+    useEffect(() => {
+        const fetchLoanData = async () => {
+            try {
+                // Get token from MMKV storage
+                const token = storage.getString('token');
+
+                if (!token) {
+                    console.error('No token found in storage');
+                    setError('Authentication error. Please login again.');
+                    setLoading(false);
+                    return;
+                }
+
+                // Make API call with token in header
+                const response = await axios.get(Routes.get_loan, {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+
+                // Filter to only show loans with pending status
+                const pendingLoans = response.data.filter(loan =>
+                    loan.status.toLowerCase() === 'pending'
+                );
+
+                setLoanData(pendingLoans);
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching loan data:", err);
+                setError("Failed to load loan data");
+                setLoading(false);
+            }
+        };
+
+        fetchLoanData();
+    }, []);
+
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedBank, setSelectedBank] = useState('');
     const navigation = useNavigation();
+
+    // Format date for display
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB'); // DD-MM-YYYY format
+    };
+
+    // Format time for display
+    const formatTime = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
+
+    // Format amount for display
+    const formatAmount = (amount) => {
+        return parseFloat(amount).toLocaleString();
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -113,8 +141,7 @@ const PendingLoan = () => {
             </View>
 
             <Text style={styles.mainTitle}>Pending Loan</Text>
-            {/* Updated dropdown container */}
-            
+
             <View style={styles.container2}>
                 <CustomDropdown
                     label="categories"
@@ -131,25 +158,51 @@ const PendingLoan = () => {
             </View>
 
             <ScrollView style={styles.scrollView}>
-                <View style={styles.rowContainer}>
-                    {loanData.map((loan, index) => (
-                        <View key={index} style={styles.columnItem}>
-                            <ItemStatusBox
-                                onPress={() => { navigation.navigate(ScreensName.ELoanEach, { loanId: loan.id, status: loan.status, bank: loan.bank, amount: loan.amount, date: loan.date, location: loan.location, time: loan.time, statusColor: loan.color }) }}
-                                bodyData={[
-                                    { label: "Date", data: loan.date },
-                                    { label: "Bank", data: loan.bank },
-                                    { label: "Amount", data: loan.amount },
-                                ]}
-                                name={"Loan: " + loan.id}
-                                status={loan.status}
-                                bgGiven={loan.color}
-                                statusTrueText={loan.status}
-                                statusFalseText={loan.status}
-                            />
-                        </View>
-                    ))}
-                </View>
+                {loading ? (
+                    <View style={styles.loaderContainer}>
+                        <ActivityIndicator size="large" color={colors.BLUE} />
+                    </View>
+                ) : error ? (
+                    <Text style={styles.errorText}>{error}</Text>
+                ) : (
+                    <View style={styles.rowContainer}>
+                        {loanData.map((loan, index) => {
+                            const statusColor = getStatusColor(loan.status);
+                            const createdDate = formatDate(loan.created_at);
+                            const createdTime = formatTime(loan.created_at);
+
+                            return (
+                                <View key={index} style={styles.columnItem}>
+                                    <ItemStatusBox
+                                        onPress={() => {
+                                            navigation.navigate(ScreensName.ELoanEach, {
+                                                loanId: loan.id,
+                                                status: loan.status,
+                                                bank: loan.bank_name,
+                                                amount: formatAmount(loan.loan_amount),
+                                                date: createdDate,
+                                                location: loan.city,
+                                                time: createdTime,
+                                                statusColor: statusColor,
+                                                loanDetails: loan
+                                            })
+                                        }}
+                                        bodyData={[
+                                            { label: "Date", data: createdDate },
+                                            { label: "Bank", data: loan.bank_name },
+                                            { label: "Amount", data: formatAmount(loan.loan_amount) },
+                                        ]}
+                                        name={"Loan: " + loan.id}
+                                        status={loan.status}
+                                        bgGiven={statusColor}
+                                        statusTrueText={loan.status}
+                                        statusFalseText={loan.status}
+                                    />
+                                </View>
+                            );
+                        })}
+                    </View>
+                )}
             </ScrollView>
         </SafeAreaView>
     );
@@ -214,10 +267,21 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     columnItem: {
-        width: wp('45%'), // Adjust this value to control item width
+        width: wp('45%'),
         marginBottom: hp('2%'),
     },
-
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: hp('10%'),
+    },
+    errorText: {
+        textAlign: 'center',
+        color: colors.RED,
+        fontSize: hp('2%'),
+        marginTop: hp('10%'),
+    },
     loanCard: {
         flexDirection: 'row',
         justifyContent: 'space-between',

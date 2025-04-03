@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ScreensName from '../../../../../util/Constants/ScreensName';
 import Home from './HomeScr';
-import EMarket from './E-Market';
+import EMarketMainStack from './EMarketMainStack';
 import EMunshi from '../E-Munshi/E-Munshi';
 import colors from '../../../../../util/Constants/colors';
 import { useTranslation } from 'react-i18next';
@@ -61,7 +61,7 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     friction: 9,
                     useNativeDriver: true,
                 }),
-                
+
                 // Animate new tab up with spring
                 Animated.spring(animatedValues[state.index], {
                     toValue: 1,
@@ -71,10 +71,10 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     useNativeDriver: true,
                 })
             ];
-            
+
             // Run animations in parallel for smoother transitions
             Animated.parallel(animations).start();
-            
+
             setPrevIndex(state.index);
         }
     }, [state.index, prevIndex, animatedValues]);
@@ -89,7 +89,7 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
             useNativeDriver: true,
         }).start();
     }, []);
-    
+
     // Helper function to render the label
     const renderLabel = (label: string | ((props: any) => React.ReactNode), isFocused: boolean, index: number) => {
         // Create animated opacity based on focus state
@@ -97,13 +97,13 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
             inputRange: [0, 1],
             outputRange: [0.7, 1],
         });
-        
+
         // Create animated scale for labels
         const scale = animatedValues[index].interpolate({
             inputRange: [0, 1],
             outputRange: [1, 1.1],
         });
-        
+
         if (typeof label === 'function') {
             return label({
                 focused: isFocused,
@@ -112,9 +112,9 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                 children: ''
             });
         }
-        
+
         return (
-            <Animated.Text 
+            <Animated.Text
                 style={[
                     styles.labelStyle,
                     {
@@ -147,7 +147,7 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     case 'Dashboard':
                         iconSource = require('../../../../assets/MainApp/NewTabIcons/DashBoard.png');
                         break;
-                    case t(ScreensName.EMarket):
+                    case t(ScreensName.EMarketMainStack):
                         iconSource = require('../../../../assets/MainApp/NewTabIcons/Cart.png');
                         break;
                     case t(ScreensName.EWarehouseMainStack):
@@ -182,18 +182,18 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     inputRange: [0, 1],
                     outputRange: [1, 1.2],
                 });
-                
+
                 const rotate = animatedValues[index].interpolate({
                     inputRange: [0, 1],
                     outputRange: ['0deg', '360deg'],
                 });
-                
+
                 // Shadow opacity and elevation animation
                 const shadowOpacity = animatedValues[index].interpolate({
                     inputRange: [0, 1],
                     outputRange: [0, 0.35],
                 });
-                
+
                 const elevation = animatedValues[index].interpolate({
                     inputRange: [0, 1],
                     outputRange: [0, 8],
@@ -211,7 +211,7 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                                 styles.iconContainer,
                                 {
                                     transform: [
-                                        { translateY }, 
+                                        { translateY },
                                         { scale }
                                     ],
                                     shadowOpacity,
@@ -219,7 +219,7 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                                 }
                             ]}
                         >
-                            <Animated.View 
+                            <Animated.View
                                 style={[
                                     isFocused ? styles.activeIconContainer : {},
                                     isFocused && { transform: [{ rotate }] }
@@ -245,14 +245,14 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
 export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
     const { t } = useTranslation();
-    
+
     // Transition configuration for screens
     const screenOptions = {
         headerShown: false,
         tabBarActiveTintColor: colors.GREEN,
         tabBarInactiveTintColor: colors.GRAY,
     };
-    
+
     return (
         <View style={styles.container}>
             <Tab.Navigator
@@ -275,8 +275,8 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name={t(ScreensName.EMarket)}
-                    component={EMarket}
+                    name={t(ScreensName.EMarketMainStack)}
+                    component={EMarketMainStack}
                     options={{
                         tabBarLabel: t('E-Market'),
                     }}

@@ -69,6 +69,7 @@ export default {
 
     EInventory: "E-Inventory",
     EMarket: "E-Market",
+    EMarketMainStack: "EMarketMainStack",
 
     //specific to each product
     ProductScr: "Product",
@@ -95,6 +96,12 @@ export default {
 
     //For E-Mandi
     EMandi: 'E-Mandi',
+    EMandiMainStack: 'EMandiMainStack',
+    EMandiHomeScreen: 'EMandiHomeScreen',
+    RequestForAuction: 'RequestForAuction',
+    MyAuctions: 'MyAuctions',
+    Auctions: 'Auctions',
+    AuctionHistory: 'AuctionHistory',
     MarketDept: 'MarketDept',
     Profile: 'Profile',
 

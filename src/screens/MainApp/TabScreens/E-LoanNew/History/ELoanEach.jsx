@@ -14,14 +14,23 @@ import colors from '../../../../../../util/Constants/colors';
 import { fonts } from '../../../../../../util/Constants/FontName';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
+
 const ELoanEach = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const route = useRoute();
-    const { loanId, status, bank, amount, date, location, time, statusColor="rgb(14, 174, 45)" } = route.params;
-     // Correct way to get params
+    const {
+        loanId,
+        status,
+        bank,
+        amount,
+        date,
+        location,
+        time,
+        statusColor = "rgb(14, 174, 45)",
+        loanDetails
+    } = route.params;
 
-    console.log(loanId)
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -35,22 +44,45 @@ const ELoanEach = () => {
             <ScrollView style={styles.scrollView}>
                 <View style={styles.loanContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.loanTitle}>Loan {loanId}</Text>
+                        <Text style={styles.loanTitle}>{loanDetails?.title || `Loan ${loanId}`}</Text>
                         <View style={[styles.statusContainer, { backgroundColor: statusColor }]}>
                             <Text style={styles.statusText}>{status}</Text>
                         </View>
                     </View>
 
-                    <View style={styles.detailsContainer}>
-                        <DetailRow label="Date" value={date} />
-                        <DetailRow label="Location" value={location} />
-                        <DetailRow label="Time" value={time}/>
-                        <DetailRow label="Bank" value={bank} />
-                        <DetailRow 
-                            label="Total amount" 
-                            value={`${amount} Rupees`}
-                            isLast={true}
-                        />
+                    <View style={styles.sectionContainer}>
+                        <Text style={styles.sectionTitle}>Basic Information</Text>
+                        <View style={styles.detailsContainer}>
+                            <DetailRow label="Loan ID" value={loanId.toString()} />
+                            <DetailRow label="Status" value={status} />
+                            <DetailRow label="Date" value={date} />
+                            <DetailRow label="Time" value={time} />
+                            <DetailRow label="Location" value={location} />
+                            <DetailRow label="Loan Type" value={loanDetails?.loan_type || '-'} isLast={true} />
+                        </View>
+                    </View>
+
+                    <View style={styles.sectionContainer}>
+                        <Text style={styles.sectionTitle}>Financial Details</Text>
+                        <View style={styles.detailsContainer}>
+                            <DetailRow label="Bank" value={bank} />
+                            <DetailRow label="Amount" value={`${amount} Rupees`} />
+                            <DetailRow label="Period" value={`${loanDetails?.desired_loan_period || '-'} months`} />
+                            <DetailRow label="Monthly Income" value={`${parseFloat(loanDetails?.monthly_net_income || 0).toLocaleString()} Rupees`} />
+                            <DetailRow label="Yearly Revenue" value={`${parseFloat(loanDetails?.yearly_crop_revenue || 0).toLocaleString()} Rupees`} />
+                            <DetailRow label="Yearly Yield" value={`${parseFloat(loanDetails?.yearly_yield || 0).toLocaleString()}`} isLast={true} />
+                        </View>
+                    </View>
+
+                    <View style={styles.sectionContainer}>
+                        <Text style={styles.sectionTitle}>Personal Information</Text>
+                        <View style={styles.detailsContainer}>
+                            <DetailRow label="Name" value={loanDetails?.name || '-'} />
+                            <DetailRow label="CNIC" value={loanDetails?.cnic || '-'} />
+                            <DetailRow label="Contact" value={loanDetails?.contact || '-'} />
+                            <DetailRow label="Email" value={loanDetails?.email || '-'} />
+                            <DetailRow label="Entity Name" value={loanDetails?.entity_name || '-'} isLast={true} />
+                        </View>
                     </View>
                 </View>
             </ScrollView>
@@ -87,6 +119,7 @@ const styles = StyleSheet.create({
     loanContainer: {
         marginHorizontal: wp('4%'),
         marginTop: hp('2%'),
+        marginBottom: hp('4%'),
         backgroundColor: colors.WHITE,
         borderRadius: hp('1%'),
         borderWidth: 1,
@@ -103,6 +136,7 @@ const styles = StyleSheet.create({
         fontSize: hp('2.4%'),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
+        flex: 1,
     },
     statusContainer: {
         backgroundColor: colors.GREEN,
@@ -115,12 +149,25 @@ const styles = StyleSheet.create({
         fontSize: hp('1.6%'),
         fontFamily: fonts.Medium,
     },
+    sectionContainer: {
+        marginTop: hp('2%'),
+    },
+    sectionTitle: {
+        fontSize: hp('2%'),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
+        marginBottom: hp('1%'),
+    },
     detailsContainer: {
         backgroundColor: colors.WHITE,
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        borderRadius: hp('1%'),
     },
     detailRow: {
         flexDirection: 'row',
         paddingVertical: hp('1.2%'),
+        paddingHorizontal: wp('3%'),
     },
     borderBottom: {
         borderBottomWidth: 1,

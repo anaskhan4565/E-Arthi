@@ -88,7 +88,7 @@ const NewDrawerData = [
         id: 'mandi',
         title: 'E-Mandi',
         svgImage: EMandiIcon,
-        screen: ScreensName.EMandi,
+        screen: ScreensName.EMandiMainStack,
         isNavigation: true,
     },
     {

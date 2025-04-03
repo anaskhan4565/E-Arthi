@@ -6,16 +6,28 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { fonts } from '../../../../util/Constants/FontName.js';
 import ScreensName from '../../../../util/Constants/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
-import AddImg from './TempImages/AddImg.png';
 import { MMKV } from 'react-native-mmkv';
 
-const ProductBox = ({ AddIcon = true, name,
-  price, save, old, SourceGiven,
-  backColor = colors.WHITE,
-  isNavigation, w = wp('40%'),
-  weight,Description,category,
-  h = hp('28%'), onPressG, iscentered = null
+const formatPrice = (price) => {
+  // Convert price to number if it's a string
+  const numPrice = typeof price === 'string' ? parseFloat(price.replace(/,/g, '')) : price;
+  
+  // Format number to include commas and limit decimal places
+  return numPrice.toLocaleString('en-IN', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  });
+};
 
+const ProductBox = ({ 
+  name,
+  price, 
+  discounted_price, 
+  SourceGiven,
+  category,
+  Description,
+  weight,
+  onPressG,
 }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -23,121 +35,162 @@ const ProductBox = ({ AddIcon = true, name,
 
   const handlePress = () => {
     if (name) {
-      const productData = JSON.stringify({ name, price, save, old, SourceGiven,weight,Description,category });
+      const productData = JSON.stringify({ 
+        name, price, discounted_price,
+        SourceGiven, weight, Description, category 
+      });
       ProductClickInfo.set('selectedProduct', productData);
       navigation.navigate(ScreensName.ProductScr);
     }
   };
 
-  const HandleAddPress = () => {
-    if (onPressG) {
-      onPressG();
-    }
+  // Format prices
+  const formattedPrice = formatPrice(price);
+  const formattedDiscountedPrice = discounted_price ? formatPrice(discounted_price) : null;
+
+  // Calculate font size based on price length
+  const getPriceFontSize = (priceString) => {
+    const length = priceString.length;
+    if (length > 12) return hp(1.6);
+    if (length > 8) return hp(1.8);
+    return hp(2);
   };
 
-  return (
-    <TouchableOpacity style={[styles.Wrapper, { width: w, height: h, backgroundColor: backColor }]} onPress={handlePress}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/AddImg.png')}
-          style={styles.ImageStyle}
-        />     
-         AddIcon &&{ (
-          <TouchableOpacity style={styles.addIcon} onPress={HandleAddPress}>
-            <Image source={AddImg} style={styles.addIconImage} />
-          </TouchableOpacity>
-        )}
-      </View>
-      <View style={[styles.textContainer, { alignItems: iscentered ? 'center' : null }]}>
-      <Text style={[styles.TextStyle2, { fontSize: iscentered ? hp(2) : null, fontFamily: iscentered ? fonts.Bold : null }]} numberOfLines={2} ellipsizeMode="tail">
-      {t(name)}
-        </Text>
-        <View style={[styles.priceContainer]}>
-          <Text style={[styles.TextStyle, styles.price, { textAlign: iscentered ? 'center' : null, fontSize: iscentered ? hp(1.4) : hp(1) }]}>{t('Price')}: PKR {price}</Text>
-          {old != null ?
+  const mainPriceToShow = formattedDiscountedPrice || formattedPrice;
+  const mainPriceFontSize = getPriceFontSize(mainPriceToShow);
 
-            <Text style={[styles.TextStyle, styles.save]}>{t('PKR')}{t(old)}</Text>
-            : null}
+  return (
+    <TouchableOpacity 
+      onPress={handlePress} 
+      activeOpacity={0.9} 
+      style={styles.container}
+    >
+      <Image
+        source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/AddImg.png')}
+        style={styles.image}
+        resizeMode="cover"
+      />
+      
+      <View style={styles.content}>
+        <Text style={styles.title} numberOfLines={2}>
+          {t(name)}
+        </Text>
+
+        <View style={styles.priceRow}>
+          <View style={styles.priceContainer}>
+            <Text style={[styles.price, { fontSize: mainPriceFontSize }]} numberOfLines={1}>
+              Rs. {mainPriceToShow}
+            </Text>
+            {discounted_price && (
+              <Text style={styles.originalPrice} numberOfLines={1}>
+                Rs. {formattedPrice}
+              </Text>
+            )}
+          </View>
+          {discounted_price && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>Agri cash</Text>
+            </View>
+          )}
         </View>
-        {save != null ?
-          <Text style={styles.TextStyle1}>{t('Save')}: PKR {t(save)}</Text>
-          : null
-        }
+
+        <TouchableOpacity 
+          style={styles.cartButton} 
+          onPress={onPressG}
+        >
+          <Image 
+            source={require('./TempImages/AddImg.png')} 
+            style={styles.cartIcon}
+          />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default ProductBox;
-
 const styles = StyleSheet.create({
-  Wrapper: {
-    borderRadius: 10,
-    marginHorizontal: hp('0.5%'),
+  container: {
+    width: wp(45),
+    backgroundColor: colors.WHITE,
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginBottom: hp(1.5),
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  image: {
+    width: '100%',
+    height: hp(18),
+    backgroundColor: colors.LIGHT_GRAY
+  },
+  content: {
+    padding: hp(1.2),
+    minHeight: hp(12), // Ensure minimum height for content
+  },
+  title: {
+    fontSize: hp(1.8),
+    fontFamily: fonts.Medium,
+    color: colors.BLACK,
+    marginBottom: hp(1),
+    lineHeight: hp(2.2),
+  },
+  priceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: hp(1),
+  },
+  priceContainer: {
+    flex: 1,
+    marginRight: wp(2), // Add space between price and badge
+  },
+  price: {
+    fontFamily: fonts.Bold,
+    color: colors.GREEN,
+    fontSize: hp(1.6),
+  },
+  originalPrice: {
+    fontSize: hp(1.8),
+    color: colors.BLACK,
+    fontFamily: fonts.Bold,
+    marginTop: 2,
+  },
+  badge: {
+    backgroundColor: colors.GREEN,
+    paddingHorizontal: wp(2),
+    paddingVertical: hp(0.3),
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+  },
+  badgeText: {
+    color: colors.WHITE,
+    fontSize: hp(1.4),
+    fontFamily: fonts.Medium,
+  },
+  cartButton: {
+    position: 'absolute',
+    bottom: hp(1.2),
+    right: hp(1.2),
+    backgroundColor: colors.WHITE,
+    padding: hp(1.2),
+    width: wp(10),
+    height: wp(10),
+    borderRadius: wp(5),
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    overflow: 'hidden',
-  },
-  imageContainer: {
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    marginTop: hp(0.4),
-    overflow: 'hidden',
   },
-  addIcon: {
-    position: 'absolute',
-    top: hp(1),
-    right: hp(1),
-  },
-  addIconImage: {
-    width: hp(2.5),
-    height: hp(2.5),
-  },
-  textContainer: {
-    paddingHorizontal: hp('1%'),
-    paddingBottom: hp('1.5%'),
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  TextStyle: {
-    fontFamily: fonts.SemiBold,
-    textAlign: 'left',
-    fontSize: hp('1%'),
-  },
-  TextStyle1: {
-    fontFamily: fonts.SemiBold,
-    textAlign: 'left',
-    color: colors.GREEN,
-    fontSize: hp('1%'),
-  },
-  TextStyle2: {
-    fontFamily: fonts.Medium,
-    textAlign: 'left',
-    fontSize: hp('1.4%'),
-  },
-  price: {
-    flex: 1,
-    textAlign: 'left',
-  },
-  save: {
-    flex: 1,
-    textAlign: 'right',
-    color: 'red',
-    textDecorationLine: 'line-through',
-  },
-  ImageStyle: {
-    width: wp('30%'),
-    height: hp('14%'),
-    resizeMode: 'contain',
-    maxWidth: '100%',
-    maxHeight: '100%',
+  cartIcon: {
+    width: wp(5),
+    height: wp(5),
   },
 });
+
+export default ProductBox;

@@ -53,6 +53,7 @@ const EMarket = () => {
 
     React.useEffect(() => {
         const token = storage.getString("token");
+        console.log("token", token);
         let endpoint = DefaultEndPoint;
 
         if (selectedCategory && categoryEndpoints[selectedCategory]) {
@@ -157,14 +158,14 @@ const EMarket = () => {
                             </View>
                         ) : filteredProducts.length > 0 ? (
                             <View style={styles.productContainer}>
+                                
                                 {filteredProducts.map((product, index) => (
                                     <View style={styles.productBoxWrapper} key={index}>
                                         <ProductBox
                                             name={product.name}
-                                            price={product.discounted_price}
-                                            save={formatNumber(product.price - (product.discounted_price))}
+                                            price={product.price}
+                                            discounted_price={product.discounted_price}
                                             SourceGiven={product.image_url}
-                                            old={product.price}
                                             category={product.category}
                                             Description={product.description}
                                             isNavigation={0}
@@ -203,11 +204,12 @@ const styles = StyleSheet.create({
     productContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
+        marginTop: hp(1),
+        gap: hp(1),
         justifyContent: "space-between",
-    },
-    productBoxWrapper: {
-        width: "48%",
-        marginBottom: 20,
+        paddingHorizontal: wp(3),
+
+
     },
     container: {
         flex: 1,
@@ -219,28 +221,39 @@ const styles = StyleSheet.create({
         marginTop: hp("0.14%"),
     },
     searchContainer: {
-        marginVertical: hp("3.2%"),
+        marginVertical: hp("2%"),
         height: hp("7%"),
-        marginLeft: hp(1),
+        marginHorizontal: hp(2),
         alignSelf: "flex-start",
     },
     bodyContainer: {
         flex: 1,
-        margin: 20,
     },
     titleContainer: {
-        marginLeft: hp(0.6),
+        marginLeft: hp(1),
+        marginBottom: hp(2),
     },
     titleText: {
         fontWeight: "bold",
-        fontSize: 25,
+        fontSize: hp(3),
+        color: colors.BLACK,
+        fontFamily: fonts.Bold,
     },
     scrollContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        paddingVertical: hp("2%"),
+        paddingVertical: hp("1%"),
         width: "100%",
+        backgroundColor: colors.WHITE,
+        borderRadius: 15,
+        paddingHorizontal: hp(1),
+        marginBottom: hp(2),
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     itemBoxWrapper: {
         width: "22%",
@@ -248,35 +261,41 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     recommendedProducts: {
-        marginTop: hp(2),
+        marginTop: hp(1),
         marginBottom: hp(4),
+
     },
     recommendedTitle: {
-        fontSize: hp("2.5%"),
+        fontSize: hp("2.2%"),
         fontFamily: fonts.SemiBold,
         marginBottom: hp("2%"),
+        color: colors.BLACK,
+        marginLeft: hp(1),
     },
     cartWrapper: {
         position: "absolute",
         bottom: hp(2),
-        alignSelf: "center",
-        width: wp(80),
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: wp(5),
     },
     cartButton: {
         width: "100%",
-        height: hp(4.75),
-        borderWidth: 1,
+        height: hp(5),
         flexDirection: "row",
         justifyContent: "space-between",
         borderRadius: hp(1),
         alignItems: "center",
         backgroundColor: colors.GREEN,
         borderColor: colors.GREEN,
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(5),
+        maxWidth: wp(85),
     },
     cartText: {
         fontFamily: fonts.SemiBold,
-        fontSize: hp(1.5),
+        fontSize: hp(1.6),
         color: colors.WHITE,
     },
     loaderContainer: {
@@ -294,6 +313,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: hp(10),
+        backgroundColor: colors.WHITE,
+        borderRadius: 15,
+        marginHorizontal: hp(2),
     },
     noProductsText: {
         fontSize: hp(2),

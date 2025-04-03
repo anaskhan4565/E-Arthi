@@ -27,6 +27,7 @@ const ProductBox = ({
   category,
   Description,
   weight,
+  stock_quantity,
   onPressG,
 }) => {
   const navigation = useNavigation();
@@ -37,7 +38,7 @@ const ProductBox = ({
     if (name) {
       const productData = JSON.stringify({ 
         name, price, discounted_price,
-        SourceGiven, weight, Description, category 
+        SourceGiven, weight, Description, category, stock_quantity
       });
       ProductClickInfo.set('selectedProduct', productData);
       navigation.navigate(ScreensName.ProductScr);
@@ -66,7 +67,7 @@ const ProductBox = ({
       style={styles.container}
     >
       <Image
-        source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/AddImg.png')}
+        source={SourceGiven ? { uri: SourceGiven } : require('./TempImages/AddImg2.png')}
         style={styles.image}
         resizeMode="cover"
       />
@@ -99,7 +100,7 @@ const ProductBox = ({
           onPress={onPressG}
         >
           <Image 
-            source={require('./TempImages/AddImg.png')} 
+            source={require('./TempImages/AddImg2.png')} 
             style={styles.cartIcon}
           />
         </TouchableOpacity>
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    minHeight: hp(35), // Increased minimum height
   },
   image: {
     width: '100%',
@@ -128,7 +130,8 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: hp(1.2),
-    minHeight: hp(12), // Ensure minimum height for content
+    flex: 1,
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: hp(1.8),
@@ -136,16 +139,19 @@ const styles = StyleSheet.create({
     color: colors.BLACK,
     marginBottom: hp(1),
     lineHeight: hp(2.2),
+    height: hp(4.4), // Fixed height for 2 lines
+    overflow: 'hidden',
   },
   priceRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginBottom: hp(1),
+    minHeight: hp(6), // Minimum height for price section
   },
   priceContainer: {
     flex: 1,
-    marginRight: wp(2), // Add space between price and badge
+    marginRight: wp(2),
   },
   price: {
     fontFamily: fonts.Bold,
@@ -164,6 +170,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(0.3),
     borderRadius: 4,
     alignSelf: 'flex-start',
+    marginTop: hp(0.5),
   },
   badgeText: {
     color: colors.WHITE,
@@ -174,13 +181,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: hp(1.2),
     right: hp(1.2),
-    backgroundColor: colors.WHITE,
-    padding: hp(1.2),
-    width: wp(10),
-    height: wp(10),
-    borderRadius: wp(5),
-    elevation: 3,
-    shadowColor: '#000',
+    shadowColor: colors.GREEN,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
@@ -188,8 +189,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartIcon: {
-    width: wp(5),
-    height: wp(5),
+  
+    width: wp(7),
+    height: wp(6),
+    
   },
 });
 

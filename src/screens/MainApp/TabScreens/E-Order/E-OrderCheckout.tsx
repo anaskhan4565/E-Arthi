@@ -13,6 +13,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/Constants/FontName.js';
@@ -28,37 +29,84 @@ function EOrderPlaceOrder(): React.JSX.Element {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState('Crop');
   const navigation = useNavigation();
-  const [key, setKey] = useState(0); // Change key to force re-render
-  const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+  const [key, setKey] = useState(0);
+  const storage = new MMKV();
+  const AGRI_CASH_LIMIT = 100000; // 1 Lakh rupees
+
+  const formatNumber = (num) => {
+    if (!num) return "0";
+    return new Intl.NumberFormat("en-IN").format(num);
+  };
 
   useFocusEffect(
     useCallback(() => {
-      setKey(prevKey => prevKey + 1); // Update key to trigger re-render
+      setKey(prevKey => prevKey + 1);
     }, [])
   );
-  const storage = new MMKV();
 
   const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
-  console.log(parsedCart);
 
+  const checkAgriCashLimit = (product, newQuantity) => {
+    const itemPrice = parseFloat(product.discounted_price?.replace(/,/g, '') || 0);
+    const newItemTotal = itemPrice * newQuantity;
+
+    // Calculate current cart total excluding this item
+    const currentCartTotal = parsedCart.reduce((sum, item) => {
+      if (item.name !== product.name && !item.isCashPurchase) {
+        const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
+        return sum + (price * item.quantity);
+      }
+      return sum;
+    }, 0);
+
+    return (currentCartTotal + newItemTotal) <= AGRI_CASH_LIMIT;
+  };
 
   const updateQuantity = (product: any, change: number) => {
-    const productIndex = parsedCart.findIndex(item => item.name === product.name);
+    const productIndex = parsedCart.findIndex(item => 
+      item.name === product.name && item.isCashPurchase === product.isCashPurchase
+    );
 
     if (productIndex !== -1) {
-      parsedCart[productIndex].quantity += change;
+      const newQuantity = parsedCart[productIndex].quantity + change;
+      
+      // Check Agri-Cash limit only for non-cash purchases
+      if (!product.isCashPurchase && change > 0) {
+        if (!checkAgriCashLimit(product, newQuantity)) {
+          Alert.alert(
+            "Agri-Cash Limit Exceeded",
+            `Increasing quantity would exceed your Agri-Cash limit of Rs ${formatNumber(AGRI_CASH_LIMIT)}.`
+          );
+          return;
+        }
+      }
 
-      if (parsedCart[productIndex].quantity <= 0) {
-        parsedCart.splice(productIndex, 1); // Remove item with 0 quantity
+      if (newQuantity <= 0) {
+        parsedCart.splice(productIndex, 1);
+      } else {
+        parsedCart[productIndex].quantity = newQuantity;
       }
 
       storage.set('cart', JSON.stringify(parsedCart));
-      setKey(prevKey => prevKey + 1); // Force re-render 
+      setKey(prevKey => prevKey + 1);
     }
   };
-  const totalPrice = parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13;
-  storage.set('FinalPrice', JSON.stringify(totalPrice))
+
+  const calculateSubtotal = () => {
+    return parsedCart.reduce((acc, product) => {
+      const price = parseFloat(product.isCashPurchase ? 
+        product.price?.replace(/,/g, '') : 
+        product.discounted_price?.replace(/,/g, '') || 0);
+      return acc + (price * product.quantity);
+    }, 0);
+  };
+
+  const subtotal = calculateSubtotal();
+  const tax = subtotal * 0.13;
+  const total = subtotal + tax;
+
+  storage.set('FinalPrice', JSON.stringify(total));
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,25 +128,34 @@ function EOrderPlaceOrder(): React.JSX.Element {
             <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.2) }}>{t('Items')}</Text>
           </View>
           {parsedCart.map((product, index) => (
-            product.quantity >= 1 && <View key={index} style={styles.productRow}>
-              <View style={styles.productInfo}>
-                <Text style={styles.productText}>{product.name}</Text>
-                <Text style={styles.priceText}>PKR {formatNumber(parseInt(product.price.replace(/,/g, '')).toFixed(2))}</Text>
-              </View>
-              <View style={[styles.quantityContainer, { justifyContent: 'space-around' }]}>
-                <View style={{ justifyContent: "center", marginRight: hp(1) }}>
-                  <TouchableOpacity onPress={() => updateQuantity(product, -1)}>
-                    <Image source={Sub} style={{ width: hp(4), height: hp(4) }} />
+            product.quantity >= 1 && (
+              <View key={`${product.name}-${product.isCashPurchase}-${index}`} style={styles.productRow}>
+                <View style={styles.productInfo}>
+                  <Text style={styles.productText}>{product.name}</Text>
+                  <Text style={styles.priceText}>
+                    PKR {formatNumber(parseFloat(
+                      product.isCashPurchase ? 
+                      product.price?.replace(/,/g, '') : 
+                      product.discounted_price?.replace(/,/g, '') || 0
+                    ).toFixed(2))}
+                    {product.isCashPurchase ? " (Cash)" : " (Agri-Cash)"}
+                  </Text>
+                </View>
+                <View style={[styles.quantityContainer, { justifyContent: 'space-around' }]}>
+                  <View style={{ justifyContent: "center", marginRight: hp(1) }}>
+                    <TouchableOpacity onPress={() => updateQuantity(product, -1)}>
+                      <Image source={Sub} style={{ width: hp(4), height: hp(4) }} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.quantityBox}>
+                    <Text style={{ color: colors.GREEN }}>{product.quantity}</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{ margin: hp(1) }}>
+                    <Image source={Add} style={{ width: hp(4), height: hp(4) }} />
                   </TouchableOpacity>
                 </View>
-                <View style={styles.quantityBox}>
-                  <Text style={{ color: colors.GREEN }}>{product.quantity}</Text>
-                </View>
-                <TouchableOpacity onPress={() => updateQuantity(product, 1)} style={{ margin: hp(1) }}>
-                  <Image source={Add} style={{ width: hp(4), height: hp(4) }} />
-                </TouchableOpacity>
               </View>
-            </View>
+            )
           ))}
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
             <View style={styles.notesContainer}>
@@ -118,28 +175,28 @@ function EOrderPlaceOrder(): React.JSX.Element {
           <View style={styles.summaryContainer}>
             <View style={styles.totalContainer}>
               <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('SubTotal')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(subtotal.toFixed(2))}</Text>
             </View>
             <View style={styles.totalContainer}>
               <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t('Tax (13%)')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 0.13)).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Regular }}>PKR {formatNumber(tax.toFixed(2))}</Text>
             </View>
             {/* Dotted Line */}
             <View style={styles.dottedLine} />
 
             <View style={styles.totalContainer}>
               <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Bold }}>{t('Total')}</Text>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(((parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13)).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(1.5), fontFamily: fonts.Bold }}>PKR {formatNumber(total.toFixed(2))}</Text>
             </View>
           </View>
 
           <CustomButton MainText={t('Proceed')}
-            BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
+            BgGiven={total === 0 ? colors.GRAY : colors.GREEN}
             txColor={colors.WHITE}
-            bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
-            isNavigation={totalPrice === 0 ? 0 : 1}
-            isdisabled={totalPrice === 0 ? true : false}
-            name={totalPrice !== 0 ? ScreensName.EOrderPaymentMethod : null} />
+            bordergiven={total === 0 ? colors.GRAY : colors.GREEN}
+            isNavigation={total === 0 ? 0 : 1}
+            isdisabled={total === 0 ? true : false}
+            name={total !== 0 ? ScreensName.EOrderPaymentMethod : null} />
           <View style={{ marginTop: hp(2) }}>
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>

@@ -17,6 +17,8 @@ import {
     TouchableOpacity,
     View,
     ActivityIndicator,
+    Alert,
+    Animated,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
@@ -30,7 +32,13 @@ import { setSelectedCategory, addToCart, setCart, setProducts } from '../../../.
 
 const EMarket = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const [activeTab, setActiveTab] = useState('products');
+    const [tabIndicatorPosition] = useState(new Animated.Value(0));
+    const [errorMessage, setErrorMessage] = useState("");
     const dispatch = useDispatch();
+    const storage = new MMKV();
+    const AGRI_CASH_LIMIT = 100000; // 1 Lakh rupees
+
     const {
         products,
         loading: isLoading,
@@ -39,17 +47,20 @@ const EMarket = () => {
     } = useSelector(state => state.emarket);
     const categoryEndpoints = {
         Seeds: "Seeds",
-        Fertilizer: "Fertilizers",
+        Fertilizers: "Fertilizers",
         Herbicide: "Herbicides",
         Labour: "Labour",
         Machinery: "Machinery",
         Crops: "Crops",
         Fungicide: "Fungicides"
     };
-    const storage = new MMKV();
     const Navigation = useNavigation();
     const { t } = useTranslation();
     const DefaultEndPoint = "https://eagri-backend.vercel.app/e_market/products/";
+
+    // Mock data for counts - will be replaced with API data later
+    const favoritesCount = 0;
+    const notifiedCount = 0;
 
     React.useEffect(() => {
         const token = storage.getString("token");
@@ -64,6 +75,7 @@ const EMarket = () => {
     }, [selectedCategory, dispatch]);
 
     const handleCategorySelect = (category) => {
+        console.log("category", category);
         if (selectedCategory === category) {
             dispatch(setProducts([]));
             dispatch(setSelectedCategory(""));
@@ -74,11 +86,69 @@ const EMarket = () => {
         dispatch(setSelectedCategory(category));
     };
 
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('en-IN').format(price || 0);
+    };
+
+    const checkAgriCashLimit = (newItem, quantity = 1) => {
+        const itemPrice = parseFloat(newItem.discounted_price?.replace(/,/g, '') || 0);
+        const newItemTotal = itemPrice * quantity;
+
+        // Calculate current cart total for Agri-Cash purchases
+        const currentCartTotal = cart.reduce((sum, item) => {
+            const itemPrice = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
+            return sum + (itemPrice * item.quantity);
+        }, 0);
+
+        // Check if adding this item would exceed the limit
+        return (currentCartTotal + newItemTotal) <= AGRI_CASH_LIMIT;
+    };
+
     const handleAddItem = (product) => {
-        dispatch(addToCart(product));
-        // Save to MMKV
-        const updatedCart = [...cart, { ...product, quantity: 1 }];
-        storage.set("cart", JSON.stringify(updatedCart));
+        if (product.stock_quantity === 0) {
+            Alert.alert("Out of Stock", "This product is currently out of stock.");
+            return;
+        }
+        if (product.stock_quantity < 0) {
+            Alert.alert("Coming Soon", "This product is currently not listed.");
+            return;
+        }
+
+        // Check Agri-Cash limit before adding
+        if (!checkAgriCashLimit(product)) {
+            Alert.alert(
+                "Agri-Cash Limit Exceeded",
+                `Adding this item would exceed your Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}.`
+            );
+            return;
+        }
+
+        const existingItemIndex = cart.findIndex(item => item.name === product.name);
+
+        if (existingItemIndex !== -1) {
+            // Update existing item
+            const updatedCart = cart.map((item, index) => {
+                if (index === existingItemIndex) {
+                    // Check if increasing quantity would exceed limit
+                    if (!checkAgriCashLimit(item, item.quantity + 1)) {
+                        Alert.alert(
+                            "Agri-Cash Limit Exceeded",
+                            `Increasing quantity would exceed your Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}.`
+                        );
+                        return item;
+                    }
+                    return { ...item, quantity: item.quantity + 1 };
+                }
+                return item;
+            });
+            dispatch(setCart(updatedCart));
+            storage.set("cart", JSON.stringify(updatedCart));
+        } else {
+            // Add new item
+            const updatedCart = [...cart, { ...product, quantity: 1 }];
+            dispatch(setCart(updatedCart));
+            storage.set("cart", JSON.stringify(updatedCart));
+        }
     };
 
     useFocusEffect(
@@ -90,12 +160,16 @@ const EMarket = () => {
         }, [dispatch])
     );
 
-    const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+    const formatNumber = (num) => {
+        if (!num) return "0";
+        return new Intl.NumberFormat("en-IN").format(num);
+    };
 
     const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalCost = cart.reduce((sum, item) =>
-        sum + item.quantity * parseInt(item.price?.replace(/,/g, '') || 0), 0
-    );
+    const totalCost = cart.reduce((sum, item) => {
+        const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
+        return sum + (price * item.quantity);
+    }, 0);
 
     const filteredProducts = products.filter((product) =>
         product.name?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -105,9 +179,15 @@ const EMarket = () => {
         setSearchQuery(query);
     };
 
-    // const handleCategorySelect = (category) => {
-    //     dispatch(setSelectedCategory(category));
-    // };
+    const handleTabPress = (tab) => {
+        setActiveTab(tab);
+        const position = tab === 'products' ? 0 : tab === 'favorites' ? 1 : 2;
+        Animated.spring(tabIndicatorPosition, {
+            toValue: position,
+            useNativeDriver: true,
+        }).start();
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -138,7 +218,7 @@ const EMarket = () => {
                                             SourceGiven={Category.img}
                                             isNavigation={false}
                                             selectedCategory={selectedCategory}
-                                            setSelectedCategory={(category) => handleCategorySelect(Category.title)} // Use the exact category title
+                                            setSelectedCategory={(category) => handleCategorySelect(Category.title)}
                                             OnpressCustom={true}
                                         />
                                     </View>
@@ -146,41 +226,111 @@ const EMarket = () => {
                         )}
                     </View>
 
-                    <View style={styles.recommendedProducts}>
-                        <Text style={styles.recommendedTitle}>
-                            {selectedCategory || "Top Products"}
-                        </Text>
+                    <View style={styles.tabsContainer}>
+                        <View style={styles.tabsWrapper}>
+                            <TouchableOpacity 
+                                style={[styles.tab, activeTab === 'products' && styles.activeTab]} 
+                                onPress={() => handleTabPress('products')}
+                            >
+                                <Text style={[styles.tabText, activeTab === 'products' && styles.activeTabText]}>
+                                    Products
+                                </Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity 
+                                style={[styles.tab, activeTab === 'favorites' && styles.activeTab]} 
+                                onPress={() => handleTabPress('favorites')}
+                            >
+                                <Text style={[styles.tabText, activeTab === 'favorites' && styles.activeTabText]}>
+                                    Favorites ({favoritesCount})
+                                </Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity 
+                                style={[styles.tab, activeTab === 'notified' && styles.activeTab]} 
+                                onPress={() => handleTabPress('notified')}
+                            >
+                                <Text style={[styles.tabText, activeTab === 'notified' && styles.activeTabText]}>
+                                    Notified ({notifiedCount})
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Animated.View 
+                            style={[
+                                styles.tabIndicator,
+                                {
+                                    transform: [{
+                                        translateX: tabIndicatorPosition.interpolate({
+                                            inputRange: [0, 1, 2],
+                                            outputRange: [0, wp(33.33), wp(66.66)],
+                                        })
+                                    }]
+                                }
+                            ]}
+                        />
+                    </View>
 
-                        {isLoading ? (
-                            <View style={styles.loaderContainer}>
-                                <ActivityIndicator size="large" color={colors.GREEN} />
-                                <Text style={styles.loaderText}>Loading products...</Text>
-                            </View>
-                        ) : filteredProducts.length > 0 ? (
-                            <View style={styles.productContainer}>
-                                
-                                {filteredProducts.map((product, index) => (
-                                    <View style={styles.productBoxWrapper} key={index}>
-                                        <ProductBox
-                                            name={product.name}
-                                            price={product.price}
-                                            discounted_price={product.discounted_price}
-                                            SourceGiven={product.image_url}
-                                            category={product.category}
-                                            Description={product.description}
-                                            isNavigation={0}
-                                            weight={product.weight}
-                                            onPressG={() => handleAddItem(product)}
-                                        />
+                    <View style={styles.recommendedProducts}>
+                        {activeTab === 'products' && (
+                            <>
+                                <Text style={styles.recommendedTitle}>
+                                    {selectedCategory || "Top Products"}
+                                </Text>
+
+                                {isLoading ? (
+                                    <View style={styles.loaderContainer}>
+                                        <ActivityIndicator size="large" color={colors.GREEN} />
+                                        <Text style={styles.loaderText}>Loading products...</Text>
                                     </View>
-                                ))}
+                                ) : filteredProducts.length > 0 ? (
+                                    <View style={styles.productContainer}>
+                                        
+                                        {filteredProducts.map((product, index) => (
+                                            <View style={styles.productBoxWrapper} key={index}>
+                                                <ProductBox
+                                                    name={product.name}
+                                                    price={product.price}
+                                                    discounted_price={product.discounted_price}
+                                                    SourceGiven={product.image_url}
+                                                    category={product.category}
+                                                    Description={product.description}
+                                                    isNavigation={0}
+                                                    stock_quantity={product.stock_quantity}
+                                                    weight={product.weight}
+                                                    onPressG={() => handleAddItem(product)}
+                                                />
+                                            </View>
+                                        ))}
+                                    </View>
+                                ) : (
+                                    <View style={styles.noProductsContainer}>
+                                        <Text style={styles.noProductsText}>No products found</Text>
+                                    </View>
+                                )}
+                            </>
+                        )}
+
+                        {activeTab === 'favorites' && (
+                            <View style={styles.centeredContent}>
+                                <Text style={styles.recommendedTitle}>Favorite Products</Text>
+                                {/* Favorites will be implemented later */}
+                                <Text style={styles.placeholderText}>Your favorite products will appear here</Text>
                             </View>
-                        ) : (
-                            <View style={styles.noProductsContainer}>
-                                <Text style={styles.noProductsText}>No products found</Text>
+                        )}
+
+                        {activeTab === 'notified' && (
+                            <View style={styles.centeredContent}>
+                                <Text style={styles.recommendedTitle}>Notified Products</Text>
+                                {/* Notified products will be implemented later */}
+                                <Text style={styles.placeholderText}>Products you're notified about will appear here</Text>
                             </View>
                         )}
                     </View>
+                    {errorMessage ? (
+                        <View style={styles.errorContainer}>
+                            <Text style={styles.errorText}>{errorMessage}</Text>
+                        </View>
+                    ) : null}
                 </View>
             </ScrollView>
             {cart.length > 0 && (
@@ -270,7 +420,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SemiBold,
         marginBottom: hp("2%"),
         color: colors.BLACK,
-        marginLeft: hp(1),
+        marginLeft: hp(2),
     },
     cartWrapper: {
         position: "absolute",
@@ -321,6 +471,54 @@ const styles = StyleSheet.create({
         fontSize: hp(2),
         fontFamily: fonts.SemiBold,
         color: colors.GRAY,
+    },
+    tabsContainer: {
+        marginTop: hp(2),
+        marginHorizontal: hp(1),
+        marginBottom: hp(1),
+    },
+    tabsWrapper: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: '#E0E0E0',
+    },
+    tab: {
+        flex: 1,
+        paddingVertical: hp(1.5),
+        alignItems: 'center',
+    },
+    activeTab: {
+        borderBottomWidth: 2,
+        borderBottomColor: colors.GREEN,
+    },
+    tabText: {
+        fontSize: wp(3.8),
+        fontFamily: fonts.Regular,
+        color: colors.GRAY,
+    },
+    activeTabText: {
+        color: colors.GREEN,
+        fontFamily: fonts.SemiBold,
+    },
+    tabIndicator: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: wp(33.33),
+        height: 2,
+        backgroundColor: colors.GREEN,
+    },
+    centeredContent: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: hp(10),
+    },
+    placeholderText: {
+        fontSize: wp(3.5),
+        color: colors.GRAY,
+        textAlign: 'center',
+        marginTop: hp(2),
     },
 });
 

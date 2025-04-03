@@ -8,6 +8,7 @@ import {
     ScrollView,
     StatusBar,
     SafeAreaView,
+    ActivityIndicator,
 } from "react-native";
 import ButtonLess from "../../../assets/MainApp/EmarketPlace/Products/Buttons/LessButton.png";
 import ButtonPlus from "../../../assets/MainApp/EmarketPlace/Products/Buttons/MoreButton.png";
@@ -26,57 +27,227 @@ import { MMKV } from "react-native-mmkv";
 
 const ProductScr = () => {
     const [Count, SetCount] = useState(1);
+    const [CashCount, SetCashCount] = useState(0);
     const [Price, setPrice] = useState(2080);
+    const [showCashOption, setShowCashOption] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const Navigation = useNavigation();
     const storage = new MMKV();
     const ProductClickInfo = new MMKV();
     const [isFavorite, setIsFavorite] = useState(false);
+    const [cart, setCart] = useState([]);
 
     const productData = ProductClickInfo.getString("selectedProduct");
     const ProductInfo = productData ? JSON.parse(productData) : null;
-    const [cart, setCart] = useState([]);
-
+    console.log("ProductInfo infoss",ProductInfo.stock_quantity);
     useEffect(() => {
         const savedCart = storage.getString("cart");
         if (savedCart) {
             setCart(JSON.parse(savedCart));
         }
-
     }, []);
-    function configureCount(less) {
-        let newCount = less ? Math.max(1, Count - 1) : Count + 1;
-        SetCount(newCount);
+
+    const isProductAvailable = ProductInfo?.stock_quantity > 0;
+    const AGRI_CASH_LIMIT = 100000; // 1 Lakh rupees
+    const MAX_AGRI_CASH_QUANTITY = 5; // Maximum quantity with Agri-Cash
+
+    function configureCount(less, isCash = false) {
+        if (!isProductAvailable) return;
+        
+        if (isCash) {
+            let newCount = less ? Math.max(0, CashCount - 1) : CashCount + 1;
+            SetCashCount(newCount);
+        } else {
+            let newCount = less ? Math.max(1, Count - 1) : Count + 1;
+            
+            if (newCount <= MAX_AGRI_CASH_QUANTITY) {
+                SetCount(newCount);
+                // Show cash option only when count is exactly 5
+                setShowCashOption(newCount === MAX_AGRI_CASH_QUANTITY);
+                if (newCount < MAX_AGRI_CASH_QUANTITY) {
+                    setErrorMessage("");
+                }
+            } else {
+                setShowCashOption(true);
+                setErrorMessage(`You can only purchase up to ${MAX_AGRI_CASH_QUANTITY} units with Agri-Cash. Additional units can be purchased with Cash.`);
+            }
+        }
     }
 
-    const handleNotifyMe = () => {
-        // Handle notification logic here
-        console.log("Notify me for product:", ProductInfo?.name);
+    const getStockStatus = () => {
+        if (!ProductInfo) return {};
+        
+        if (ProductInfo.stock_quantity === 0) {
+            return {
+                text: "Out of Stock",
+                color: "#FF0000",
+                backgroundColor: "#FFE5E5"
+            };
+        } else if (ProductInfo.stock_quantity === -1) {
+            return {
+                text: "Coming Soon",
+                color: "#800080",
+                backgroundColor: "#F5E6FA"
+            };
+        } else {
+            return {
+                text: "In Stock",
+                color: "#09c18c",
+                backgroundColor: "#E5F9F2"
+            };
+        }
     };
 
-    const handleAddtoCart = () => {
-        if (!ProductInfo) return;
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('en-IN').format(price || 0);
+    };
+
+    const handleNotifyMe = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+            Navigation.goBack();
+        }, 1500);
+    };
+
+    const updateCart = (newItem, isCash = false) => {
+        const quantity = isCash ? CashCount : Count;
+        const price = isCash ? ProductInfo.price : ProductInfo.discounted_price;
 
         setCart((prevCart) => {
-            const existingItem = prevCart.find((item) => item.name === ProductInfo.name);
+            const existingItem = prevCart.find(item => 
+                item.name === newItem.name && item.isCashPurchase === isCash
+            );
+
             let updatedCart;
             if (existingItem) {
-                updatedCart = prevCart.map((item) =>
-                    item.name === ProductInfo.name ? { ...item, quantity: item.quantity + Count } : item
+                updatedCart = prevCart.map(item =>
+                    item.name === newItem.name && item.isCashPurchase === isCash
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
                 );
             } else {
-                updatedCart = [...prevCart, { ...ProductInfo, quantity: Count }];
+                updatedCart = [...prevCart, { 
+                    ...newItem, 
+                    quantity, 
+                    price,
+                    isCashPurchase: isCash 
+                }];
             }
 
-            storage.set("cart", JSON.stringify(updatedCart)); // Save to MMKV storage
+            storage.set("cart", JSON.stringify(updatedCart));
             return updatedCart;
         });
-        const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-        console.log("New quantity:", totalQuantity);
+    };
+
+    const checkAgriCashLimit = (price, quantity) => {
+        // Calculate total price for this purchase
+        const totalPrice = price * quantity;
+
+        // Calculate current cart total for Agri-Cash purchases
+        const currentCartTotal = cart.reduce((sum, item) => {
+            if (!item.isCashPurchase) {
+                return sum + (item.price * item.quantity);
+            }
+            return sum;
+        }, 0);
+
+        // Check if adding this item would exceed the limit
+        return (currentCartTotal + totalPrice) <= AGRI_CASH_LIMIT;
+    };
+
+    const handleIndividualPurchase = async () => {
+        if (!ProductInfo) return;
+
+        // Check Agri-Cash limit for the current quantity
+        if (!checkAgriCashLimit(ProductInfo.discounted_price, Count)) {
+            setErrorMessage(`Cannot add items. Total would exceed Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}`);
+            return;
+        }
+
+        setErrorMessage("");
+        setIsLoading(true);
+
+        try {
+            const agriCashItem = {
+                ...ProductInfo,
+                quantity: Count,
+                price: ProductInfo.discounted_price,
+                isCashPurchase: false
+            };
+            
+            updateCart(agriCashItem, false);
+            
+            setTimeout(() => {
+                setIsLoading(false);
+                Navigation.goBack();
+            }, 1500);
+        } catch (error) {
+            setErrorMessage("Failed to add items to cart");
+            setIsLoading(false);
+        }
+    };
+
+    const handleCombinedPurchase = async () => {
+        if (!ProductInfo) return;
+
+        // Check Agri-Cash limit for the 5 units
+        if (!checkAgriCashLimit(ProductInfo.discounted_price, MAX_AGRI_CASH_QUANTITY)) {
+            setErrorMessage(`Cannot add items. Total would exceed Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}`);
+            return;
+        }
+
+        setErrorMessage("");
+        setIsLoading(true);
+
+        try {
+            // Add 5 units with Agri-Cash
+            const agriCashItem = {
+                ...ProductInfo,
+                quantity: MAX_AGRI_CASH_QUANTITY,
+                price: ProductInfo.discounted_price,
+                isCashPurchase: false
+            };
+            
+            // Add cash units if any
+            if (CashCount > 0) {
+                const cashItem = {
+                    ...ProductInfo,
+                    quantity: CashCount,
+                    price: ProductInfo.price,
+                    isCashPurchase: true
+                };
+                updateCart(cashItem, true);
+            }
+            
+            updateCart(agriCashItem, false);
+            
+            setTimeout(() => {
+                setIsLoading(false);
+                Navigation.goBack();
+            }, 1500);
+        } catch (error) {
+            setErrorMessage("Failed to add items to cart");
+            setIsLoading(false);
+        }
     };
 
     const toggleFavorite = () => {
         setIsFavorite(!isFavorite);
     };
+
+    const handlePreOrder = () => {
+        // Implement pre-order logic here
+        console.log("Pre-order for product:", ProductInfo?.name);
+    };
+
+    const calculateDiscount = () => {
+        if (!ProductInfo?.price || !ProductInfo?.discounted_price) return 0;
+        const discount = ((ProductInfo.price - ProductInfo.discounted_price) / ProductInfo.price) * 100;
+        return Math.round(discount);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor="#f5f9f9" barStyle="dark-content" />
@@ -94,8 +265,13 @@ const ProductScr = () => {
                                 {ProductInfo.name || "Sona Urea"}
                             </Text>
                             <View style={styles.stockAndFavorite}>
-                                <View style={styles.outOfStockBadge}>
-                                    <Text style={styles.outOfStockText}>Out of Stock</Text>
+                                <View style={[
+                                    styles.stockBadge,
+                                    { backgroundColor: getStockStatus().backgroundColor }
+                                ]}>
+                                    <Text style={[styles.stockText, { color: getStockStatus().color }]}>
+                                        {getStockStatus().text}
+                                    </Text>
                                 </View>
                                 <TouchableOpacity onPress={toggleFavorite}>
                                     <Image
@@ -124,51 +300,168 @@ const ProductScr = () => {
                             </View>
                             <View style={styles.infoRow}>
                                 <Text style={styles.infoLabel}>Price:</Text>
-                                <Text style={styles.infoValue}>Rs {ProductInfo.price || 4850}</Text>
+                                <Text style={styles.infoValue}>
+                                    Rs {formatPrice(ProductInfo.discounted_price)}
+                                </Text>
                             </View>
                             <View style={styles.infoRow}>
                                 <Text style={styles.infoLabel}>Pack Size:</Text>
                                 <Text style={styles.infoValue}>{ProductInfo.weight} Kg</Text>
                             </View>
                             <View style={styles.infoRow}>
+                                <Text style={styles.infoLabel}>Discount with Agri-Cash:</Text>
+                                <Text style={[styles.infoValue, styles.discountText]}>
+                                    {calculateDiscount()}% OFF
+                                </Text>
+                            </View>
+                            <View style={styles.infoRow}>
                                 <Text style={styles.infoLabel}>Expected Available Date:</Text>
                                 <Text style={styles.infoValue}>Coming Soon</Text>
                             </View>
 
-                            <View style={styles.quantityAndNotify}>
-                                <View style={styles.quantityContainer}>
-                                    <TouchableOpacity
-                                        onPress={() => configureCount(true)}
-                                        style={styles.quantityButton}
-                                    >
-                                        <Text style={styles.quantityButtonText}>−</Text>
-                                    </TouchableOpacity>
-
-                                    <Text style={styles.quantityText}>
-                                        {Count < 10 ? "0" + Count : Count}
-                                    </Text>
-
-                                    <TouchableOpacity
-                                        onPress={() => configureCount(false)}
-                                        style={[styles.quantityButton, styles.plusButton]}
-                                    >
-                                        <Text style={styles.quantityButtonText}>+</Text>
-                                    </TouchableOpacity>
+                            {errorMessage ? (
+                                <View style={styles.errorContainer}>
+                                    <Text style={styles.errorText}>{errorMessage}</Text>
                                 </View>
+                            ) : null}
 
-                                <TouchableOpacity
-                                    style={styles.notifyButton}
-                                    onPress={handleNotifyMe}
-                                >
-                                    <Text style={styles.notifyButtonText}>Notify Me</Text>
-                                </TouchableOpacity>
+                            <View style={styles.actionsContainer}>
+                                <View style={styles.quantityAndCartContainer}>
+                                    <View style={[
+                                        styles.quantitySelector,
+                                        !isProductAvailable && styles.quantitySelectorDisabled
+                                    ]}>
+                                        <TouchableOpacity
+                                            onPress={() => configureCount(true)}
+                                            disabled={!isProductAvailable}
+                                            style={[styles.quantityButton, styles.minusButton]}
+                                        >
+                                            <Text style={styles.quantityButtonText}>−</Text>
+                                        </TouchableOpacity>
+
+                                        <Text style={styles.quantityText}>
+                                            {Count < 10 ? "0" + Count : Count}
+                                        </Text>
+
+                                        <TouchableOpacity
+                                            onPress={() => configureCount(false)}
+                                            disabled={!isProductAvailable || Count >= MAX_AGRI_CASH_QUANTITY}
+                                            style={[
+                                                styles.quantityButton,
+                                                styles.plusButton,
+                                                Count >= MAX_AGRI_CASH_QUANTITY && styles.disabledPlusButton
+                                            ]}
+                                        >
+                                            <Text style={styles.quantityButtonText}>+</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {isProductAvailable ? (
+                                        <TouchableOpacity
+                                            style={[
+                                                styles.addToCartButton,
+                                                isLoading && styles.buttonLoading
+                                            ]}
+                                            onPress={handleIndividualPurchase}
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? (
+                                                <ActivityIndicator color="#FFFFFF" />
+                                            ) : (
+                                                <Text style={styles.addToCartText}>
+                                                    Buy {Count} with Agri-Cash
+                                                </Text>
+                                            )}
+                                        </TouchableOpacity>
+                                    ) : (
+                                        <TouchableOpacity
+                                            style={[
+                                                styles.notifyButton,
+                                                isLoading && styles.buttonLoading
+                                            ]}
+                                            onPress={handleNotifyMe}
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? (
+                                                <ActivityIndicator color="#FFFFFF" />
+                                            ) : (
+                                                <Text style={styles.notifyButtonText}>Notify Me</Text>
+                                            )}
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
                             </View>
                         </View>
+
+                        {showCashOption && (
+                            <View style={styles.cashPurchaseContainer}>
+                                <View style={styles.limitWarning}>
+                                    <Text style={styles.warningText}>
+                                        You've reached the Agri-Cash purchase limit ({MAX_AGRI_CASH_QUANTITY} units).
+                                        Additional units can be purchased with Cash.
+                                    </Text>
+                                </View>
+                                
+                                <View style={styles.cashPurchaseSection}>
+                                    <View style={styles.priceInfoContainer}>
+                                        <Text style={styles.cashTitle}>Buy with Cash</Text>
+                                        <Text style={styles.priceInfo}>
+                                            Price: Rs {formatPrice(ProductInfo.price)}
+                                        </Text>
+                                        <Text style={styles.packSizeInfo}>
+                                            Pack Size: {ProductInfo.weight} Kg
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.quantityAndCartContainer}>
+                                        <View style={styles.quantitySelector}>
+                                            <TouchableOpacity
+                                                onPress={() => configureCount(true, true)}
+                                                style={[styles.quantityButton, styles.minusButton]}
+                                            >
+                                                <Text style={styles.quantityButtonText}>−</Text>
+                                            </TouchableOpacity>
+
+                                            <Text style={styles.quantityText}>
+                                                {CashCount < 10 ? "0" + CashCount : CashCount}
+                                            </Text>
+
+                                            <TouchableOpacity
+                                                onPress={() => configureCount(false, true)}
+                                                style={[styles.quantityButton, styles.plusButton]}
+                                            >
+                                                <Text style={styles.quantityButtonText}>+</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                        <TouchableOpacity
+                                            style={[
+                                                styles.addToCartButton,
+                                                styles.combinedButton,
+                                                CashCount === 0 && styles.disabledButton
+                                            ]}
+                                            onPress={handleCombinedPurchase}
+                                            disabled={isLoading || CashCount === 0}
+                                        >
+                                            {isLoading ? (
+                                                <ActivityIndicator color="#FFFFFF" />
+                                            ) : (
+                                                <Text style={styles.addToCartText}>
+                                                    {CashCount > 0 
+                                                        ? `Buy Total Items: 5 + ${CashCount}`
+                                                        : 'Add Cash Items'}
+                                                </Text>
+                                            )}
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        )}
 
                         <View style={styles.descriptionContainer}>
                             <Text style={styles.descriptionTitle}>Product Description:</Text>
                             <Text style={styles.descriptionText}>
-                               {ProductInfo.Description}
+                                {ProductInfo.Description}
                             </Text>
                         </View>
                     </View>
@@ -239,15 +532,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    outOfStockBadge: {
-        backgroundColor: '#ff3b30',
+    stockBadge: {
         paddingHorizontal: wp(2),
         paddingVertical: wp(1),
         borderRadius: wp(1),
         marginRight: wp(2),
     },
-    outOfStockText: {
-        color: '#fff',
+    stockText: {
         fontSize: wp(3),
         fontWeight: 'bold',
     },
@@ -273,6 +564,7 @@ const styles = StyleSheet.create({
     },
     infoRow: {
         flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: hp(1),
     },
     navbarContainer: {
@@ -292,23 +584,37 @@ const styles = StyleSheet.create({
         color: '#000',
         flex: 1,
     },
-    quantityAndNotify: {
+    actionsContainer: {
+        marginTop: hp(2),
+    },
+    quantityAndCartContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: hp(2),
+        gap: wp(3),
     },
-    quantityContainer: {
+    quantitySelector: {
         flexDirection: 'row',
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        borderRadius: wp(1),
+        backgroundColor: '#FFFFFF',
+        padding: wp(1),
+    },
+    quantitySelectorDisabled: {
+        opacity: 0.6,
+        backgroundColor: '#F5F5F5',
     },
     quantityButton: {
         width: wp(8),
         height: wp(8),
-        backgroundColor: '#e0e0e0',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: wp(1),
+    },
+    minusButton: {
+        backgroundColor: '#F5F5F5',
     },
     plusButton: {
         backgroundColor: '#09c18c',
@@ -316,22 +622,38 @@ const styles = StyleSheet.create({
     quantityButtonText: {
         fontSize: wp(5),
         fontWeight: 'bold',
-        color: '#000',
+        color: '#000000',
     },
     quantityText: {
         fontSize: wp(4.5),
         fontWeight: 'bold',
         marginHorizontal: wp(3),
+        color: '#000000',
+    },
+    addToCartButton: {
+        flex: 1,
+        backgroundColor: '#09c18c',
+        paddingVertical: hp(1.5),
+        borderRadius: wp(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    addToCartText: {
+        color: '#FFFFFF',
+        fontSize: wp(4),
+        fontWeight: 'bold',
     },
     notifyButton: {
+        flex: 1,
         backgroundColor: '#09c18c',
-        paddingHorizontal: wp(4),
-        paddingVertical: hp(1),
+        paddingVertical: hp(1.5),
         borderRadius: wp(1),
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     notifyButtonText: {
-        color: '#fff',
-        fontSize: wp(3.8),
+        color: '#FFFFFF',
+        fontSize: wp(4),
         fontWeight: 'bold',
     },
     descriptionContainer: {
@@ -384,5 +706,81 @@ const styles = StyleSheet.create({
     loadingText: {
         fontSize: wp(4),
         color: '#666',
+    },
+    comingSoonButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: wp(2),
+    },
+    preOrderButton: {
+        backgroundColor: '#800080',
+    },
+    cashPurchaseContainer: {
+        marginTop: hp(3),
+        backgroundColor: '#FFFFFF',
+        borderRadius: wp(2),
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#800080',
+    },
+    limitWarning: {
+        backgroundColor: '#F5E6FA',
+        padding: wp(3),
+        marginBottom: hp(2),
+    },
+    warningText: {
+        color: '#800080',
+        fontSize: wp(3.5),
+        lineHeight: wp(5),
+    },
+    cashPurchaseSection: {
+        padding: wp(3),
+    },
+    priceInfoContainer: {
+        marginBottom: hp(2),
+    },
+    cashTitle: {
+        fontSize: wp(4.5),
+        fontWeight: 'bold',
+        color: '#800080',
+        marginBottom: hp(1),
+    },
+    priceInfo: {
+        fontSize: wp(3.8),
+        color: '#666666',
+        marginBottom: hp(0.5),
+    },
+    packSizeInfo: {
+        fontSize: wp(3.8),
+        color: '#666666',
+    },
+    combinedButton: {
+        backgroundColor: '#800080',
+        flex: 1,
+    },
+    disabledPlusButton: {
+        backgroundColor: '#E0E0E0',
+        opacity: 0.5,
+    },
+    discountText: {
+        color: '#09c18c',
+        fontWeight: 'bold',
+    },
+    errorContainer: {
+        backgroundColor: '#FFE5E5',
+        padding: wp(3),
+        borderRadius: wp(1),
+        marginVertical: hp(1),
+    },
+    errorText: {
+        color: '#FF0000',
+        fontSize: wp(3.5),
+        textAlign: 'center',
+    },
+    buttonLoading: {
+        opacity: 0.7,
+    },
+    disabledButton: {
+        opacity: 0.5,
     },
 });

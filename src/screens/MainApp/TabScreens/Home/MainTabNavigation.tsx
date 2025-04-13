@@ -12,7 +12,7 @@ import { fonts } from '../../../../../util/Constants/FontName';
 import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack";
 import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
 import NewHomeMainStack from './NewHomeMainStack';
-import DashboardScreen from './DashBoard';
+import DashBoardNew from './DashBoardNew';
 
 const { height, width } = Dimensions.get("window");
 
@@ -144,7 +144,7 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     case t(ScreensName.NewHomeMainStack):
                         iconSource = require('../../../../assets/MainApp/NewTabIcons/Home.png');
                         break;
-                    case 'Dashboard':
+                    case ScreensName.DashBoardNew:
                         iconSource = require('../../../../assets/MainApp/NewTabIcons/DashBoard.png');
                         break;
                     case t(ScreensName.EMarketMainStack):
@@ -268,8 +268,8 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name="Dashboard"
-                    component={DashboardScreen}
+                    name={t(ScreensName.DashBoardNew)}
+                    component={DashBoardNew}
                     options={{
                         tabBarLabel: t('Dashboard'),
                     }}

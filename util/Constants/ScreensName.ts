@@ -177,6 +177,7 @@ export default {
     NewHomeMainStack: "NewHomeMainStack",
     NewHomeScreen: "NewHomeScreen",
     DashboardScreen: "DashboardScreen",
+    DashBoardNew: "DashBoardNew",
     ELoanNew: "ELoanNew",
     EENewLoan: "EENewLoan",
     ELoanRequestNewLoan: "ELoanRequestNewLoan",

@@ -11,11 +11,7 @@ import { fonts } from '../../../../../util/Constants/FontName';
 import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack";
 import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
 import NewHomeMainStack from './NewHomeMainStack';
-import DashboardScreen from './DashBoard';
-import { useSelector } from 'react-redux';
-
-// Import SVG components from BottomTab.js
-import BottomTabData from './BottomTab/BottomTab';
+import DashBoardNew from './DashBoardNew';
 
 const { height, width } = Dimensions.get("window");
 const TAB_BAR_HEIGHT = hp('10%'); // Increased height
@@ -98,8 +94,8 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     case t(ScreensName.NewHomeMainStack):
                         iconData = icons.home;
                         break;
-                    case 'Dashboard':
-                        iconData = icons.dashboard;
+                    case ScreensName.DashBoardNew:
+                        iconSource = require('../../../../assets/MainApp/NewTabIcons/DashBoard.png');
                         break;
                     case t(ScreensName.EMarketMainStack):
                         iconData = icons.cart;
@@ -222,8 +218,8 @@ export default function MainTabNavigation() {
                     }}
                 />
                 <Tab.Screen
-                    name="Dashboard"
-                    component={DashboardScreen}
+                    name={t(ScreensName.DashBoardNew)}
+                    component={DashBoardNew}
                     options={{
                         tabBarLabel: t('Dashboard'),
                     }}

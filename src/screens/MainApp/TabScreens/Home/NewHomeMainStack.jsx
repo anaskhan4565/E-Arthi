@@ -13,6 +13,7 @@ import Profile from "../../EMandi/Screens/Profile";
 import EVendorsMainStack from "../E-Vendors/E-VendorsMainStack";
 import Home from "./HomeScr";
 import NewHomeScreen from "./NewHomeScreen";
+import DashBoardNew from "./DashBoardNew";
 import ScreensName from "../../../../../util/Constants/ScreensName";
 import ELoanMainStack from "../E-Loan/E-LoanMainStack";
 import PlantDoctorMainStack from "../Plant-Doctor/PlantDoctorMainStack";
@@ -30,6 +31,7 @@ function NewHomeMainStack() {
     <Stack.Navigator initialRouteName={ScreensName.NewHomeScreen} screenOptions={{ headerShown: false }}>
       <Stack.Screen name={ScreensName.NewHomeScreen} component={NewHomeScreen} />
       <Stack.Screen name={ScreensName.Home} component={Home} />
+      <Stack.Screen name={ScreensName.DashBoardNew} component={DashBoardNew} />
       <Stack.Screen name={ScreensName.EMandi} component={Overview} />
       <Stack.Screen name={ScreensName.MarketDept} component={MarketDept} />
       <Stack.Screen name={ScreensName.Profile} component={Profile} />
@@ -42,7 +44,7 @@ function NewHomeMainStack() {
       <Stack.Screen name={ScreensName.SettlementsMainStack} component={SettlementsMainStack} />
       <Stack.Screen name={ScreensName.EMarketMainStack} component={EMarketMainStack} />
       <Stack.Screen name={ScreensName.EMandiMainStack} component={EMandiMainStack} />
-      
+
     </Stack.Navigator>
   );
 }

@@ -119,10 +119,10 @@ const NewDrawerData = [
         screen: ScreensName.AnimalFeedScr,
         isNavigation: true,
     },
- 
 
 
-  
+
+
 ];
 
 export default NewDrawerData; 

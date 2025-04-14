@@ -32,7 +32,7 @@ const NewDrawerData = [
         id: 'advisor',
         title: 'E-Advisor',
         svgImage: EAdvisorIcon,
-        screen: ScreensName.AdvisorScr,
+        screen: ScreensName.EAdviserMainStack,
         isNavigation: true,
     },
     {

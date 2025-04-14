@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
@@ -19,6 +19,7 @@ import { fonts } from "../../../../../util/Constants/FontName.js";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
+import CustomButton from "../../../../components/CustomButton.jsx";
 
 // Import your assets
 import RAAST from "../../../../assets/MainApp/E-Order/PaymentMethods/RAAST.svg";
@@ -29,37 +30,33 @@ import AGRICARD from "../../../../assets/MainApp/E-Order/PaymentMethods/AgriCard
 import KISSANCARD from "../../../../assets/MainApp/E-Order/PaymentMethods/KisaanCard.png";
 import InventoryProduct from "../../CustomComponent/WarehouseProduct.jsx";
 import Wallet from './TempImgsOrder/image.png'
-import { Button, RadioButton } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { RadioButton } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 const paymentMethods = [
     { name: "Raast", image: RAAST },
     { name: "Debit Card", image: DEBIT },
     { name: "MasterCard", image: MASTER },
     { name: "VISA", image: VISA },
-    // { name: "Agri Card", image: AGRICARD },
     { name: "Kisaan Card", image: KISSANCARD },
 ];
 
-function EOrderPlaceOrder(): React.JSX.Element {
+function EOrderPaymentMethod(): React.JSX.Element {
     const { t } = useTranslation();
     const navigation = useNavigation();
-    const formatNumber = (num) =>
-        new Intl.NumberFormat("en-US").format(num ?? 0);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Raast");
     const storage = new MMKV();
     const savedCart = storage.getString("cart");
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+    const CREDIT_LIMIT = 100000; // Example credit limit: 1 Lakh
 
-    const PassedPayment = new MMKV();
-
-    const NavigateToPayment = (passed) => {
-        PassedPayment.set("PassedName", passed.name);
-        // PassedPayment.set("PassedImage", passed.image);
-        navigation.navigate(ScreensName.RaastPaymentScreen);
-    };
-
+    // Animation refs
     const translateY = useRef(new Animated.Value(hp(20))).current;
     const opacity = useRef(new Animated.Value(0)).current;
+
+    // Get cart from Redux if available
+    const reduxCart = useSelector((state) => state?.emarket?.cart || []);
+    const cartItems = reduxCart.length > 0 ? reduxCart : parsedCart;
 
     useEffect(() => {
         Animated.timing(translateY, {
@@ -75,140 +72,213 @@ function EOrderPlaceOrder(): React.JSX.Element {
         }).start();
     }, []);
 
-    const [selected, setSelected] = useState("recommended");
+    // Separate Agri-Cash and regular cash items
+    const { agriCashItems, cashItems, agriCashTotal, cashTotal, grandTotal } = useMemo(() => {
+        const agriItems = cartItems.filter(item => !item.isCashPurchase);
+        const regularItems = cartItems.filter(item => item.isCashPurchase);
+        
+        const agriTotal = agriItems.reduce((acc, item) => {
+            const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
+            return acc + (price * item.quantity);
+        }, 0);
+        
+        const regTotal = regularItems.reduce((acc, item) => {
+            const price = parseFloat(item.price?.replace(/,/g, '') || 0);
+            return acc + (price * item.quantity);
+        }, 0);
+        
+        // Add tax (13%)
+        const agriWithTax = agriTotal * 1.13;
+        const cashWithTax = regTotal * 1.13;
+        const total = agriWithTax + cashWithTax;
+        
+        return {
+            agriCashItems: agriItems,
+            cashItems: regularItems, 
+            agriCashTotal: agriWithTax,
+            cashTotal: cashWithTax,
+            grandTotal: total
+        };
+    }, [cartItems]);
+
+    // Format numbers with commas
+    const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num?.toFixed(2) ?? 0);
+
+    // Calculate remaining credit
+    const remainingCredit = CREDIT_LIMIT - agriCashTotal;
+
+    const handlePaymentMethodSelect = (method) => {
+        setSelectedPaymentMethod(method);
+        // Store selected payment method
+        storage.set("selectedPaymentMethod", method);
+    };
+
+    const handleProceed = () => {
+        // Store the selected payment method before navigating
+        storage.set("selectedPaymentMethod", selectedPaymentMethod);
+        navigation.navigate(ScreensName.RaastPaymentScreen);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
-                <Navbar />
+                <Navbar gobackOnly={true} />
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t("Search in here")} />
+                    <CustomSearchApp placeholder={t("Search in here")} value="" onChangeText={() => {}} />
                 </View>
-                <View
-                    style={{
-                        marginBottom: hp(1.2),
-                        marginTop: hp(0),
-                        marginHorizontal: wp(5),
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontFamily: fonts.SemiBold,
-                            fontSize: hp(2.9),
-                            marginLeft: hp(1),
-                        }}
-                    >
-                        {t("Payment Methods")}
-                    </Text>
+                
+                <View style={styles.headerContainer}>
+                    <Text style={styles.headerText}>{t("Payment Methods")}</Text>
                 </View>
 
-                <View style={styles.totalContainer}>
-                    <Text style={styles.totalText}>{t("Total")}</Text>
-                    <Text style={styles.amountText}> PKR{'\u00A0'}
-                        {formatNumber(
-                            (
-                                parsedCart.reduce(
-                                    (acc, product) =>
-                                        acc +
-                                        parseInt(
-                                            product.price.replace(/,/g, "")
-                                        ) *
-                                        product.quantity,
-                                    0
-                                ) * 1.13
-                            ).toFixed(2)
-                        )}
-                    </Text>
-                </View>
-                <View style={{ flex: 1, marginLeft: hp(2), marginBottom: hp(4) }}>
-                    <View style={{ flexDirection: 'row', alignItems: "center", alignContent: 'center' }}>
-                        <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Recommended Option</Text>
-                        <TouchableOpacity onPress={() => setSelected("recommended")} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
-                            <RadioButton
-                                value="recommended"
-                                status={selected === "recommended" ? "checked" : "unchecked"}
-                                onPress={() => setSelected("recommended")}
-                                color={colors.GREEN}
-
-                            />
-                        </TouchableOpacity>
+                {/* Summary section */}
+                <View style={styles.summaryContainer}>
+                    <View style={styles.totalRow}>
+                        <Text style={styles.totalLabel}>{t("Grand Total")}</Text>
+                        <Text style={styles.totalValue}>PKR {formatNumber(grandTotal)}</Text>
                     </View>
-                    <View
-                        style={{
-                            opacity: selected === "recommended" ? 1 : 0.5, // Reduce opacity when disabled
-                            // transform: [{ translateY }],
+                    
+                    {/* Divider */}
+                    <View style={styles.divider}></View>
+                    
+                    {agriCashItems.length > 0 && (
+                        <View style={styles.totalRow}>
+                            <Text style={styles.subtotalLabel}>{t("Agri-Cash Items")}</Text>
+                            <Text style={styles.subtotalValue}>PKR {formatNumber(agriCashTotal)}</Text>
+                        </View>
+                    )}
+                    
+                    {cashItems.length > 0 && (
+                        <View style={styles.totalRow}>
+                            <Text style={styles.subtotalLabel}>{t("Cash Items")}</Text>
+                            <Text style={styles.subtotalValue}>PKR {formatNumber(cashTotal)}</Text>
+                        </View>
+                    )}
+                </View>
 
-                        }}
-                        pointerEvents={selected === "recommended" ? "auto" : "none"} // Disable interaction when off
-                    >
-                        <InventoryProduct
-                            key={1}
-                            name={"Line of credit"}
-                            //price={product.price}
-                            isNavigation={true}
-                            SecTextAllow={true}
-                            customImg={Wallet}
-                            imgH={hp(4.6)}
-                            h={hp(7)}
-                            AllowElv={selected === "recommended" ? true : false}
-                            navigateTo={ScreensName.LineOfCreditPay}
-                        />
+                {/* Agri-Cash section - only show if there are Agri-Cash items */}
+                {agriCashItems.length > 0 && (
+                    <View style={styles.paymentSection}>
+                        <View style={styles.sectionHeader}>
+                            <Text style={styles.sectionTitle}>{t("Agri-Cash Payment")}</Text>
+                        </View>
+                        
+                        <View style={styles.creditInfoContainer}>
+                            <Text style={styles.creditInfoText}>
+                                {t("Credit Limit")}: PKR {formatNumber(CREDIT_LIMIT)}
+                            </Text>
+                            <Text style={styles.creditInfoText}>
+                                {t("Remaining Credit")}: PKR {formatNumber(remainingCredit)}
+                            </Text>
+                        </View>
+                        
+                        <View style={styles.paymentOption}>
+                            <View style={styles.paymentRadioContainer}>
+                                <RadioButton
+                                    value="LineOfCredit"
+                                    status="checked"
+                                    color={colors.GREEN}
+                                    disabled
+                                />
+                                <Text style={styles.paymentOptionText}>{t("Line of Credit")}</Text>
+                            </View>
+                            
+                            <View style={styles.paymentImageContainer}>
+                                <Image 
+                                    source={Wallet} 
+                                    style={styles.paymentOptionImage} 
+                                    resizeMode="contain"
+                                />
+                            </View>
+                            
+                            <Text style={styles.paymentAmountText}>
+                                PKR {formatNumber(agriCashTotal)}
+                            </Text>
+                        </View>
                     </View>
-                </View>
-                <View style={{ flex: 1, marginLeft: hp(2), flexDirection: 'row', alignItems: "center", alignContent: 'center' }}>
-                    <Text style={{ fontSize: 20, fontFamily: fonts.Bold }}>Pay with your Card</Text>
-                    <TouchableOpacity onPress={() => setSelected("Card")} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
-                        <RadioButton
-                            value="Card"
-                            status={selected === "Card" ? "checked" : "unchecked"}
-                            onPress={() => setSelected("Card")}
-                            color={colors.GREEN}
-                        />
-                    </TouchableOpacity>
-                </View>
-                <Animated.View
-                    style={[
-                        styles.imageGrid,
-                        {
-                            transform: [{ translateY }],
-                            opacity: selected === "Card" ? 1 : 0.5, // Reduce opacity when disabled
-                        },
-                    ]}
-                    pointerEvents={selected === "Card" ? "auto" : "none"} // Disable interaction when off
-                >
-                    {paymentMethods.map((each, index) => {
-                        return (
-                            <TouchableOpacity
-                                onPress={() => NavigateToPayment(each)}
-                                key={index}
-                                style={[styles.imageButton, { elevation: selected == "Card" ? 5 : 0 }]}
-                            >
-                                <View style={styles.imageWrapper}>
-                                    {typeof each.image === "function" ? (
-                                        <each.image
-                                            width={wp(20)}
-                                            height={hp(10)}
-                                            style={styles.image}
-                                        />
-                                    ) : (
-                                        <Image
-                                            source={each.image}
-                                            style={[styles.image, { width: wp(46), height: hp(13.5) }]}
-                                            resizeMode="contain"
-                                        />
-                                    )}
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    })}
-                </Animated.View>
+                )}
 
+                {/* Cash Payment Section - only show if there are Cash items */}
+                {cashItems.length > 0 && (
+                    <View style={styles.paymentSection}>
+                        <View style={styles.sectionHeader}>
+                            <Text style={styles.sectionTitle}>{t("Cash Payment")}</Text>
+                        </View>
+                        
+                        <View style={styles.defaultPaymentMethod}>
+                            <View style={styles.paymentRadioContainer}>
+                                <RadioButton
+                                    value="Raast"
+                                    status={selectedPaymentMethod === "Raast" ? "checked" : "unchecked"}
+                                    onPress={() => handlePaymentMethodSelect("Raast")}
+                                    color={colors.GREEN}
+                                />
+                                <Text style={styles.paymentOptionText}>{t("Raast")}</Text>
+                            </View>
+                            
+                            {selectedPaymentMethod === "Raast" && (
+                                <Text style={styles.paymentAmountText}>
+                                    PKR {formatNumber(cashTotal)}
+                                </Text>
+                            )}
+                        </View>
+                        
+                        <Text style={styles.changePaymentText}>{t("Or change payment method")}</Text>
+                        
+                        <Animated.View
+                            style={[
+                                styles.paymentMethodsGrid,
+                                {
+                                    transform: [{ translateY }],
+                                    opacity: opacity,
+                                },
+                            ]}
+                        >
+                            {paymentMethods.map((method, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={[
+                                        styles.paymentMethodButton,
+                                        selectedPaymentMethod === method.name && styles.selectedPaymentMethod,
+                                    ]}
+                                    onPress={() => handlePaymentMethodSelect(method.name)}
+                                >
+                                    <View style={styles.paymentMethodImageWrapper}>
+                                        {typeof method.image === "function" ? (
+                                            <method.image
+                                                width={wp(16)}
+                                                height={hp(8)}
+                                                style={styles.paymentMethodImage}
+                                            />
+                                        ) : (
+                                            <Image
+                                                source={method.image}
+                                                style={styles.paymentMethodImage}
+                                                resizeMode="contain"
+                                            />
+                                        )}
+                                    </View>
+                                    <Text style={styles.paymentMethodName}>{method.name}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </Animated.View>
+                    </View>
+                )}
+
+                {/* Proceed Button */}
+                <View style={styles.buttonContainer}>
+                    <CustomButton
+                        MainText={t("Proceed")}
+                        BgGiven={colors.GREEN}
+                        txColor={colors.WHITE}
+                        onPressG={handleProceed}
+                    />
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
-
 }
 
 const styles = StyleSheet.create({
@@ -226,162 +296,192 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginVertical: hp("3.2%"),
         height: hp("7%"),
+        marginHorizontal: wp(4),
     },
-    bodyContainer: {
-        alignItems: "center",
-        marginBottom: hp(4),
-        padding: wp(5),
-    },
-    selectercontainer: {
-        width: wp(100),
-        height: hp(15),
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        marginTop: hp(1),
-    },
-    headerRow: {
-        marginTop: hp(2),
+    headerContainer: {
         marginBottom: hp(2),
+        marginHorizontal: wp(5),
     },
     headerText: {
-        fontWeight: "bold",
-        fontSize: hp(3),
-        color: colors.DARK_GRAY,
-    },
-    itemBox: {
-        width: wp(30),
-        height: hp(5),
-        justifyContent: "center",
-        alignItems: "center",
-        borderWidth: 1,
-        borderColor: "#D3D3D3",
-        borderRadius: 8,
-        marginVertical: hp(0.5),
-        marginHorizontal: wp(1),
-    },
-    selectedBox: {
-        borderColor: colors.GREEN,
-    },
-    itemText: {
-        color: "#000",
-        fontSize: hp(2),
-    },
-    selectedText: {
-        color: colors.GREEN,
-        fontWeight: "bold",
-    },
-    recommendedProducts: {
-        marginTop: hp("2%"),
-        marginLeft: wp(2),
-    },
-    recommendedTitle: {
-        fontSize: hp("3%"),
         fontFamily: fonts.SemiBold,
-        marginBottom: hp("2%"),
-    },
-    productRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: hp("3%"),
-        padding: wp(3),
-        borderRadius: 10,
-        backgroundColor: colors.LIGHT_BLUE,
-        width: "100%",
-    },
-    productText: {
-        color: colors.PRIMARY,
-        fontSize: hp(2.5),
-    },
-    quantityContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        width: wp(30),
-    },
-    quantityButton: {
-        backgroundColor: colors.PRIMARY,
-        borderRadius: 5,
-        padding: wp(2),
-        marginHorizontal: wp(1),
-        alignItems: "center",
-    },
-    quantityText: {
-        fontSize: hp(2),
-        color: colors.WHITE,
-    },
-    notesContainer: {
-        marginTop: hp(3),
-        width: "100%",
-    },
-    notesInput: {
-        borderColor: colors.GRAY,
-        borderWidth: 1,
-        borderRadius: 5,
-        padding: wp(2),
-        height: hp(10),
-        textAlignVertical: "top",
+        fontSize: hp(2.9),
+        color: colors.BLACK,
     },
     summaryContainer: {
-        marginTop: hp(3),
-        width: "100%",
-        padding: wp(3),
-        borderRadius: 5,
+        marginHorizontal: wp(5),
+        borderRadius: hp(1),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        padding: wp(4),
+        marginBottom: hp(3),
     },
-    totalContainer: {
+    totalRow: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginHorizontal: wp(4),
-        marginBottom: hp(2),
-        borderBottomWidth: 1,
+        marginVertical: hp(0.5),
     },
-    totalText: {
+    totalLabel: {
+        fontFamily: fonts.Bold,
+        fontSize: hp(2.2),
         color: colors.GREEN,
-        fontSize: hp(2),
-        marginLeft: hp(2),
-        fontFamily: fonts.Bold,
     },
-    amountText: {
-        color: "#000",
-        fontSize: hp(2),
-        marginRight: hp(2),
+    totalValue: {
         fontFamily: fonts.Bold,
+        fontSize: hp(2.2),
+        color: colors.BLACK,
     },
-    imageGrid: {
+    subtotalLabel: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.8),
+        color: colors.BLACK,
+    },
+    subtotalValue: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.8),
+        color: colors.BLACK,
+    },
+    divider: {
+        height: 1,
+        backgroundColor: colors.GRAY,
+        marginVertical: hp(1.5),
+    },
+    paymentSection: {
+        marginHorizontal: wp(5),
+        marginBottom: hp(3),
+        backgroundColor: colors.WHITE,
+        borderRadius: hp(1),
+        padding: wp(4),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+    },
+    sectionHeader: {
+        marginBottom: hp(2),
+    },
+    sectionTitle: {
+        fontFamily: fonts.SemiBold,
+        fontSize: hp(2.2),
+        color: colors.BLACK,
+    },
+    creditInfoContainer: {
+        backgroundColor: colors.LIGHT_GREEN,
+        borderRadius: hp(1),
+        borderColor: colors.GREEN,
+        borderWidth: 1,
+        padding: wp(3),
+        marginBottom: hp(2),
+    },
+    creditInfoText: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.8),
+        color: colors.BLACK,
+        marginVertical: hp(0.3),
+    },
+    paymentOption: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: colors.LIGHT_GREEN,
+        borderColor: colors.GREEN,
+        borderWidth: 1,
+        borderRadius: hp(1),
+        padding: wp(3),
+    },
+    paymentRadioContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    paymentOptionText: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.8),
+        color: colors.BLACK,
+        marginLeft: wp(2),
+    },
+    paymentImageContainer: {
+        width: wp(10),
+        height: wp(10),
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    paymentOptionImage: {
+        width: "100%",
+        height: "100%",
+    },
+    paymentAmountText: {
+        fontFamily: fonts.SemiBold,
+        fontSize: hp(1.8),
+        color: colors.BLACK,
+    },
+    defaultPaymentMethod: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: colors.LIGHT_GREEN,
+        borderColor: colors.GREEN,
+        borderWidth: 1,
+         borderRadius: hp(1),
+        padding: wp(3),
+        marginBottom: hp(2),
+    },
+    changePaymentText: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.8),
+        color: colors.GRAY,
+        marginVertical: hp(1.5),
+        textAlign: "center",
+    },
+    paymentMethodsGrid: {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: hp(1),
-        backgroundColor: "#F4FEFF",
-        margin: hp(2),
-        borderRadius: hp(0.9),
     },
-    imageButton: {
-        width: wp(42),
-        height: hp(10),
-        marginBottom: hp(4),
-        borderRadius: 8,
+    paymentMethodButton: {
+        width: wp(28),
+        height: hp(15),
+        borderRadius: hp(1),
         backgroundColor: colors.WHITE,
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        padding: wp(2),
+        marginBottom: hp(2),
+        justifyContent: "center",
+        alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 1,
         },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2,
+    },
+    selectedPaymentMethod: {
+        borderColor: colors.GREEN,
+        borderWidth: 2,
+        elevation: 4,
+    },
+    paymentMethodImageWrapper: {
+        width: wp(20),
+        height: hp(8),
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: hp(1),
     },
-    imageWrapper: {
-        borderRadius: 8,
-    },
-    image: {
+    paymentMethodImage: {
         width: "100%",
         height: "100%",
-        borderRadius: 8,
+    },
+    paymentMethodName: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.5),
+        color: colors.BLACK,
+        textAlign: "center",
+    },
+    buttonContainer: {
+        marginHorizontal: wp(5),
+        marginBottom: hp(5),
+        alignSelf: "center",
     },
 });
 
-export default EOrderPlaceOrder;
+export default EOrderPaymentMethod;

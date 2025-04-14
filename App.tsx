@@ -59,6 +59,7 @@ import NewHomeMainStack from "./src/screens/MainApp/TabScreens/Home/NewHomeMainS
 import ELoanMainStack from "./src/screens/MainApp/TabScreens/E-Loan/E-LoanMainStack.tsx";
 import { Provider } from "react-redux";
 import store from "./src/redux/store.js";
+import EAdviserMainStack from "./src/screens/MainApp/TabScreens/EAdvisers/EAdviserMainStack.tsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -135,6 +136,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
             <Stack.Screen name={ScreensName.NewHomeMainStack} component={NewHomeMainStack} />
             <Stack.Screen name={ScreensName.ELoanMainStack} component={ELoanMainStack} />
+            <Stack.Screen name={ScreensName.EAdviserMainStack} component={EAdviserMainStack} />
           </Stack.Navigator>
         </NavigationContainer>
       </I18nextProvider>

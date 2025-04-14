@@ -221,4 +221,12 @@ export default {
     EColdStorageRental: 'EColdStorageRental',
     ExistingRentals: 'ExistingRentals',
     RentalDetails: 'RentalDetails',
+    ELoanNewLand: 'ELoanNewLand',
+    EAdviser: 'EAdviser',
+    AgriServices: 'AgriServices',
+    CropAdvisor: 'CropAdvisor',
+    ZoneDetails: 'ZoneDetails',
+    FertilizerAdvisor: 'FertilizerAdvisor',
+    EAdviserMainStack: 'EAdviserMainStack',
+
 }

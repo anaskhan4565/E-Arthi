@@ -1,11 +1,10 @@
 import { StyleSheet, View, Image, Dimensions, TouchableOpacity, Text, Animated } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ScreensName from '../../../../../util/Constants/ScreensName';
 import Home from './HomeScr';
 import EMarketMainStack from './EMarketMainStack';
-import EMunshi from '../E-Munshi/E-Munshi';
 import colors from '../../../../../util/Constants/colors';
 import { useTranslation } from 'react-i18next';
 import { fonts } from '../../../../../util/Constants/FontName';
@@ -13,16 +12,15 @@ import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack";
 import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
 import NewHomeMainStack from './NewHomeMainStack';
 import DashboardScreen from './DashBoard';
+import { useSelector } from 'react-redux';
+
+// Import SVG components from BottomTab.js
+import BottomTabData from './BottomTab/BottomTab';
 
 const { height, width } = Dimensions.get("window");
+const TAB_BAR_HEIGHT = hp('10%'); // Increased height
 
-// Tab bar custom styles
-const TAB_BAR_HEIGHT = hp('9%');
-const ICON_SIZE = hp('4%');
-const ICON_CONTAINER_SIZE = hp('6%');
-const LIFT_DISTANCE = hp('2.5%'); // Increased lift distance for more dramatic effect
-
-// Types for tab bar props
+// Type definitions for tab bar props
 interface TabBarProps {
     state: {
         index: number;
@@ -31,134 +29,93 @@ interface TabBarProps {
             name: string;
         }>;
     };
-    descriptors: {
-        [key: string]: {
-            options: {
-                tabBarLabel?: string | ((props: { focused: boolean; color: string; position: any; children: string; }) => React.ReactNode);
-            };
-        };
-    };
+    descriptors: any;
     navigation: any;
-    insets?: any;
 }
 
 // Custom Tab Bar component
 function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
     const { t } = useTranslation();
-    const [prevIndex, setPrevIndex] = useState(state.index);
-    const animatedValues = useRef(state.routes.map(() => new Animated.Value(0))).current;
-
-    // Run animation when the selected tab changes
+    const prevIndexRef = useRef(state.index);
+    const cartAnimatedValue = useRef(new Animated.Value(0)).current;
+    
+    // Get cart items from Redux store
+    const cart = useSelector((state: any) => state.emarket?.cart || []);
+    const cartCount = cart.length;
+    
+    // Animation for cart icon when selected/unselected
     useEffect(() => {
-        if (prevIndex !== state.index) {
-            // Create parallel animations for smoother transitions
-            const animations = [
-                // Animate previous tab down with spring for bouncy effect
-                Animated.spring(animatedValues[prevIndex], {
-                    toValue: 0,
-                    velocity: 10,
-                    tension: 80,
-                    friction: 9,
-                    useNativeDriver: true,
-                }),
-
-                // Animate new tab up with spring
-                Animated.spring(animatedValues[state.index], {
+        // Check if cart tab was selected or unselected
+        const cartRouteIndex = state.routes.findIndex(route => route.name === t(ScreensName.EMarketMainStack));
+        
+        if (cartRouteIndex >= 0) {
+            const wasSelected = prevIndexRef.current === cartRouteIndex;
+            const isSelected = state.index === cartRouteIndex;
+            
+            if (!wasSelected && isSelected) {
+                // Cart got selected - animate up
+                Animated.spring(cartAnimatedValue, {
                     toValue: 1,
-                    velocity: 10,
-                    tension: 80,
-                    friction: 9,
-                    useNativeDriver: true,
-                })
-            ];
-
-            // Run animations in parallel for smoother transitions
-            Animated.parallel(animations).start();
-
-            setPrevIndex(state.index);
+                    tension: 50,
+                    friction: 7,
+                    useNativeDriver: true
+                }).start();
+            } else if (wasSelected && !isSelected) {
+                // Cart got unselected - animate down
+                Animated.spring(cartAnimatedValue, {
+                    toValue: 0,
+                    tension: 50,
+                    friction: 7,
+                    useNativeDriver: true
+                }).start();
+            }
         }
-    }, [state.index, prevIndex, animatedValues]);
-
-    // Initialize animations for the initial tab
-    useEffect(() => {
-        Animated.spring(animatedValues[state.index], {
-            toValue: 1,
-            velocity: 10,
-            tension: 80,
-            friction: 9,
-            useNativeDriver: true,
-        }).start();
+        
+        prevIndexRef.current = state.index;
+    }, [state.index, cartAnimatedValue, t]);
+    
+    // Pre-find icons for better performance
+    const icons = useMemo(() => {
+        return {
+            home: BottomTabData.find(tab => tab.id === 'home'),
+            dashboard: BottomTabData.find(tab => tab.id === 'dashboard'),
+            cart: BottomTabData.find(tab => tab.id === 'cart'),
+            warehouse: BottomTabData.find(tab => tab.id === 'warehouse'),
+            munshi: BottomTabData.find(tab => tab.id === 'munshi')
+        };
     }, []);
-
-    // Helper function to render the label
-    const renderLabel = (label: string | ((props: any) => React.ReactNode), isFocused: boolean, index: number) => {
-        // Create animated opacity based on focus state
-        const opacity = animatedValues[index].interpolate({
-            inputRange: [0, 1],
-            outputRange: [0.7, 1],
-        });
-
-        // Create animated scale for labels
-        const scale = animatedValues[index].interpolate({
-            inputRange: [0, 1],
-            outputRange: [1, 1.1],
-        });
-
-        if (typeof label === 'function') {
-            return label({
-                focused: isFocused,
-                color: isFocused ? colors.GREEN : colors.GRAY,
-                position: 'below-icon',
-                children: ''
-            });
-        }
-
-        return (
-            <Animated.Text
-                style={[
-                    styles.labelStyle,
-                    {
-                        color: isFocused ? colors.GREEN : colors.GRAY,
-                        fontFamily: isFocused ? fonts.Bold : fonts.Medium,
-                        opacity: opacity,
-                        transform: [{ scale }]
-                    }
-                ]}
-            >
-                {label}
-            </Animated.Text>
-        );
-    };
-
+    
     return (
         <View style={styles.tabBarContainer}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label = options.tabBarLabel || route.name;
-
                 const isFocused = state.index === index;
-
-                // Get the appropriate icon
-                let iconSource;
+                
+                // Get icons based on the route name - faster lookup
+                let iconData;
                 switch (route.name) {
                     case t(ScreensName.NewHomeMainStack):
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/Home.png');
+                        iconData = icons.home;
                         break;
                     case 'Dashboard':
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/DashBoard.png');
+                        iconData = icons.dashboard;
                         break;
                     case t(ScreensName.EMarketMainStack):
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/Cart.png');
+                        iconData = icons.cart;
                         break;
                     case t(ScreensName.EWarehouseMainStack):
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/EWareHouse.png');
+                        iconData = icons.warehouse;
                         break;
                     case t(ScreensName.EMunshiMainStack):
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/EMunshi.png');
+                        iconData = icons.munshi;
                         break;
                     default:
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/Home.png');
+                        iconData = icons.home;
                 }
+
+                const ActiveIcon = iconData?.icon || null;
+                const InactiveIcon = iconData?.inactiveIcon || null;
 
                 const onPress = () => {
                     const event = navigation.emit({
@@ -168,73 +125,72 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                     });
 
                     if (!isFocused && !event.defaultPrevented) {
+                        // Direct navigation without extra params for speed
                         navigation.navigate(route.name);
                     }
                 };
 
-                // Calculate animations based on focused state
-                const translateY = animatedValues[index].interpolate({
+                // Render central cart icon differently (with circle background)
+                const isCartTab = route.name === t(ScreensName.EMarketMainStack);
+                
+                // Cart-specific animation transformations
+                const cartTranslateY = cartAnimatedValue.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [0, -LIFT_DISTANCE],
+                    outputRange: [0, -hp('2.5%')]
                 });
-
-                const scale = animatedValues[index].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, 1.2],
-                });
-
-                const rotate = animatedValues[index].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ['0deg', '360deg'],
-                });
-
-                // Shadow opacity and elevation animation
-                const shadowOpacity = animatedValues[index].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 0.35],
-                });
-
-                const elevation = animatedValues[index].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 8],
-                });
-
+                
                 return (
                     <TouchableOpacity
                         key={index}
                         activeOpacity={0.7}
                         onPress={onPress}
-                        style={styles.tabButton}
+                        style={[
+                            styles.tabButton,
+                        ]}
                     >
-                        <Animated.View
-                            style={[
-                                styles.iconContainer,
-                                {
-                                    transform: [
-                                        { translateY },
-                                        { scale }
-                                    ],
-                                    shadowOpacity,
-                                    elevation,
-                                }
-                            ]}
-                        >
-                            <Animated.View
+                        {isCartTab ? (
+                            <Animated.View 
                                 style={[
-                                    isFocused ? styles.activeIconContainer : {},
-                                    isFocused && { transform: [{ rotate }] }
+                                    styles.cartButtonContainer,
+                                    { transform: [{ translateY: cartTranslateY }] }
                                 ]}
                             >
-                                <Image
-                                    source={iconSource}
-                                    style={[
-                                        styles.icon,
-                                        { tintColor: isFocused ? colors.WHITE : colors.GREEN },
-                                    ]}
-                                />
+                                <View style={[
+                                    styles.cartIconContainer, 
+                                    isFocused ? styles.activeCartIconContainer : styles.inactiveCartIconContainer
+                                ]}>
+                                    {isFocused && ActiveIcon ? 
+                                        <ActiveIcon width={26} height={26} fill={colors.WHITE} /> : 
+                                        InactiveIcon && <InactiveIcon width={26} height={26} />}
+                                    
+                                    {/* {cartCount > 0 && (
+                                        <View style={styles.cartBadge}>
+                                            <Text style={styles.cartBadgeText}>{cartCount}</Text>
+                                        </View>
+                                    )} */}
+                                </View>
+                                
+                                {isFocused && (
+                                    <Text style={[styles.labelStyle, styles.activeLabel]}>
+                                        Cart ({cartCount})
+                                    </Text>
+                                )}
                             </Animated.View>
-                        </Animated.View>
-                        {renderLabel(label, isFocused, index)}
+                        ) : (
+                            <>
+                                <View style={styles.iconContainer}>
+                                    {isFocused && ActiveIcon ? 
+                                        <ActiveIcon width={24} height={24} /> : 
+                                        InactiveIcon && <InactiveIcon width={24} height={24} />}
+                                </View>
+                                <Text style={[
+                                    styles.labelStyle,
+                                    isFocused ? styles.activeLabel : styles.inactiveLabel
+                                ]}>
+                                    {label}
+                                </Text>
+                            </>
+                        )}
                     </TouchableOpacity>
                 );
             })}
@@ -246,18 +202,16 @@ export default function MainTabNavigation() {
     const Tab = createBottomTabNavigator();
     const { t } = useTranslation();
 
-    // Transition configuration for screens
-    const screenOptions = {
-        headerShown: false,
-        tabBarActiveTintColor: colors.GREEN,
-        tabBarInactiveTintColor: colors.GRAY,
-    };
-
     return (
         <View style={styles.container}>
             <Tab.Navigator
                 initialRouteName={t(ScreensName.NewHomeMainStack)}
-                screenOptions={screenOptions}
+                screenOptions={{
+                    headerShown: false,
+                    // Optimize navigation performance
+                    freezeOnBlur: true,
+                    lazy: false, // Keep screens mounted for faster switching
+                }}
                 tabBar={props => <MyTabBar {...props} />}
             >
                 <Tab.Screen
@@ -307,47 +261,74 @@ const styles = StyleSheet.create({
     tabBarContainer: {
         flexDirection: 'row',
         height: TAB_BAR_HEIGHT,
-        backgroundColor: colors.LIGHT_GREEN,
+        backgroundColor: '#f5fbfa',
         borderTopWidth: 1,
-        borderTopColor: '#ccc',
-        paddingBottom: hp(0.5),
+        borderTopColor: '#e0e0e0',
+        paddingTop: hp('1%'),
+        paddingBottom: hp('1.5%'),
     },
     tabButton: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        height: TAB_BAR_HEIGHT,
-        paddingBottom: hp(0.5),
+        justifyContent: 'center',
+    },
+    cartButtonContainer: {
+        alignItems: 'center',
     },
     iconContainer: {
+        height: hp('4%'),
+        width: wp('10%'),
         justifyContent: 'center',
         alignItems: 'center',
-        height: ICON_CONTAINER_SIZE,
-        width: ICON_CONTAINER_SIZE,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowRadius: 8,
+        marginBottom: hp('0.8%'),
     },
-    icon: {
-        width: ICON_SIZE,
-        height: ICON_SIZE,
-        resizeMode: 'contain',
+    cartIconContainer: {
+        width: wp('16%'),
+        height: wp('16%'),
+        borderRadius: wp('16%') / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: hp('0.8%'),
+        position: 'relative',
+    },
+    cartBadge: {
+        position: 'absolute',
+        top: -5,
+        right: -5,
+        backgroundColor: 'red',
+        borderRadius: 10,
+        minWidth: 20,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 4,
+    },
+    cartBadgeText: {
+        color: 'white',
+        fontSize: 12,
+        fontWeight: 'bold',
+    },
+    activeCartIconContainer: {
+        backgroundColor: colors.GREEN,
+        elevation: 5,
+        shadowColor: colors.GREEN,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+    },
+    inactiveCartIconContainer: {
+        backgroundColor: '#D9D9D9',
     },
     labelStyle: {
-        fontSize: hp('1.3%'),
+        fontSize: hp('1.4%'),
         fontFamily: fonts.Medium,
-        marginTop: hp(0.8),
+        textAlign: 'center',
     },
-    activeIconContainer: {
-        backgroundColor: colors.GREEN,
-        borderRadius: wp(100),
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: hp(1),
-        height: ICON_CONTAINER_SIZE,
-        width: ICON_CONTAINER_SIZE,
+    activeLabel: {
+        color: colors.GREEN,
+        fontFamily: fonts.SemiBold,
+    },
+    inactiveLabel: {
+        color: colors.GRAY,
     },
 });

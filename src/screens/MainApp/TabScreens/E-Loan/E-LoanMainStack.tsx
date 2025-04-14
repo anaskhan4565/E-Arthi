@@ -10,10 +10,7 @@ import {
     View,
 } from 'react-native';
 import ScreensName from '../../../../../util/Constants/ScreensName';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { I18nextProvider } from 'react-i18next';
 import i18next from "i18next";
@@ -49,6 +46,7 @@ import MadadgarHome from "../E-LoanNew/Madadgar/MadadgarHome";
 import MadadgarS2 from "../E-LoanNew/Madadgar/MadadgarS2";
 import MadadgarS3 from "../E-LoanNew/Madadgar/MadadgarS3";
 import MadadgarSuccess from "../E-LoanNew/Madadgar/MadadgarSuccess";
+import ELoanNewLand from '../../TabScreens/E-LoanNew/E-LoanNewLand';
 
 // Import Minority Loan screens
 import MinorityL from "../E-LoanNew/MinorityLoan/MinorityL";
@@ -70,10 +68,8 @@ import MicroFSuccess from "../E-LoanNew/MicroFinance/MicroFSuccess";
 
 const Stack = createNativeStackNavigator();
 
-
 function ELoanMainStack(): React.JSX.Element {
     return (
-        //  <I18nextProvider i18n={i18next}>
         <Stack.Navigator initialRouteName={ScreensName.ELoanNew} screenOptions={{ headerShown: false }}>
             <Stack.Screen name={ScreensName.ELoan} component={ELoan} />
             <Stack.Screen name={ScreensName.EloanOTP} component={ELoanOTP} />
@@ -93,7 +89,7 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanWoanScreen2} component={ELoanWoanScreen2} />
             <Stack.Screen name={ScreensName.ELoanPending} component={ELoanPending} />
 
-            {/* //New screens */}
+            {/* New screens */}
             <Stack.Screen name={ScreensName.ELoanNew} component={ELoanHome} />
             <Stack.Screen name={ScreensName.EENewLoan} component={EENewLoan} />
             <Stack.Screen name={ScreensName.ELoanRequestNewLoan} component={ELoanRequestNewLoan} />
@@ -108,6 +104,7 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanMadadgarS2} component={MadadgarS2} />
             <Stack.Screen name={ScreensName.ELoanMadadgarS3} component={MadadgarS3} />
             <Stack.Screen name={ScreensName.ELoanMadadgarSuccess} component={MadadgarSuccess} />
+            <Stack.Screen name={ScreensName.ELoanNewLand} component={ELoanNewLand} />
 
             {/* Minority Loan screens */}
             <Stack.Screen name={ScreensName.ELoanMinority} component={MinorityL} />
@@ -126,9 +123,7 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanMicroFS2} component={MicroFS2} />
             <Stack.Screen name={ScreensName.ELoanMicroFS3} component={MicroFS3} />
             <Stack.Screen name={ScreensName.ELoanMicroFSuccess} component={MicroFSuccess} />
-
         </Stack.Navigator>
-        // </I18nextProvider>
     );
 }
 

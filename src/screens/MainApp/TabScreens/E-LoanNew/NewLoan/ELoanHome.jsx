@@ -20,7 +20,7 @@ import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
 const loanOptions = [
     {
         title: "New Loan",
-        screen: ScreensName.EENewLoan,
+        screen: ScreensName.ELoanNewLand,
         img: require("../../../../../assets/ELoanNew/1.png"),
     },
     {

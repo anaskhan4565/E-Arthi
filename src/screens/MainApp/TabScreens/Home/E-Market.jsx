@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, memo } from "react";
 import ECategories from "../../../../../util/Data/E-Categories.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
@@ -19,6 +19,7 @@ import {
     ActivityIndicator,
     Alert,
     Animated,
+    InteractionManager,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
@@ -29,6 +30,10 @@ import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsThunk } from '../../../../redux/emarketThunks.js';
 import { setSelectedCategory, addToCart, setCart, setProducts } from '../../../../redux/emarketSlice';
+
+// Memoized components for better performance
+const MemoizedProductBox = memo(ProductBox);
+const MemoizedCategorybox = memo(Categorybox);
 
 const EMarket = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -62,20 +67,38 @@ const EMarket = () => {
     const favoritesCount = 0;
     const notifiedCount = 0;
 
-    React.useEffect(() => {
-        const token = storage.getString("token");
-        console.log("token", token);
-        let endpoint = DefaultEndPoint;
+    // Efficient cart loading without loops
+    useFocusEffect(
+        useCallback(() => {
+            // Load cart from storage only on focus, with error handling
+            try {
+                const savedCart = storage.getString("cart");
+                if (savedCart) {
+                    const parsedCart = JSON.parse(savedCart);
+                    dispatch(setCart(parsedCart));
+                }
+            } catch (error) {
+                console.error("Error parsing cart:", error);
+            }
+        }, [dispatch])
+    );
 
-        if (selectedCategory && categoryEndpoints[selectedCategory]) {
-            endpoint = `https://eagri-backend.vercel.app/e_market/products/by-category/?category=${categoryEndpoints[selectedCategory]}`;
-        }
+    // Load products only when needed
+    useEffect(() => {
+        // Use InteractionManager to ensure UI interactions complete first
+        InteractionManager.runAfterInteractions(() => {
+            const token = storage.getString("token");
+            let endpoint = DefaultEndPoint;
 
-        dispatch(fetchProductsThunk(endpoint, token));
+            if (selectedCategory && categoryEndpoints[selectedCategory]) {
+                endpoint = `https://eagri-backend.vercel.app/e_market/products/by-category/?category=${categoryEndpoints[selectedCategory]}`;
+            }
+
+            dispatch(fetchProductsThunk(endpoint, token));
+        });
     }, [selectedCategory, dispatch]);
 
-    const handleCategorySelect = (category) => {
-        console.log("category", category);
+    const handleCategorySelect = useCallback((category) => {
         if (selectedCategory === category) {
             dispatch(setProducts([]));
             dispatch(setSelectedCategory(""));
@@ -84,13 +107,13 @@ const EMarket = () => {
         
         dispatch(setProducts([]));
         dispatch(setSelectedCategory(category));
-    };
+    }, [selectedCategory, dispatch, setProducts, setSelectedCategory]);
 
-    const formatPrice = (price) => {
+    const formatPrice = useCallback((price) => {
         return new Intl.NumberFormat('en-IN').format(price || 0);
-    };
+    }, []);
 
-    const checkAgriCashLimit = (newItem, quantity = 1) => {
+    const checkAgriCashLimit = useCallback((newItem, quantity = 1) => {
         const itemPrice = parseFloat(newItem.discounted_price?.replace(/,/g, '') || 0);
         const newItemTotal = itemPrice * quantity;
 
@@ -102,9 +125,9 @@ const EMarket = () => {
 
         // Check if adding this item would exceed the limit
         return (currentCartTotal + newItemTotal) <= AGRI_CASH_LIMIT;
-    };
+    }, [cart, AGRI_CASH_LIMIT]);
 
-    const handleAddItem = (product) => {
+    const handleAddItem = useCallback((product) => {
         if (product.stock_quantity === 0) {
             Alert.alert("Out of Stock", "This product is currently out of stock.");
             return;
@@ -149,44 +172,46 @@ const EMarket = () => {
             dispatch(setCart(updatedCart));
             storage.set("cart", JSON.stringify(updatedCart));
         }
-    };
+    }, [cart, checkAgriCashLimit, dispatch, formatPrice, AGRI_CASH_LIMIT]);
 
-    useFocusEffect(
-        useCallback(() => {
-            const savedCart = storage.getString("cart");
-            if (savedCart) {
-                dispatch(setCart(JSON.parse(savedCart)));
-            }
-        }, [dispatch])
-    );
-
-    const formatNumber = (num) => {
+    const formatNumber = useCallback((num) => {
         if (!num) return "0";
         return new Intl.NumberFormat("en-IN").format(num);
-    };
+    }, []);
 
-    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalCost = cart.reduce((sum, item) => {
-        const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
-        return sum + (price * item.quantity);
-    }, 0);
+    // Memoize cart calculations to avoid recalculations on every render
+    const { totalQuantity, totalCost } = React.useMemo(() => {
+        const quantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cost = cart.reduce((sum, item) => {
+            const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
+            return sum + (price * item.quantity);
+        }, 0);
+        return { totalQuantity: quantity, totalCost: cost };
+    }, [cart]);
 
-    const filteredProducts = products.filter((product) =>
-        product.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Memoize filtered products to avoid filtering on every render
+    const filteredProducts = React.useMemo(() => {
+        return products.filter((product) =>
+            product.name?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [products, searchQuery]);
 
-    const handleSearch = (query) => {
+    const handleSearch = useCallback((query) => {
         setSearchQuery(query);
-    };
+    }, []);
 
-    const handleTabPress = (tab) => {
+    const handleTabPress = useCallback((tab) => {
         setActiveTab(tab);
         const position = tab === 'products' ? 0 : tab === 'favorites' ? 1 : 2;
         Animated.spring(tabIndicatorPosition, {
             toValue: position,
             useNativeDriver: true,
         }).start();
-    };
+    }, [tabIndicatorPosition]);
+
+    const navigateToCheckout = useCallback(() => {
+        Navigation.navigate(ScreensName.EOrderMainStack, { screen: ScreensName.EOrderCheckout });
+    }, [Navigation]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -213,7 +238,7 @@ const EMarket = () => {
                             (Category, index) =>
                                 Category.title.trim() !== "" && (
                                     <View style={styles.itemBoxWrapper} key={index}>
-                                        <Categorybox
+                                        <MemoizedCategorybox
                                             name={t(Category.title)}
                                             SourceGiven={Category.img}
                                             isNavigation={false}
@@ -287,7 +312,7 @@ const EMarket = () => {
                                         
                                         {filteredProducts.map((product, index) => (
                                             <View style={styles.productBoxWrapper} key={index}>
-                                                <ProductBox
+                                                <MemoizedProductBox
                                                     name={product.name}
                                                     price={product.price}
                                                     discounted_price={product.discounted_price}
@@ -337,7 +362,7 @@ const EMarket = () => {
                 <View style={styles.cartWrapper}>
                     <TouchableOpacity
                         style={styles.cartButton}
-                        onPress={() => Navigation.navigate(ScreensName.EOrderMainStack, { screen: ScreensName.EOrderCheckout })}
+                        onPress={navigateToCheckout}
                     >
                         <Text style={styles.cartText}>
                             {totalQuantity} Items . PKR {formatNumber(totalCost)}
@@ -423,7 +448,7 @@ const styles = StyleSheet.create({
     },
     cartWrapper: {
         position: "absolute",
-        bottom: hp(2),
+        bottom: hp(4),
         left: 0,
         right: 0,
         alignItems: 'center',

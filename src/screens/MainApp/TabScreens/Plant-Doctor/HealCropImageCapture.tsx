@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,6 +8,10 @@ import {
     TouchableOpacity,
     Alert,
     ActivityIndicator,
+    Platform,
+    Linking,
+    PermissionsAndroid,
+    BackHandler,
 } from "react-native";
 import {
     widthPercentageToDP as wp,
@@ -21,7 +25,6 @@ import {
     ImageLibraryOptions, 
     MediaType 
 } from 'react-native-image-picker';
-import { PermissionsAndroid } from 'react-native';  // Import PermissionsAndroid
 import colors from "../../../../../util/Constants/colors.js";
 import Navbar from "../../Navbar/Navbar.jsx";
 import { useTranslation } from "react-i18next";
@@ -41,33 +44,116 @@ const HealCropImageCapture = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
     const [analysisError, setAnalysisError] = useState<string | null>(null);
+    const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
 
-    // Request camera permission
-    const requestCameraPermission = async () => {
+    useEffect(() => {
+        checkCameraPermission();
+    }, []);
+
+    const checkCameraPermission = async () => {
         try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                {
-                    title: 'Camera Permission',
-                    message: 'This app needs access to your camera to take photos',
-                    buttonNegative: 'Cancel',
-                    buttonPositive: 'OK',
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('Camera permission granted');
-                handleCameraLaunch();  // Launch the camera after permission is granted
-            } else {
-                console.log('Camera permission denied');
-                Alert.alert('Permission Denied', 'Camera permission is required to take a photo.');
+            if (Platform.OS === 'android') {
+                const result = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA);
+                setHasCameraPermission(result);
             }
         } catch (err) {
-            console.warn(err);
+            console.warn('Error checking camera permission:', err);
+            setHasCameraPermission(false);
         }
     };
 
-    // Handle Camera launch
+    const requestCameraPermission = async () => {
+        try {
+            if (Platform.OS === 'android') {
+                // Try requesting through the Android permissions API first
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.CAMERA,
+                    {
+                        title: 'Camera Permission',
+                        message: 'EArthi needs camera access to diagnose plant health',
+                        buttonPositive: 'Allow Camera',
+                        buttonNegative: 'Cancel',
+                    }
+                );
+
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    setHasCameraPermission(true);
+                    handleCameraLaunch();
+                } else {
+                    // If permission is denied, try a different approach
+                    Alert.alert(
+                        'Camera Access Required',
+                        'EArthi needs camera access to work properly. Please enable camera access in your device settings.',
+                        [
+                            {
+                                text: 'Cancel',
+                                style: 'cancel',
+                                onPress: () => {
+                                    // Optionally handle cancel
+                                }
+                            },
+                            {
+                                text: 'Enable Camera',
+                                onPress: async () => {
+                                    try {
+                                        // Try to open app settings directly
+                                        await Linking.openSettings();
+                                        
+                                        // When user comes back to app, check permission again
+                                        const backHandler = BackHandler.addEventListener(
+                                            'hardwareBackPress',
+                                            () => {
+                                                checkCameraPermission();
+                                                backHandler.remove();
+                                                return false;
+                                            }
+                                        );
+
+                                        // Also check permission when app comes to foreground
+                                        const timeout = setTimeout(() => {
+                                            checkCameraPermission();
+                                        }, 1000);
+
+                                        return () => {
+                                            clearTimeout(timeout);
+                                            backHandler.remove();
+                                        };
+                                    } catch (error) {
+                                        console.error('Failed to open settings:', error);
+                                        Alert.alert(
+                                            'Manual Setup Required',
+                                            'Please follow these steps:\n\n' +
+                                            '1. Open your phone Settings\n' +
+                                            '2. Tap on Apps & notifications\n' +
+                                            '3. Find and tap on EArthi\n' +
+                                            '4. Tap on Permissions\n' +
+                                            '5. Enable Camera permission'
+                                        );
+                                    }
+                                }
+                            }
+                        ]
+                    );
+                }
+            } else {
+                // For iOS, try direct camera launch
+                handleCameraLaunch();
+            }
+        } catch (err) {
+            console.warn('Error requesting camera permission:', err);
+            Alert.alert(
+                'Permission Error',
+                'Unable to request camera permission. Please enable camera access manually in your device settings.'
+            );
+        }
+    };
+
     const handleCameraLaunch = () => {
+        if (!hasCameraPermission && Platform.OS === 'android') {
+            requestCameraPermission();
+            return;
+        }
+
         const options: CameraOptions = {
             mediaType: 'photo' as MediaType,
             quality: 1,
@@ -78,24 +164,32 @@ const HealCropImageCapture = () => {
         launchCamera(options)
             .then(response => {
                 if (response.didCancel) {
-                    console.log('User cancelled camera');
                     return;
                 }
 
                 if (response.errorCode) {
-                    console.error('ImagePicker Error:', response.errorMessage);
-                    Alert.alert('Error', 'Failed to capture image. Please try again.');
+                    if (response.errorCode === 'camera_unavailable') {
+                        Alert.alert('Error', 'Camera is not available on this device');
+                    } else if (response.errorCode === 'permission') {
+                        setHasCameraPermission(false);
+                        requestCameraPermission();
+                    } else if (response.errorCode === 'others') {
+                        Alert.alert('Error', response.errorMessage || 'Failed to access camera');
+                    }
                     return;
                 }
 
                 if (response.assets && response.assets[0]?.uri) {
                     setSelectedImage(response.assets[0].uri);
-                    setAnalysisError(null); // Clear any previous error
+                    setAnalysisError(null);
                 }
             })
             .catch(error => {
-                console.error('Camera launch failed:', error);
-                Alert.alert('Error', 'Failed to launch camera. Please try again.');
+                console.error('Camera launch error:', error);
+                Alert.alert(
+                    'Camera Error',
+                    'Failed to launch camera. Please try again or use gallery option.'
+                );
             });
     };
 
@@ -122,7 +216,7 @@ const HealCropImageCapture = () => {
 
                 if (response.assets && response.assets[0]?.uri) {
                     setSelectedImage(response.assets[0].uri);
-                    setAnalysisError(null); // Clear any previous error
+                    setAnalysisError(null);
                 }
             })
             .catch(error => {
@@ -144,8 +238,8 @@ const HealCropImageCapture = () => {
         const formData = new FormData();
         formData.append('image', {
             uri: selectedImage,
-            type: 'image/png',
-            name: 'plant_image.png'
+            type: 'image/jpeg', // Changed from png to jpeg
+            name: 'plant_image.jpg'
         } as any);
         formData.append('application_used_image_gallery', 'false');
         formData.append('application_id', 'EArthi');
@@ -162,69 +256,95 @@ const HealCropImageCapture = () => {
                 body: formData
             });
 
-            // Check HTTP status code
-            if (response.ok) {
-                // Status 200-299 - success
-                const result = await response.json();
-                console.log("Plant & Disease Suggestions:", result);
-                
-                // Check if predicted_diagnoses exists and has more than 1 item
-                if (result.predicted_diagnoses && result.predicted_diagnoses.length > 1) {
-                    // Multiple diagnoses - go to Fetch1 screen for user to select
-                    console.log(`Multiple diagnoses found (${result.predicted_diagnoses.length}), navigating to selection screen`);
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                // Check for errors array in the response
+                if (responseData.errors && responseData.errors.length > 0) {
+                    const error = responseData.errors[0];
+                    let errorMessage = error.message;
+
+                    // Add image feedback details if available
+                    if (responseData.image_feedback) {
+                        const feedback = responseData.image_feedback;
+                        if (feedback.image_focus === 'bad') {
+                            errorMessage += '\nThe image is too blurry. Please take a clearer photo.';
+                        }
+                        if (feedback.image_distance === 'bad') {
+                            errorMessage += '\nPlease capture the image from an appropriate distance.';
+                        }
+                    }
+
+                    // Handle specific error types
+                    switch (error.type) {
+                        case 'bad_image':
+                            errorMessage = 'The image quality is too low. Please ensure the image is clear and well-lit.';
+                            break;
+                        case 'image_blurry':
+                            errorMessage = 'The image is too blurry. Please take a clearer photo.';
+                            break;
+                        case 'distance_too_far':
+                            errorMessage = 'You are too far from the plant. Please take a closer photo.';
+                            break;
+                        case 'non_plant':
+                            errorMessage = 'No plant detected in the image. Please ensure the image contains a plant.';
+                            break;
+                        case 'crop_not_supported':
+                            errorMessage = 'This crop type is not currently supported by our system.';
+                            break;
+                        case 'ornamental_plant':
+                            errorMessage = 'Ornamental plants are not supported. Please only use agricultural crops.';
+                            break;
+                        case 'unknown_disease':
+                            errorMessage = 'Unable to recognize these symptoms. This particular problem may not be supported yet.';
+                            break;
+                    }
+
+                    setAnalysisError(errorMessage);
+                    return; // Don't proceed to navigation if there's an error
+                }
+
+                // If no errors, proceed with navigation based on results
+                if (responseData.predicted_diagnoses && responseData.predicted_diagnoses.length > 1) {
                     navigation.navigate(ScreensName.Fetch1, { 
-                        analysisResults: result,
+                        analysisResults: responseData,
                         imageUri: selectedImage
                     });
                 } else {
-                    // Single diagnosis or no diagnosis - go directly to Diagnosis
-                    console.log('Single or no diagnosis, navigating to Diagnosis screen');
                     navigation.navigate(ScreensName.Diagnosis, { 
                         imageUri: selectedImage,
-                        diagnosisResult: result.predicted_diagnoses && result.predicted_diagnoses.length === 1 ? 
-                            result.predicted_diagnoses[0] : null
+                        diagnosisResult: responseData.predicted_diagnoses && responseData.predicted_diagnoses.length === 1 ? 
+                            responseData.predicted_diagnoses[0] : null
                     });
                 }
             } else {
-                // Handle errors based on status code
+                // Handle non-200 status codes
                 let errorMessage = '';
                 
                 if (response.status === 400) {
-                    errorMessage = "Bad Request: The request was invalid.";
-                } else if (response.status === 404) {
-                    errorMessage = "Not Found: The endpoint was not found.";
+                    if (responseData.message?.includes('resolution')) {
+                        errorMessage = "Image resolution is too low. Please use an image with higher resolution (min: 200x200px, max: 6000x6000px).";
+                    } else {
+                        errorMessage = responseData.message || "Invalid request. Please try again with a different image.";
+                    }
+                } else if (response.status === 401) {
+                    errorMessage = "Authentication failed. Please try again later.";
+                } else if (response.status === 413) {
+                    errorMessage = "Image file is too large. Please use a smaller image.";
+                } else if (response.status === 429) {
+                    errorMessage = "Too many requests. Please try again later.";
                 } else if (response.status === 500) {
-                    errorMessage = "Internal Server Error: There was a problem with the server.";
+                    errorMessage = "Server error. Please try again later.";
                 } else {
-                    errorMessage = `Error: Received status code ${response.status}`;
+                    errorMessage = responseData.message || `Error: ${response.status}`;
                 }
 
-                // Optionally, get more details about the error response
-                try {
-                    const errorDetails = await response.json();
-                    console.error("Error Details:", errorDetails);
-                    
-                    // Add error details if available
-                    if (errorDetails.message) {
-                        errorMessage += ` - ${errorDetails.message}`;
-                    }
-                } catch (e) {
-                    // If can't parse error response as JSON
-                    console.error("Error parsing error response:", e);
-                }
-                
                 setAnalysisError(errorMessage);
-                
-                // Also navigate to Diagnosis with the image for default app behavior
-                navigation.navigate(ScreensName.Diagnosis, { imageUri: selectedImage });
+                return; // Don't proceed to navigation
             }
         } catch (error: any) {
-            // Catch network errors (e.g., no internet, server unreachable)
             console.error("Network Error:", error);
-            setAnalysisError(`Network Error: ${error.message || 'Unable to connect to server'}`);
-            
-            // Also navigate to Diagnosis with the image for default app behavior
-            navigation.navigate(ScreensName.Diagnosis, { imageUri: selectedImage });
+            setAnalysisError("Network error. Please check your internet connection and try again.");
         } finally {
             setIsAnalyzing(false);
         }
@@ -232,13 +352,10 @@ const HealCropImageCapture = () => {
 
     const handleProceed = () => {
         if (selectedImage) {
-            // Analyze the image if we have a valid API key
             if (PLANTIX_API_KEY && PLANTIX_API_KEY !== 'YOUR_PLANTIX_API_KEY') {
                 analyzePlantImage();
             } else {
-                // Fallback to default behavior if no API key
-                console.log('No valid API key, using default behavior');
-                navigation.navigate(ScreensName.Diagnosis, { imageUri: selectedImage });
+                setAnalysisError('API configuration error. Please contact support.');
             }
         }
     };
@@ -290,7 +407,7 @@ const HealCropImageCapture = () => {
 
                     <TouchableOpacity
                         style={styles.iconButton}
-                        onPress={requestCameraPermission}  // Request permission before launching camera
+                        onPress={requestCameraPermission}
                     >
                         <Image
                             source={captureButton}
@@ -305,7 +422,7 @@ const HealCropImageCapture = () => {
                         (!selectedImage || isAnalyzing) && styles.proceedButtonDisabled
                     ]}
                     onPress={handleProceed}
-                    disabled={!selectedImage || isAnalyzing}  // Disable while analyzing
+                    disabled={!selectedImage || isAnalyzing}
                 >
                     {isAnalyzing ? (
                         <ActivityIndicator color={colors.WHITE} size="small" />
@@ -317,6 +434,7 @@ const HealCropImageCapture = () => {
         </SafeAreaView>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -373,15 +491,17 @@ const styles = StyleSheet.create({
     },
     errorContainer: {
         width: wp('90%'),
-        padding: wp('2%'),
-        backgroundColor: colors.LIGHT_GRAY, // Use available color
+        padding: wp('4%'),
+        backgroundColor: colors.LIGHT_GRAY,
         borderRadius: wp('2%'),
         marginBottom: hp('2%'),
+        borderWidth: 1,
+        borderColor: colors.RED,
     },
     errorText: {
-        fontSize: hp('1.6%'),
-        fontFamily: fonts.Regular,
-        color: colors.RED, // Use available color
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Medium,
+        color: colors.RED,
         textAlign: 'center',
     },
     actionButtonsContainer: {

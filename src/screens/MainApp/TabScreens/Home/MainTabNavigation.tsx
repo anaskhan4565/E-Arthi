@@ -12,6 +12,8 @@ import EWarehouseMainStack from "../E-Warehouse/E-WarehouseMainStack";
 import EMunshiMainStack from '../E-Munshi/E-MunshiMainStack';
 import NewHomeMainStack from './NewHomeMainStack';
 import DashBoardNew from './DashBoardNew';
+import BottomTabData from './BottomTab/BottomTab';
+import { useSelector } from 'react-redux';
 
 const { height, width } = Dimensions.get("window");
 const TAB_BAR_HEIGHT = hp('10%'); // Increased height
@@ -95,8 +97,8 @@ function MyTabBar({ state, descriptors, navigation }: TabBarProps) {
                         iconData = icons.home;
                         break;
                     case ScreensName.DashBoardNew:
-                        iconSource = require('../../../../assets/MainApp/NewTabIcons/DashBoard.png');
-                        break;
+                        iconData = icons.dashboard;
+                    break;
                     case t(ScreensName.EMarketMainStack):
                         iconData = icons.cart;
                         break;

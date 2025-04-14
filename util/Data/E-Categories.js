@@ -20,7 +20,7 @@ export default [
   
     {
         title: "Machinery",
-        img:require('../../src/assets/MainApp/E-Market/Seeds2.png'),
+        img:require('../../src/assets/MainApp/E-Market/Machine2.png'),
         subcategories: [
             { name: "Rice Seeds" },
             { name: "Wheat Seeds" },
@@ -30,7 +30,7 @@ export default [
     },
     {
         title: "Crops",
-        img:require('../../src/assets/MainApp/E-Market/Fertilizer2.png'),
+        img:require('../../src/assets/MainApp/E-Market/cropmay.png'),
         subcategories: [
             { name: "ENGRO-400 Fertilizer" },
             { name: "Potash-5800 Fertilizer" },
@@ -46,7 +46,7 @@ export default [
     },
     {
         title: "Labour",
-        img:require('../../src/assets/MainApp/E-Market/Fertilizer3.png'),
+        img:require('../../src/assets/MainApp/E-Market/labor2.png'),
         subcategories: [
             { name: "ENGRO-400 Fertilizer" },
             { name: "Potash-5800 Fertilizer" },

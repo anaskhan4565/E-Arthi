@@ -99,10 +99,16 @@ const ELoanRequestNewLoan = () => {
             }
 
             const token = storage.getString('token');
+            const userId = storage.getString('userId');
             console.log(token);
 
             if (!token) {
                 setError('You must be logged in to submit a loan application');
+                return;
+            }
+
+            if (!userId) {
+                setError('User ID not found. Please login again.');
                 return;
             }
 
@@ -124,7 +130,7 @@ const ELoanRequestNewLoan = () => {
             });
 
             const loanData = {
-                user: userConstants.id,
+                user: userId,
                 bank_name: bankName,
                 name: userConstants.name,
                 cnic: userConstants.cnic,

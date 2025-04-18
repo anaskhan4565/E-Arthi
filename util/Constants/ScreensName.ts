@@ -232,5 +232,18 @@ export default {
     ZoneDetails: 'ZoneDetails',
     FertilizerAdvisor: 'FertilizerAdvisor',
     EAdviserMainStack: 'EAdviserMainStack',
-
+    FertilizerAdvisorSelectedCrop: 'FertilizerAdvisorSelectedCrop',
+    ApplicationInstructions: 'ApplicationInstructions',
+    FertilizationSchedule: 'FertilizationSchedule',
+    PricingAdvisor: 'PricingAdvisor',
+    ProfitMaximisation: 'ProfitMaximisation',
+    ProductPricing: 'ProductPricing',
+    YieldTracker: 'YieldTracker',
+    CropYield: 'CropYield',
+    Diagnostics: 'Diagnostics',
+    CropDiagnostics: 'CropDiagnostics',
+    SoilTesting: 'SoilTesting',
+    RequestSoilTesting: 'RequestSoilTesting',
+    SoilTestingReport: 'SoilTestingReport',
+    
 }

@@ -77,6 +77,7 @@ const PendingLoan = () => {
             try {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
+                console.log("Attempting to fetch loan data with token:", token);
 
                 if (!token) {
                     console.error('No token found in storage');
@@ -86,11 +87,15 @@ const PendingLoan = () => {
                 }
 
                 // Make API call with token in header
+                console.log("Making request to:", Routes.get_loan);
                 const response = await axios.get(Routes.get_loan, {
                     headers: {
-                        'Authorization': `Token ${token}`
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
                     }
                 });
+
+                console.log("API Response:", response.data);
 
                 // Filter to only show loans with pending status
                 const pendingLoans = response.data.filter(loan =>
@@ -101,7 +106,22 @@ const PendingLoan = () => {
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching loan data:", err);
-                setError("Failed to load loan data");
+                if (err.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.error("Error response data:", err.response.data);
+                    console.error("Error status:", err.response.status);
+                    console.error("Error headers:", err.response.headers);
+                    setError(`Server error: ${err.response.status} - ${err.response.data?.message || 'Unknown error'}`);
+                } else if (err.request) {
+                    // The request was made but no response was received
+                    console.error("No response received:", err.request);
+                    setError("No response from server. Please check your internet connection.");
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.error("Error setting up request:", err.message);
+                    setError("Failed to setup request. Please try again.");
+                }
                 setLoading(false);
             }
         };

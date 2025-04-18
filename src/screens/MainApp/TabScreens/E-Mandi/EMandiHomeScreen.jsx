@@ -5,42 +5,55 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
-import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
+
+// Import SVG icons
+import AuctionSvg from '../../../../assets/MainApp/E-MandiNew/Auction.svg';
+import MyAuctionSvg from '../../../../assets/MainApp/E-MandiNew/MyAuction.svg';
+import LiveAuctionSvg from '../../../../assets/MainApp/E-MandiNew/LiveAuction.svg';
+import RentalsSvg from '../../../../assets/MainApp/E-MandiNew/Rentals.svg';
 
 const mandiOptions = [
     {
         title: "Request for Auction",
         screen: ScreensName.RequestForAuction,
-        img: require("../../../../assets/MainApp/E-MandiNew/Auction.png"),
+        SvgIcon: AuctionSvg,
     },
     {
         title: "My Auctions",
         screen: ScreensName.MyAuctions,
-        img: require("../../../../assets/MainApp/E-MandiNew/MyAuction.png"),
+        SvgIcon: MyAuctionSvg,
     },
     {
-        title: "Auctions",
-        screen: ScreensName.Auctions,
-        img: require("../../../../assets/MainApp/E-MandiNew/LiveAuction.png"),
+        title: "Live Auctions",
+        screen: ScreensName.LiveAuctions,
+        SvgIcon: LiveAuctionSvg,
+        isLarger: true, // Flag to make this icon larger
     },
     {
         title: "History",
         screen: ScreensName.AuctionHistory,
-        img: require("../../../../assets/MainApp/E-MandiNew/Rentals.png"),
+        SvgIcon: RentalsSvg,
     }
 ];
 
 function EMandiHomeScreen() {
     const { t } = useTranslation();
+    const navigation = useNavigation();
+
+    const handleNavigation = (screenName) => {
+        navigation.navigate(ScreensName.EMandiMainStack, { screen: screenName });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -54,32 +67,39 @@ function EMandiHomeScreen() {
                 </View>
 
                 <View style={styles.titleWrapper}>
-                    <Text style={styles.titleText}>{t('E-Mundi')}</Text>
+                    <Text style={styles.titleText}>{t('E-Mandi')}</Text>
                 </View>
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.scrollContainer}>
-                        {mandiOptions.map((option, index) => (
-                            <View style={styles.itemBoxWrapper} key={index}>
-                                <EInventoryBoxes
-                                    name={t(option.title)}
-                                    screenName={option.screen}
-                                    navigationName={ScreensName.EMandiMainStack}
-                                    SourceGiven={option.img}
-                                    isNavigation={1}
-                                    w={wp("23%")}
-                                    h={hp("14%")}
-                                    img_size_h={hp(7)}
-                                    img_size_w={wp(16)}
-                                    font_Size={hp('1.8%')}
-                                    isLightBold={true}
-                                    fontcolor={colors.BLACK}
-                                    backgroundColor={colors.WHITE}
-                                    elevation={0}
-                                    borderRadius={hp(2)}
-                                />
-                            </View>
-                        ))}
+                        {mandiOptions.map((option, index) => {
+                            const IconComponent = option.SvgIcon;
+                            // Default and larger sizes for icons
+                            const iconSize = option.isLarger
+                                ? { width: wp(22), height: hp(11) }
+                                : { width: wp(16), height: hp(7) };
+
+                            return (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.itemBox}
+                                    onPress={() => handleNavigation(option.screen)}
+                                >
+                                    <View style={[styles.iconContainer, option.isLarger && { marginTop: hp(-3) }]}>
+                                        <IconComponent
+                                            width={iconSize.width}
+                                            height={iconSize.height}
+                                        />
+                                    </View>
+                                    <Text style={[
+                                        styles.itemText,
+                                        option.isLarger && { marginTop: hp(-1.5) }
+                                    ]}>
+                                        {t(option.title)}
+                                    </Text>
+                                </TouchableOpacity>
+                            );
+                        })}
                     </View>
                 </View>
             </ScrollView>
@@ -115,7 +135,7 @@ const styles = StyleSheet.create({
         letterSpacing: hp(0.1),
     },
     bodyContainer: {
-        // marginLeft: hp(3),
+        // No left margin
     },
     scrollContainer: {
         flexWrap: 'wrap',
@@ -125,8 +145,25 @@ const styles = StyleSheet.create({
         paddingVertical: hp("1%"),
         width: '100%',
     },
-    itemBoxWrapper: {
+    itemBox: {
+        width: wp("23%"),
+        height: hp("14%"),
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.WHITE,
+        borderRadius: hp(2),
         marginBottom: hp("2%"),
+    },
+    iconContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: hp(0.5),
+    },
+    itemText: {
+        textAlign: 'center',
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
     },
 });
 

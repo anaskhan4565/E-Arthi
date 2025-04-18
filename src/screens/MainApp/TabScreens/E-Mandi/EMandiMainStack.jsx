@@ -17,6 +17,9 @@ import RequestForAuction from "./RequestForAuction";
 import MyAuctions from "./MyAuctions";
 import Auctions from "./Auctions";
 import AuctionHistory from "./AuctionHistory";
+import AuctionSubmissionSuccess from "./AuctionSubmissionSuccess";
+import LiveAuctions from "./LiveAuctions";
+import AuctionDetails from "./AuctionDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +31,9 @@ function EMandiMainStack() {
             <Stack.Screen name={ScreensName.MyAuctions} component={MyAuctions} />
             <Stack.Screen name={ScreensName.Auctions} component={Auctions} />
             <Stack.Screen name={ScreensName.AuctionHistory} component={AuctionHistory} />
+            <Stack.Screen name={ScreensName.AuctionSubmissionSuccess} component={AuctionSubmissionSuccess} />
+            <Stack.Screen name={ScreensName.LiveAuctions} component={LiveAuctions} />
+            <Stack.Screen name={ScreensName.AuctionDetails} component={AuctionDetails} />
         </Stack.Navigator>
     );
 }

@@ -102,6 +102,9 @@ export default {
     MyAuctions: 'MyAuctions',
     Auctions: 'Auctions',
     AuctionHistory: 'AuctionHistory',
+    AuctionSubmissionSuccess: 'AuctionSubmissionSuccess',
+    LiveAuctions: 'LiveAuctions',
+    AuctionDetails: 'AuctionDetails',
     MarketDept: 'MarketDept',
     Profile: 'Profile',
 

@@ -129,6 +129,11 @@ const ELoanRequestNewLoan = () => {
                 }
             });
 
+            // Ensure desired_loan_period is set from repaymentPeriod state
+            processedFormData.desired_loan_period = repaymentPeriod ? parseInt(repaymentPeriod) : null;
+            // Set title from the title state
+            processedFormData.title = title;
+
             const loanData = {
                 user: userId,
                 bank_name: bankName,

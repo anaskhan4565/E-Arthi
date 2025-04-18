@@ -17,7 +17,7 @@ import Navbar from '../../Navbar/Navbar.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
-
+import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 function AuctionHistoryDetails() {
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -26,70 +26,60 @@ function AuctionHistoryDetails() {
 
     // Handle payment button press
     const handlePayNow = () => {
-        // Add payment logic here
-        console.log('Pay now pressed');
+        navigation.navigate(ScreensName.AuctionHistoryPaymentMethod, { auctionData });
     };
 
     // Render auction product details
     const renderProductDetails = () => (
-        <View style={styles.sectionContainer}>
-            <View style={styles.productDetailsHeader}>
-                <Text style={styles.productDetailsTitle}>{t('Product Details')}</Text>
+        <View style={styles.productDetailsCard}>
+            <View style={styles.imageContainer}>
+                {auctionData.image ? (
+                    <Image source={auctionData.image} style={styles.productImage} />
+                ) : (
+                    <View style={styles.imagePlaceholder} />
+                )}
             </View>
-
-            <View style={styles.productDetailsContent}>
-                <View style={styles.imageContainer}>
-                    {auctionData.image ? (
-                        <Image source={auctionData.image} style={styles.productImage} />
-                    ) : (
-                        <View style={styles.placeholderImage} />
-                    )}
-                </View>
-
-                <View style={styles.productInfo}>
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoLabel}>{t('Made By')}:</Text>
-                        <Text style={styles.infoValue}>User</Text>
+            <View style={styles.productDetails}>
+                <Text style={styles.detailsTitle}>{t('Product Details')}</Text>
+                <View style={styles.detailsRow}>
+                    <View style={styles.detailColumn}>
+                        <Text style={styles.detailLabel}>{t('Made By:')}</Text>
+                        <Text style={styles.detailValue}>User</Text>
                     </View>
-
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoLabel}>{t('Product Name')}:</Text>
-                        <Text style={styles.infoValue}>{auctionData.productName}</Text>
+                    <View style={styles.verticalDivider} />
+                    <View style={styles.detailColumn}>
+                        <Text style={styles.detailLabel}>{t('Product Name:')}</Text>
+                        <Text style={styles.detailValue}>{auctionData.productName}</Text>
                     </View>
                 </View>
             </View>
         </View>
     );
 
-    // Render auction timing information
-    const renderAuctionTimings = () => (
-        <View style={styles.sectionContainer}>
-            <View style={styles.timingsGrid}>
-                <View style={styles.gridLeft}>
-                    <Text style={styles.gridLabel}>{t('Auction starts at')}:</Text>
-                    <Text style={styles.gridValue}>01/01/2025 <Text style={styles.gridTime}>06:13</Text></Text>
+    // Render auction timing and pricing information
+    const renderAuctionInfo = () => (
+        <View style={styles.auctionInfoCard}>
+            <View style={styles.auctionInfoRow}>
+                <View style={styles.infoColumn}>
+                    <Text style={styles.infoLabel}>{t('Auction starts at:')}</Text>
+                    <Text style={styles.infoValue}>01/01/2025 06:13</Text>
                 </View>
-                <View style={styles.gridDivider} />
-                <View style={styles.gridRight}>
-                    <Text style={styles.gridLabel}>{t('Auction ends at')}:</Text>
-                    <Text style={styles.gridValue}>{auctionData.endDate} <Text style={styles.gridTime}>{auctionData.endTime}</Text></Text>
+                <View style={styles.verticalDivider} />
+                <View style={styles.infoColumn}>
+                    <Text style={styles.infoLabel}>{t('Auction ends at:')}</Text>
+                    <Text style={styles.infoValue}>{auctionData.endDate} {auctionData.endTime}</Text>
                 </View>
             </View>
-        </View>
-    );
-
-    // Render auction pricing information
-    const renderPricing = () => (
-        <View style={styles.sectionContainer}>
-            <View style={styles.timingsGrid}>
-                <View style={styles.gridLeft}>
-                    <Text style={styles.gridLabel}>{t('Auction start price')}:</Text>
-                    <Text style={styles.gridValue}>{auctionData.startPrice} Rs</Text>
+            <View style={styles.horizontalDivider} />
+            <View style={styles.auctionInfoRow}>
+                <View style={styles.infoColumn}>
+                    <Text style={styles.infoLabel}>{t('Auction start price:')}</Text>
+                    <Text style={styles.infoValue}>{auctionData.startPrice} Rs</Text>
                 </View>
-                <View style={styles.gridDivider} />
-                <View style={styles.gridRight}>
-                    <Text style={styles.gridLabel}>{t('Winning bid')}:</Text>
-                    <Text style={styles.gridValue}>{auctionData.startPrice} Rs</Text>
+                <View style={styles.verticalDivider} />
+                <View style={styles.infoColumn}>
+                    <Text style={styles.infoLabel}>{t('Winning bid:')}</Text>
+                    <Text style={styles.infoValue}>{auctionData.startPrice} Rs</Text>
                 </View>
             </View>
         </View>
@@ -129,16 +119,8 @@ function AuctionHistoryDetails() {
             </View>
 
             <View style={styles.searchContainer}>
-                <View style={styles.searchInputContainer}>
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder={t("Search in here")}
-                        editable={false}
-                    />
-                    <View style={styles.searchIconContainer}>
-                        <Text style={styles.searchIcon}>🔍</Text>
-                    </View>
-                </View>
+                <CustomSearchApp placeholder={t("Search in here")} />
+
             </View>
 
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -154,8 +136,7 @@ function AuctionHistoryDetails() {
                 <Text style={styles.sectionTitle}>{t('Bidding Highlights')}</Text>
 
                 {renderProductDetails()}
-                {renderAuctionTimings()}
-                {renderPricing()}
+                {renderAuctionInfo()}
                 {renderStatus()}
                 {renderPayment()}
             </ScrollView>
@@ -204,7 +185,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        padding: hp(3),
+        padding: hp(2.5),
     },
     headerContainer: {
         flexDirection: 'row',
@@ -220,111 +201,115 @@ const styles = StyleSheet.create({
     headerStatusBadge: {
         backgroundColor: colors.GREEN,
         paddingHorizontal: wp(3),
-        paddingVertical: hp(0.5),
-        borderRadius: hp(1),
+        paddingVertical: hp(0.7),
+        borderRadius: hp(2),
     },
     headerBadgeText: {
         color: colors.WHITE,
-        fontSize: hp(1.5),
+        fontSize: hp(1.8),
         fontFamily: fonts.Medium,
     },
     sectionTitle: {
-        fontSize: hp(2.2),
-        fontFamily: fonts.Medium,
+        fontSize: hp(2.4),
+        fontFamily: fonts.SemiBold,
         color: colors.BLACK,
         marginBottom: hp(2),
     },
-    sectionContainer: {
-        marginBottom: hp(2),
-    },
-    productDetailsHeader: {
-        marginBottom: hp(1),
-    },
-    productDetailsTitle: {
-        fontSize: hp(2),
-        fontFamily: fonts.Medium,
-        color: colors.BLACK,
-    },
-    productDetailsContent: {
-        flexDirection: 'row',
-        borderWidth: 1,
-        borderColor: colors.LIGHT_GRAY,
-        borderRadius: hp(1),
+    // Product details card styles
+    productDetailsCard: {
+        backgroundColor: colors.LIGHT_GREEN,
+        borderRadius: 6,
         padding: hp(2),
-        backgroundColor: colors.WHITE,
+        flexDirection: 'row',
+        gap: wp(4),
+        marginBottom: hp(2),
+        elevation: 2,
     },
     imageContainer: {
-        width: wp(25),
+        width: wp(30),
         justifyContent: 'center',
         alignItems: 'center',
     },
-    placeholderImage: {
-        width: wp(20),
-        height: wp(20),
+    imagePlaceholder: {
+        width: wp(30),
+        aspectRatio: 1,
         backgroundColor: colors.LIGHT_GRAY,
         borderRadius: hp(1),
     },
     productImage: {
-        width: wp(20),
-        height: wp(20),
+        width: wp(30),
+        aspectRatio: 1,
         borderRadius: hp(1),
     },
-    productInfo: {
+    productDetails: {
         flex: 1,
-        paddingLeft: wp(2),
-        justifyContent: 'center',
     },
-    infoRow: {
-        flexDirection: 'row',
-        marginBottom: hp(1),
-    },
-    infoLabel: {
-        fontSize: hp(1.8),
-        fontFamily: fonts.Medium,
-        color: colors.BLACK,
-        marginRight: wp(2),
-    },
-    infoValue: {
-        fontSize: hp(1.8),
+    detailsTitle: {
+        fontSize: hp(2.2),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
+        marginBottom: hp(2),
     },
-    timingsGrid: {
+    detailsRow: {
         flexDirection: 'row',
-        borderWidth: 1,
-        borderColor: colors.LIGHT_GRAY,
-        borderRadius: hp(1),
-        backgroundColor: colors.WHITE,
+        justifyContent: 'space-between',
     },
-    gridLeft: {
+    detailColumn: {
         flex: 1,
-        padding: hp(2),
     },
-    gridRight: {
-        flex: 1,
-        padding: hp(2),
-    },
-    gridDivider: {
-        width: 1,
-        backgroundColor: colors.LIGHT_GRAY,
-    },
-    gridLabel: {
-        fontSize: hp(1.6),
+    detailLabel: {
+        fontSize: hp(1.8),
         fontFamily: fonts.Medium,
         color: colors.GRAY,
         marginBottom: hp(0.5),
     },
-    gridValue: {
-        fontSize: hp(1.6),
+    detailValue: {
+        fontSize: hp(1.8),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
     },
-    gridTime: {
+    // Auction Info Card styles
+    auctionInfoCard: {
+        backgroundColor: colors.WHITE,
+        borderRadius: 6,
+        padding: hp(2),
+        marginBottom: hp(2),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+    },
+    auctionInfoRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    infoColumn: {
+        flex: 1,
+        paddingHorizontal: wp(2),
+    },
+    infoLabel: {
+        fontSize: hp(1.6),
+        fontFamily: fonts.Medium,
+        color: colors.GRAY,
+        marginBottom: hp(1),
+    },
+    infoValue: {
         fontSize: hp(1.6),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
-        marginLeft: wp(4),
+        marginBottom: hp(0.5),
     },
+    verticalDivider: {
+        width: 1,
+        backgroundColor: colors.DARK_GREEN,
+        marginHorizontal: wp(4),
+        alignSelf: 'stretch',
+    },
+    horizontalDivider: {
+        height: 1,
+        backgroundColor: colors.DARK_GREEN,
+        width: '100%',
+        marginVertical: hp(2),
+    },
+    // Status styles
     statusContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -351,6 +336,7 @@ const styles = StyleSheet.create({
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
     },
+    // Payment styles
     paymentContainer: {
         flexDirection: 'row',
         alignItems: 'center',

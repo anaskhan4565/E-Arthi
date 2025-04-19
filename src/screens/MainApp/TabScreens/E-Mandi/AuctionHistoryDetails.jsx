@@ -26,7 +26,7 @@ function AuctionHistoryDetails() {
 
     // Handle payment button press
     const handlePayNow = () => {
-        navigation.navigate(ScreensName.AuctionHistoryPaymentMethod, { auctionData });
+        navigation.navigate(ScreensName.PaymentHistory, { auctionData });
     };
 
     // Render auction product details

@@ -257,5 +257,14 @@ export default {
     CreatePackageDetails: 'CreatePackageDetails',
     CreatePackage: 'CreatePackage',
     
+    ERentals: 'ERentals',
+    ERentalsMainStack: 'ERentalsMainStack',
+    Harvester: 'Harvester',
+    Forklift: 'Forklift',
+    Auger: 'Auger',
+    ToolCarrier: 'ToolCarrier',
+    Tractor: 'Tractor',
+    BookRental: 'BookRental',
+    
 
 }

@@ -67,7 +67,7 @@ const NewDrawerData = [
         id: 'rental',
         title: 'E-Rental',
         svgImage: ERentalIcon,
-        screen: ScreensName.RentalScr,
+        screen: ScreensName.ERentalsMainStack,
         isNavigation: true,
     },
     {

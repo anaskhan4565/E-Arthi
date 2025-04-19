@@ -20,6 +20,15 @@ import SoilTesting from './SoilTesting.tsx';
 import RequestSoilTesting from './RequestSoilTesting.tsx';
 import SoilTestingReport from './SoilTestingReport.tsx';
 import EMarketMainStack from '../Home/EMarketMainStack.jsx';
+import Packaging from './Packaging.tsx';
+import GradingInfo from './GradingInfo.tsx';
+import Grading from './Grading.tsx';
+import RequestGrading from './RequestGrading.tsx';
+import RequestGradingDone from './RequestGradingDone.tsx';
+import ViewPackage from './ViewPackage.tsx';
+import CreatePackageDetails from './CreatePackageDetails.tsx';
+import CreatePackage from './CreatePackage.tsx';
+
 const Stack = createNativeStackNavigator();
 
 const EAdviserMainStack = () => {
@@ -47,7 +56,14 @@ const EAdviserMainStack = () => {
             <Stack.Screen name={ScreensName.RequestSoilTesting} component={RequestSoilTesting} />
             <Stack.Screen name={ScreensName.SoilTestingReport} component={SoilTestingReport} />
             <Stack.Screen name={ScreensName.EMarketMainStack} component={EMarketMainStack} />
-            
+            <Stack.Screen name={ScreensName.Packaging} component={Packaging} />
+            <Stack.Screen name={ScreensName.GradingInfo} component={GradingInfo} />
+            <Stack.Screen name={ScreensName.Grading} component={Grading} />
+            <Stack.Screen name={ScreensName.RequestGrading} component={RequestGrading} />
+            <Stack.Screen name={ScreensName.RequestGradingDone} component={RequestGradingDone} />
+            <Stack.Screen name={ScreensName.ViewPackage} component={ViewPackage} />
+            <Stack.Screen name={ScreensName.CreatePackageDetails} component={CreatePackageDetails} />
+            <Stack.Screen name={ScreensName.CreatePackage} component={CreatePackage} />
         </Stack.Navigator>
     );
 };

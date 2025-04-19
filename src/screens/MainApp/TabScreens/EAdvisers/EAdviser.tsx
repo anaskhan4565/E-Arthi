@@ -96,7 +96,7 @@ const EAdviser = () => {
 
                     <TouchableOpacity 
                         style={styles.menuItem}
-                    >
+                        onPress={() => navigation.navigate(ScreensName.PricingAdvisor)}>
                         <View style={styles.pricingIcon}>
                             <Image 
                                 source={require('./Images/Home/3.png')}
@@ -108,6 +108,7 @@ const EAdviser = () => {
 
                     <TouchableOpacity 
                         style={styles.menuItem}
+                        onPress={() => navigation.navigate(ScreensName.YieldTracker)}
                     >
                         <View style={styles.yieldIcon}>
                             <Image 

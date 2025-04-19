@@ -248,5 +248,14 @@ export default {
     SoilTesting: 'SoilTesting',
     RequestSoilTesting: 'RequestSoilTesting',
     SoilTestingReport: 'SoilTestingReport',
+    Packaging: 'Packaging',
+    GradingInfo: 'GradingInfo',
+    Grading: 'Grading',
+    RequestGrading: 'RequestGrading',
+    RequestGradingDone: 'RequestGradingDone',
+    ViewPackage: 'ViewPackage',
+    CreatePackageDetails: 'CreatePackageDetails',
+    CreatePackage: 'CreatePackage',
     
+
 }

@@ -22,7 +22,7 @@ type RootStackParamList = {
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const ToolCarrier = () => {
+const Forklift = () => {
     const navigation = useNavigation<NavigationProp>();
 
     return (
@@ -35,21 +35,56 @@ const ToolCarrier = () => {
                 {/* Search Bar */}
                 
 
-                <Text style={styles.title}>Tool Carrier</Text>
-                <Text style={styles.subtitle}>Choose the attachment for the tool carrier</Text>
+                <Text style={styles.title}>Forklift</Text>
+                <Text style={styles.subtitle}>Choose the attachment for the forklift</Text>
 
                 {/* Vehicle Grid */}
                 <View style={styles.vehicleGrid}>
                     <TouchableOpacity 
                         style={styles.vehicleItem}
-                        onPress={() => navigation.navigate(ScreensName.BookRental, { vehicleType: 'Viroc' })}
+                        onPress={() => navigation.navigate(ScreensName.BookRental, { vehicleType: 'FHS 55 STANDARD' })}
                     >
                         <Image
-                            source={require('./assets/viroc.png')}
+                            source={require('./assets/standard.png')}
                             style={[styles.vehicleIcon]}
                         />
-                        <Text style={styles.vehicleText}>Viroc</Text>
-                    </TouchableOpacity> 
+                        <Text style={styles.vehicleText}>FHS 55 STANDARD</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={styles.vehicleItem}
+                        onPress={() => navigation.navigate(ScreensName.BookRental, { vehicleType: 'FHS 55 4W' })}
+                    >
+                        <Image
+                            source={require('./assets/4w.png')}
+                            style={[styles.vehicleIcon]}
+                        />
+                        <Text style={styles.vehicleText}>FHS 55 4W</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={styles.vehicleItem}
+                        onPress={() => navigation.navigate(ScreensName.BookRental, { vehicleType: 'FHS 55 4WP REACH' })}
+                    >
+                        <Image
+                            source={require('./assets/4wp.png')}
+                            style={[styles.vehicleIcon]}
+                        />
+                        <Text style={styles.vehicleText}>FHS 55 4WP REACH</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={styles.vehicleItem}
+                        onPress={() => navigation.navigate(ScreensName.BookRental, { vehicleType: 'FHS 55 P REACH' })}
+                    >
+                        <Image
+                            source={require('./assets/p.png')}
+                            style={[styles.vehicleIcon]}
+                        />
+                        <Text style={styles.vehicleText}>FHS 55 P REACH</Text>
+                    </TouchableOpacity>
+
+                    
                 </View>
             </ScrollView>
         </View>
@@ -134,4 +169,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ToolCarrier;
+export default Forklift;

@@ -110,6 +110,7 @@ export default {
     AuctionDetails: 'AuctionDetails',
     MarketDept: 'MarketDept',
     Profile: 'Profile',
+    PaymentHistory: 'PaymentHistory',
 
 
     ETransportStack: "ETransportStack",
@@ -261,5 +262,15 @@ export default {
     CreatePackageDetails: 'CreatePackageDetails',
     CreatePackage: 'CreatePackage',
     
+    ERentals: 'ERentals',
+    ERentalsMainStack: 'ERentalsMainStack',
+    Harvester: 'Harvester',
+    Forklift: 'Forklift',
+    Auger: 'Auger',
+    ToolCarrier: 'ToolCarrier',
+    Tractor: 'Tractor',
+    BookRental: 'BookRental',
+    
+
 
 }

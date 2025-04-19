@@ -86,15 +86,17 @@ const ELoanHistory = () => {
                     setLoading(false);
                     return;
                 }
+                const userid = parseInt(storage.getString('userId'));
 
-                // Make API call with token in header - using the same endpoint as PendingLoan
-                const response = await axios.get(Routes.get_loan, {
+                console.log("User ID:", userid);
+                const url = `https://eagri-backend.vercel.app/e_loan/get_loan/user/${userid}/`;
+                const response = await axios.get(url, {
                     headers: {
                         'Authorization': `Token ${token}`
                     }
                 });
 
-                // No filtering - show all loans in history
+
                 setLoanData(response.data);
                 setLoading(false);
             } catch (err) {

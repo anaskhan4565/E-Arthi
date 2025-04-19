@@ -96,7 +96,7 @@ const PendingLoan = () => {
                 }
 
                 // Make API call with token in header and userId in URL
-                const url = `${Routes.get_loan}${userId}`;
+                const url = `https://eagri-backend.vercel.app/e_loan/get_loan/user/${userId}/`;
                 console.log("Making request to:", url);
                 const response = await axios.get(url, {
                     headers: {

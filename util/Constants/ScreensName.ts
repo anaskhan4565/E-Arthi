@@ -110,6 +110,7 @@ export default {
     AuctionDetails: 'AuctionDetails',
     MarketDept: 'MarketDept',
     Profile: 'Profile',
+    PaymentHistory: 'PaymentHistory',
 
 
     ETransportStack: "ETransportStack",
@@ -266,5 +267,6 @@ export default {
     Tractor: 'Tractor',
     BookRental: 'BookRental',
     
+
 
 }

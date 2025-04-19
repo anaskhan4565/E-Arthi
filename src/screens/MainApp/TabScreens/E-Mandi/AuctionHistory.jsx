@@ -60,6 +60,8 @@ function AuctionHistory() {
         navigation.navigate(ScreensName.AuctionHistoryDetails, { auctionData: auction });
     };
 
+
+
     const renderAuctionItem = ({ item }) => (
         <TouchableOpacity
             style={styles.auctionItem}
@@ -137,11 +139,27 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: hp(3),
     },
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: hp(2),
+    },
     title: {
         fontSize: hp(3),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
-        marginBottom: hp(2),
+    },
+    paymentHistoryButton: {
+        backgroundColor: colors.GREEN,
+        paddingHorizontal: wp(3),
+        paddingVertical: hp(1),
+        borderRadius: hp(1),
+    },
+    paymentHistoryButtonText: {
+        color: colors.WHITE,
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.5),
     },
     auctionsList: {
         paddingBottom: hp(5),

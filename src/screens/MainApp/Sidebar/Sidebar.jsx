@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import colors from "../../../../util/Constants/colors";
 import CustomImageButton from "../CustomComponent/CustomImageButton";
@@ -23,16 +24,69 @@ import Power from "../../../assets/MainApp/Sidebar/Power.png";
 import links from "../../../../util/Data/SidebarLinks";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../util/Constants/FontName";
+import Routes from "../../../../util/Constants/Routes";
+import { storage } from "../../../screens/InitialStartScreens/SignIn.jsx";
 
 
 function Sidebar() {
   const navigation = useNavigation();
+  const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState({
+    name: '',
+    email: ''
+  });
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    try {
+      setIsLoading(true);
+      const token = storage.getString('token');
+
+      if (!token) {
+        setError('No authentication token found');
+        setIsLoading(false);
+        return;
+      }
+
+      const headers = {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const response = await fetch(Routes.UserInfo, {
+        method: 'GET',
+        headers: headers
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok) {
+        const data = result.data;
+        setUserData({
+          name: `${data.first_name} ${data.last_name}`,
+          email: data.email
+        });
+      } else {
+        setError(result.message || 'Failed to fetch user information');
+      }
+    } catch (error) {
+      console.log('Error fetching user info:', error);
+      setError('An error occurred while fetching user information');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSubmit = () => {
     console.log('just a submit demo');
   };
 
-  const { t } = useTranslation();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -42,12 +96,21 @@ function Sidebar() {
       </View>
       <View style={styles.User}>
         <Image source={ProfilePic} style={styles.Profile} />
-        <View style={styles.UserInfo}>
-          <Text style={{ fontSize: hp("2.75%"), fontFamily: fonts.SemiBold, }}>
-            {t('MAAZ NAVAID')}
-          </Text>
-          <Text style={{ fontSize: hp("1.95%"), fontFamily: fonts.Regular, }}>{t('maaznavaid@gmail.com')}</Text>
-        </View>
+        {isLoading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color={colors.GREEN} />
+            <Text style={styles.loadingText}>{t('Loading...')}</Text>
+          </View>
+        ) : (
+          <View style={styles.UserInfo}>
+            <Text style={{ fontSize: hp("2.75%"), fontFamily: fonts.SemiBold }}>
+              {userData.name || t('USER NAME')}
+            </Text>
+            <Text style={{ fontSize: hp("1.95%"), fontFamily: fonts.Regular }}>
+              {userData.email || t('user@email.com')}
+            </Text>
+          </View>
+        )}
       </View>
       {/* <View style={styles.body}></View> */}
       {links.map(
@@ -93,12 +156,20 @@ const styles = StyleSheet.create({
     borderColor: colors.GREEN,
     borderWidth: 3,
     borderRadius: 20,
-
-
   },
   UserInfo: {
     marginLeft: wp("5%"),
     gap: wp("2%"),
+  },
+  loadingContainer: {
+    marginLeft: wp("5%"),
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  loadingText: {
+    marginLeft: wp("2%"),
+    fontSize: hp("1.8%"),
+    fontFamily: fonts.Regular,
   },
   Icons: {
     width: wp("9%"),
@@ -118,7 +189,6 @@ const styles = StyleSheet.create({
   logout: {
     marginTop: hp("2.5%"),
     marginBottom: hp('2%'),
-
   },
   logoutText: {
     fontSize: hp("1.9%"),

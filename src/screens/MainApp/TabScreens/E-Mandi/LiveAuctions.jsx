@@ -19,50 +19,100 @@ import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
-function MyAuctions() {
+
+const SAMPLE_AUCTIONS = [
+    {
+        id: '1',
+        productName: 'Apples',
+        startPrice: 120,
+        grading: 'A+',
+        region: 'Karachi',
+        endDate: '01/01/2025',
+        endTime: '06:13',
+        status: 'ongoing'
+    },
+    {
+        id: '2',
+        productName: 'Tomatoes',
+        startPrice: 85,
+        grading: 'A',
+        region: 'Lahore',
+        endDate: '15/01/2025',
+        endTime: '12:30',
+        status: 'pre_auction'
+    },
+    {
+        id: '3',
+        productName: 'Rice',
+        startPrice: 250,
+        grading: 'B+',
+        region: 'Islamabad',
+        endDate: '05/02/2025',
+        endTime: '14:45',
+        status: 'ongoing'
+    },
+    {
+        id: '4',
+        productName: 'Wheat',
+        startPrice: 180,
+        grading: 'A',
+        region: 'Multan',
+        endDate: '20/01/2025',
+        endTime: '09:15',
+        status: 'pre_auction'
+    },
+    {
+        id: '5',
+        productName: 'Mangoes',
+        startPrice: 300,
+        grading: 'A++',
+        region: 'Hyderabad',
+        endDate: '10/02/2025',
+        endTime: '18:00',
+        status: 'expiring_soon'
+    },
+];
+
+function LiveAuctions() {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const [filterStatus, setFilterStatus] = useState('');
 
-    // Sample auction data
-    const auctions = [
-        {
-            id: '1',
-            productName: 'Fruits',
-            startPrice: 100,
-            grading: 'A+',
-            region: 'Karachi',
-            endDate: '01/01/2025',
-            endTime: '06:13',
-            status: 'ongoing',
-        },
-        {
-            id: '2',
-            productName: 'Fruits',
-            startPrice: 100,
-            grading: 'A',
-            region: 'Lahore',
-            endDate: '01/01/2025',
-            endTime: '06:13',
-            status: 'ended',
-        },
-        {
-            id: '3',
-            productName: 'Fruits',
-            startPrice: 100,
-            grading: 'B+',
-            region: 'Islamabad',
-            endDate: '01/01/2025',
-            endTime: '06:13',
-            status: 'ended',
-        },
-    ];
+    const renderFilterButton = (label, value) => (
+        <TouchableOpacity
+            style={[
+                styles.filterButton,
+                filterStatus === value ? { backgroundColor: colors.GREEN } : {}
+            ]}
+            onPress={() => setFilterStatus(filterStatus === value ? '' : value)}
+        >
+            <Text
+                style={[
+                    styles.filterButtonText,
+                    filterStatus === value ? { color: colors.WHITE } : {}
+                ]}
+            >
+                {t(label)}
+            </Text>
+        </TouchableOpacity>
+    );
+
+    const handleAuctionPress = (item) => {
+        navigation.navigate(ScreensName.AuctionDetails, { auctionData: item });
+    };
+
+    // Filter auctions based on selected filter
+    const filteredAuctions = filterStatus
+        ? SAMPLE_AUCTIONS.filter(auction => auction.status === filterStatus)
+        : SAMPLE_AUCTIONS;
 
     const renderAuctionItem = ({ item }) => (
         <TouchableOpacity
             style={styles.auctionItem}
-            onPress={() => navigation.navigate(ScreensName.MyAuctionDetail, { auctionData: item })}
+            onPress={() => handleAuctionPress(item)}
         >
             <View style={styles.auctionImageContainer}>
+
                 <View style={styles.placeholderImage} />
             </View>
             <View style={styles.auctionDetails}>
@@ -79,10 +129,10 @@ function MyAuctions() {
             <View style={styles.statusBadgeContainer}>
                 <View style={[
                     styles.statusBadge,
-                    item.status === 'ended' ? styles.endedBadge : styles.ongoingBadge
+                    item.status === 'ongoing' ? styles.ongoingBadge : styles.preAuctionBadge
                 ]}>
                     <Text style={styles.statusText}>
-                        {item.status === 'ended' ? t('Ended') : t('On going')}
+                        {item.status === 'ongoing' ? t('On going') : t('Pre auction')}
                     </Text>
                 </View>
             </View>
@@ -100,10 +150,18 @@ function MyAuctions() {
             </View>
 
             <View style={styles.content}>
-                <Text style={styles.title}>{t('My Auctions')}</Text>
+                <Text style={styles.title}>{t('Live Auctions')}</Text>
+
+                <View style={styles.filtersContainer}>
+                    {renderFilterButton('Starting soon', 'starting_soon')}
+                    {renderFilterButton('Expiring soon', 'expiring_soon')}
+                    {renderFilterButton('Products', 'products')}
+                    {renderFilterButton('Grading', 'grading')}
+                    {renderFilterButton('Region', 'region')}
+                </View>
 
                 <FlatList
-                    data={auctions}
+                    data={filteredAuctions}
                     renderItem={renderAuctionItem}
                     keyExtractor={item => item.id}
                     contentContainerStyle={styles.auctionsList}
@@ -140,6 +198,26 @@ const styles = StyleSheet.create({
         color: colors.BLACK,
         marginBottom: hp(2),
     },
+    filtersContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginBottom: hp(2),
+    },
+    filterButton: {
+        marginHorizontal: wp(2),
+        paddingHorizontal: wp(2),
+        paddingVertical: hp(0.8),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        borderRadius: hp(1),
+        marginRight: wp(2),
+        marginBottom: hp(1),
+    },
+    filterButtonText: {
+        fontSize: hp(1.6),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+    },
     auctionsList: {
         paddingBottom: hp(5),
     },
@@ -154,6 +232,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 1,
+
     },
     auctionImageContainer: {
         width: wp(25),
@@ -172,6 +251,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: hp(4),
     },
+
     auctionPrice: {
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
@@ -236,8 +316,8 @@ const styles = StyleSheet.create({
     ongoingBadge: {
         backgroundColor: colors.ORANGE,
     },
-    endedBadge: {
-        backgroundColor: colors.RED,
+    preAuctionBadge: {
+        backgroundColor: colors.GREEN,
     },
     statusText: {
         fontSize: hp(1.4),
@@ -246,4 +326,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyAuctions; 
+export default LiveAuctions; 

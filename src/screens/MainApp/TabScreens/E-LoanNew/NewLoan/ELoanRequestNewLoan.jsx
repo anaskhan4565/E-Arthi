@@ -83,10 +83,10 @@ const ELoanRequestNewLoan = () => {
         ];
 
         for (const field of requiredFields) {
-            if (!formData[field]) {
-                setError(`Please fill in ${field.replace(/_/g, ' ')}`);
-                return false;
-            }
+            // if (!formData[field]) {
+            //     setError(`Please fill in ${field.replace(/_/g, ' ')}`);
+            //     return false;
+            // }
         }
         setError('');
         return true;
@@ -99,10 +99,16 @@ const ELoanRequestNewLoan = () => {
             }
 
             const token = storage.getString('token');
+            const userId = storage.getString('userId');
             console.log(token);
 
             if (!token) {
                 setError('You must be logged in to submit a loan application');
+                return;
+            }
+
+            if (!userId) {
+                setError('User ID not found. Please login again.');
                 return;
             }
 
@@ -123,8 +129,13 @@ const ELoanRequestNewLoan = () => {
                 }
             });
 
+            // Ensure desired_loan_period is set from repaymentPeriod state
+            processedFormData.desired_loan_period = repaymentPeriod ? parseInt(repaymentPeriod) : null;
+            // Set title from the title state
+            processedFormData.title = title;
+
             const loanData = {
-                user: userConstants.id,
+                user: userId,
                 bank_name: bankName,
                 name: userConstants.name,
                 cnic: userConstants.cnic,
@@ -154,7 +165,6 @@ const ELoanRequestNewLoan = () => {
             setIsLoading(false);
         }
     };
-    const [loanType, setLoanType] = useState('');
     const [title, setTitle] = useState('');
     const [repaymentPeriod, setRepaymentPeriod] = useState('');
     const { height } = Dimensions.get("window");
@@ -234,17 +244,17 @@ const ELoanRequestNewLoan = () => {
                             <Text style={styles.label}>Loan Type:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
-                                    selectedValue={loanType}
-                                    onValueChange={(value) => setLoanType(value)}
+                                    selectedValue={formData.loan_type}
+                                    onValueChange={(value) => handleInputChange('loan_type', value)}
                                     style={styles.picker}
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
                                     <Picker.Item label="Select loan type" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="Personal" value="personal" style={styles.pickerItem} />
-                                    <Picker.Item label="Agriculture" value="agriculture" style={styles.pickerItem} />
-                                    <Picker.Item label="Mortgage" value="mortgage" style={styles.pickerItem} />
-                                    <Picker.Item label="Business" value="business" style={styles.pickerItem} />
+                                    <Picker.Item label="Personal" value="Personal" style={styles.pickerItem} />
+                                    <Picker.Item label="Agriculture" value="Agriculture" style={styles.pickerItem} />
+                                    <Picker.Item label="Mortgage" value="Mortgage" style={styles.pickerItem} />
+                                    <Picker.Item label="Business" value="Business" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>

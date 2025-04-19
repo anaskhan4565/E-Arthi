@@ -441,7 +441,6 @@ const styles = StyleSheet.create({
 
 
         padding: wp('3%'),
-        marginBottom: hp('2%'),
 
     },
     sectionTitle: {

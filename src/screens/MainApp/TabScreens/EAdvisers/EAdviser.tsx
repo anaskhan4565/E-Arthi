@@ -13,16 +13,16 @@ import Navbar from '../../Navbar/Navbar';
 import colors from '../../../../../util/Constants/colors';
 import ScreensName from '../../../../../util/Constants/ScreensName';
 
-type RootStackParamList = {
-    [ScreensName.CropAdvisor]: undefined;
-    [ScreensName.FertilizerAdvisor]: undefined;
-    [ScreensName.AgriServices]: undefined;
-};
+// // type RootStackParamList = {
+//     [ScreensName.CropAdvisor]: undefined;
+//     [ScreensName.FertilizerAdvisor]: undefined;
+//     [ScreensName.AgriServices]: undefined;
+// };
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+// type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const EAdviser = () => {
-    const navigation = useNavigation<NavigationProp>();
+    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>

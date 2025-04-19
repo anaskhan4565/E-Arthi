@@ -12,15 +12,19 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useTranslation } from 'react-i18next';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker } from "@react-native-picker/picker";
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import CustomInput from '../../../../components/CustomInput.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
+import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 
 function RequestForAuction() {
     const { t } = useTranslation();
+    const navigation = useNavigation();
 
     // Form state
     const [madeBy, setMadeBy] = useState('');
@@ -122,8 +126,8 @@ function RequestForAuction() {
 
     // Submit handler
     const handleSubmit = () => {
-        // Implement form submission logic
-        console.log('Form submitted');
+        // Navigate to success screen
+        navigation.navigate(ScreensName.AuctionSubmissionSuccess);
     };
 
     return (
@@ -132,44 +136,57 @@ function RequestForAuction() {
                 <Navbar hasBackButton={true} />
             </View>
 
+            <View style={styles.searchContainer}>
+                <CustomSearchApp placeholder={t('Search in here')} />
+            </View>
+
             <ScrollView style={styles.scrollView}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>{t('Request For Auction')}</Text>
+                    <Text style={styles.title}>{t('Mundi - Create Auction')}</Text>
 
                     <View style={styles.formContainer}>
-                        <Text style={styles.formLabel}>{t('Enter the following details:')}</Text>
 
-                        <View style={styles.imageUploadContainer}>
-                            <View style={styles.imageBox}>
-                                {/* Placeholder for image upload */}
-                            </View>
-                            <View style={styles.formFields}>
-                                <View style={styles.formField}>
-                                    <Text style={styles.fieldLabel}>{t('Made By:')}</Text>
-                                    <CustomInput
-                                        placeholder="User"
-                                        w={wp('45%')}
-                                        value={madeBy}
-                                        onChangeText={setMadeBy}
-                                    />
+
+                        <View style={styles.formFieldsContainer}>
+                            <Text style={styles.formLabel}>{t('Enter the following details:')}</Text>
+
+                            <View style={styles.imageUploadContainer}>
+                                <View style={styles.imageBox}>
+                                    {/* Placeholder for image upload */}
                                 </View>
-                                <View style={styles.formField}>
-                                    <Text style={styles.fieldLabel}>{t('Product Name:')}</Text>
-                                    <CustomInput
-                                        placeholder="Enter product name"
-                                        w={wp('45%')}
-                                        value={productName}
-                                        onChangeText={setProductName}
-                                    />
+                                <View style={styles.formFields}>
+                                    <View style={styles.formField}>
+                                        <Text style={styles.fieldLabel}>{t('Made By:')}</Text>
+                                        <CustomInput
+                                            placeholder="User"
+                                            w={wp('45%')}
+                                            h={hp('5.5%')}
+                                            value={madeBy}
+                                            onChangeText={setMadeBy}
+                                            bg_give={colors.WHITE}
+                                        />
+                                    </View>
+                                    <View style={styles.formField}>
+                                        <Text style={styles.fieldLabel}>{t('Product Name:')}</Text>
+                                        <CustomInput
+                                            placeholder="Enter product name"
+                                            w={wp('45%')}
+                                            h={hp('5.5%')}
+                                            value={productName}
+                                            onChangeText={setProductName}
+                                            bg_give={colors.WHITE}
+                                        />
+                                    </View>
                                 </View>
                             </View>
+
                         </View>
 
                         <View style={styles.dateTimeContainer}>
                             <Text style={styles.fieldLabel}>{t('Auction starts at:')}</Text>
                             <View style={styles.dateTimeRow}>
                                 <TouchableOpacity
-                                    style={styles.dateTimePicker}
+                                    style={styles.dateInputPicker}
                                     onPress={() => setStartDatePickerVisible(true)}
                                 >
                                     <Text style={styles.dateTimeText}>
@@ -177,7 +194,7 @@ function RequestForAuction() {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={styles.dateTimePicker}
+                                    style={styles.timeInputPicker}
                                     onPress={() => setStartTimePickerVisible(true)}
                                 >
                                     <Text style={styles.dateTimeText}>
@@ -191,7 +208,7 @@ function RequestForAuction() {
                             <Text style={styles.fieldLabel}>{t('Auction ends at:')}</Text>
                             <View style={styles.dateTimeRow}>
                                 <TouchableOpacity
-                                    style={styles.dateTimePicker}
+                                    style={styles.dateInputPicker}
                                     onPress={() => setEndDatePickerVisible(true)}
                                 >
                                     <Text style={styles.dateTimeText}>
@@ -199,7 +216,7 @@ function RequestForAuction() {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={styles.dateTimePicker}
+                                    style={styles.timeInputPicker}
                                     onPress={() => setEndTimePickerVisible(true)}
                                 >
                                     <Text style={styles.dateTimeText}>
@@ -214,12 +231,14 @@ function RequestForAuction() {
                             <View style={styles.priceInputContainer}>
                                 <CustomInput
                                     placeholder="Enter price"
-                                    w={wp('85%')}
+                                    w={wp('90%')}
                                     value={startPrice}
+                                    h={hp('5.5%')}
                                     onChangeText={setStartPrice}
                                     numericOnly={true}
+                                    bg_give={colors.WHITE}
                                 />
-                                <Text style={styles.currencyText}>Rs</Text>
+
                             </View>
                         </View>
 
@@ -228,12 +247,14 @@ function RequestForAuction() {
                             <View style={styles.priceInputContainer}>
                                 <CustomInput
                                     placeholder="Enter reserve price"
-                                    w={wp('85%')}
+                                    w={wp('90%')}
+                                    h={hp('5.5%')}
                                     value={reservePrice}
                                     onChangeText={setReservePrice}
                                     numericOnly={true}
+                                    bg_give={colors.WHITE}
                                 />
-                                <Text style={styles.currencyText}>Rs</Text>
+
                             </View>
                         </View>
 
@@ -242,12 +263,14 @@ function RequestForAuction() {
                             <View style={styles.priceInputContainer}>
                                 <CustomInput
                                     placeholder="Enter buy now price"
-                                    w={wp('85%')}
+                                    w={wp('90%')}
+                                    h={hp('5.5%')}
                                     value={buyNowPrice}
                                     onChangeText={setBuyNowPrice}
                                     numericOnly={true}
+                                    bg_give={colors.WHITE}
                                 />
-                                <Text style={styles.currencyText}>Rs</Text>
+
                             </View>
                         </View>
 
@@ -255,31 +278,36 @@ function RequestForAuction() {
                             <Text style={styles.fieldLabel}>{t('Enter product description:')}</Text>
                             <CustomInput
                                 placeholder="Enter description"
-                                w={wp('85%')}
-                                h={hp('10%')}
+                                w={wp('90%')}
+                                h={hp('7%')}
                                 value={description}
                                 onChangeText={setDescription}
+                                bg_give={colors.WHITE}
                             />
                         </View>
 
                         <View style={styles.pickerContainer}>
                             <Text style={styles.fieldLabel}>{t('Category:')}</Text>
-                            <View style={styles.picker}>
-                                <TouchableOpacity style={styles.pickerTouch}>
-                                    <Text style={styles.pickerText}>{category || 'Enter category'}</Text>
-                                    <Text style={styles.pickerDropdown}>▼</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <CustomInput
+                                placeholder="Enter category"
+                                w={wp('90%')}
+                                h={hp('5.5%')}
+                                value={category}
+                                onChangeText={setCategory}
+                                bg_give={colors.WHITE}
+                            />
                         </View>
 
                         <View style={styles.pickerContainer}>
                             <Text style={styles.fieldLabel}>{t('Quantity:')}</Text>
-                            <View style={styles.picker}>
-                                <TouchableOpacity style={styles.pickerTouch}>
-                                    <Text style={styles.pickerText}>{quantity || 'Enter quantity/weight'}</Text>
-                                    <Text style={styles.pickerDropdown}>▼</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <CustomInput
+                                placeholder="Enter quantity/weight"
+                                w={wp('90%')}
+                                h={hp('5.5%')}
+                                value={quantity}
+                                onChangeText={setQuantity}
+                                bg_give={colors.WHITE}
+                            />
                         </View>
 
                         <View style={styles.certificateContainer}>
@@ -354,14 +382,19 @@ function RequestForAuction() {
                             </View>
                         </View>
 
-                        <CustomButton
-                            MainText="Submit"
-                            BgGiven={colors.GREEN}
-                            txColor={colors.WHITE}
-                            wgiven={wp('85%')}
-                            hgiven={hp('5%')}
-                            onPressG={handleSubmit}
-                        />
+                        <View style={styles.buttonContainer}>
+                            <CustomButton
+                                MainText="Submit"
+                                BgGiven={colors.GREEN}
+                                txColor={colors.WHITE}
+                                wgiven={wp('85%')}
+                                hgiven={hp('5%')}
+                                onPressG={handleSubmit}
+                            />
+                        </View>
+
+
+
                     </View>
                 </View>
             </ScrollView>
@@ -406,11 +439,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: colors.LIGHT_GRAY,
     },
+    searchContainer: {
+        marginTop: hp('2%'),
+        height: hp('7%'),
+        marginHorizontal: hp(2),
+    },
     scrollView: {
         flex: 1,
     },
     content: {
-        padding: hp(3),
+        // padding: hp(1),
         paddingBottom: hp(5),
     },
     title: {
@@ -418,11 +456,13 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
         marginBottom: hp(2),
+        marginLeft: hp(2),
     },
     formContainer: {
-        backgroundColor: colors.LIGHT_GREEN,
+        backgroundColor: colors.WHITE,
         borderRadius: hp(1.5),
         padding: hp(2),
+
     },
     formLabel: {
         fontSize: hp(2),
@@ -430,9 +470,16 @@ const styles = StyleSheet.create({
         color: colors.BLACK,
         marginBottom: hp(2),
     },
+    formFieldsContainer: {
+        backgroundColor: colors.LIGHT_GREEN,
+        marginBottom: hp(2),
+    },
     imageUploadContainer: {
         flexDirection: 'row',
         marginBottom: hp(2),
+        padding: hp(1.5),
+        backgroundColor: colors.LIGHT_GREEN,
+        borderRadius: hp(1),
     },
     imageBox: {
         width: wp('27%'),
@@ -461,8 +508,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    dateTimePicker: {
-        width: wp('41%'),
+    dateInputPicker: {
+        width: wp('70%'),
+        height: hp('5.5%'),
+        backgroundColor: colors.WHITE,
+        borderRadius: hp(0.5),
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        justifyContent: 'center',
+        paddingHorizontal: wp(2),
+    },
+    timeInputPicker: {
+        width: wp('23%'),
         height: hp('5.5%'),
         backgroundColor: colors.WHITE,
         borderRadius: hp(0.5),
@@ -482,21 +539,24 @@ const styles = StyleSheet.create({
     priceInputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        position: 'relative',
     },
     currencyText: {
         fontSize: hp(1.8),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
-        marginLeft: wp(2),
+        position: 'absolute',
+        right: wp(2),
     },
     descriptionContainer: {
-        marginBottom: hp(2),
+        // marginBottom: hp(2),
     },
     pickerContainer: {
-        marginBottom: hp(2),
+        // marginBottom: hp(2),
+        alignSelf: 'center',
     },
     picker: {
-        width: wp('85%'),
+        width: wp('90%'),
         height: hp('5.5%'),
         backgroundColor: colors.WHITE,
         borderRadius: hp(0.5),
@@ -521,6 +581,7 @@ const styles = StyleSheet.create({
         color: colors.GRAY,
     },
     certificateContainer: {
+        marginTop: hp(2),
         marginBottom: hp(2),
     },
     certificateRow: {
@@ -653,6 +714,10 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
         color: colors.BLACK,
         marginLeft: wp(1),
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        marginTop: hp(2),
     },
 });
 

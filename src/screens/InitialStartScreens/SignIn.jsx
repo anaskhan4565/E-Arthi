@@ -109,8 +109,9 @@ function SignIn() {
       if (response.status === 200) {
         const data = response.data;
 
-        if (data?.data?.userId) {
-          storage.set('userId', data.data.userId.toString());
+        if (data?.data?.user?.id) {
+     
+          storage.set('userId', data.data.user.id.toString());
         }
 
         if (data?.data?.token) {

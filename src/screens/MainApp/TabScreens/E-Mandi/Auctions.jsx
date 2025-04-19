@@ -25,7 +25,7 @@ function Auctions() {
                 <Text style={styles.title}>{t('Auctions')}</Text>
                 <Text style={styles.subtitle}>{t('Browse all available auctions')}</Text>
 
-                {/* Content will be added as per requirements */}
+     
             </View>
         </SafeAreaView>
     );

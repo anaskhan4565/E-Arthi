@@ -77,6 +77,9 @@ const PendingLoan = () => {
             try {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
+                const userId = storage.getString('userId');
+                console.log("Attempting to fetch loan data with token:", token);
+                console.log("User ID:", userId);
 
                 if (!token) {
                     console.error('No token found in storage');
@@ -85,12 +88,24 @@ const PendingLoan = () => {
                     return;
                 }
 
-                // Make API call with token in header
-                const response = await axios.get(Routes.get_loan, {
+                if (!userId) {
+                    console.error('No user ID found in storage');
+                    setError('User ID not found. Please login again.');
+                    setLoading(false);
+                    return;
+                }
+
+                // Make API call with token in header and userId in URL
+                const url = `${Routes.get_loan}${userId}`;
+                console.log("Making request to:", url);
+                const response = await axios.get(url, {
                     headers: {
-                        'Authorization': `Token ${token}`
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
                     }
                 });
+
+                console.log("API Response:", response.data);
 
                 // Filter to only show loans with pending status
                 const pendingLoans = response.data.filter(loan =>
@@ -101,7 +116,22 @@ const PendingLoan = () => {
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching loan data:", err);
-                setError("Failed to load loan data");
+                if (err.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.error("Error response data:", err.response.data);
+                    console.error("Error status:", err.response.status);
+                    console.error("Error headers:", err.response.headers);
+                    setError(`Server error: ${err.response.status} - ${err.response.data?.message || 'Unknown error'}`);
+                } else if (err.request) {
+                    // The request was made but no response was received
+                    console.error("No response received:", err.request);
+                    setError("No response from server. Please check your internet connection.");
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.error("Error setting up request:", err.message);
+                    setError("Failed to setup request. Please try again.");
+                }
                 setLoading(false);
             }
         };

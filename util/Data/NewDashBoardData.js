@@ -116,7 +116,7 @@ const NewDrawerData = [
         id: 'animalfeed',
         title: 'Animal Feed',
         svgImage: AnimalFeedIcon,
-        screen: ScreensName.AnimalFeedScr,
+        screen: "",
         isNavigation: true,
     },
 

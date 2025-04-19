@@ -40,15 +40,22 @@ function PaymentScreens(): React.JSX.Element {
   );
 
   const storage = new MMKV();
+
   const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
-  const finalPrice = storage.getString("FinalPrice");
+  const finalPrice = storage.getString("AgriCash") || "0";
   const totalPrice = parsedCart.reduce(
     (acc, product) =>
       acc + parseInt(product.price.replace(/,/g, '')) * product.quantity,
     0
   ) * 1.13;
-  const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+
+  // Format numbers with commas
+  const formatNumber = (num) => {
+    const parsedNum = parseFloat(num) || 0;
+    return new Intl.NumberFormat("en-US").format(parsedNum.toFixed(2));
+  };
+
   const PassedPayment = new MMKV();
 
   // Retrieve the passed payment method name from storage
@@ -131,7 +138,7 @@ function PaymentScreens(): React.JSX.Element {
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
             <View style={styles.amountContainer}>
               <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>
-                PKR {formatNumber(parseInt(finalPrice).toFixed(2))}
+                PKR {formatNumber(finalPrice)}
               </Text>
             </View>
           </View>

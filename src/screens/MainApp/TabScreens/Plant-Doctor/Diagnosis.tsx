@@ -57,6 +57,7 @@ const Diagnosis = () => {
         if (diagnosisResult) {
             PlantDiagnosisData.set("Diagnosis", diagnosisResult.common_name);
             PlantDiagnosisData.set("Symptoms", diagnosisResult.symptoms);
+            PlantDiagnosisData.set("DiagnosisImage", imageUri);
             
             // Store other useful diagnosis information
             if (diagnosisResult.scientific_name) {

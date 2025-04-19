@@ -77,7 +77,9 @@ const PendingLoan = () => {
             try {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
+                const userId = storage.getString('userId');
                 console.log("Attempting to fetch loan data with token:", token);
+                console.log("User ID:", userId);
 
                 if (!token) {
                     console.error('No token found in storage');
@@ -86,9 +88,17 @@ const PendingLoan = () => {
                     return;
                 }
 
-                // Make API call with token in header
-                console.log("Making request to:", Routes.get_loan);
-                const response = await axios.get(Routes.get_loan, {
+                if (!userId) {
+                    console.error('No user ID found in storage');
+                    setError('User ID not found. Please login again.');
+                    setLoading(false);
+                    return;
+                }
+
+                // Make API call with token in header and userId in URL
+                const url = `https://eagri-backend.vercel.app/e_loan/get_loan/user/${userId}/`;
+                console.log("Making request to:", url);
+                const response = await axios.get(url, {
                     headers: {
                         'Authorization': `Token ${token}`,
                         'Content-Type': 'application/json'

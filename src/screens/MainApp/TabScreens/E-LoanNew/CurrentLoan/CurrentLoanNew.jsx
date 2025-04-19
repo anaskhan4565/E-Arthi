@@ -29,6 +29,7 @@ const CurrentLoanNew = () => {
             try {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
+                const userId = storage.getString('userId');
 
                 if (!token) {
                     console.error('No token found in storage');
@@ -37,22 +38,32 @@ const CurrentLoanNew = () => {
                     return;
                 }
 
-                // Make API call with token in header
-                const response = await axios.get(Routes.get_loan, {
+                if (!userId) {
+                    console.error('No user ID found in storage');
+                    setError('User ID not found. Please login again.');
+                    setLoading(false);
+                    return;
+                }
+
+                // Make API call with token in header and userId in URL
+                const url = `https://eagri-backend.vercel.app/e_loan/get_loan/user/${userId}/`;
+                const response = await axios.get(url, {
                     headers: {
-                        'Authorization': `Token ${token}`
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
                     }
                 });
 
-                // Filter to get the current active loan (fulfilled or in-progress status)
-                const fulfilledLoans = response.data.filter(loan =>
+                // Filter to get only approved loans
+                const approvedLoans = response.data.filter(loan =>
+                    loan.status.toLowerCase() === 'approved' ||
                     loan.status.toLowerCase() === 'fulfilled' ||
                     loan.status.toLowerCase() === 'in progress'
                 );
 
-                if (fulfilledLoans.length > 0) {
-                    // Use the most recent fulfilled loan as the current loan
-                    const sortedLoans = fulfilledLoans.sort((a, b) =>
+                if (approvedLoans.length > 0) {
+                    // Use the most recent approved loan as the current loan
+                    const sortedLoans = approvedLoans.sort((a, b) =>
                         new Date(b.created_at) - new Date(a.created_at)
                     );
                     setCurrentLoan(sortedLoans[0]);
@@ -82,28 +93,30 @@ const CurrentLoanNew = () => {
         return parseFloat(amount).toLocaleString();
     };
 
-    // Calculate the cash and line of credit split (for demo purposes)
+    // Calculate the cash and line of credit split (30% cash, 70% line of credit)
     const calculateLoanSplit = (totalAmount) => {
-        const cashAmount = Math.round(totalAmount * 0.6); // 60% cash
-        const lineOfCreditAmount = totalAmount - cashAmount; // 40% line of credit
+        const cashAmount = Math.round(totalAmount * 0.3); // 30% cash
+        const lineOfCreditAmount = totalAmount - cashAmount; // 70% line of credit
 
         return {
             cashAmount,
             lineOfCreditAmount,
-            cashPercentage: 60,
-            lineOfCreditPercentage: 40
+            cashPercentage: 30,
+            lineOfCreditPercentage: 70
         };
     };
 
-    // Calculate spending (for demo purposes since we don't have real spending data)
+    // Calculate spending with random values
     const calculateSpending = (amount) => {
-        const spent = Math.round(amount * 0.7); // 70% spent
-        const remaining = amount - spent; // 30% remaining
+        // Random spending percentage between 40% and 85%
+        const spendingPercentage = Math.floor(Math.random() * (85 - 40 + 1)) + 40;
+        const spent = Math.round(amount * (spendingPercentage / 100));
+        const remaining = amount - spent;
 
         return {
             spent,
             remaining,
-            percentage: 70
+            percentage: spendingPercentage
         };
     };
 
@@ -137,7 +150,7 @@ const CurrentLoanNew = () => {
                             <Text style={styles.summaryText}>Loan taken on: {formatDate(currentLoan.created_at)}</Text>
                             <Text style={styles.summaryText}>Loan amount: {formatAmount(currentLoan.loan_amount)} Rupees</Text>
 
-                            {/* Calculate loan splits for demo purposes */}
+                            {/* Calculate loan splits */}
                             {(() => {
                                 const loanAmount = parseFloat(currentLoan.loan_amount);
                                 const loanSplit = calculateLoanSplit(loanAmount);

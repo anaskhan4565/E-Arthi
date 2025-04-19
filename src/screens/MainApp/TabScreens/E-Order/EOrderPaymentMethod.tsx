@@ -46,10 +46,10 @@ function EOrderPaymentMethod(): React.JSX.Element {
     const navigation = useNavigation();
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Raast");
     const storage = new MMKV();
+    const passedAm=new MMKV()
     const savedCart = storage.getString("cart");
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
     const CREDIT_LIMIT = 100000; // Example credit limit: 1 Lakh
-
     // Animation refs
     const translateY = useRef(new Animated.Value(hp(20))).current;
     const opacity = useRef(new Animated.Value(0)).current;
@@ -100,7 +100,8 @@ function EOrderPaymentMethod(): React.JSX.Element {
             grandTotal: total
         };
     }, [cartItems]);
-
+    passedAm.set("AgriCash",cashTotal)
+    
     // Format numbers with commas
     const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num?.toFixed(2) ?? 0);
 
@@ -108,15 +109,33 @@ function EOrderPaymentMethod(): React.JSX.Element {
     const remainingCredit = CREDIT_LIMIT - agriCashTotal;
 
     const handlePaymentMethodSelect = (method) => {
+        console.log(method)
         setSelectedPaymentMethod(method);
+        
         // Store selected payment method
         storage.set("selectedPaymentMethod", method);
     };
 
     const handleProceed = () => {
-        // Store the selected payment method before navigating
-        storage.set("selectedPaymentMethod", selectedPaymentMethod);
-        navigation.navigate(ScreensName.RaastPaymentScreen);
+        // Store the selected payment method in MMKV
+        storage.set("PassedName", selectedPaymentMethod);
+        
+        // Store the total price in MMKV
+        const priceToStore = selectedPaymentMethod === "Raast" ? cashTotal : agriCashTotal;
+        storage.set("AgriCash", priceToStore.toString());
+        
+        // Navigate based on payment method
+        if (selectedPaymentMethod === "Raast") {
+            navigation.navigate({
+                name: "RaastConfirmPayment",
+                params: { paymentMethod: selectedPaymentMethod }
+            });
+        } else {
+            navigation.navigate({
+                name: "RaastPaymentScreen",
+                params: { paymentMethod: selectedPaymentMethod }
+            });
+        }
     };
 
     return (

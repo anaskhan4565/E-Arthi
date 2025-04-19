@@ -106,6 +106,7 @@ export default {
     AuctionHistoryDetails: 'AuctionHistoryDetails',
     AuctionSubmissionSuccess: 'AuctionSubmissionSuccess',
     LiveAuctions: 'LiveAuctions',
+    AuctionHistoryPaymentMethod: 'AuctionHistoryPaymentMethod',
     AuctionDetails: 'AuctionDetails',
     MarketDept: 'MarketDept',
     Profile: 'Profile',

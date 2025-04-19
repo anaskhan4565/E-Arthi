@@ -22,7 +22,7 @@ import LiveAuctions from "./LiveAuctions";
 import AuctionDetails from "./AuctionDetails";
 import MyAuctionDetail from "./MyAuctionDetail";
 import AuctionHistoryDetails from "./AuctionHistoryDetails";
-
+import AuctionHistoryPaymentMethod from "./AuctionHistoryPaymentMethod";
 const Stack = createNativeStackNavigator();
 
 function EMandiMainStack() {
@@ -38,6 +38,7 @@ function EMandiMainStack() {
             <Stack.Screen name={ScreensName.AuctionDetails} component={AuctionDetails} />
             <Stack.Screen name={ScreensName.MyAuctionDetail} component={MyAuctionDetail} />
             <Stack.Screen name={ScreensName.AuctionHistoryDetails} component={AuctionHistoryDetails} />
+            <Stack.Screen name={ScreensName.AuctionHistoryPaymentMethod} component={AuctionHistoryPaymentMethod} />
         </Stack.Navigator>
     );
 }

@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Navbar from '../../Navbar/Navbar';
 import colors from '../../../../../util/Constants/colors';
+import ScreensName from '../../../../../util/Constants/ScreensName';
 
 const AgriServices = () => {
     const navigation = useNavigation();
@@ -26,7 +27,9 @@ const AgriServices = () => {
 
                 <View style={styles.servicesContainer}>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.serviceCard}>
+                        <TouchableOpacity style={styles.serviceCard}
+                        onPress={() => navigation.navigate(ScreensName.Diagnostics)}
+                        >
                             <View style={styles.iconContainer}>
                                 <Image 
                                     source={require('./Images/Services/1.png')}
@@ -36,7 +39,9 @@ const AgriServices = () => {
                             <Text style={styles.serviceName}>Diagnostics</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.serviceCard}>
+                        <TouchableOpacity style={styles.serviceCard}
+                        onPress={() => navigation.navigate(ScreensName.SoilTesting)}
+                        >
                             <View style={styles.iconContainer}>
                                 <Image 
                                     source={require('./Images/Services/2.png')}
@@ -48,7 +53,9 @@ const AgriServices = () => {
                     </View>
 
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.serviceCard}>
+                        <TouchableOpacity style={styles.serviceCard}
+                        onPress={() => navigation.navigate(ScreensName.Packaging)}
+                        >
                             <View style={styles.iconContainer}>
                                 <Image 
                                     source={require('./Images/Services/3.png')}
@@ -58,7 +65,9 @@ const AgriServices = () => {
                             <Text style={styles.serviceName}>Packaging</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.serviceCard}>
+                        <TouchableOpacity style={styles.serviceCard}
+                        onPress={() => navigation.navigate(ScreensName.Grading)}
+                        >
                             <View style={styles.iconContainer}>
                                 <Image 
                                     source={require('./Images/Services/4.png')}

@@ -5,7 +5,7 @@ import colors from '../../../../../util/Constants/colors';
 import { fonts } from '../../../../../util/Constants/FontName';
 import Navbar from '../../Navbar/Navbar';
 
-const RequestSoilTesting = () => {
+const RequestGradingDone = () => {
   return (
     <View style={styles.container}>
       <View style={styles.navbarContainer}>
@@ -13,7 +13,7 @@ const RequestSoilTesting = () => {
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.title}>Request Soil Testing</Text>
+        <Text style={styles.title}>Request Grading</Text>
 
         <View style={styles.successContainer}>
           <View style={styles.checkmarkContainer}>
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RequestSoilTesting
+export default RequestGradingDone

@@ -27,7 +27,6 @@ type CropType = {
     id: string;
     name: string;
     image: any;
-    
 };
 
 const crops: CropType[] = [
@@ -57,11 +56,11 @@ const crops: CropType[] = [
     },
 ];
 
-const YieldTracker = () => {
+const RequestGrading = () => {
     const navigation = useNavigation<NavigationProp>();
 
     const handleCropSelect = (crop: CropType) => {
-      navigation.navigate('CropYield', { crop });
+      navigation.navigate(ScreensName.RequestGradingDone, { crop });
     };
 
     return (
@@ -71,8 +70,8 @@ const YieldTracker = () => {
             </View>
 
             <ScrollView style={styles.content}>
-                <Text style={styles.title}>Yield Tracker</Text>
-                <Text style={styles.subtitle}>Choose the crop to track yield for:</Text>
+                <Text style={styles.title}>Request Grading</Text>
+                <Text style={styles.subtitle}>Choose the crop to request grading for:</Text>
 
                 <View style={styles.cropsGrid}>
                     {crops.map((crop) => (
@@ -167,4 +166,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default YieldTracker; 
+export default RequestGrading;   

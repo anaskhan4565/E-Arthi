@@ -65,6 +65,10 @@ import MicroF from "../E-LoanNew/MicroFinance/MicroF";
 import MicroFS2 from "../E-LoanNew/MicroFinance/MicroFS2";
 import MicroFS3 from "../E-LoanNew/MicroFinance/MicroFS3";
 import MicroFSuccess from "../E-LoanNew/MicroFinance/MicroFSuccess";
+import Salam from "../E-LoanNew/Salam/Salam";
+import SalamS2 from "../E-LoanNew/Salam/SalamS2";
+import SalamS3 from "../E-LoanNew/Salam/SalamS3";
+import SalamSuccess from "../E-LoanNew/Salam/SalamSuccess";
 
 const Stack = createNativeStackNavigator();
 
@@ -123,6 +127,12 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanMicroFS2} component={MicroFS2} />
             <Stack.Screen name={ScreensName.ELoanMicroFS3} component={MicroFS3} />
             <Stack.Screen name={ScreensName.ELoanMicroFSuccess} component={MicroFSuccess} />
+
+            {/* Salam screens */}
+            <Stack.Screen name={ScreensName.ELoanSalam} component={Salam} />
+            <Stack.Screen name={ScreensName.ELoanSalamS2} component={SalamS2} />
+            <Stack.Screen name={ScreensName.ELoanSalamS3} component={SalamS3} />
+            <Stack.Screen name={ScreensName.ELoanSalamSuccess} component={SalamSuccess} />
         </Stack.Navigator>
     );
 }

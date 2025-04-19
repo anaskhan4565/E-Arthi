@@ -29,7 +29,6 @@ const ProductScr = () => {
     const [Count, SetCount] = useState(1);
     const [CashCount, SetCashCount] = useState(0);
     const [Price, setPrice] = useState(2080);
-    const [showCashOption, setShowCashOption] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const Navigation = useNavigation();
@@ -59,17 +58,14 @@ const ProductScr = () => {
             let newCount = less ? Math.max(0, CashCount - 1) : CashCount + 1;
             SetCashCount(newCount);
         } else {
-            let newCount = less ? Math.max(1, Count - 1) : Count + 1;
+            let newCount = less ? Math.max(0, Count - 1) : Count + 1;
             
             if (newCount <= MAX_AGRI_CASH_QUANTITY) {
-                SetCount(newCount);
-                // Show cash option only when count is exactly 5
-                setShowCashOption(newCount === MAX_AGRI_CASH_QUANTITY);
+        SetCount(newCount);
                 if (newCount < MAX_AGRI_CASH_QUANTITY) {
                     setErrorMessage("");
                 }
             } else {
-                setShowCashOption(true);
                 setErrorMessage(`You can only purchase up to ${MAX_AGRI_CASH_QUANTITY} units with Agri-Cash. Additional units can be purchased with Cash.`);
             }
         }
@@ -189,11 +185,37 @@ const ProductScr = () => {
         }
     };
 
+    const handleCashPurchase = async () => {
+        if (!ProductInfo) return;
+
+        setErrorMessage("");
+        setIsLoading(true);
+
+        try {
+            const cashItem = {
+                ...ProductInfo,
+                quantity: CashCount,
+                price: ProductInfo.price,
+                isCashPurchase: true
+            };
+            
+            updateCart(cashItem, true);
+            
+            setTimeout(() => {
+                setIsLoading(false);
+                Navigation.goBack();
+            }, 1500);
+        } catch (error) {
+            setErrorMessage("Failed to add items to cart");
+            setIsLoading(false);
+        }
+    };
+
     const handleCombinedPurchase = async () => {
         if (!ProductInfo) return;
 
-        // Check Agri-Cash limit for the 5 units
-        if (!checkAgriCashLimit(ProductInfo.discounted_price, MAX_AGRI_CASH_QUANTITY)) {
+        // Check Agri-Cash limit for the Agri-Cash units
+        if (Count > 0 && !checkAgriCashLimit(ProductInfo.discounted_price, Count)) {
             setErrorMessage(`Cannot add items. Total would exceed Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}`);
             return;
         }
@@ -202,13 +224,16 @@ const ProductScr = () => {
         setIsLoading(true);
 
         try {
-            // Add 5 units with Agri-Cash
-            const agriCashItem = {
-                ...ProductInfo,
-                quantity: MAX_AGRI_CASH_QUANTITY,
-                price: ProductInfo.discounted_price,
-                isCashPurchase: false
-            };
+            // Add Agri-Cash units if any
+            if (Count > 0) {
+                const agriCashItem = {
+                    ...ProductInfo,
+                    quantity: Count,
+                    price: ProductInfo.discounted_price,
+                    isCashPurchase: false
+                };
+                updateCart(agriCashItem, false);
+            }
             
             // Add cash units if any
             if (CashCount > 0) {
@@ -220,8 +245,6 @@ const ProductScr = () => {
                 };
                 updateCart(cashItem, true);
             }
-            
-            updateCart(agriCashItem, false);
             
             setTimeout(() => {
                 setIsLoading(false);
@@ -326,26 +349,27 @@ const ProductScr = () => {
                             ) : null}
 
                             <View style={styles.actionsContainer}>
+                                <Text style={styles.sectionTitle}>Purchase with Agri-Cash</Text>
                                 <View style={styles.quantityAndCartContainer}>
                                     <View style={[
                                         styles.quantitySelector,
                                         !isProductAvailable && styles.quantitySelectorDisabled
                                     ]}>
-                                        <TouchableOpacity
-                                            onPress={() => configureCount(true)}
+                                    <TouchableOpacity
+                                        onPress={() => configureCount(true)}
                                             disabled={!isProductAvailable}
                                             style={[styles.quantityButton, styles.minusButton]}
-                                        >
-                                            <Text style={styles.quantityButtonText}>−</Text>
-                                        </TouchableOpacity>
+                                    >
+                                        <Text style={styles.quantityButtonText}>−</Text>
+                                    </TouchableOpacity>
 
-                                        <Text style={styles.quantityText}>
-                                            {Count < 10 ? "0" + Count : Count}
-                                        </Text>
+                                    <Text style={styles.quantityText}>
+                                        {Count < 10 ? "0" + Count : Count}
+                                    </Text>
 
-                                        <TouchableOpacity
-                                            onPress={() => configureCount(false)}
-                                            disabled={!isProductAvailable || Count >= MAX_AGRI_CASH_QUANTITY}
+                                    <TouchableOpacity
+                                        onPress={() => configureCount(false)}
+                                            disabled={!isProductAvailable}
                                             style={[
                                                 styles.quantityButton,
                                                 styles.plusButton,
@@ -360,10 +384,11 @@ const ProductScr = () => {
                                         <TouchableOpacity
                                             style={[
                                                 styles.addToCartButton,
-                                                isLoading && styles.buttonLoading
+                                                isLoading && styles.buttonLoading,
+                                                Count === 0 && styles.disabledButton
                                             ]}
                                             onPress={handleIndividualPurchase}
-                                            disabled={isLoading}
+                                            disabled={isLoading || Count === 0}
                                         >
                                             {isLoading ? (
                                                 <ActivityIndicator color="#FFFFFF" />
@@ -393,75 +418,88 @@ const ProductScr = () => {
                             </View>
                         </View>
 
-                        {showCashOption && (
-                            <View style={styles.cashPurchaseContainer}>
-                                <View style={styles.limitWarning}>
-                                    <Text style={styles.warningText}>
-                                        You've reached the Agri-Cash purchase limit ({MAX_AGRI_CASH_QUANTITY} units).
-                                        Additional units can be purchased with Cash.
+                        {/* Cash Purchase Section - Always Visible */}
+                        <View style={styles.cashPurchaseContainer}>
+                            <View style={styles.cashPurchaseSection}>
+                                <View style={styles.priceInfoContainer}>
+                                    <Text style={styles.cashTitle}>Buy with Cash</Text>
+                                    <Text style={styles.priceInfo}>
+                                        Price: Rs {formatPrice(ProductInfo.price)}
+                                    </Text>
+                                    <Text style={styles.packSizeInfo}>
+                                        Pack Size: {ProductInfo.weight} Kg
                                     </Text>
                                 </View>
-                                
-                                <View style={styles.cashPurchaseSection}>
-                                    <View style={styles.priceInfoContainer}>
-                                        <Text style={styles.cashTitle}>Buy with Cash</Text>
-                                        <Text style={styles.priceInfo}>
-                                            Price: Rs {formatPrice(ProductInfo.price)}
+
+                                <View style={styles.quantityAndCartContainer}>
+                                    <View style={styles.quantitySelector}>
+                                        <TouchableOpacity
+                                            onPress={() => configureCount(true, true)}
+                                            style={[styles.quantityButton, styles.minusButton]}
+                                        >
+                                            <Text style={styles.quantityButtonText}>−</Text>
+                                        </TouchableOpacity>
+
+                                        <Text style={styles.quantityText}>
+                                            {CashCount < 10 ? "0" + CashCount : CashCount}
                                         </Text>
-                                        <Text style={styles.packSizeInfo}>
-                                            Pack Size: {ProductInfo.weight} Kg
-                                        </Text>
-                                    </View>
-
-                                    <View style={styles.quantityAndCartContainer}>
-                                        <View style={styles.quantitySelector}>
-                                            <TouchableOpacity
-                                                onPress={() => configureCount(true, true)}
-                                                style={[styles.quantityButton, styles.minusButton]}
-                                            >
-                                                <Text style={styles.quantityButtonText}>−</Text>
-                                            </TouchableOpacity>
-
-                                            <Text style={styles.quantityText}>
-                                                {CashCount < 10 ? "0" + CashCount : CashCount}
-                                            </Text>
-
-                                            <TouchableOpacity
-                                                onPress={() => configureCount(false, true)}
-                                                style={[styles.quantityButton, styles.plusButton]}
-                                            >
-                                                <Text style={styles.quantityButtonText}>+</Text>
-                                            </TouchableOpacity>
-                                        </View>
 
                                         <TouchableOpacity
-                                            style={[
-                                                styles.addToCartButton,
-                                                styles.combinedButton,
-                                                CashCount === 0 && styles.disabledButton
-                                            ]}
-                                            onPress={handleCombinedPurchase}
-                                            disabled={isLoading || CashCount === 0}
-                                        >
-                                            {isLoading ? (
-                                                <ActivityIndicator color="#FFFFFF" />
-                                            ) : (
-                                                <Text style={styles.addToCartText}>
-                                                    {CashCount > 0 
-                                                        ? `Buy Total Items: 5 + ${CashCount}`
-                                                        : 'Add Cash Items'}
-                                                </Text>
-                                            )}
-                                        </TouchableOpacity>
-                                    </View>
+                                            onPress={() => configureCount(false, true)}
+                                        style={[styles.quantityButton, styles.plusButton]}
+                                    >
+                                        <Text style={styles.quantityButtonText}>+</Text>
+                                    </TouchableOpacity>
                                 </View>
+
+                                <TouchableOpacity
+                                        style={[
+                                            styles.addToCartButton,
+                                            styles.combinedButton,
+                                            CashCount === 0 && styles.disabledButton
+                                        ]}
+                                        onPress={handleCashPurchase}
+                                        disabled={isLoading || CashCount === 0}
+                                    >
+                                        {isLoading ? (
+                                            <ActivityIndicator color="#FFFFFF" />
+                                        ) : (
+                                            <Text style={styles.addToCartText}>
+                                                Buy {CashCount} with Cash
+                                            </Text>
+                                        )}
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* Combined Purchase Option - Only shown when both methods are used */}
+                        {(Count > 0 && CashCount > 0) && (
+                            <View style={styles.combinedPurchaseContainer}>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.addToCartButton,
+                                        styles.combinedButton,
+                                        isLoading && styles.buttonLoading
+                                    ]}
+                                    onPress={handleCombinedPurchase}
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? (
+                                        <ActivityIndicator color="#FFFFFF" />
+                                    ) : (
+                                        <Text style={styles.addToCartText}>
+                                            Buy Total Items: {Count} + {CashCount}
+                                        </Text>
+                                    )}
+                                </TouchableOpacity>
                             </View>
                         )}
 
                         <View style={styles.descriptionContainer}>
                             <Text style={styles.descriptionTitle}>Product Description:</Text>
                             <Text style={styles.descriptionText}>
-                                {ProductInfo.Description}
+                               {ProductInfo.Description}
                             </Text>
                         </View>
                     </View>
@@ -782,5 +820,19 @@ const styles = StyleSheet.create({
     },
     disabledButton: {
         opacity: 0.5,
+    },
+    sectionTitle: {
+        fontSize: wp(4.5),
+        fontWeight: 'bold',
+        color: '#000',
+        marginBottom: hp(1),
+    },
+    combinedPurchaseContainer: {
+        marginTop: hp(2),
+        backgroundColor: '#FFFFFF',
+        borderRadius: wp(2),
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#800080',
     },
 });

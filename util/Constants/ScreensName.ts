@@ -216,6 +216,10 @@ export default {
     ELoanMicroFS2: "ELoanMicroFS2",
     ELoanMicroFS3: "ELoanMicroFS3",
     ELoanMicroFSuccess: "ELoanMicroFSuccess",
+    ELoanSalam: "ELoanSalam",
+    ELoanSalamS2: "ELoanSalamS2",
+    ELoanSalamS3: "ELoanSalamS3",
+    ELoanSalamSuccess: "ELoanSalamSuccess",
 
     // Settlements screens
     SettlementsMainStack: 'SettlementsMainStack',

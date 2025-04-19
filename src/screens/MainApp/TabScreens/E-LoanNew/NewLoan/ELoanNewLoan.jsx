@@ -35,15 +35,21 @@ const bankData = [
         image: require('../../../../../assets/ELoanNew/TakeLoan/BanksImgs/ZTBL.png')
     },
     {
-        id: 4,
-        name: "Meezan Bank",
-        image: require('../../../../../assets/ELoanNew/TakeLoan/BanksImgs/Meezan.png')
-    },
-    {
         id: 5,
         name: "Askari Bank",
         image: require('../../../../../assets/ELoanNew/TakeLoan/BanksImgs/AskariBank.png')
     },
+    {
+        id: 6,
+        name: "Bank Al-Falah",
+        image: require('../../../../../assets/ELoanNew/TakeLoan/BanksImgs/Alfaalah.png')
+    },
+    {
+        id: 7,
+        name: "Faysal Bank",
+        image: require('../../../../../assets/ELoanNew/TakeLoan/BanksImgs/faysal.png')
+    }
+
 
 ];
 
@@ -72,7 +78,12 @@ const specialPrograms = [
         title: 'Microfinance Bank',
         screen: ScreensName.ELoanMicroF,
         icon: require('../TempImgs/MFinance.png')
-
+    },
+    {
+        id: 5,
+        title: 'Islamic Banking\n(Salam)',
+        screen: ScreensName.ELoanSalam,
+        icon: require('../TempImgs/MFinance.png') // Placeholder icon
     }
 ];
 

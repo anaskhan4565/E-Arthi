@@ -73,7 +73,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: ScreensName.MainTabNavigation}],
+          routes: [{ name: ScreensName.Cnic_page_1}],
         }),
       );
     }, 3000);

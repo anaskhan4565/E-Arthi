@@ -10,8 +10,6 @@ import { useTranslation } from 'react-i18next';
 const CustomTxtAndPicker = ({ PlaceHolderGiven = "demo", itemPackage, Picker_Txt = "Select" }) => {
     const { t } = useTranslation();
     return (
-        <View style={{ flex: 1, alignItems: 'flex-start', gap: hp(0.5) }}>
-            <Text style={{ fontSize: hp(2), paddingLeft: hp(0.1) }}>{t(PlaceHolderGiven)}</Text>
             <CustomPicker items={itemPackage}
                 key={0} isheader={false}
                 w_given={wp(85)}
@@ -24,7 +22,6 @@ const CustomTxtAndPicker = ({ PlaceHolderGiven = "demo", itemPackage, Picker_Txt
                 placeholder={t(Picker_Txt)}
             />
 
-        </View>
 
     )
 }

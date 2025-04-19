@@ -25,7 +25,10 @@ function PaymentConfirmation(): React.JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [key, setKey] = useState(0);
-  const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num ?? 0);
+  const formatNumber = (num) => {
+    const parsedNum = parseFloat(num) || 0;
+    return new Intl.NumberFormat("en-US").format(parsedNum.toFixed(2));
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -35,7 +38,7 @@ function PaymentConfirmation(): React.JSX.Element {
   const storage = new MMKV();
   const PassedPayment = new MMKV();
 
-  const finalPrice = storage.getString("FinalPrice")
+  const finalPrice = storage.getString("AgriCash") || "0";
   const passedName = PassedPayment.getString("PassedName");
 
   const savedCart = storage.getString("cart");
@@ -90,7 +93,9 @@ function PaymentConfirmation(): React.JSX.Element {
           </View>
           <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
             <View style={styles.amountContainer}>
-              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>PKR {formatNumber(parseInt(finalPrice).toFixed(2))}</Text>
+              <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>
+                PKR {formatNumber(finalPrice)}
+              </Text>
             </View>
           </View>
 

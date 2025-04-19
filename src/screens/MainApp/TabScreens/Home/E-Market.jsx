@@ -57,7 +57,8 @@ const EMarket = () => {
         Labour: "Labour",
         Machinery: "Machinery",
         Crops: "Crops",
-        Fungicide: "Fungicides"
+        Fungicide: "Fungicides",
+        Insecticide: "Insecticides"
     };
     const Navigation = useNavigation();
     const { t } = useTranslation();

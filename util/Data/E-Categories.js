@@ -61,8 +61,8 @@ export default [
         ]
     },
     {
-        title: "See More",
-        img:require('../../src/assets/MainApp/E-Market/Seemore.png'),
+        title: "Insecticide",
+        img:require('../../src/assets/MainApp/E-Market/Insect.png'),
         subcategories: []
     },
 

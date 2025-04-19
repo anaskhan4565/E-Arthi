@@ -115,6 +115,7 @@ function SignIn() {
 
         if (data?.data?.token) {
           storage.set('token', data.data.token);
+          console.log("Token:", data.data.token);
         }
 
         navigation.navigate(ScreensName.MainTabNavigation);

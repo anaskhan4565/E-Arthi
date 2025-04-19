@@ -21,14 +21,39 @@ import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
 const Treatment = () => {
     const navigation = useNavigation();
-    const PlantDiagnosisData=new MMKV();
-    const Likelihood=PlantDiagnosisData.getString("Likelihood");
-    const PreventiveMeasures=PlantDiagnosisData.getString("Preventive Measures");
-    const Treatment=PlantDiagnosisData.getString("Treatment");
+    const PlantDiagnosisData = new MMKV();
+    
+    // Get diagnosis data from MMKV
+    const diagnosisName = PlantDiagnosisData.getString("Diagnosis");
+    const imageUri = PlantDiagnosisData.getString("DiagnosisImage");
+    const pathogenClass = PlantDiagnosisData.getString("PathogenClass");
+
+    // Define the insecticides list
+    const insecticides = [
+        {
+            name: "PlantCare Plus",
+            manufacturer: "Terminix Pakistan",
+            type: "Insecticide",
+            id: 74
+        },
+        {
+            name: "Acelan 20SL",
+            manufacturer: "FMC",
+            type: "Insecticide",
+            id: 75
+        },
+        {
+            name: "Moveto 240",
+            manufacturer: "Bayer",
+            type: "Insecticide",
+            id: 76
+        }
+    ];
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
-                <Navbar gobackOnly={true} />
+                <Navbar gobackOnly={true} /> 
             </View>
             <ScrollView style={styles.contentContainer}>
                 {/* Title */}
@@ -36,33 +61,47 @@ const Treatment = () => {
 
                 {/* Pest Info Row */}
                 <View style={styles.pestInfoContainer}>
-                    <Image
-                        source={require('./AssetsPlantDr/Diagnosis/Plant.png')}
-                        style={styles.pestImage}
-                    />
+                    {imageUri ? (
+                        <Image
+                            source={{ uri: imageUri }}
+                            style={styles.pestImage}
+                            resizeMode="cover"
+                        />
+                    ) : (
+                        <View style={styles.imagePlaceholder}>
+                            <Icon name="image-off" size={wp('8%')} color={colors.GRAY} />
+                        </View>
+                    )}
                     <View style={styles.pestNameContainer}>
-                        <Text style={styles.pestName}>Fall Armyworm</Text>
+                        <Text style={styles.pestName}>{diagnosisName || "Unknown Condition"}</Text>
                     </View>
                     <TouchableOpacity style={styles.insectButton}>
-                        <Text style={styles.insectButtonText}>Insect</Text>
+                        <Text style={styles.insectButtonText}>{pathogenClass || "Unknown"}</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Recommended Products Section */}
                 <Text style={styles.sectionTitle}>Recommended Products:</Text>
                 <View style={styles.warningContainer}>
-                    <Text style={styles.warningText}>Select and apply only of these products to your crop.</Text>
+                    <Text style={styles.warningText}>Select and apply only one of these products to your crop.</Text>
                 </View>
 
                 {/* Product List */}
-                {[1, 2, 3, 4].map((item) => (
-                    <TouchableOpacity key={item} style={styles.productItem} onPress={()=>navigation.navigate(ScreensName.TreatmentProductDescription)}>
+                {insecticides.map((insecticide, index) => (
+                    <TouchableOpacity 
+                        key={index} 
+                        style={styles.productItem} 
+                        onPress={() => {
+                            PlantDiagnosisData.set("SelectedProduct", JSON.stringify(insecticide));
+                            navigation.navigate(ScreensName.TreatmentProductDescription);
+                        }}
+                    >
                         <View style={styles.productIconContainer}>
                             <Image source={require('./AssetsPlantDr/Treatment/image.png')} style={styles.productIcon} />
                         </View>
                         <View style={styles.productInfo}>
-                            <Text style={styles.productType}>Insecticide</Text>
-                            <Text style={styles.productName}>Broflanilide 20.0% SC</Text>
+                            <Text style={styles.productType}>{insecticide.type}</Text>
+                            <Text style={styles.productName}>{insecticide.name} by {insecticide.manufacturer}</Text>
                         </View>
                         <Image source={require('./AssetsPlantDr/Treatment/Arrow.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>
@@ -134,6 +173,7 @@ const styles = StyleSheet.create({
         height: wp('17%'),
         borderRadius: wp('2%'),
         marginRight: wp('3%'),
+        backgroundColor: colors.LIGHT_GRAY,
     },
     pestNameContainer: {
         flex: 1,
@@ -192,5 +232,14 @@ const styles = StyleSheet.create({
         fontSize: wp('4%'),
         fontWeight: '500',
         color: '#000',
+    },
+    imagePlaceholder: {
+        width: wp('17%'),
+        height: wp('17%'),
+        borderRadius: wp('2%'),
+        marginRight: wp('3%'),
+        backgroundColor: colors.LIGHT_GRAY,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

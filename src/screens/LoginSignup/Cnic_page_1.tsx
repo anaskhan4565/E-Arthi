@@ -79,7 +79,7 @@ const Cnic_page_1 = () => {
                                 borderRadius: 8,
                             },
                         ]}
-                        onPress={() => { navigation.navigate(ScreensName.OTP) }}
+                        onPress={() => { navigation.navigate(ScreensName.Cnic_page_2) }}
 
                     >
                         <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>{t('Continue')}</Text>
@@ -107,13 +107,13 @@ const Cnic_page_1 = () => {
 
                 <View style={styles.buttonSpacing} />
 
-                <CustomButton
+                {/* <CustomButton
                     MainText={t('Enter CNIC Details Manually')}
                     BgGiven={colors.GREEN}
                     txColor={colors.WHITE}
                     isNavigation={true}
                     name={ScreensName.Cnic_page_2}
-                />
+                /> */}
             </View>
         </View>
     );

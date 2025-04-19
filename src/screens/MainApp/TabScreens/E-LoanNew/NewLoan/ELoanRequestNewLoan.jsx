@@ -25,15 +25,6 @@ import { storage } from '../../../../../screens/InitialStartScreens/SignIn.jsx';
 import Routes from '../../../../../../util/Constants/Routes';
 import { Picker } from '@react-native-picker/picker';
 
-const userInfo = {
-    name: 'ABC',
-    cnic: '42201-12345-7',
-    contact: '+92 123456789',
-    email: 'abc@gmail.com',
-    city: 'Karachi'
-};
-
-
 const ELoanRequestNewLoan = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -41,16 +32,17 @@ const ELoanRequestNewLoan = () => {
     const { bankName } = route.params || {};
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isUserDataLoading, setIsUserDataLoading] = useState(true);
     const [error, setError] = useState('');
-
-    const userConstants = {
-        id: 1,
-        name: 'ABC',
-        cnic: '42201-12345-7',
-        contact: '+92 123456789',
-        email: 'abc@gmail.com',
-        city: 'Karachi'
-    };
+    const [userInfo, setUserInfo] = useState({
+        id: null,
+        name: '',
+        username: '',
+        email: '',
+        phone_number: '',
+        cnic: '42101-467672-3', // Default CNIC as requested
+        city: 'Karachi' // Default city
+    });
 
     const [formData, setFormData] = useState({
         entity_name: '',
@@ -62,6 +54,56 @@ const ELoanRequestNewLoan = () => {
         loan_amount: '',
         desired_loan_period: ''
     });
+
+    useEffect(() => {
+        fetchUserInfo();
+    }, []);
+
+    const fetchUserInfo = async () => {
+        try {
+            setIsUserDataLoading(true);
+            const token = storage.getString('token');
+
+            if (!token) {
+                setError('You must be logged in to view this page');
+                setIsUserDataLoading(false);
+                return;
+            }
+
+            const headers = {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            const response = await fetch(Routes.UserInfo, {
+                method: 'GET',
+                headers: headers
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (response.ok) {
+                const userData = result.data;
+                setUserInfo({
+                    id: userData.id,
+                    name: `${userData.first_name} ${userData.last_name}`,
+                    username: userData.username,
+                    email: userData.email,
+                    phone_number: userData.phone_number,
+                    cnic: '42101-467672-3', // Default CNIC as requested
+                    city: 'Karachi' // Default city
+                });
+            } else {
+                setError(result.message || 'Failed to fetch user information');
+            }
+        } catch (error) {
+            console.log('Error fetching user info:', error);
+            setError('An error occurred while fetching user information');
+        } finally {
+            setIsUserDataLoading(false);
+        }
+    };
 
     const handleInputChange = (field, value) => {
         setFormData({
@@ -137,11 +179,11 @@ const ELoanRequestNewLoan = () => {
             const loanData = {
                 user: userId,
                 bank_name: bankName,
-                name: userConstants.name,
-                cnic: userConstants.cnic,
-                contact: userConstants.contact,
-                email: userConstants.email,
-                city: userConstants.city,
+                name: userInfo.name,
+                cnic: userInfo.cnic,
+                contact: userInfo.phone_number,
+                email: userInfo.email,
+                city: userInfo.city,
                 ...processedFormData
             };
 
@@ -182,13 +224,20 @@ const ELoanRequestNewLoan = () => {
                 <Text style={styles.mainTitle}>Request a New Loan from {bankName}</Text>
 
                 <View style={styles.contentContainer}>
-                    <View style={styles.infoSection}>
-                        <Text style={styles.infoText}>Name: {userConstants.name}</Text>
-                        <Text style={styles.infoText}>CNIC: {userConstants.cnic}</Text>
-                        <Text style={styles.infoText}>Contact Number: {userConstants.contact}</Text>
-                        <Text style={styles.infoText}>Email: {userConstants.email}</Text>
-                        <Text style={styles.infoText}>City: {userConstants.city}</Text>
-                    </View>
+                    {isUserDataLoading ? (
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size="large" color={colors.GREEN} />
+                            <Text style={styles.loadingText}>Loading user information...</Text>
+                        </View>
+                    ) : (
+                        <View style={styles.infoSection}>
+                            <Text style={styles.infoText}>Name: {userInfo.name}</Text>
+                            <Text style={styles.infoText}>CNIC: {userInfo.cnic}</Text>
+                            <Text style={styles.infoText}>Contact Number: {userInfo.phone_number}</Text>
+                            <Text style={styles.infoText}>Email: {userInfo.email}</Text>
+                            <Text style={styles.infoText}>City: {userInfo.city}</Text>
+                        </View>
+                    )}
 
                     <Text style={styles.subTitle}>Enter the following details:</Text>
 
@@ -439,6 +488,21 @@ const styles = StyleSheet.create({
     },
     disabledButton: {
         opacity: 0.7,
+    },
+    loadingContainer: {
+        padding: hp('2%'),
+        borderRadius: hp('1%'),
+        marginBottom: hp('3%'),
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: hp('10%'),
+        backgroundColor: colors.LIGHT_GREEN,
+    },
+    loadingText: {
+        marginTop: hp('1%'),
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
     },
 });
 

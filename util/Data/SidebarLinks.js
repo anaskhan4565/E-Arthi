@@ -1,4 +1,4 @@
-import ScreensName from "../Constants/ScreensName";
+import ScreensName from "../Constants/ScreensName.ts";
 
 export default [
     {
@@ -12,9 +12,9 @@ export default [
         screenName: "MyOrdersScreen"
     },
     {
-        name: "E-Arthi Khata",
+        name: "E-Munshi",
         icon: require("../../src/assets/MainApp/Sidebar/Profile.png"),
-        screenName: "EArthiKhataScreen"
+        screenName: ScreensName.EMunshi
     },
     {
         name: "Language",

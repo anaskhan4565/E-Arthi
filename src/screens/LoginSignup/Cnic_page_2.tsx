@@ -30,7 +30,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 function Cnic_page_2() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false); // State to toggle the date picker
-  const [selectedDate, setSelectedDate] = useState(null); // State to store selected date
+  const [selectedDate, setSelectedDate] = useState("03/04/2023"); // Default date set to April 3, 2023
+  const [cnic, setCnic] = useState("42101-467672-3");
   const navigation = useNavigation();
 
   const { t } = useTranslation();
@@ -59,7 +60,7 @@ function Cnic_page_2() {
           <Text style={styles.inputText}>{t('Your CNIC number ')}</Text>
         </View>
 
-        <CustomInput placeholder={t('42101-467672-3')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} hide={true} />
+        <CustomInput placeholder={t('42101-467672-3')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} hide={false} value={cnic} onChangeText={setCnic} />
 
         <View style={styles.textcontainer}>
           <Text style={styles.inputText}>{t('Your CNIC date of issue')}</Text>

@@ -41,12 +41,12 @@ const ELoanRequest2 = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request a New Loan</Text>
+                <Text style={styles.mainTitle}>{t("Request a New Loan")}</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
 
-                    <Text style={styles.subTitle}>Upload the following documents:</Text>
+                    <Text style={styles.subTitle}>{t("Upload the following documents:")}</Text>
 
                     {/* Form Section */}
                     <View style={styles.formContainer}>
@@ -77,7 +77,7 @@ const ELoanRequest2 = () => {
                     </View>
 
                     <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanRequest3)}>
-                        <Text style={styles.continueButtonText}>Continue</Text>
+                        <Text style={styles.continueButtonText}>{t("Continue")}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

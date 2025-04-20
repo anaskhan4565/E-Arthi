@@ -65,7 +65,7 @@ const ELoanRequestNewLoan = () => {
             const token = storage.getString('token');
 
             if (!token) {
-                setError('You must be logged in to view this page');
+                setError(t('You must be logged in to view this page'));
                 setIsUserDataLoading(false);
                 return;
             }
@@ -92,14 +92,14 @@ const ELoanRequestNewLoan = () => {
                     email: userData.email,
                     phone_number: userData.phone_number,
                     cnic: '42101-467672-3', // Default CNIC as requested
-                    city: 'Karachi' // Default city
+                    city: t('Karachi') // Default city
                 });
             } else {
-                setError(result.message || 'Failed to fetch user information');
+                setError(result.message || t('Failed to fetch user information'));
             }
         } catch (error) {
             console.log('Error fetching user info:', error);
-            setError('An error occurred while fetching user information');
+            setError(t('An error occurred while fetching user information'));
         } finally {
             setIsUserDataLoading(false);
         }
@@ -145,12 +145,12 @@ const ELoanRequestNewLoan = () => {
             console.log(token);
 
             if (!token) {
-                setError('You must be logged in to submit a loan application');
+                setError(t('You must be logged in to submit a loan application'));
                 return;
             }
 
             if (!userId) {
-                setError('User ID not found. Please login again.');
+                setError(t('User ID not found. Please login again.'));
                 return;
             }
 
@@ -198,11 +198,11 @@ const ELoanRequestNewLoan = () => {
             if (response.ok) {
                 navigation.navigate(ScreensName.ELoanRequest2);
             } else {
-                setError(result.message || `Failed to submit loan application: ${response.status}`);
+                setError(result.message || t(`Failed to submit loan application: ${response.status}`));
             }
         } catch (error) {
             console.log('Error submitting loan application:', error);
-            setError('An error occurred while submitting your loan application');
+            setError(t('An error occurred while submitting your loan application'));
         } finally {
             setIsLoading(false);
         }
@@ -221,32 +221,32 @@ const ELoanRequestNewLoan = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request a New Loan from {bankName}</Text>
+                <Text style={styles.mainTitle}>{t("Request a New Loan from")} {bankName}</Text>
 
                 <View style={styles.contentContainer}>
                     {isUserDataLoading ? (
                         <View style={styles.loadingContainer}>
                             <ActivityIndicator size="large" color={colors.GREEN} />
-                            <Text style={styles.loadingText}>Loading user information...</Text>
+                            <Text style={styles.loadingText}>{t("Loading user information...")}</Text>
                         </View>
                     ) : (
                         <View style={styles.infoSection}>
-                            <Text style={styles.infoText}>Name: {userInfo.name}</Text>
-                            <Text style={styles.infoText}>CNIC: {userInfo.cnic}</Text>
-                            <Text style={styles.infoText}>Contact Number: {userInfo.phone_number}</Text>
-                            <Text style={styles.infoText}>Email: {userInfo.email}</Text>
-                            <Text style={styles.infoText}>City: {userInfo.city}</Text>
+                            <Text style={styles.infoText}>{t("Name")}: {userInfo.name}</Text>
+                            <Text style={styles.infoText}>{t("CNIC")}: {userInfo.cnic}</Text>
+                            <Text style={styles.infoText}>{t("Contact Number")}: {userInfo.phone_number}</Text>
+                            <Text style={styles.infoText}>{t("Email")}: {userInfo.email}</Text>
+                            <Text style={styles.infoText}>{t("City")}: {userInfo.city}</Text>
                         </View>
                     )}
 
-                    <Text style={styles.subTitle}>Enter the following details:</Text>
+                    <Text style={styles.subTitle}>{t("Enter the following details:")}</Text>
 
                     <View style={styles.formContainer}>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Entity Name:</Text>
+                            <Text style={styles.label}>{t("Entity Name")}:</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter entity name"
+                                placeholder={t("Enter entity name")}
                                 placeholderTextColor={colors.GRAY}
                                 value={formData.entity_name}
                                 onChangeText={(text) => handleInputChange('entity_name', text)}
@@ -254,10 +254,10 @@ const ELoanRequestNewLoan = () => {
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Yearly Crop Revenue:</Text>
+                            <Text style={styles.label}>{t("Yearly Crop Revenue")}:</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter yearly crop revenue"
+                                placeholder={t("Enter yearly crop revenue")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                                 value={formData.yearly_crop_revenue}
@@ -266,10 +266,10 @@ const ELoanRequestNewLoan = () => {
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Yearly Yield:</Text>
+                            <Text style={styles.label}>{t("Yearly Yield")}:</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter yearly yield"
+                                placeholder={t("Enter yearly yield")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                                 value={formData.yearly_yield}
@@ -278,10 +278,10 @@ const ELoanRequestNewLoan = () => {
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Monthly Net Income:</Text>
+                            <Text style={styles.label}>{t("Monthly Net Income")}:</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter monthly income"
+                                placeholder={t("Enter monthly income")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                                 value={formData.monthly_net_income}
@@ -290,7 +290,7 @@ const ELoanRequestNewLoan = () => {
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Loan Type:</Text>
+                            <Text style={styles.label}>{t("Loan Type")}:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={formData.loan_type}
@@ -299,17 +299,17 @@ const ELoanRequestNewLoan = () => {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Select loan type" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="Personal" value="Personal" style={styles.pickerItem} />
-                                    <Picker.Item label="Agriculture" value="Agriculture" style={styles.pickerItem} />
-                                    <Picker.Item label="Mortgage" value="Mortgage" style={styles.pickerItem} />
-                                    <Picker.Item label="Business" value="Business" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Select loan type")} value="" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Personal")} value="Personal" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Agriculture")} value="Agriculture" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Mortgage")} value="Mortgage" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Business")} value="Business" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Title:</Text>
+                            <Text style={styles.label}>{t("Title")}:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={title}
@@ -318,20 +318,20 @@ const ELoanRequestNewLoan = () => {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Select title" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="Mr." value="mr" style={styles.pickerItem} />
-                                    <Picker.Item label="Mrs." value="mrs" style={styles.pickerItem} />
-                                    <Picker.Item label="Miss" value="miss" style={styles.pickerItem} />
-                                    <Picker.Item label="Dr." value="dr" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Select title")} value="" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Mr.")} value="mr" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Mrs.")} value="mrs" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Miss")} value="miss" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Dr.")} value="dr" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Loan Amount:</Text>
+                            <Text style={styles.label}>{t("Loan Amount")}:</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter loan amount"
+                                placeholder={t("Enter loan amount")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                                 value={formData.loan_amount}
@@ -340,7 +340,7 @@ const ELoanRequestNewLoan = () => {
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Desired Loan Repayment Period:</Text>
+                            <Text style={styles.label}>{t("Desired Loan Repayment Period")}:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={repaymentPeriod}
@@ -349,12 +349,12 @@ const ELoanRequestNewLoan = () => {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Select period" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="1 Year" value="1" style={styles.pickerItem} />
-                                    <Picker.Item label="2 Years" value="2" style={styles.pickerItem} />
-                                    <Picker.Item label="3 Years" value="3" style={styles.pickerItem} />
-                                    <Picker.Item label="4 Years" value="4" style={styles.pickerItem} />
-                                    <Picker.Item label="5 Years" value="5" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Select period")} value="" style={styles.pickerItem} />
+                                    <Picker.Item label={t("1 Year")} value="1" style={styles.pickerItem} />
+                                    <Picker.Item label={t("2 Years")} value="2" style={styles.pickerItem} />
+                                    <Picker.Item label={t("3 Years")} value="3" style={styles.pickerItem} />
+                                    <Picker.Item label={t("4 Years")} value="4" style={styles.pickerItem} />
+                                    <Picker.Item label={t("5 Years")} value="5" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
@@ -370,7 +370,7 @@ const ELoanRequestNewLoan = () => {
                         {isLoading ? (
                             <ActivityIndicator color={colors.WHITE} />
                         ) : (
-                            <Text style={styles.continueButtonText}>Submit Application</Text>
+                            <Text style={styles.continueButtonText}>{t("Submit Application")}</Text>
                         )}
                     </TouchableOpacity>
                 </View>

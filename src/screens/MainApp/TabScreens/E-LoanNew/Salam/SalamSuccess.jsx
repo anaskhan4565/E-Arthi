@@ -31,20 +31,19 @@ const SalamSuccess = () => {
                         resizeMode="contain"
                     />
                     
-                    <Text style={styles.title}>Application Submitted!</Text>
+                    <Text style={styles.title}>{t("Application Submitted!")}</Text>
                     
                     <Text style={styles.message}>
-                        Your Salam loan application has been successfully submitted. 
-                        We will review your application and get back to you shortly.
+                        {t("Your Salam loan application has been successfully submitted. We will review your application and get back to you shortly.")}
                     </Text>
                     
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoLabel}>Application ID:</Text>
+                        <Text style={styles.infoLabel}>{t("Application ID:")}</Text>
                         <Text style={styles.infoValue}>SLM-2023-78945</Text>
                     </View>
                     
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoLabel}>Date Submitted:</Text>
+                        <Text style={styles.infoLabel}>{t("Date Submitted:")}</Text>
                         <Text style={styles.infoValue}>{new Date().toLocaleDateString()}</Text>
                     </View>
                     
@@ -52,7 +51,7 @@ const SalamSuccess = () => {
                         style={styles.homeButton}
                         onPress={() => navigation.navigate(ScreensName.ELoanNew)}
                     >
-                        <Text style={styles.homeButtonText}>Back to Home</Text>
+                        <Text style={styles.homeButtonText}>{t("Back to Home")}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

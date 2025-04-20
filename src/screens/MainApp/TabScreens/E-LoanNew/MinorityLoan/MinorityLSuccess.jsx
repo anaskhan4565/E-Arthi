@@ -39,14 +39,14 @@ const MinorityLSuccess = () => {
                     },
                 ]}
             />
-            <Text style={styles.successText}>Your loan request has been successfully submitted!</Text>
-            <Text style={styles.subText}>We will review your application and get back to you soon.</Text>
+            <Text style={styles.successText}>{t("Your loan request has been successfully submitted!")}</Text>
+            <Text style={styles.subText}>{t("We will review your application and get back to you soon.")}</Text>
 
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate(ScreensName.ELoanNew)}
             >
-                <Text style={styles.buttonText}>Back to Home</Text>
+                <Text style={styles.buttonText}>{t("Back to Home")}</Text>
             </TouchableOpacity>
         </View>
     );

@@ -106,10 +106,10 @@ const NewLoan = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>New Loan</Text>
+                <Text style={styles.mainTitle}>{t("New Loan")}</Text>
 
                 <View style={styles.contentContainer}>
-                    <Text style={styles.subTitle}>Choose the bank to take loan from:</Text>
+                    <Text style={styles.subTitle}>{t("Choose the bank to take loan from:")}</Text>
 
                     <View style={styles.banksGrid}>
                         {bankData.map((bank, index) => (
@@ -125,7 +125,7 @@ const NewLoan = () => {
                                         resizeMode="contain"
                                     />
                                 </View>
-                                <Text style={styles.bankName}>{bank.name}</Text>
+                                <Text style={styles.bankName}>{t(bank.name)}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -142,7 +142,7 @@ const NewLoan = () => {
                             isChecked={isSelected}
                             onPress={() => setSelection(!isSelected)}
                         />
-                        <Text style={styles.checkboxLabel}>Apply to all banks</Text>
+                        <Text style={styles.checkboxLabel}>{t("Apply to all banks")}</Text>
                     </View>
 
                     <TouchableOpacity
@@ -150,10 +150,10 @@ const NewLoan = () => {
                         onPress={handleApplyToAllBanks}
                         disabled={!isSelected}
                     >
-                        <Text style={styles.applyButtonText}>Apply to All Banks</Text>
+                        <Text style={styles.applyButtonText}>{t("Apply to All Banks")}</Text>
                     </TouchableOpacity>
 
-                    <Text style={styles.specialProgramsTitle}>Special Programs</Text>
+                    <Text style={styles.specialProgramsTitle}>{t("Special Programs")}</Text>
 
                     <View style={styles.specialProgramsContainer}>
                         {specialPrograms.map((program, index) => (
@@ -167,7 +167,7 @@ const NewLoan = () => {
                                     style={styles.programIcon}
                                     resizeMode="contain"
                                 />
-                                <Text style={styles.programTitle}>{program.title}</Text>
+                                <Text style={styles.programTitle}>{t(program.title)}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>

@@ -120,9 +120,12 @@ function EOrderPaymentMethod(): React.JSX.Element {
         // Store the selected payment method in MMKV
         storage.set("PassedName", selectedPaymentMethod);
         
-        // Store the total price in MMKV
-        const priceToStore = selectedPaymentMethod === "Raast" ? cashTotal : agriCashTotal;
-        storage.set("AgriCash", priceToStore.toString());
+        // Store both Agri-Cash and regular amounts separately
+        storage.set("AgriCashAmount", agriCashTotal.toString());
+        storage.set("RegularCashAmount", cashTotal.toString());
+        
+        // Set flag for Agri-Cash only payments
+        storage.set("IsAgriCashOnly", (agriCashItems.length > 0 && cashItems.length === 0).toString());
         
         // Navigate based on payment method
         if (selectedPaymentMethod === "Raast") {

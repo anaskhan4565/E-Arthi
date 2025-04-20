@@ -24,8 +24,14 @@ const AboutMore = () => {
     const finalPrice = storage.getString("FinalPrice") || "0";
     const passedName = PassedPayment.getString("PassedName") || "";
     
-    // Get Agri Cash information that was stored in E-OrderCheckout
+    // Get Agri Cash information 
     const agriCashAmount = storage.getString("AgriCashAmount") || "0";
+    const regularCashAmount = storage.getString("RegularCashAmount") || "0";
+    
+    // Check if we're using both payment methods
+    const hasBothPaymentTypes = parseFloat(agriCashAmount) > 0 && parseFloat(regularCashAmount) > 0;
+    
+    // Check if we're using only Agri Cash
     const isAgriCashOnly = storage.getString("IsAgriCashOnly") === "true";
 
     const translateY = useRef(new Animated.Value(hp(20))).current;
@@ -54,9 +60,6 @@ const AboutMore = () => {
         navigation.navigate(ScreensName.MainTabNavigation);
     }
 
-    // Calculate the remaining amount paid through other method
-    const otherPaymentAmount = parseFloat(finalPrice) - parseFloat(agriCashAmount);
-
     // Determine the success message based on payment method
     const getSuccessMessage = () => {
         // Format amount with non-breaking space between PKR and the number
@@ -64,8 +67,12 @@ const AboutMore = () => {
         
         if (isAgriCashOnly) {
             return `${t('You have successfully sent')} ${formatCurrency(finalPrice)} ${t('through Agri Cash')}.`;
+        } else if (hasBothPaymentTypes) {
+            return `${t('You have successfully paid')} ${formatCurrency(agriCashAmount)} ${t('through Agri Cash')} ${t('and')} ${formatCurrency(regularCashAmount)} ${t('through')} ${t(passedName)}.`;
         } else if (parseFloat(agriCashAmount) > 0) {
-            return `${t('You have successfully paid')} ${formatCurrency(agriCashAmount)} ${t('through Agri Cash')} ${t('and')} ${formatCurrency(otherPaymentAmount)} ${t('through')} ${t(passedName)}.`;
+            return `${t('You have successfully paid')} ${formatCurrency(agriCashAmount)} ${t('through Agri Cash')}.`;
+        } else if (parseFloat(regularCashAmount) > 0) {
+            return `${t('You have successfully paid')} ${formatCurrency(regularCashAmount)} ${t('through')} ${t(passedName)}.`;
         } else {
             return `${t('You have successfully sent')} ${formatCurrency(finalPrice)} ${t('through')} ${t(passedName)}.`;
         }

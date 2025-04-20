@@ -14,6 +14,7 @@ import colors from '../../../../../../util/Constants/colors';
 import { fonts } from '../../../../../../util/Constants/FontName';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
+import { t } from 'i18next';
 
 const ELoanEach = () => {
     const { t } = useTranslation();
@@ -46,12 +47,12 @@ const ELoanEach = () => {
                     <View style={styles.headerContainer}>
                         <Text style={styles.loanTitle}>{loanDetails?.title || `Loan ${loanId}`}</Text>
                         <View style={[styles.statusContainer, { backgroundColor: statusColor }]}>
-                            <Text style={styles.statusText}>{status}</Text>
+                            <Text style={styles.statusText}>{t(status)}</Text>
                         </View>
                     </View>
 
                     <View style={styles.sectionContainer}>
-                        <Text style={styles.sectionTitle}>Basic Information</Text>
+                        <Text style={styles.sectionTitle}>{t("Basic Information")}</Text>
                         <View style={styles.detailsContainer}>
                             <DetailRow label="Loan ID" value={loanId.toString()} />
                             <DetailRow label="Status" value={status} />
@@ -63,7 +64,7 @@ const ELoanEach = () => {
                     </View>
 
                     <View style={styles.sectionContainer}>
-                        <Text style={styles.sectionTitle}>Financial Details</Text>
+                        <Text style={styles.sectionTitle}>{t("Financial Details")}</Text>
                         <View style={styles.detailsContainer}>
                             <DetailRow label="Bank" value={bank} />
                             <DetailRow label="Amount" value={`${amount} Rupees`} />
@@ -75,7 +76,7 @@ const ELoanEach = () => {
                     </View>
 
                     <View style={styles.sectionContainer}>
-                        <Text style={styles.sectionTitle}>Personal Information</Text>
+                        <Text style={styles.sectionTitle}>{t("Personal Information")}</Text>
                         <View style={styles.detailsContainer}>
                             <DetailRow label="Name" value={loanDetails?.name || '-'} />
                             <DetailRow label="CNIC" value={loanDetails?.cnic || '-'} />
@@ -92,8 +93,8 @@ const ELoanEach = () => {
 
 const DetailRow = ({ label, value, isLast = false }) => (
     <View style={[styles.detailRow, !isLast && styles.borderBottom]}>
-        <Text style={styles.labelText}>{label}:</Text>
-        <Text style={styles.valueText}>{value}</Text>
+        <Text style={styles.labelText}>{t(label)}:</Text>
+        <Text style={styles.valueText}>{t(value)}</Text>
     </View>
 );
 

@@ -17,7 +17,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import colors from '../../../../../util/Constants/colors';
 import Navbar from '../../Navbar/Navbar';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { useTranslation } from 'react-i18next';
 const storage = new MMKV();
 
 interface Land {
@@ -36,6 +36,7 @@ const ELoanNewLand = () => {
         size: '',
         photo: null,
     });
+    const { t } = useTranslation();
 
     useEffect(() => {
         loadLands();
@@ -99,7 +100,7 @@ const ELoanNewLand = () => {
                 <Navbar />
             </View>
             <View style={styles.header}>
-                <Text style={styles.headerText}>My Lands</Text>
+                <Text style={styles.headerText}>{t('My Lands')}</Text>
                 <View style={styles.headerButtons}>
                     {/* <TouchableOpacity
                         style={[styles.button, styles.resetButton]}
@@ -111,7 +112,7 @@ const ELoanNewLand = () => {
                         style={[styles.button, styles.addButton]}
                         onPress={() => setModalVisible(true)}
                     >
-                        <Text style={styles.buttonText}>Add New Land</Text>
+                        <Text style={styles.buttonText}>{t('Add New Land')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -119,9 +120,9 @@ const ELoanNewLand = () => {
             <ScrollView style={styles.landsContainer}>
                 {lands.length === 0 ? (
                     <View style={styles.emptyState}>
-                        <Text style={styles.emptyStateText}>No lands added yet</Text>
+                        <Text style={styles.emptyStateText}>{t('No lands added yet')}</Text>
                         <Text style={styles.emptyStateSubText}>
-                            Click "Add New Land" to add your first land
+                            {t('Click "Add New Land" to add your first land')}
                         </Text>
                     </View>
                 ) : (
@@ -139,7 +140,7 @@ const ELoanNewLand = () => {
                             />
                             <View style={styles.landInfo}>
                                 <Text style={styles.landName}>{land.name}</Text>
-                                <Text style={styles.landSize}>Size: {land.size} acres</Text>
+                                <Text style={styles.landSize}>{t('Size')}: {land.size} {t('acres')}</Text>
                             </View>
                         </TouchableOpacity>
                     ))
@@ -154,7 +155,7 @@ const ELoanNewLand = () => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Add New Land</Text>
+                        <Text style={styles.modalTitle}>{t('Add New Land')}</Text>
 
                         <TouchableOpacity
                             style={styles.imageUploadContainer}
@@ -168,7 +169,7 @@ const ELoanNewLand = () => {
                             ) : (
                                 <View style={styles.imagePlaceholder}>
                                     <Text style={styles.imagePlaceholderText}>
-                                        Tap to add land photo
+                                        {t('Tap to add land photo')}
                                     </Text>
                                 </View>
                             )}
@@ -176,14 +177,14 @@ const ELoanNewLand = () => {
 
                         <TextInput
                             style={styles.input}
-                            placeholder="Land Name"
+                            placeholder={t('Land Name')}
                             value={newLand.name}
                             onChangeText={(text) => setNewLand({ ...newLand, name: text })}
                         />
 
                         <TextInput
                             style={styles.input}
-                            placeholder="Land Size (acres)"
+                            placeholder={t('Land Size (acres)')}
                             value={newLand.size}
                             onChangeText={(text) => setNewLand({ ...newLand, size: text })}
                             keyboardType="numeric"
@@ -194,14 +195,14 @@ const ELoanNewLand = () => {
                                 style={[styles.modalButton, styles.cancelButton]}
                                 onPress={() => setModalVisible(false)}
                             >
-                                <Text style={styles.buttonText}>Cancel</Text>
+                                <Text style={styles.buttonText}>{t('Cancel')}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
                                 style={[styles.modalButton, styles.saveButton]}
                                 onPress={saveLand}
                             >
-                                <Text style={styles.buttonText}>Save</Text>
+                                <Text style={styles.buttonText}>{t('Save')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

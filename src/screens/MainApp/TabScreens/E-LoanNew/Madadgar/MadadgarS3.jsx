@@ -42,12 +42,12 @@ const MadadgarS3 = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request For Madadgar Grant</Text>
+                <Text style={styles.mainTitle}>{t("Request For Madadgar Grant")}</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
 
-                    <Text style={styles.subTitle}>Terms and Conditions:</Text>
+                    <Text style={styles.subTitle}>{t("Terms and Conditions:")}</Text>
 
                     {/* Form Section */}
                     <View style={styles.formContainer}>
@@ -60,7 +60,7 @@ const MadadgarS3 = () => {
                                 textComponent={true}
                                 innerIconStyle={{ borderRadius: 5 }}
                             />
-                            <Text style={styles.checkboxLabel}>I agree with E-Agri terms and conditions to take out a loan</Text>
+                            <Text style={styles.checkboxLabel}>{t("I agree with E-Agri terms and conditions to take out a loan")}</Text>
                         </View>
                         <View style={styles.checkboxContainer}>
                             <BouncyCheckbox
@@ -71,7 +71,7 @@ const MadadgarS3 = () => {
                                 textComponent={true}
                                 innerIconStyle={{ borderRadius: 5 }}
                             />
-                            <Text style={styles.checkboxLabel}>I have a valid government-issued ID</Text>
+                            <Text style={styles.checkboxLabel}>{t("I have a valid government-issued ID")}</Text>
                         </View>
                         <View style={styles.checkboxContainer}>
                             <BouncyCheckbox
@@ -82,7 +82,7 @@ const MadadgarS3 = () => {
                                 textComponent={true}
                                 innerIconStyle={{ borderRadius: 5 }}
                             />
-                            <Text style={styles.checkboxLabel}>I understand that this application does not guarantee loan approval</Text>
+                            <Text style={styles.checkboxLabel}>{t("I understand that this application does not guarantee loan approval")}</Text>
                         </View>
                         <View style={styles.checkboxContainer}>
                             <BouncyCheckbox
@@ -93,13 +93,13 @@ const MadadgarS3 = () => {
                                 textComponent={true}
                                 innerIconStyle={{ borderRadius: 5 }}
                             />
-                            <Text style={styles.checkboxLabel}>I consent to receive communication via email and phone regarding my loan application</Text>
+                            <Text style={styles.checkboxLabel}>{t("I consent to receive communication via email and phone regarding my loan application")}</Text>
                         </View>
 
                     </View>
 
                     <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMadadgarSuccess)}>
-                        <Text style={styles.continueButtonText}>Continue</Text>
+                        <Text style={styles.continueButtonText}>{t("Continue")}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

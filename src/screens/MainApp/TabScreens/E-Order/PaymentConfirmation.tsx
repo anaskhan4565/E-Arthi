@@ -38,7 +38,10 @@ function PaymentConfirmation(): React.JSX.Element {
   const storage = new MMKV();
   const PassedPayment = new MMKV();
 
-  const finalPrice = storage.getString("AgriCash") || "0";
+  // Get payment details from storage
+  const agriCashAmount = storage.getString("AgriCashAmount") || "0";
+  const regularCashAmount = storage.getString("RegularCashAmount") || "0";
+  const finalPrice = storage.getString("AgriCash") || regularCashAmount;
   const passedName = PassedPayment.getString("PassedName");
 
   const savedCart = storage.getString("cart");
@@ -62,6 +65,14 @@ function PaymentConfirmation(): React.JSX.Element {
   };
   const totalPrice = parsedCart.reduce((acc, product) => acc + parseInt(product.price.replace(/,/g, '')) * product.quantity, 0) * 1.13;
 
+  const handleConfirm = () => {
+    // Store both payment amounts
+    storage.set("AgriCashAmount", agriCashAmount);
+    storage.set("RegularCashAmount", finalPrice);
+    
+    // Navigate to OTP
+    navigation.navigate(ScreensName.AllOTP);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -134,9 +145,10 @@ function PaymentConfirmation(): React.JSX.Element {
               BgGiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
               txColor={colors.WHITE}
               bordergiven={totalPrice === 0 ? colors.GRAY : colors.GREEN}
-              isNavigation={totalPrice === 0 ? 0 : 1}
+              onPressG={handleConfirm}
+              isNavigation={0}
               isdisabled={totalPrice === 0 ? true : false}
-              name={totalPrice !== 0 ? ScreensName.AllOTP : null} />
+              />
             <CustomButton MainText={t('Cancel')} BgGiven={colors.WHITE} txColor={colors.GREEN} />
           </View>
         </View>

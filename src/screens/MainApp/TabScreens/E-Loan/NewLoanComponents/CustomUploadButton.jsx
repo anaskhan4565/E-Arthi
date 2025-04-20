@@ -50,13 +50,13 @@ const CustomUploadButton = ({ isCamera = false, NoPic = false, PlaceHolderGiven 
                 { backgroundColor: colors.GREEN, padding: 10},
                 styles.Wrapper
             ]}>
-                <Text style={{ color: 'white', fontSize: hp('2.2%'), fontFamily: fonts.Regular }}>Upload</Text>
+                <Text style={{ color: 'white', fontSize: hp('2.2%'), fontFamily: fonts.Regular }}>{t("Upload")}</Text>
             </TouchableOpacity>
             {fileName ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp(1) }}>
-                    <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Regular }}>{PlaceHolderGiven + " Uploaded!"}</Text>
+                    <Text style={{ fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t(PlaceHolderGiven) + " " + t("Uploaded!")}</Text>
                     <TouchableOpacity onPress={handleRemoveImage}>
-                        <Text style={{ color: colors.GREEN, marginLeft: 10, fontSize: hp(1.5), fontFamily: fonts.Regular }}>Remove</Text>
+                        <Text style={{ color: colors.GREEN, marginLeft: 10, fontSize: hp(1.5), fontFamily: fonts.Regular }}>{t("Remove")}</Text>
                     </TouchableOpacity>
                 </View>
             ) : null}

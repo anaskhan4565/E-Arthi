@@ -10,6 +10,7 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '../../../../../../util/Constants/FontName';
 import colors from '../../../../../../util/Constants/colors';
+import { useTranslation } from 'react-i18next';
 
 const CustomDropdown = ({
     label,
@@ -19,6 +20,7 @@ const CustomDropdown = ({
     width = wp('43%'),
 }) => {
     const [visible, setVisible] = useState(false);
+    const { t } = useTranslation();
 
     const renderDropdown = () => {
         if (!visible) return null;
@@ -46,7 +48,7 @@ const CustomDropdown = ({
                                         setVisible(false);
                                     }}
                                 >
-                                    <Text style={styles.itemText}>{item}</Text>
+                                    <Text style={styles.itemText}>{t(item)}</Text>
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
@@ -62,7 +64,7 @@ const CustomDropdown = ({
             onPress={() => setVisible(true)}
         >
             <Text style={styles.buttonText}>
-                {selectedValue || label}
+                {t(selectedValue) || t(label)}
             </Text>
             <Text style={styles.icon}>▼</Text>
             {renderDropdown()}

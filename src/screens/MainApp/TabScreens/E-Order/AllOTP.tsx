@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { View, TextInput, StyleSheet, Button, Text, ActivityIndicator } from 'react-native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { View, TextInput, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import CustomButton from '../../../../components/CustomButton';
 import colors from '../../../../../util/Constants/colors';
 import ScreensName from '../../../../../util/Constants/ScreensName';
 import { useTranslation } from "react-i18next";
 import { fonts } from '../../../../../util/Constants/FontName';
+import { MMKV } from 'react-native-mmkv';
 
 const AllOTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -14,6 +15,7 @@ const AllOTP = () => {
     const [timer, setTimer] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(60);
     const isFocused = useIsFocused()
+    const navigation = useNavigation();
     let intervalId: NodeJS.Timeout;
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -63,9 +65,12 @@ const AllOTP = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleVerify = () => {
         const otpCode = otp.join("");
+        // Verify the OTP code
 
+        // Navigate to payment success
+        navigation.navigate(ScreensName.PaymentSuccess);
     };
 
     return (
@@ -73,7 +78,7 @@ const AllOTP = () => {
             <Text style={styles.title}>{t('OTP Verification')}</Text>
             <View style={styles.infotextcontainer}>
                 <Text style={styles.subtitle}>
-                    {t('Please enter the verification code we’ve sent you on +92-3212684192')}
+                    {t('Please enter the verification code we have sent you on +92-3212684192')}
                 </Text>
             </View>
 
@@ -97,7 +102,11 @@ const AllOTP = () => {
 
             <CustomButton
                 MainText={t('Verify')}
-                BgGiven={colors.GREEN} name={ScreensName.PaymentSuccess} txColor={colors.WHITE} isNavigation={1} />
+                BgGiven={colors.GREEN} 
+                onPressG={handleVerify}
+                name={ScreensName.PaymentSuccess} 
+                txColor={colors.WHITE} 
+                isNavigation={0} />
         </View>
     );
 };

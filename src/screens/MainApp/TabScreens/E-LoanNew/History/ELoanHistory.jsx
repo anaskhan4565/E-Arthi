@@ -70,7 +70,7 @@ const ELoanHistory = () => {
                 { backgroundColor: status === 'Completed' ? colors.GREEN : colors.BLUE }
             ]}
         >
-            <Text style={styles.statusText}>{status}</Text>
+            <Text style={styles.statusText}>{t(status)}</Text>
         </TouchableOpacity>
     );
 
@@ -82,7 +82,7 @@ const ELoanHistory = () => {
 
                 if (!token) {
                     console.error('No token found in storage');
-                    setError('Authentication error. Please login again.');
+                    setError(t('Authentication error. Please login again.'));
                     setLoading(false);
                     return;
                 }
@@ -101,7 +101,7 @@ const ELoanHistory = () => {
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching loan history:", err);
-                setError("Failed to load loan history");
+                setError(t("Failed to load loan history"));
                 setLoading(false);
             }
         };
@@ -140,7 +140,7 @@ const ELoanHistory = () => {
                 <CustomSearchApp placeholder="Search in here" />
             </View>
 
-            <Text style={styles.mainTitle}>Loan History</Text>
+            <Text style={styles.mainTitle}>{t("Loan History")}</Text>
 
             <View style={styles.container2}>
                 <CustomDropdown
@@ -163,10 +163,10 @@ const ELoanHistory = () => {
                         <ActivityIndicator size="large" color={colors.BLUE} />
                     </View>
                 ) : error ? (
-                    <Text style={styles.errorText}>{error}</Text>
+                    <Text style={styles.errorText}>{t(error)}</Text>
                 ) : loanData.length === 0 ? (
                     <View style={styles.emptyContainer}>
-                        <Text style={styles.emptyText}>No loan history found</Text>
+                        <Text style={styles.emptyText}>{t("No loan history found")}</Text>
                     </View>
                 ) : (
                     <View style={styles.rowContainer}>

@@ -45,63 +45,63 @@ const MinorityL = () => {
                     <CustomSearchApp placeholder="Search in here" />
                 </View>
 
-                <Text style={styles.mainTitle}>Request for Minority Loan</Text>
+                <Text style={styles.mainTitle}>{t("Request for Minority Loan")}</Text>
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
                     <View style={styles.infoSection}>
-                        <Text style={styles.infoText}>Name: {userInfo.name}</Text>
-                        <Text style={styles.infoText}>CNIC: {userInfo.cnic}</Text>
-                        <Text style={styles.infoText}>Contact Number: {userInfo.contact}</Text>
-                        <Text style={styles.infoText}>Email: {userInfo.email}</Text>
-                        <Text style={styles.infoText}>City: {userInfo.city}</Text>
+                        <Text style={styles.infoText}>{t("Name")}: {userInfo.name}</Text>
+                        <Text style={styles.infoText}>{t("CNIC")}: {userInfo.cnic}</Text>
+                        <Text style={styles.infoText}>{t("Contact Number")}: {userInfo.contact}</Text>
+                        <Text style={styles.infoText}>{t("Email")}: {userInfo.email}</Text>
+                        <Text style={styles.infoText}>{t("City")}: {userInfo.city}</Text>
                     </View>
 
-                    <Text style={styles.subTitle}>Enter the following details:</Text>
+                    <Text style={styles.subTitle}>{t("Enter the following details:")}</Text>
 
                     {/* Form Section */}
                     <View style={styles.formContainer}>
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Entity Name:</Text>
+                            <Text style={styles.label}>{t("Entity Name")}:</Text>
                             <TextInput 
                                 style={styles.input}
-                                placeholder="Enter entity name"
+                                placeholder={t("Enter entity name")}
                                 placeholderTextColor={colors.GRAY}
                             />
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Yearly Crop Revenue:</Text>
+                            <Text style={styles.label}>{t("Yearly Crop Revenue")}:</Text>
                             <TextInput 
                                 style={styles.input}
-                                placeholder="Enter yearly crop revenue"
-                                placeholderTextColor={colors.GRAY}
-                                keyboardType="numeric"
-                            />
-                        </View>
-
-                        <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Yearly Yield:</Text>
-                            <TextInput 
-                                style={styles.input}
-                                placeholder="Enter yearly yield"
+                                placeholder={t("Enter yearly crop revenue")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                             />
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Monthly Net Income:</Text>
+                            <Text style={styles.label}>{t("Yearly Yield")}:</Text>
                             <TextInput 
                                 style={styles.input}
-                                placeholder="Enter monthly income"
+                                placeholder={t("Enter yearly yield")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                             />
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Loan Type:</Text>
+                            <Text style={styles.label}>{t("Monthly Net Income")}:</Text>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder={t("Enter monthly income")}
+                                placeholderTextColor={colors.GRAY}
+                                keyboardType="numeric"
+                            />
+                        </View>
+
+                        <View style={styles.inputWrapper}>
+                            <Text style={styles.label}>{t("Loan Type")}:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={loanType}
@@ -110,17 +110,17 @@ const MinorityL = () => {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Select loan type" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="Personal" value="personal" style={styles.pickerItem} />
-                                    <Picker.Item label="Agriculture" value="agriculture" style={styles.pickerItem} />
-                                    <Picker.Item label="Mortgage" value="mortgage" style={styles.pickerItem} />
-                                    <Picker.Item label="Business" value="business" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Select loan type")} value="" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Personal")} value="personal" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Agriculture")} value="agriculture" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Mortgage")} value="mortgage" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Business")} value="business" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Title:</Text>
+                            <Text style={styles.label}>{t("Title")}:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={title}
@@ -129,27 +129,27 @@ const MinorityL = () => {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Select title" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="Mr." value="mr" style={styles.pickerItem} />
-                                    <Picker.Item label="Mrs." value="mrs" style={styles.pickerItem} />
-                                    <Picker.Item label="Miss" value="miss" style={styles.pickerItem} />
-                                    <Picker.Item label="Dr." value="dr" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Select title")} value="" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Mr.")} value="mr" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Mrs.")} value="mrs" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Miss")} value="miss" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Dr.")} value="dr" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Loan Amount:</Text>
+                            <Text style={styles.label}>{t("Loan Amount")}:</Text>
                             <TextInput 
                                 style={styles.input}
-                                placeholder="Enter loan amount"
+                                placeholder={t("Enter loan amount")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
                             />
                         </View>
 
                         <View style={styles.inputWrapper}>
-                            <Text style={styles.label}>Desired Loan Repayment Period:</Text>
+                            <Text style={styles.label}>{t("Desired Loan Repayment Period")}:</Text>
                             <View style={styles.pickerContainer}>
                                 <Picker
                                     selectedValue={repaymentPeriod}
@@ -158,19 +158,19 @@ const MinorityL = () => {
                                     mode="dropdown"
                                     itemStyle={styles.pickerItem}
                                 >
-                                    <Picker.Item label="Select period" value="" style={styles.pickerItem} />
-                                    <Picker.Item label="1 Year" value="1" style={styles.pickerItem} />
-                                    <Picker.Item label="2 Years" value="2" style={styles.pickerItem} />
-                                    <Picker.Item label="3 Years" value="3" style={styles.pickerItem} />
-                                    <Picker.Item label="4 Years" value="4" style={styles.pickerItem} />
-                                    <Picker.Item label="5 Years" value="5" style={styles.pickerItem} />
+                                    <Picker.Item label={t("Select period")} value="" style={styles.pickerItem} />
+                                    <Picker.Item label={t("1 Year")} value="1" style={styles.pickerItem} />
+                                    <Picker.Item label={t("2 Years")} value="2" style={styles.pickerItem} />
+                                    <Picker.Item label={t("3 Years")} value="3" style={styles.pickerItem} />
+                                    <Picker.Item label={t("4 Years")} value="4" style={styles.pickerItem} />
+                                    <Picker.Item label={t("5 Years")} value="5" style={styles.pickerItem} />
                                 </Picker>
                             </View>
                         </View>
                     </View>
 
                     <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMinorityS2)}>
-                        <Text style={styles.continueButtonText}>Continue</Text>
+                        <Text style={styles.continueButtonText}>{t("Continue")}</Text>
                     </TouchableOpacity>
     </View>
             </ScrollView>

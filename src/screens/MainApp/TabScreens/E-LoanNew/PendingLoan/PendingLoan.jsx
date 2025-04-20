@@ -68,7 +68,7 @@ const PendingLoan = () => {
                 { backgroundColor: status === 'Completed' ? colors.GREEN : colors.BLUE }
             ]}
         >
-            <Text style={styles.statusText}>{status}</Text>
+            <Text style={styles.statusText}>{t(status)}</Text>
         </TouchableOpacity>
     );
 
@@ -83,14 +83,14 @@ const PendingLoan = () => {
 
                 if (!token) {
                     console.error('No token found in storage');
-                    setError('Authentication error. Please login again.');
+                    setError(t('Authentication error. Please login again.'));
                     setLoading(false);
                     return;
                 }
 
                 if (!userId) {
                     console.error('No user ID found in storage');
-                    setError('User ID not found. Please login again.');
+                    setError(t('User ID not found. Please login again.'));
                     setLoading(false);
                     return;
                 }
@@ -122,15 +122,15 @@ const PendingLoan = () => {
                     console.error("Error response data:", err.response.data);
                     console.error("Error status:", err.response.status);
                     console.error("Error headers:", err.response.headers);
-                    setError(`Server error: ${err.response.status} - ${err.response.data?.message || 'Unknown error'}`);
+                    setError(`${t("Server error")}: ${err.response.status} - ${err.response.data?.message || t('Unknown error')}`);
                 } else if (err.request) {
                     // The request was made but no response was received
                     console.error("No response received:", err.request);
-                    setError("No response from server. Please check your internet connection.");
+                    setError(t("No response from server. Please check your internet connection."));
                 } else {
                     // Something happened in setting up the request that triggered an Error
                     console.error("Error setting up request:", err.message);
-                    setError("Failed to setup request. Please try again.");
+                    setError(t("Failed to setup request. Please try again."));
                 }
                 setLoading(false);
             }
@@ -170,17 +170,17 @@ const PendingLoan = () => {
                 <CustomSearchApp placeholder="Search in here" />
             </View>
 
-            <Text style={styles.mainTitle}>Pending Loan</Text>
+            <Text style={styles.mainTitle}>{t("Pending Loan")}</Text>
 
             <View style={styles.container2}>
                 <CustomDropdown
-                    label="categories"
+                    label={t("categories")}
                     options={categories}
                     selectedValue={selectedCategory}
                     onSelect={setSelectedCategory}
                 />
                 <CustomDropdown
-                    label="banks"
+                    label={t("banks")}
                     options={banks}
                     selectedValue={selectedBank}
                     onSelect={setSelectedBank}
@@ -193,7 +193,7 @@ const PendingLoan = () => {
                         <ActivityIndicator size="large" color={colors.BLUE} />
                     </View>
                 ) : error ? (
-                    <Text style={styles.errorText}>{error}</Text>
+                    <Text style={styles.errorText}>{t(error)}</Text>
                 ) : (
                     <View style={styles.rowContainer}>
                         {loanData.map((loan, index) => {

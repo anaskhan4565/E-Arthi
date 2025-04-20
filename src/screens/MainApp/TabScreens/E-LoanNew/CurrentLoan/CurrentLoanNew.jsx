@@ -32,15 +32,15 @@ const CurrentLoanNew = () => {
                 const userId = storage.getString('userId');
 
                 if (!token) {
-                    console.error('No token found in storage');
-                    setError('Authentication error. Please login again.');
+                    console.error(t('No token found in storage'));
+                    setError(t('Authentication error. Please login again.'));
                     setLoading(false);
                     return;
                 }
 
                 if (!userId) {
-                    console.error('No user ID found in storage');
-                    setError('User ID not found. Please login again.');
+                    console.error(t('No user ID found in storage'));
+                    setError(t('User ID not found. Please login again.'));
                     setLoading(false);
                     return;
                 }
@@ -72,7 +72,7 @@ const CurrentLoanNew = () => {
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching current loan:", err);
-                setError("Failed to load current loan");
+                setError(t("Failed to load current loan"));
                 setLoading(false);
             }
         };
@@ -127,11 +127,11 @@ const CurrentLoanNew = () => {
             </View>
 
             <View style={styles.searchBarContainer}>
-                <CustomSearchApp placeholder="Search in here" />
+                <CustomSearchApp placeholder={t("Search in here")} />
             </View>
 
             <ScrollView style={styles.scrollView}>
-                <Text style={styles.title}>Current Loan</Text>
+                <Text style={styles.title}>{t("Current Loan")}</Text>
 
                 {loading ? (
                     <View style={styles.loaderContainer}>
@@ -141,14 +141,14 @@ const CurrentLoanNew = () => {
                     <Text style={styles.errorText}>{error}</Text>
                 ) : !currentLoan ? (
                     <View style={styles.emptyContainer}>
-                        <Text style={styles.emptyText}>You don't have any active loans</Text>
+                        <Text style={styles.emptyText}>{t("You don't have any active loans")}</Text>
                     </View>
                 ) : (
                     <>
                         <View style={styles.summaryContainer}>
-                            <Text style={styles.sectionTitle}>Loan Summary</Text>
-                            <Text style={styles.summaryText}>Loan taken on: {formatDate(currentLoan.created_at)}</Text>
-                            <Text style={styles.summaryText}>Loan amount: {formatAmount(currentLoan.loan_amount)} Rupees</Text>
+                            <Text style={styles.sectionTitle}>{t("Loan Summary")}</Text>
+                            <Text style={styles.summaryText}>{t("Loan taken on")}: {formatDate(currentLoan.created_at)}</Text>
+                            <Text style={styles.summaryText}>{t("Loan amount")}: {formatAmount(currentLoan.loan_amount)} {t("Rupees")}</Text>
 
                             {/* Calculate loan splits */}
                             {(() => {
@@ -171,13 +171,13 @@ const CurrentLoanNew = () => {
                                                 {() => (
                                                     <View style={styles.progressTextContainer}>
                                                         <Text style={styles.progressMainText}>
-                                                            {formatAmount(loanSplit.cashAmount)} Rupees
+                                                            {formatAmount(loanSplit.cashAmount)} {t("Rupees")}
                                                         </Text>
-                                                        <Text style={styles.progressSubText}>is cash</Text>
+                                                        <Text style={styles.progressSubText}>{t("is cash")}</Text>
                                                         <Text style={styles.progressMainText}>
-                                                            {formatAmount(loanSplit.lineOfCreditAmount)} Rupees
+                                                            {formatAmount(loanSplit.lineOfCreditAmount)} {t("Rupees")}
                                                         </Text>
-                                                        <Text style={styles.progressSubText}>is line of credit</Text>
+                                                        <Text style={styles.progressSubText}>{t("is line of credit")}</Text>
                                                     </View>
                                                 )}
                                             </AnimatedCircularProgress>
@@ -185,7 +185,7 @@ const CurrentLoanNew = () => {
 
                                         <View style={styles.splitProgressContainer}>
                                             <View style={styles.progressItem}>
-                                                <Text style={styles.progressLabel}>Cash</Text>
+                                                <Text style={styles.progressLabel}>{t("Cash")}</Text>
                                                 <AnimatedCircularProgress
                                                     size={wp('30%')}
                                                     width={4}
@@ -198,18 +198,18 @@ const CurrentLoanNew = () => {
                                                             <Text style={styles.smallProgressText}>
                                                                 {formatAmount(cashSpending.spent)} Rupees
                                                             </Text>
-                                                            <Text style={styles.smallSubText}>spent</Text>
+                                                            <Text style={styles.smallSubText}>{t("spent")}</Text>
                                                             <Text style={styles.smallProgressText}>
                                                                 {formatAmount(cashSpending.remaining)} Rupees
                                                             </Text>
-                                                            <Text style={styles.smallSubText}>remaining</Text>
+                                                            <Text style={styles.smallSubText}>{t("remaining")}</Text>
                                                         </View>
                                                     )}
                                                 </AnimatedCircularProgress>
                                             </View>
 
                                             <View style={styles.progressItem}>
-                                                <Text style={styles.progressLabel}>Line of Credit</Text>
+                                                <Text style={styles.progressLabel}>{t("Line of Credit")}</Text>
                                                 <AnimatedCircularProgress
                                                     size={wp('30%')}
                                                     width={5}
@@ -222,11 +222,11 @@ const CurrentLoanNew = () => {
                                                             <Text style={styles.smallProgressText}>
                                                                 {formatAmount(creditSpending.spent)} Rupees
                                                             </Text>
-                                                            <Text style={styles.smallSubText}>spent</Text>
+                                                            <Text style={styles.smallSubText}>{t("spent")}</Text>
                                                             <Text style={styles.smallProgressText}>
-                                                                {formatAmount(creditSpending.remaining)} Rupees
+                                                                {formatAmount(creditSpending.remaining)} {t("Rupees")}
                                                             </Text>
-                                                            <Text style={styles.smallSubText}>remaining</Text>
+                                                            <Text style={styles.smallSubText}>{t("remaining")}</Text>
                                                         </View>
                                                     )}
                                                 </AnimatedCircularProgress>
@@ -238,12 +238,12 @@ const CurrentLoanNew = () => {
                         </View>
 
                         <View style={styles.detailsContainer}>
-                            <Text style={styles.sectionTitle}>Loan Details</Text>
-                            <DetailRow label="Bank" value={currentLoan.bank_name} />
-                            <DetailRow label="Title" value={currentLoan.title} />
-                            <DetailRow label="Loan Type" value={currentLoan.loan_type} />
-                            <DetailRow label="Loan Period" value={`${currentLoan.desired_loan_period} months`} />
-                            <DetailRow label="Entity Name" value={currentLoan.entity_name} isLast={true} />
+                            <Text style={styles.sectionTitle}>{t("Loan Details")}</Text>
+                            <DetailRow label={t("Bank")} value={currentLoan.bank_name} />
+                            <DetailRow label={t("Title")} value={currentLoan.title} />
+                            <DetailRow label={t("Loan Type")} value={currentLoan.loan_type} />
+                            <DetailRow label={t("Loan Period")} value={`${currentLoan.desired_loan_period} ${t("months")}`} />
+                            <DetailRow label={t("Entity Name")} value={currentLoan.entity_name} isLast={true} />
                         </View>
                     </>
                 )}

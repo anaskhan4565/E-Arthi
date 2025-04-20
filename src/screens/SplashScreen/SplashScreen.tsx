@@ -73,11 +73,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-<<<<<<< Updated upstream
-          routes: [{ name: ScreensName.LanguageSelect}],
-=======
           routes: [{ name: ScreensName.OnboardingScreen1 }],
->>>>>>> Stashed changes
         }),
       );
     }, 3000);

@@ -24,6 +24,9 @@ import EInventoryAddSuppliers from "./src/screens/MainApp/TabScreens/E-Inventory
 import EInventorySupplierReports from "./src/screens/MainApp/TabScreens/E-InventoryScreens/E-InventorySupplierReports.tsx";
 import LanguageSelect from './src/screens/InitialStartScreens/LanguageSelect.tsx';
 import EMunshiWarehouseInfo from './src/screens/MainApp/TabScreens/E-Munshi/EMunshiWarehouseInfo.tsx';
+import OnboardingScreen1 from './src/screens/OnBoardingScreens/OnboardingScreen1.tsx';
+import OnboardingScreen2 from './src/screens/OnBoardingScreens/OnboardingScreen2.tsx';
+import DashboardInitialization from './src/screens/OnBoardingScreens/DashboardInitialization.tsx';
 
 import EWarehouseMainStack from "./src/screens/MainApp/TabScreens/E-Warehouse/E-WarehouseMainStack.tsx";
 //for i18-next
@@ -77,6 +80,9 @@ function App(): React.JSX.Element {
         <NavigationContainer>
           <Stack.Navigator initialRouteName={ScreensName.SplashScreen} screenOptions={{ headerShown: false }}>
             <Stack.Screen name={ScreensName.SplashScreen} component={SplashScreen} />
+            <Stack.Screen name={ScreensName.OnboardingScreen1} component={OnboardingScreen1} />
+            <Stack.Screen name={ScreensName.OnboardingScreen2} component={OnboardingScreen2} />
+            <Stack.Screen name={ScreensName.DashboardInitialization} component={DashboardInitialization} />
             <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
             <Stack.Screen name={ScreensName.Connect} component={Connect} />
             <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />

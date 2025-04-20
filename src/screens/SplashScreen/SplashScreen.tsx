@@ -73,7 +73,11 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
+<<<<<<< Updated upstream
           routes: [{ name: ScreensName.LanguageSelect}],
+=======
+          routes: [{ name: ScreensName.OnboardingScreen1 }],
+>>>>>>> Stashed changes
         }),
       );
     }, 3000);
@@ -84,36 +88,36 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Animated.Image 
-          source={Icon1} 
+        <Animated.Image
+          source={Icon1}
           style={[
-            styles.logo, 
-            { 
+            styles.logo,
+            {
               opacity: opacityIcon1,
               transform: [{ scale: scaleAnim }],
               position: 'absolute'
             }
-          ]} 
+          ]}
         />
-        <Animated.Image 
-          source={Icon2} 
+        <Animated.Image
+          source={Icon2}
           style={[
-            styles.logo, 
-            { 
+            styles.logo,
+            {
               opacity: opacityIcon2,
               position: 'absolute'
             }
-          ]} 
+          ]}
         />
-        <Animated.Image 
-          source={Icon3} 
+        <Animated.Image
+          source={Icon3}
           style={[
-            styles.logo, 
-            { 
+            styles.logo,
+            {
               opacity: opacityIcon3,
               position: 'absolute'
             }
-          ]} 
+          ]}
         />
       </View>
       <Animated.Text style={styles.text}>E-Agri</Animated.Text>

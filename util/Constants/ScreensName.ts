@@ -1,6 +1,11 @@
 export default {
     SplashScreen: "SplashScreen",
 
+    // Onboarding Screens
+    OnboardingScreen1: "OnboardingScreen1",
+    OnboardingScreen2: "OnboardingScreen2",
+    DashboardInitialization: "DashboardInitialization",
+
     // Module1
     Connect: "Connect",
     ForgotPassword: "ForgotPassword",
@@ -261,7 +266,7 @@ export default {
     ViewPackage: 'ViewPackage',
     CreatePackageDetails: 'CreatePackageDetails',
     CreatePackage: 'CreatePackage',
-    
+
     ERentals: 'ERentals',
     ERentalsMainStack: 'ERentalsMainStack',
     Harvester: 'Harvester',
@@ -270,7 +275,7 @@ export default {
     ToolCarrier: 'ToolCarrier',
     Tractor: 'Tractor',
     BookRental: 'BookRental',
-    
+
 
 
 }

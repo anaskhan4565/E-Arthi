@@ -104,7 +104,10 @@ function CashFlow(): React.JSX.Element {
                     <Text style={styles.headerText}>{t("Cash Flow")}</Text>
                 </View>
                 <View style={styles.gridContainer}>
-                    {transactions.map((transaction, index) => (
+                    
+                    {
+                    transactions.length<0? 
+                    transactions.map((transaction, index) => (
                         <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => { navigation.navigate(ScreensName.EmunshiTransactionDetail, { transactiondata: transactions[index] }) }}>
                             <View style={styles.RectangleheaderRow}>
                                 <Text style={[styles.transactionText, styles.transactionLabel]}>
@@ -121,7 +124,9 @@ function CashFlow(): React.JSX.Element {
                             <Text style={styles.transactionText}>Vendor: {transaction.Vendor}</Text>
                             <Text style={styles.transactionText}>Amount: {transaction.Items.reduce((total, item) => total + (item.qty * item.price), 0)} Rs</Text>
                         </TouchableOpacity>
-                    ))}
+                    )):
+                    <Text style={styles.transactionText2}>No transactions found</Text>
+                    }
                 </View>
             </View>
         </ScrollView>
@@ -132,6 +137,19 @@ const styles = StyleSheet.create({
     navbarContainer: {
         height: hp(8.5),
         backgroundColor: colors.WHITE,
+    },
+    transactionText2:{
+        fontFamily: fonts.Medium,
+        fontSize: hp(2.4),
+        color: colors.GRAY,
+        marginTop: hp(1),
+        marginBottom: hp(1),
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+        marginHorizontal: wp(15),
+        textAlign: 'center',
     },
     container: {
         flex: 1,

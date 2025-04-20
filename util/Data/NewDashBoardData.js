@@ -21,9 +21,9 @@ import ScreensName from '../Constants/ScreensName.ts';
  * Drawer navigation data with icons from NewDrawerIcons
  */
 const NewDrawerData = [
-    {
+    { 
         id: 'loan',
-        title: 'Loan',
+        title: 'E-Loan',
         svgImage: LoanIcon,
         screen: ScreensName.ELoanMainStack,
         isNavigation: true,

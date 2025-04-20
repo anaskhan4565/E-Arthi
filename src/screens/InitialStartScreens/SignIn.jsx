@@ -192,8 +192,8 @@ function SignIn() {
                   isheader={true}
                   padding_f={true}
                   placeholder={"+92"}
-                  w_given={hp(9.5)}
-                  min_given={hp(11)}
+                  w_given={hp(9.9)}
+                  min_given={hp(12)}
                   onValueChange={(value) => setSelectedCountryCode(value)}
                   selectedValue={selectedCountryCode}
                 />

@@ -36,6 +36,8 @@ const MyButton: React.FC<{ onPress: () => void; title: string; bgColor: string; 
 function BiometricVerification() {
   const [scanStage, setScanStage] = useState('left'); // 'left', 'right', 'completed'
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationProgress, setVerificationProgress] = useState(0);
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
 
@@ -73,6 +75,31 @@ function BiometricVerification() {
     });
   };
 
+  const handleContinue = () => {
+    setIsVerifying(true);
+    setVerificationProgress(0);
+    
+    // Simulate verification progress
+    const totalTime = 6000; // 6 seconds
+    const interval = 100; // Update every 100ms
+    const steps = totalTime / interval;
+    let currentStep = 0;
+    
+    const progressTimer = setInterval(() => {
+      currentStep++;
+      setVerificationProgress(Math.min((currentStep / steps) * 100, 100));
+      
+      if (currentStep >= steps) {
+        clearInterval(progressTimer);
+        // Navigate after verification completes
+        setTimeout(() => {
+          setIsVerifying(false);
+          navigation.navigate(ScreensName.BiometricSuccess);
+        }, 200);
+      }
+    }, interval);
+  };
+
   const getInstructionText = () => {
     if (scanStage === 'left') {
       return (
@@ -103,7 +130,18 @@ function BiometricVerification() {
   };
 
   const renderButton = () => {
-    if (isProcessing) {
+    if (isVerifying) {
+      return (
+        <View style={styles.verificationContainer}>
+          <Text style={styles.verificationText}>{t('Verifying with NADRA biometric database...')}</Text>
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar, { width: `${verificationProgress}%` }]} />
+          </View>
+          <Text style={styles.progressText}>{Math.round(verificationProgress)}%</Text>
+          <ActivityIndicator size="large" color={colors.GREEN} style={styles.loader} />
+        </View>
+      );
+    } else if (isProcessing) {
       return (
         <View style={styles.processingContainer}>
           <ActivityIndicator size="large" color={colors.GREEN} />
@@ -132,7 +170,7 @@ function BiometricVerification() {
       return (
         <MyButton
           title={t('Continue')}
-          onPress={() => navigation.navigate(ScreensName.BiometricSuccess)}
+          onPress={handleContinue}
           bgColor={colors.GREEN}
           textColor={colors.WHITE}
         />
@@ -214,6 +252,38 @@ const styles = StyleSheet.create({
     fontSize: hp(2),
     fontFamily: fonts.Regular,
     color: colors.BLACK,
+  },
+  verificationContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: wp(85),
+  },
+  verificationText: {
+    fontSize: hp(2),
+    fontFamily: fonts.SemiBold,
+    color: colors.BLACK,
+    marginBottom: hp(2),
+    textAlign: 'center',
+  },
+  progressBarContainer: {
+    width: wp(85),
+    height: hp(1.5),
+    backgroundColor: colors.LIGHT_GRAY,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: colors.GREEN,
+  },
+  progressText: {
+    fontSize: hp(1.8),
+    fontFamily: fonts.Regular,
+    color: colors.BLACK,
+    marginTop: hp(1),
+  },
+  loader: {
+    marginTop: hp(2),
   },
 });
 

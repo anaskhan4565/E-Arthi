@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import colors from '../../../util/Constants/colors.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from '../../assets/Icon/Logo-only.png';
-import VectorMen from '../../assets/AboutMoreicons/Vectormen.png';
+import VectorMen from '../../assets/AboutMoreicons/farmerr.png';
+import VectorMen2 from '../../assets/AboutMoreicons/buyer.png';
 import CustomButton from '../../components/CustomButton';
 import ScreensName from '../../../util/Constants/ScreensName.ts';
 import { useTranslation } from 'react-i18next';
@@ -43,8 +44,8 @@ const AboutMore = () => {
                             ]}
                             onPress={() => setSelectedCard('Dealer')}
                         >
-                            <Image source={VectorMen} style={styles.vectorLogo} />
-                            <Text style={styles.cardText}>{t('Vender')}</Text>
+                            <Image source={VectorMen2} style={styles.vectorLogo} />
+                            <Text style={styles.cardText}>{t('Buyer')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -89,8 +90,8 @@ const styles = StyleSheet.create({
         height: hp('13%'),
     },
     vectorLogo: {
-        width: wp(10),
-        height: hp(9),
+        width: wp(16),
+        height: hp(8),
         resizeMode: 'contain',
         marginTop: hp(1),
     },

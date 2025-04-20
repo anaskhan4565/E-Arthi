@@ -22,20 +22,18 @@ const Cnic_page_1 = () => {
             const result = await launchImageLibrary({
                 mediaType: 'photo',
                 quality: 0.5,
+                selectionLimit: 1,
+                includeBase64: false,
             });
 
-            if (result.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (result.errorCode) {
-                console.log('ImagePicker Error: ', result.errorMessage);
-                Alert.alert('Error', result.errorMessage || 'Something went wrong');
-            } else if (result.assets && result.assets.length > 0) {
+            if (result.assets && result.assets[0]) {
                 const uri = result.assets[0].uri;
                 setSelectedImage(uri || null);
                 console.log('Selected Image URI: ', uri);
             }
         } catch (error) {
             console.error('Error picking image: ', error);
+            Alert.alert('Error', 'Failed to pick image from gallery');
         }
     };
 
@@ -57,15 +55,18 @@ const Cnic_page_1 = () => {
                         <Image source={{ uri: selectedImage }} style={styles.image} />
                         <TouchableOpacity style={styles.closeButton} onPress={handleRemoveImage}>
                             <Image source={require('../../../src/assets/Icon/remove.png')} style={styles.icon} />
-
                         </TouchableOpacity>
                     </View>
                 ) : (
-                    <Image
-                        source={require('../../assets/Cnic.png')}
-                        style={styles.image}
-                    />
+                    <View style={styles.imagePlaceholder}>
+                        <Image
+                            source={require('../../assets/Cnic.png')}
+                            style={styles.image}
+                        />
+                        <Text style={styles.placeholderText}>{t('Tap the button below to upload your CNIC')}</Text>
+                    </View>
                 )}
+                
                 {selectedImage ? (
                     <TouchableOpacity
                         style={[
@@ -80,7 +81,6 @@ const Cnic_page_1 = () => {
                             },
                         ]}
                         onPress={() => { navigation.navigate(ScreensName.Cnic_page_2) }}
-
                     >
                         <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>{t('Continue')}</Text>
                     </TouchableOpacity>
@@ -95,25 +95,19 @@ const Cnic_page_1 = () => {
                                 borderColor: colors.GREEN,
                                 borderWidth: 1,
                                 borderRadius: 8,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: 10,
                             },
                         ]}
                         onPress={handlePickImage}
                     >
-                        <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>{t('Upload CNIC Image')}</Text>
+                        <Text style={{ color: colors.GREAT_WHITE, fontSize: hp('2%') }}>{t('Upload from Gallery')}</Text>
                     </TouchableOpacity>
-
                 )}
 
-
                 <View style={styles.buttonSpacing} />
-
-                {/* <CustomButton
-                    MainText={t('Enter CNIC Details Manually')}
-                    BgGiven={colors.GREEN}
-                    txColor={colors.WHITE}
-                    isNavigation={true}
-                    name={ScreensName.Cnic_page_2}
-                /> */}
             </View>
         </View>
     );
@@ -156,6 +150,19 @@ const styles = StyleSheet.create({
         marginBottom: hp(6),
         resizeMode: 'contain',
     },
+    imagePlaceholder: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: hp(2),
+    },
+    placeholderText: {
+        fontSize: hp('1.8%'),
+        color: colors.GRAY,
+        fontFamily: fonts.Regular,
+        textAlign: 'center',
+        marginTop: -hp(4),
+        marginBottom: hp(4),
+    },
     icon: {
         width: wp(5),
         height: hp(5),
@@ -167,10 +174,8 @@ const styles = StyleSheet.create({
         right: -hp(-2),
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: colors.BLACK,
         width: wp(5),
         height: wp(5),
-        // borderRadius: wp(4),
     },
     Wrapper: {
         justifyContent: 'center',

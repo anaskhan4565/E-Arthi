@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import colors from "../../../util/Constants/colors";
 import CustomInput from "../../components/CustomInput";
@@ -32,11 +33,13 @@ function Cnic_page_2() {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false); // State to toggle the date picker
   const [selectedDate, setSelectedDate] = useState("03/04/2023"); // Default date set to April 3, 2023
   const [cnic, setCnic] = useState("42101-467672-3");
-  const navigation = useNavigation();
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationProgress, setVerificationProgress] = useState(0);
+  const navigation = useNavigation<any>();
 
   const { t } = useTranslation();
 
-  const handleDateConfirm = (date) => {
+  const handleDateConfirm = (date: Date) => {
     // Format the selected date (example: 'DD/MM/YYYY')
     const formattedDate = date.toLocaleDateString();
     setSelectedDate(formattedDate);
@@ -46,12 +49,37 @@ function Cnic_page_2() {
   const handleDateCancel = () => {
     setDatePickerVisible(false); // Close the picker if canceled
   };
+  
+  const handleVerify = () => {
+    setIsVerifying(true);
+    setVerificationProgress(0);
+    
+    // Simulate progress updates
+    const totalTime = 5500; // 5.5 seconds total
+    const interval = 100; // Update every 100ms
+    const steps = totalTime / interval;
+    let currentStep = 0;
+    
+    const progressTimer = setInterval(() => {
+      currentStep++;
+      setVerificationProgress(Math.min((currentStep / steps) * 100, 100));
+      
+      if (currentStep >= steps) {
+        clearInterval(progressTimer);
+        // Navigate after verification completes
+        setTimeout(() => {
+          setIsVerifying(false);
+          navigation.navigate(ScreensName.BiometricVerification);
+        }, 200);
+      }
+    }, interval);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.Header}>
         <Text style={styles.Heading}>{t('CNIC Verification')}</Text>
-        <Text style={styles.SubHeading}>{t('Please enter your CNIC details')}</Text>
+        <Text style={styles.SubHeading}>{t('Our system has extracted the CNIC details from the uploaded image. Please confirm the details')}</Text>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -60,7 +88,16 @@ function Cnic_page_2() {
           <Text style={styles.inputText}>{t('Your CNIC number ')}</Text>
         </View>
 
-        <CustomInput placeholder={t('42101-467672-3')} h={hp('5.5%')} w={wp('85%')} b_radius={10} bg_give={colors.WHITE} hide={false} value={cnic} onChangeText={setCnic} />
+        <CustomInput 
+          placeholder={t('42101-467672-3')} 
+          h={hp('5.5%')} 
+          w={wp('85%')} 
+          b_radius={10} 
+          bg_give={colors.WHITE} 
+          hide={false} 
+          value={cnic} 
+          onChangeText={(text: string) => setCnic(text)} 
+        />
 
         <View style={styles.textcontainer}>
           <Text style={styles.inputText}>{t('Your CNIC date of issue')}</Text>
@@ -83,13 +120,23 @@ function Cnic_page_2() {
       />
 
       <View style={styles.buttoncontainer}>
-        <CustomButton
-          MainText="Verify"
-          BgGiven={colors.GREEN}
-          txColor={colors.WHITE}
-          isNavigation={true}
-          name={ScreensName.BiometricVerification}
-        />
+        {isVerifying ? (
+          <View style={styles.verificationContainer}>
+            <Text style={styles.verificationText}>{t('Verifying with NADRA...')}</Text>
+            <View style={styles.progressBarContainer}>
+              <View style={[styles.progressBar, { width: `${verificationProgress}%` }]} />
+            </View>
+            <Text style={styles.progressText}>{Math.round(verificationProgress)}%</Text>
+            <ActivityIndicator size="large" color={colors.GREEN} style={styles.loader} />
+          </View>
+        ) : (
+          <TouchableOpacity 
+            style={styles.verifyButton}
+            onPress={handleVerify}
+          >
+            <Text style={styles.verifyButtonText}>{t('Verify')}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -114,7 +161,7 @@ const styles = StyleSheet.create({
     marginLeft: wp('1.5%'),
   },
   SubHeading: {
-    fontSize: height / 45,
+    fontSize: height /60,
     fontFamily: fonts.Regular,
     color: colors.BLACK,
     marginTop: hp('1%'),
@@ -165,6 +212,52 @@ const styles = StyleSheet.create({
   },
   buttonSpacing: {
     height: hp('2%'),
+  },
+  verificationContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: wp(85),
+  },
+  verificationText: {
+    fontSize: hp(2.2),
+    fontFamily: fonts.SemiBold,
+    color: colors.BLACK,
+    marginBottom: hp(2),
+  },
+  progressBarContainer: {
+    width: wp(85),
+    height: hp(1.5),
+    backgroundColor: colors.LIGHT_GRAY,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: colors.GREEN,
+  },
+  progressText: {
+    fontSize: hp(1.8),
+    fontFamily: fonts.Regular,
+    color: colors.BLACK,
+    marginTop: hp(1),
+  },
+  loader: {
+    marginTop: hp(2),
+  },
+  verifyButton: {
+    backgroundColor: colors.GREEN,
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(5),
+    borderRadius: 8,
+    width: wp(85),
+    height: hp(5.7),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  verifyButtonText: {
+    color: colors.WHITE,
+    fontSize: hp(2),
+    fontFamily: fonts.SemiBold,
   },
 });
 

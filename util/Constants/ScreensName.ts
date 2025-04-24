@@ -5,6 +5,7 @@ export default {
     OnboardingScreen1: "OnboardingScreen1",
     OnboardingScreen2: "OnboardingScreen2",
     DashboardInitialization: "DashboardInitialization",
+    SatteliteScreen: "SatteliteScreen",
 
     // Module1
     Connect: "Connect",

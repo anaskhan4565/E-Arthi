@@ -27,6 +27,7 @@ import EMunshiWarehouseInfo from './src/screens/MainApp/TabScreens/E-Munshi/EMun
 import OnboardingScreen1 from './src/screens/OnBoardingScreens/OnboardingScreen1.tsx';
 import OnboardingScreen2 from './src/screens/OnBoardingScreens/OnboardingScreen2.tsx';
 import DashboardInitialization from './src/screens/OnBoardingScreens/DashboardInitialization.tsx';
+import SatteliteScreen from './src/screens/OnBoardingScreens/SatteliteScreen.jsx';
 
 import EWarehouseMainStack from "./src/screens/MainApp/TabScreens/E-Warehouse/E-WarehouseMainStack.tsx";
 //for i18-next
@@ -83,6 +84,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name={ScreensName.OnboardingScreen1} component={OnboardingScreen1} />
             <Stack.Screen name={ScreensName.OnboardingScreen2} component={OnboardingScreen2} />
             <Stack.Screen name={ScreensName.DashboardInitialization} component={DashboardInitialization} />
+            <Stack.Screen name={ScreensName.SatteliteScreen} component={SatteliteScreen} />
             <Stack.Screen name={ScreensName.NoInternet} component={NoInternet} />
             <Stack.Screen name={ScreensName.Connect} component={Connect} />
             <Stack.Screen name={ScreensName.ForgotPassword} component={ForgotPassword} />

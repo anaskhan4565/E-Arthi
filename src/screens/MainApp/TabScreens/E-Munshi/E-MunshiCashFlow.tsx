@@ -106,7 +106,7 @@ function CashFlow(): React.JSX.Element {
                 <View style={styles.gridContainer}>
                     
                     {
-                    transactions.length<0? 
+                    transactions.length>0? 
                     transactions.map((transaction, index) => (
                         <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => { navigation.navigate(ScreensName.EmunshiTransactionDetail, { transactiondata: transactions[index] }) }}>
                             <View style={styles.RectangleheaderRow}>

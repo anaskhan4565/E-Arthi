@@ -13,18 +13,18 @@ function EmunshiLineOfCredit() {
     const { t } = useTranslation();
     
     // Calculate cash and line of credit amounts
-    const totalLoanAmount = 50000;
-    const cashAmount = 30000;
-    const lineOfCreditAmount = 20000;
+    const totalLoanAmount = 500000;
+    const cashAmount = 150000;
+    const lineOfCreditAmount = 350000;
     
     // Cash spending
-    const cashSpent = 20000;
-    const cashRemaining = 10000;
+    const cashSpent = 138900;
+    const cashRemaining = 24000;
     const cashSpentPercentage = (cashSpent / cashAmount) * 100;
     
     // Line of credit spending
-    const locSpent = 15000;
-    const locRemaining = 5000;
+    const locSpent = 290167;
+    const locRemaining = 59833;
     const locSpentPercentage = (locSpent / lineOfCreditAmount) * 100;
     
     // Format amounts for display
@@ -52,7 +52,7 @@ function EmunshiLineOfCredit() {
                     <View style={styles.summaryCard}>
                         <Text style={styles.cardTitle}>Summary of Loan</Text>
                         <Text>Loan taken on: <Text style={styles.boldText}>08-02-2025</Text></Text>
-                        <Text>Loan amount: <Text style={styles.boldText}>50,000 Rupees</Text></Text>
+                        <Text>Loan amount: <Text style={styles.boldText}>500,000 Rupees</Text></Text>
                         <View style={styles.mainProgressContainer}>
                             <AnimatedCircularProgress
                                 size={wp(45)}
@@ -121,7 +121,7 @@ function EmunshiLineOfCredit() {
                         </View>
                     </View>
                     <View style={styles.summaryCard}>
-                        <Text style={styles.cardTitle}>Summary of Line of Credit</Text>
+                        <Text style={styles.cardTitle}>Summary of Agri Cash</Text>
                         <View style={styles.progressItem}>
                             <View style={styles.graphRow}>
                                 <AnimatedCircularProgress

@@ -36,6 +36,12 @@ const AboutMore = () => {
 
     const translateY = useRef(new Animated.Value(hp(20))).current;
     const opacity = useRef(new Animated.Value(0)).current;
+    
+    // Animation values for the second message
+    const [showDeliveryMessage, setShowDeliveryMessage] = useState(false);
+    const deliveryMessageOpacity = useRef(new Animated.Value(0)).current;
+    const successMessageOpacity = useRef(new Animated.Value(1)).current;
+    const deliveryMessageTranslateY = useRef(new Animated.Value(hp(0))).current;
 
     useEffect(() => {
         Animated.timing(translateY, {
@@ -55,9 +61,36 @@ const AboutMore = () => {
     }, []);
 
     const ResetDefaultsStore = () => {
-        storage.clearAll();
-        PassedPayment.clearAll();
-        navigation.navigate(ScreensName.MainTabNavigation);
+        if (!showDeliveryMessage) {
+            setShowDeliveryMessage(true);
+            
+            // Fade out success message
+            Animated.timing(successMessageOpacity, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: true,
+            }).start();
+            
+            // Animate delivery message
+            Animated.parallel([
+                Animated.timing(deliveryMessageOpacity, {
+                    toValue: 1,
+                    duration: 500,
+                    delay: 300,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(deliveryMessageTranslateY, {
+                    toValue: 0,
+                    duration: 600,
+                    delay: 300,
+                    useNativeDriver: true,
+                })
+            ]).start();
+        } else {
+            storage.clearAll();
+            PassedPayment.clearAll();
+            navigation.navigate(ScreensName.MainTabNavigation);
+        }
     }
 
     // Determine the success message based on payment method
@@ -78,6 +111,13 @@ const AboutMore = () => {
         }
     };
 
+    // Get expected delivery date (current date + 1 week)
+    const getExpectedDeliveryDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + 7);
+        return date.toLocaleDateString();
+    };
+
     return (
         <SafeAreaView style={styles.MainContainer}>
             <View style={{ flex: 0.74, backgroundColor: colors.WHITE }}>
@@ -91,16 +131,31 @@ const AboutMore = () => {
                             { transform: [{ translateY }], opacity },
                         ]}
                     />
-                    <Text style={styles.successText}>
-                        {getSuccessMessage()}
-                    </Text>
+                    <View style={styles.textContainer}>
+                        <Animated.Text style={[styles.successText, { opacity: successMessageOpacity }]}>
+                            {getSuccessMessage()}
+                        </Animated.Text>
+                        <Animated.Text 
+                            style={[
+                                styles.successText, 
+                                styles.deliveryText,
+                                { 
+                                    opacity: deliveryMessageOpacity,
+                                    transform: [{ translateY: deliveryMessageTranslateY }]
+                                }
+                            ]}
+                        >
+                            {t('Your order will be delivered to your registered address soon!')}{'\n\n'}
+                            {t('Your expected date is')} {getExpectedDeliveryDate()}
+                        </Animated.Text>
+                    </View>
                 </View>
             </View>
             <View style={{ flex: 0.3, alignItems: 'center' }}>
                 <CustomButton 
                     BgGiven={colors.GREEN}
                     onPressG={ResetDefaultsStore}
-                    MainText={t('Continue')}
+                    MainText= {t('Continue')}
                     name={ScreensName.SignUp}
                     isNavigation={true}
                     txColor={colors.WHITE}
@@ -122,12 +177,25 @@ const styles = StyleSheet.create({
         width: wp(180),
         marginLeft: hp(2.2),
     },
+    textContainer: {
+        position: 'relative',
+        height: hp(15),
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+    },
     successText: {
         fontSize: hp(2.5),
         textAlign: 'center',
         fontFamily: fonts.Medium,
         marginHorizontal: hp(3),
         lineHeight: hp(3.5),
+    },
+    deliveryText: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
     },
     card: {
         flex: 1,

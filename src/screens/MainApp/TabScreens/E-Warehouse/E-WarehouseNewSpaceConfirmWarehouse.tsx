@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import {
@@ -28,17 +28,22 @@ function ConfrimWarehouse(): React.JSX.Element {
   const { t } = useTranslation();
   const storage = new MMKV();
   const StorageType = storage.getString("StorageType");
-  const [items, setItems] = useState(WarehouseItems[StorageType]);
+  const [items, setItems] = useState(WarehouseItems[StorageType as keyof typeof WarehouseItems] || []);
+
 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbarContainer}>
-        <Navbar />
+        <Navbar gobackOnly={true} />
       </View>
       <ScrollView style={styles.container}>
         <View style={styles.searchContainer}>
-          <CustomSearchApp placeholder={t("Search in here")} />
+          <CustomSearchApp 
+            placeholder={t("Search in here")} 
+            value=""
+            onChangeText={() => {}}
+          />
         </View>
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
@@ -57,7 +62,7 @@ function ConfrimWarehouse(): React.JSX.Element {
             <Text style={styles.HeaderCol}>{t("Item Name")}</Text>
             <Text style={styles.HeaderCol}>{t("Space Reserved")}</Text>
           </View>
-          {items.map(
+          {items && items.length > 0 ? items.map(
             (data, index) =>
               data.type.trim() !== "" && (
                 <View
@@ -72,6 +77,10 @@ function ConfrimWarehouse(): React.JSX.Element {
                   <Text style={styles.space}>{data.space}</Text>
                 </View>
               )
+          ) : (
+            <View style={styles.row}>
+              <Text style={styles.typeText}>{t("No items found")}</Text>
+            </View>
           )}
         </View>
 
@@ -87,6 +96,7 @@ function ConfrimWarehouse(): React.JSX.Element {
               b_radius={10}
               bg_give={colors.WHITE}
               hide={false}
+     
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -95,8 +105,7 @@ function ConfrimWarehouse(): React.JSX.Element {
               BgGiven={colors.GREEN}
               name={ScreensName.EWarehouse}
               txColor={colors.WHITE}
-              isNavigation={1}
-              wgiven={wp("90%")}
+              isNavigation={true}
             />
           </View>
         </View>

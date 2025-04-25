@@ -313,10 +313,7 @@ const ProductScr = () => {
                         </View>
 
                         <View style={styles.infoCard}>
-                            <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Vendor Name:</Text>
-                                <Text style={styles.infoValue}>Fauji Fertilizers</Text>
-                            </View>
+
                             <View style={styles.infoRow}>
                                 <Text style={styles.infoLabel}>Category:</Text>
                                 <Text style={styles.infoValue}>{ProductInfo.category}</Text>

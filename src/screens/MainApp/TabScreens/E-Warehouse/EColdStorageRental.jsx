@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -8,10 +8,11 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
+    Alert,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
@@ -21,41 +22,114 @@ import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 // Import Cold Storage SVG
 import ColdStorageSVG from '../../../../assets/MainApp/E-Warehouse/ColdStorage.svg';
+import SiloSVG from '../../../../assets/MainApp/E-Warehouse/Silo.svg';
+
+// Image imports
+import ColdStorageImg from '../../../../assets/MainApp/E-Warehouse/ColdStorage.png';
+import SiloImg from '../../../../assets/MainApp/E-Warehouse/Silo.png';
+import DryBedsImg from '../../../../assets/MainApp/E-Warehouse/DryBeds.png';
+import TemperatureControlledImg from '../../../../assets/MainApp/E-Warehouse/TemperatureInside.png';
 
 function EColdStorageRental() {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const route = useRoute();
+    
+    // Log the route params for debugging
+    console.log('Route params received:', route.params);
+    
+    // Extract params, use default values if not provided
+    const storageType = route.params?.storageType || 'Cold Storage';
+    const location = route.params?.location || '120 Km away';
+    const description = route.params?.description || 'Temperature controlled storage';
+    const imageSource = route.params?.imageSource;
+    
+    console.log('Using values:', { storageType, location, description, imageSource });
+    
     const [entityName, setEntityName] = useState('');
     const [reservingAmount, setReservingAmount] = useState('');
     const [grading, setGrading] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
+    
+    // Validate form whenever inputs change
+    useEffect(() => {
+        const valid = 
+            entityName.trim() !== '' && 
+            reservingAmount.trim() !== '' && 
+            grading.trim() !== '' && 
+            expirationDate.trim() !== '';
+        
+        setIsFormValid(valid);
+    }, [entityName, reservingAmount, grading, expirationDate]);
 
     const handleReserve = () => {
-        navigation.navigate(ScreensName.EWarehouseSuccess);
+        if (!isFormValid) {
+            Alert.alert('Missing Information', 'Please fill in all fields before reserving.');
+            return;
+        }
+        
+        navigation.navigate(ScreensName.EWarehouseSuccess, {
+            storageType,
+            entityName,
+            reservingAmount,
+            location
+        });
+    };
+    
+    // Choose the appropriate icon based on the storage type
+    const renderStorageIcon = () => {
+        console.log('Rendering icon for type:', storageType);
+        
+        // Match storage type to the correct image
+        switch(storageType) {
+            case 'Silo':
+                return <Image source={SiloImg} style={{ width: wp(16), height: hp(10), resizeMode: 'contain' }} />;
+            case 'Cold Storage':
+                return <Image source={ColdStorageImg} style={{ width: wp(16), height: hp(10), resizeMode: 'contain' }} />;
+            case 'Dry Beds':
+                return <Image source={DryBedsImg} style={{ width: wp(16), height: hp(10), resizeMode: 'contain' }} />;
+            case 'Temperature Controlled':
+                return <Image source={TemperatureControlledImg} style={{ width: wp(16), height: hp(10), resizeMode: 'contain' }} />;
+            default:
+                return <ColdStorageSVG width={wp(20)} height={hp(10)} />;
+        }
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
-                <Navbar />
+                <Navbar gobackOnly={true} />
             </View>
 
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t('Search in here')} />
+                    <CustomSearchApp 
+                        placeholder={t('Search in here')}
+                        value=""
+                        onChangeText={() => {}}
+                    />
                 </View>
 
                 <View style={styles.titleWrapper}>
-                    <Text style={styles.titleText}>{t('Cold Storage Rental')}</Text>
+                    <Text style={styles.titleText}>
+                        {storageType ? t(storageType) : t('Storage')} {t('Rental')}
+                    </Text>
                 </View>
 
                 <View style={styles.infoBox}>
-                        <ColdStorageSVG width={wp(20)} height={hp(10)} />
+                    {renderStorageIcon()}
                     <View style={styles.locationInfo}>
-                        <Text style={styles.locationLabel}>Located:</Text>
-                        <Text style={styles.locationValue}>{t('120 Km away')}</Text>
+                        <Text style={styles.locationLabel}>Located</Text>
+                        <Text style={styles.locationValue}>{location}</Text>
                     </View>
                 </View>
+                
+                {description && (
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.descriptionText}>{t(description)}</Text>
+                    </View>
+                )}
 
                 <View style={styles.formContainer}>
                     <Text style={styles.sectionTitle}>{t('Enter the following details:')}</Text>
@@ -63,7 +137,7 @@ function EColdStorageRental() {
                     <View style={styles.inputGroup}>
                         <Text style={styles.inputLabel}>{t('Entity Name:')}</Text>
                         <TextInput
-                            style={styles.textInput}
+                            style={[styles.textInput, !entityName.trim() && styles.inputInvalid]}
                             placeholder={t('enter entity name')}
                             value={entityName}
                             onChangeText={setEntityName}
@@ -74,7 +148,7 @@ function EColdStorageRental() {
                         <Text style={styles.inputLabel}>{t('Reserving Amount (in KGs):')}</Text>
                         <View style={styles.dropdownContainer}>
                             <TextInput
-                                style={styles.textInput}
+                                style={[styles.textInput, !reservingAmount.trim() && styles.inputInvalid]}
                                 placeholder={t('enter amount')}
                                 value={reservingAmount}
                                 onChangeText={setReservingAmount}
@@ -85,10 +159,10 @@ function EColdStorageRental() {
                     </View>
 
                     <View style={styles.inputGroup}>
-                        <Text style={styles.inputLabel}>Grading</Text>
+                        <Text style={styles.inputLabel}>{t('Grading')}</Text>
                         <View style={styles.dropdownContainer}>
                             <TextInput
-                                style={styles.textInput}
+                                style={[styles.textInput, !grading.trim() && styles.inputInvalid]}
                                 placeholder={t('enter grading needed')}
                                 value={grading}
                                 onChangeText={setGrading}
@@ -101,7 +175,7 @@ function EColdStorageRental() {
                         <Text style={styles.inputLabel}>{t('Expiration Date')}</Text>
                         <View style={styles.dropdownContainer}>
                             <TextInput
-                                style={styles.textInput}
+                                style={[styles.textInput, !expirationDate.trim() && styles.inputInvalid]}
                                 placeholder={t('enter expiration date')}
                                 value={expirationDate}
                                 onChangeText={setExpirationDate}
@@ -112,8 +186,12 @@ function EColdStorageRental() {
 
                     <View style={styles.reserveButtonContainer}>
                         <TouchableOpacity
-                            style={styles.reserveButton}
+                            style={[
+                                styles.reserveButton,
+                                !isFormValid && styles.reserveButtonDisabled
+                            ]}
                             onPress={handleReserve}
+                            disabled={!isFormValid}
                         >
                             <Text style={styles.reserveButtonText}>{t('Reserve')}</Text>
                         </TouchableOpacity>
@@ -171,7 +249,7 @@ const styles = StyleSheet.create({
     },
     locationLabel: {
         fontSize: hp(2.2),
-        fontFamily: fonts.Regular,
+        fontFamily: fonts.Medium,
         color: colors.BLACK,
         textAlign: 'center',
     },
@@ -233,6 +311,27 @@ const styles = StyleSheet.create({
         color: colors.WHITE,
         fontFamily: fonts.SemiBold,
         fontSize: hp(2),
+    },
+    inputInvalid: {
+        borderColor: colors.RED || '#ff6b6b',
+        backgroundColor: colors.VERY_LIGHT_RED || '#ffeded',
+    },
+    reserveButtonDisabled: {
+        backgroundColor: colors.DARK_GRAY,
+        opacity: 0.6,
+    },
+    descriptionContainer: {
+        marginHorizontal: hp(2),
+        marginVertical: hp(1),
+        padding: hp(1.5),
+        backgroundColor: colors.LIGHT_BLUE || colors.LIGHT_GREEN,
+        borderRadius: hp(1),
+    },
+    descriptionText: {
+        fontSize: hp(1.8),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
+        textAlign: 'center',
     },
 });
 

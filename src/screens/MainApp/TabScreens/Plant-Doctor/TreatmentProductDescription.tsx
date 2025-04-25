@@ -66,17 +66,17 @@ const TreatmentProductDescription = () => {
             unit: "l",
             SourceGiven: "https://res.cloudinary.com/dgwkprjru/image/upload/v1744492799/eagri/products/stream_ulmtht.jpg"
         },
-        75: {
-            id: 75,
-            name: "Acelan 20SL by FMC",
-            description: "Acelan 20SL is a neonicotinoid insecticide containing Acetamiprid 20SL. It effectively controls sucking pests, especially aphids and whiteflies, by interrupting their neural transmission, leading to paralysis and death. Acelan is particularly effective on cotton, vegetables, orchards, and tobacco crops. The recommended dosage is 250 ml per acre.",
+        46: {
+            id: 46,
+            name: "Syngenta Actara Insecticide (24 gm)",
+            description: "Systemic insecticide containing 250g/kg Thiamethoxam, effective against a broad range of foliar and soil pests. Provides fast-acting and long-lasting control, enhancing plant health and yield.",
             category: "Insecticides",
             price: "1255.00",
             discounted_price: "1055.00",
             stock_quantity: 50,
             weight: "0.25",
             unit: "l",
-            SourceGiven: "https://res.cloudinary.com/dgwkprjru/image/upload/v1744492989/eagri/products/stream_oe2dvi.jpg"
+            SourceGiven: "https://res.cloudinary.com/dgwkprjru/image/upload/v1742994812/eagri/products/stream_ynyls2.jpg"
         },
         76: {
             id: 76,

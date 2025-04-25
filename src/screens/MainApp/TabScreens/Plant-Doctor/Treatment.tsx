@@ -37,10 +37,10 @@ const Treatment = () => {
             id: 74
         },
         {
-            name: "Acelan 20SL",
-            manufacturer: "FMC",
+            name: "Syngenta Actara Insecticide (24 gm)",
+            manufacturer: "Syngenta",
             type: "Insecticide",
-            id: 75
+            id: 46
         },
         {
             name: "Moveto 240",
@@ -93,7 +93,7 @@ const Treatment = () => {
                         style={styles.productItem} 
                         onPress={() => {
                             PlantDiagnosisData.set("SelectedProduct", JSON.stringify(insecticide));
-                            navigation.navigate(ScreensName.TreatmentProductDescription);
+                            navigation.navigate(ScreensName.TreatmentProductDescription as any);
                         }}
                     >
                         <View style={styles.productIconContainer}>
@@ -106,6 +106,18 @@ const Treatment = () => {
                         <Image source={require('./AssetsPlantDr/Treatment/Arrow.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>
                 ))}
+
+                    {/* Seeds and Fertilizers Button */}
+                    <View style={styles.seedsFertilizerButtonContainer}>
+                    <TouchableOpacity 
+                        style={styles.seedsFertilizerButton}
+                        onPress={() => navigation.navigate(ScreensName.SeedsFertilizers as any)}
+                    >
+                        <View style={styles.buttonContent}>
+                            <Text style={styles.seedsFertilizerButtonText}>Buy Plant Seeds and Fertilizers</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -117,6 +129,41 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.WHITE,
+    },
+    seedsFertilizerButtonContainer: {
+        marginVertical: hp('3%'),
+    },
+    seedsFertilizerButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: colors.GREEN,
+        padding: wp('4%'),
+        borderRadius: wp('2%'),
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+    },
+    buttonContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent:'center',
+        alignSelf:'center',
+        textAlign:'center',
+    },
+    buttonIcon: {
+        marginRight: wp('2%'),
+    },
+    seedsFertilizerButtonText: {
+        color: colors.WHITE,
+        alignSelf:'center',
+        textAlign:'center',
+        justifyContent:'center',
+        alignItems:'center',
+        fontSize: wp('4%'),
+        fontWeight: 'bold',
     },
     header: {
         flexDirection: 'row',

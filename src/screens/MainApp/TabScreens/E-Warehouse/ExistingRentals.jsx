@@ -19,62 +19,105 @@ import { fonts } from '../../../../../util/Constants/FontName';
 import ScreensName from '../../../../../util/Constants/ScreensName';
 
 const rentalData = [
-    {
-        id: 1,
-        date: '09-02-2025',
-        type: 'Silo',
-        entity: 'Wheat',
-        amount: '1000 KG',
-        status: 'Active',
-        color: '#7AAC50',
-        time: '9:00 AM',
-        warehouse: 'Silo'
-    },
-    {
-        id: 2,
-        date: '09-02-2025',
-        type: 'Temp Controlled',
-        entity: '5000 Rupees',
-        amount: '1000 KG',
-        status: 'Active',
-        color: '#D85D5D',
-        time: '9:00 AM',
-        warehouse: 'Silo'
-    },
-    {
-        id: 3,
-        date: '09-02-2025',
-        type: 'Cold Storage',
-        entity: '5000 Rupees',
-        amount: '1000 KG',
-        status: 'Active',
-        color: '#78A2AD',
-        time: '9:00 AM',
-        warehouse: 'Cold Storage'
-    },
-    {
-        id: 4,
-        date: '09-02-2025',
-        type: 'Dry Beds',
-        entity: '5000 Rupees',
-        amount: '1000 KG',
-        status: 'Active',
-        color: '#A3A3A3',
-        time: '9:00 AM',
-        warehouse: 'Dry Beds'
-    },
-    {
-        id: 5,
-        date: '09-02-2025',
-        type: 'Silo',
-        entity: '5000 Rupees',
-        amount: '1000 KG',
-        status: 'Active',
-        color: '#7AAC50',
-        time: '9:00 AM',
-        warehouse: 'Silo'
-    },
-    // Add more rental data as needed
+    
+        {
+            id: 1,
+            date: '14-03-2025',
+            type: 'Silo',
+            entity: 'Corn',
+            amount: '1750 KG',
+            status: 'Active',
+            color: '#7AAC50',
+            time: '8:30 AM',
+            warehouse: 'Silo',
+            distance: '12 KM'
+        },
+        {
+            id: 2,
+            date: '21-06-2025',
+            type: 'Temp Controlled',
+            entity: 'Vegetable Seeds',
+            amount: '620 KG',
+            status: 'Active',
+            color: '#D85D5D',
+            time: '10:15 AM',
+            warehouse: 'Temp Controlled',
+            distance: '2 KM'
+        },
+        {
+            id: 3,
+            date: '07-09-2025',
+            type: 'Cold Storage',
+            entity: 'Apples',
+            amount: '1150 KG',
+            status: 'Active',
+            color: '#78A2AD',
+            time: '11:00 AM',
+            warehouse: 'Cold Storage',
+            distance: '12 KM'
+        },
+        {
+            id: 4,
+            date: '16-11-2025',
+            type: 'Dry Beds',
+            entity: 'Coffee Beans',
+            amount: '980 KG',
+            status: 'Active',
+            color: '#A3A3A3',
+            time: '7:45 AM',
+            warehouse: 'Dry Beds',
+            distance: '12 KM'
+        },
+        {
+            id: 5,
+            date: '25-07-2025',
+            type: 'Silo',
+            entity: 'Wheat',
+            amount: '2100 KG',
+            status: 'Active',
+            color: '#7AAC50',
+            time: '9:50 AM',
+            warehouse: 'Silo',
+            distance: '21 KM'
+        },
+        {
+            id: 6,
+            date: '02-04-2025',
+            type: 'Cold Storage',
+            entity: 'Potatoes',
+            amount: '1600 KG',
+            status: 'Active',
+            color: '#78A2AD',
+            time: '6:30 AM',
+            warehouse: 'Cold Storage',
+            distance: '20 KM'
+        },
+        {
+            id: 7,
+            date: '18-08-2025',
+            type: 'Temp Controlled',
+            entity: 'Honey',
+            amount: '540 KG',
+            status: 'Active',
+            color: '#D85D5D',
+            time: '1:20 PM',
+            warehouse: 'Temp Controlled',
+            distance: '7 KM'
+        },
+        {
+            id: 8,
+            date: '29-10-2025',
+            type: 'Dry Beds',
+            entity: 'Dried Chilies',
+            amount: '1350 KG',
+            status: 'Active',
+            color: '#A3A3A3',
+            time: '4:00 PM',
+            warehouse: 'Dry Beds',
+            distance: '5 KM'
+        }
+    
+    
 ];
 
 const categories = [
@@ -139,7 +182,8 @@ const ExistingRentals = () => {
                                         status: rental.status,
                                         time: rental.time,
                                         warehouse: rental.warehouse,
-                                        color: rental.color
+                                        color: rental.color,
+                                        distance: rental.distance
                                     });
                                 }}
                                 bodyData={[

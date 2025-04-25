@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -11,6 +11,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { MMKV } from 'react-native-mmkv';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
@@ -20,13 +21,19 @@ import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 // Import SVG assets
 import SiloSVG from '../../../../assets/MainApp/E-Warehouse/Silo.svg';
+import CustomButton from '../../../../components/CustomButton.jsx';
 
 function ESiloRental2() {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const storage = new MMKV();
+    
+    // Get values from storage
+    const selectedRiceType = storage.getString('selectedRiceType') || '';
+    const reservedAmount = parseInt(storage.getString('reservedAmount') || '0', 10);
 
-    // Add data object to store dynamic values
-    const siloData = {
+    // Base data object
+    const baseData = {
         location: {
             distance: '120',
             unit: 'Km'
@@ -37,9 +44,7 @@ function ESiloRental2() {
         },
         space: {
             total: 10000,
-            remaining: 8000,
             unit: 'KG',
-            usagePercentage: 60
         },
         riceTypes: [
             {
@@ -54,16 +59,64 @@ function ESiloRental2() {
             }
         ]
     };
+    
+    // Create state for silo data to allow updates
+    const [siloData, setSiloData] = useState({
+        ...baseData,
+        space: {
+            ...baseData.space,
+            remaining: baseData.space.total - 2000,
+            usagePercentage: 20
+        }
+    });
+    
+    // Update data when reservation amount changes
+    useEffect(() => {
+        if (selectedRiceType && reservedAmount > 0) {
+            const updatedRiceTypes = [...baseData.riceTypes];
+            
+            // Find the selected rice type and update its stored amount
+            updatedRiceTypes.forEach(rice => {
+                if (rice.name === selectedRiceType) {
+                    rice.stored = rice.stored + reservedAmount;
+                }
+            });
+            
+            // Calculate total used space
+            const totalUsed = updatedRiceTypes.reduce((sum, rice) => sum + rice.stored, 0);
+            
+            // Calculate remaining space
+            const remaining = baseData.space.total - totalUsed;
+            
+            // Calculate usage percentage
+            const usagePercentage = Math.min(100, Math.round((totalUsed / baseData.space.total) * 100));
+            
+            // Update state
+            setSiloData({
+                ...baseData,
+                riceTypes: updatedRiceTypes,
+                space: {
+                    ...baseData.space,
+                    remaining,
+                    usagePercentage
+                }
+            });
+        }
+    }, [selectedRiceType, reservedAmount]);
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
-                <Navbar />
+                <Navbar gobackOnly={true} />
             </View>
 
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t('Search in here')} />
+                    <CustomSearchApp 
+                        placeholder={t('Search in here')} 
+                        value=""
+                        onChangeText={() => {}}
+                    />
                 </View>
 
                 <View style={styles.titleWrapper}>
@@ -146,6 +199,23 @@ function ESiloRental2() {
                             </React.Fragment>
                         ))}
                     </View>
+                    <View style={styles.buttonContainer}>
+                        <CustomButton
+                            MainText={t('Reserve more space')}
+                            BgGiven={colors.GREEN}
+                            name={ScreensName.ESiloRental}
+                            txColor={colors.WHITE}
+                            isNavigation={true}
+                        />  
+                    </View>
+                    
+                    {reservedAmount > 0 && (
+                        <View style={styles.updatedMessageContainer}>
+                            <Text style={styles.updatedMessageText}>
+                                {t('You have reserved')} {reservedAmount} {siloData.space.unit} {t('of')} {selectedRiceType}
+                            </Text>
+                        </View>
+                    )}
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -319,6 +389,25 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Medium,
         color: colors.DARK_GRAY,
         textAlign: 'center',
+    },
+    buttonContainer: {
+        marginTop: hp(3),
+        marginHorizontal: wp(4),
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    updatedMessageContainer: {
+        marginTop: hp(2),
+        marginHorizontal: wp(4),
+        padding: wp(2),
+        backgroundColor: colors.LIGHT_GREEN || '#f5f5f5',
+        borderRadius: 8,
+    },
+    updatedMessageText: {
+        fontSize: hp(1.8),
+        fontFamily: fonts.Bold,
+        color: colors.DARK_GREEN,
     },
 });
 

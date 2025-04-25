@@ -14,6 +14,9 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+// Additional imports for the calendar icon
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
@@ -29,6 +32,12 @@ import ColdStorageImg from '../../../../assets/MainApp/E-Warehouse/ColdStorage.p
 import SiloImg from '../../../../assets/MainApp/E-Warehouse/Silo.png';
 import DryBedsImg from '../../../../assets/MainApp/E-Warehouse/DryBeds.png';
 import TemperatureControlledImg from '../../../../assets/MainApp/E-Warehouse/TemperatureInside.png';
+
+// Define fallback colors
+const ERROR_COLOR = colors.RED || '#ff6b6b';
+const ERROR_BG_COLOR = colors.VERY_LIGHT_RED || '#ffeded';
+const HINT_COLOR = colors.DARK_GRAY;
+const FOCUS_COLOR = colors.PRIMARY;
 
 function EColdStorageRental() {
     const { t } = useTranslation();
@@ -51,16 +60,83 @@ function EColdStorageRental() {
     const [grading, setGrading] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
     const [isFormValid, setIsFormValid] = useState(false);
-    
+
+    // Function to handle and format date input (DD/MM/YYYY)
+    const handleDateChange = (text) => {
+        // Remove any non-numeric characters from input
+        let numericValue = text.replace(/[^0-9]/g, '');
+        
+        // Limit input to 8 digits (DDMMYYYY)
+        if (numericValue.length > 8) {
+            numericValue = numericValue.substring(0, 8);
+        }
+        
+        // Apply validation while typing
+        if (numericValue.length >= 1 && numericValue.length <= 2) {
+            // Day validation - limit to 31
+            const day = parseInt(numericValue);
+            if (day > 31) numericValue = '31';
+        } else if (numericValue.length >= 3 && numericValue.length <= 4) {
+            // Month validation - limit to 12
+            const month = parseInt(numericValue.substring(2, 4));
+            if (month > 12) {
+                numericValue = numericValue.substring(0, 2) + '12';
+            }
+        }
+        
+        // Format with slashes for display
+        let formattedValue = '';
+        if (numericValue.length > 0) {
+            // Add day part
+            formattedValue = numericValue.substring(0, Math.min(2, numericValue.length));
+            
+            // Add month part with slash
+            if (numericValue.length > 2) {
+                formattedValue += '/' + numericValue.substring(2, Math.min(4, numericValue.length));
+                
+                // Add year part with slash
+                if (numericValue.length > 4) {
+                    formattedValue += '/' + numericValue.substring(4);
+                }
+            }
+        }
+        
+        setExpirationDate(formattedValue);
+    };
+
     // Validate form whenever inputs change
     useEffect(() => {
-        const valid = 
+        // Check date validity silently
+        let dateValid = true;
+        
+        if (expirationDate.length === 10) {
+            // Check format
+            if (!expirationDate.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+                dateValid = false;
+            } else {
+                // Check values
+                const parts = expirationDate.split('/');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                
+                if (day < 1 || day > 31 || month < 1 || month > 12) {
+                    dateValid = false;
+                }
+            }
+        } else if (expirationDate.length > 0) {
+            // Incomplete date
+            dateValid = false;
+        }
+        
+        // Update form validity
+        const formValid = 
             entityName.trim() !== '' && 
             reservingAmount.trim() !== '' && 
             grading.trim() !== '' && 
-            expirationDate.trim() !== '';
+            dateValid && 
+            expirationDate.length === 10;
         
-        setIsFormValid(valid);
+        setIsFormValid(formValid);
     }, [entityName, reservingAmount, grading, expirationDate]);
 
     const handleReserve = () => {
@@ -137,7 +213,7 @@ function EColdStorageRental() {
                     <View style={styles.inputGroup}>
                         <Text style={styles.inputLabel}>{t('Entity Name:')}</Text>
                         <TextInput
-                            style={[styles.textInput, !entityName.trim() && styles.inputInvalid]}
+                            style={styles.textInput}
                             placeholder={t('enter entity name')}
                             value={entityName}
                             onChangeText={setEntityName}
@@ -148,13 +224,12 @@ function EColdStorageRental() {
                         <Text style={styles.inputLabel}>{t('Reserving Amount (in KGs):')}</Text>
                         <View style={styles.dropdownContainer}>
                             <TextInput
-                                style={[styles.textInput, !reservingAmount.trim() && styles.inputInvalid]}
+                                style={styles.textInput}
                                 placeholder={t('enter amount')}
                                 value={reservingAmount}
                                 onChangeText={setReservingAmount}
                                 keyboardType="numeric"
                             />
-                            
                         </View>
                     </View>
 
@@ -162,26 +237,39 @@ function EColdStorageRental() {
                         <Text style={styles.inputLabel}>{t('Grading')}</Text>
                         <View style={styles.dropdownContainer}>
                             <TextInput
-                                style={[styles.textInput, !grading.trim() && styles.inputInvalid]}
+                                style={styles.textInput}
                                 placeholder={t('enter grading needed')}
                                 value={grading}
                                 onChangeText={setGrading}
                             />
-                            
                         </View>
                     </View>
 
                     <View style={styles.inputGroup}>
                         <Text style={styles.inputLabel}>{t('Expiration Date')}</Text>
-                        <View style={styles.dropdownContainer}>
+                        <View style={styles.dateInputContainer}>
                             <TextInput
-                                style={[styles.textInput, !expirationDate.trim() && styles.inputInvalid]}
-                                placeholder={t('enter expiration date')}
+                                style={[
+                                    styles.textInput, 
+                                    styles.dateInput,
+                                ]}
+                                placeholder={t('DD/MM/YYYY')}
                                 value={expirationDate}
-                                onChangeText={setExpirationDate}
+                                onChangeText={handleDateChange}
+                                keyboardType="numeric"
+                                maxLength={10}
                             />
-                            
+                            <View style={styles.calendarIconContainer}>
+                                <Icon 
+                                    name="calendar" 
+                                    size={hp(2.5)} 
+                                    color={FOCUS_COLOR} 
+                                />
+                            </View>
                         </View>
+                        <Text style={styles.dateHint}>
+                            {t('Format: DD/MM/YYYY (e.g., 31/12/2023)')}
+                        </Text>
                     </View>
 
                     <View style={styles.reserveButtonContainer}>
@@ -332,6 +420,48 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
         color: colors.BLACK,
         textAlign: 'center',
+    },
+    dateInputContainer: {
+        position: 'relative',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    dateInput: {
+        paddingRight: hp(4),
+        letterSpacing: 1,
+        height: hp(6),
+        width: '100%',
+        fontSize: hp(1.8),
+        fontFamily: fonts.Regular,
+    },
+    calendarIconContainer: {
+        position: 'absolute',
+        right: hp(2),
+        top: '50%',
+        marginTop: -hp(1.25),
+        width: hp(2.5),
+        height: hp(2.5),
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+    },
+    dateHint: {
+        fontSize: hp(1.2),
+        fontFamily: fonts.Regular,
+        color: HINT_COLOR,
+        marginTop: hp(0.5),
+        marginLeft: hp(1),
+    },
+    dateInputError: {
+        borderColor: ERROR_COLOR,
+        backgroundColor: ERROR_BG_COLOR,
+    },
+    dateError: {
+        fontSize: hp(1.2),
+        fontFamily: fonts.Regular,
+        color: ERROR_COLOR,
+        marginTop: hp(0.5),
+        marginLeft: hp(1),
     },
 });
 

@@ -42,7 +42,7 @@ function PaymentConfirmation(): React.JSX.Element {
   const agriCashAmount = storage.getString("AgriCashAmount") || "0";
   const regularCashAmount = storage.getString("RegularCashAmount") || "0";
   const finalPrice = storage.getString("AgriCash") || regularCashAmount;
-  const passedName = PassedPayment.getString("PassedName");
+  const passedName = PassedPayment.getString(t("PassedName"));
 
   const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
@@ -83,7 +83,7 @@ function PaymentConfirmation(): React.JSX.Element {
 
         <View style={{ marginBottom: hp(1.2), marginTop: hp(1), marginHorizontal: wp(5), }}>
           <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign: 'center' }}>
-            {passedName?.toLocaleUpperCase()} {t('Transfers')}
+            {t(passedName)} {t('Transfers')}
           </Text>
         </View>
         <View style={styles.bodyContainer}>

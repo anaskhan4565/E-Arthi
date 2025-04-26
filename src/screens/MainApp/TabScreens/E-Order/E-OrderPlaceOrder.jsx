@@ -156,7 +156,7 @@ const EOrderPlaceOrder = () => {
                                         styles.selectedText,
                                     ]}
                                 >
-                                    {item}
+                                    {t(item)}
                                 </Text>
                             </TouchableOpacity>
                         ))}
@@ -189,9 +189,9 @@ const EOrderPlaceOrder = () => {
                     onPress={() => navigation.navigate(ScreensName.EOrderMainStack, { screen: ScreensName.EOrderCheckout })}
                 >
                     <Text style={styles.cartText}>
-                        {totalQuantity} Items . PKR {formatNumber(totalCost)}
+                        {totalQuantity} {t("Items")} . {t("PKR")} {formatNumber(totalCost)}
                     </Text>
-                    <Text style={styles.cartText}>Buy Now</Text>
+                    <Text style={styles.cartText}>{t("Buy Now")}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

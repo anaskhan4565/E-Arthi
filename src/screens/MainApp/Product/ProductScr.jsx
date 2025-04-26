@@ -24,7 +24,7 @@ import HeartFilledIcon from "../../../assets/MainApp/ProductScreen/likeF.png";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../Navbar/Navbar";
 import { MMKV } from "react-native-mmkv";
-
+import { useTranslation } from "react-i18next";
 const ProductScr = () => {
     const [Count, SetCount] = useState(1);
     const [CashCount, SetCashCount] = useState(0);
@@ -36,7 +36,7 @@ const ProductScr = () => {
     const ProductClickInfo = new MMKV();
     const [isFavorite, setIsFavorite] = useState(false);
     const [cart, setCart] = useState([]);
-
+    const { t } = useTranslation();
     const productData = ProductClickInfo.getString("selectedProduct");
     const ProductInfo = productData ? JSON.parse(productData) : null;
     console.log("ProductInfo infoss",ProductInfo.stock_quantity);
@@ -66,7 +66,7 @@ const ProductScr = () => {
                     setErrorMessage("");
                 }
             } else {
-                setErrorMessage(`You can only purchase up to ${MAX_AGRI_CASH_QUANTITY} units with Agri-Cash. Additional units can be purchased with Cash.`);
+                setErrorMessage(`${t("You can only purchase up to")} ${MAX_AGRI_CASH_QUANTITY} ${t("units with Agri-Cash.")} ${t("Additional units can be purchased with Cash.")}`);
             }
         }
     }
@@ -76,19 +76,19 @@ const ProductScr = () => {
         
         if (ProductInfo.stock_quantity === 0) {
             return {
-                text: "Out of Stock",
+                text: t("Out of Stock"),
                 color: "#FF0000",
                 backgroundColor: "#FFE5E5"
             };
         } else if (ProductInfo.stock_quantity === -1) {
             return {
-                text: "Coming Soon",
+                text: t("Coming Soon"),
                 color: "#800080",
                 backgroundColor: "#F5E6FA"
             };
         } else {
             return {
-                text: "In Stock",
+                text: t("In Stock"),
                 color: "#09c18c",
                 backgroundColor: "#E5F9F2"
             };
@@ -158,7 +158,7 @@ const ProductScr = () => {
 
         // Check Agri-Cash limit for the current quantity
         if (!checkAgriCashLimit(ProductInfo.discounted_price, Count)) {
-            setErrorMessage(`Cannot add items. Total would exceed Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}`);
+            setErrorMessage(`${t("Cannot add items.")} ${t("Total would exceed Agri-Cash limit of Rs")} ${formatPrice(AGRI_CASH_LIMIT)}`);
             return;
         }
 
@@ -180,7 +180,7 @@ const ProductScr = () => {
                 Navigation.goBack();
             }, 1500);
         } catch (error) {
-            setErrorMessage("Failed to add items to cart");
+            setErrorMessage(t("Failed to add items to cart"));
             setIsLoading(false);
         }
     };
@@ -206,7 +206,7 @@ const ProductScr = () => {
                 Navigation.goBack();
             }, 1500);
         } catch (error) {
-            setErrorMessage("Failed to add items to cart");
+            setErrorMessage(t("Failed to add items to cart"));
             setIsLoading(false);
         }
     };
@@ -216,7 +216,7 @@ const ProductScr = () => {
 
         // Check Agri-Cash limit for the Agri-Cash units
         if (Count > 0 && !checkAgriCashLimit(ProductInfo.discounted_price, Count)) {
-            setErrorMessage(`Cannot add items. Total would exceed Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}`);
+            setErrorMessage(`${t("Cannot add items.")} ${t("Total would exceed Agri-Cash limit of Rs")} ${formatPrice(AGRI_CASH_LIMIT)}`);
             return;
         }
 
@@ -251,7 +251,7 @@ const ProductScr = () => {
                 Navigation.goBack();
             }, 1500);
         } catch (error) {
-            setErrorMessage("Failed to add items to cart");
+            setErrorMessage(t("Failed to add items to cart"));
             setIsLoading(false);
         }
     };
@@ -314,32 +314,32 @@ const ProductScr = () => {
 
                         <View style={styles.infoCard}>
                             <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Vendor Name:</Text>
+                                <Text style={styles.infoLabel}>{t("Vendor Name")}:</Text>
                                 <Text style={styles.infoValue}>Fauji Fertilizers</Text>
                             </View>
                             <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Category:</Text>
+                                <Text style={styles.infoLabel}>{t("Category")}:</Text>
                                 <Text style={styles.infoValue}>{ProductInfo.category}</Text>
                             </View>
                             <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Price:</Text>
+                                <Text style={styles.infoLabel}>{t("Price")}:</Text>
                                 <Text style={styles.infoValue}>
                                     Rs {formatPrice(ProductInfo.discounted_price)}
                                 </Text>
                             </View>
                             <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Pack Size:</Text>
+                                <Text style={styles.infoLabel}>{t("Pack Size")}:</Text>
                                 <Text style={styles.infoValue}>{ProductInfo.weight} Kg</Text>
                             </View>
                             <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Discount with Agri-Cash:</Text>
+                                <Text style={styles.infoLabel}>{t("Discount with Agri-Cash")}:</Text>
                                 <Text style={[styles.infoValue, styles.discountText]}>
-                                    {calculateDiscount()}% OFF
+                                    {calculateDiscount()}% {t("OFF")}
                                 </Text>
                             </View>
                             <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Expected Available Date:</Text>
-                                <Text style={styles.infoValue}>Coming Soon</Text>
+                                <Text style={styles.infoLabel}>{t("Expected Available Date")}:</Text>
+                                <Text style={styles.infoValue}>{t("Coming Soon")}</Text>
                             </View>
 
                             {errorMessage ? (
@@ -349,7 +349,7 @@ const ProductScr = () => {
                             ) : null}
 
                             <View style={styles.actionsContainer}>
-                                <Text style={styles.sectionTitle}>Purchase with Agri-Cash</Text>
+                                <Text style={styles.sectionTitle}>{t("Purchase with Agri-Cash")}</Text>
                                 <View style={styles.quantityAndCartContainer}>
                                     <View style={[
                                         styles.quantitySelector,
@@ -394,7 +394,7 @@ const ProductScr = () => {
                                                 <ActivityIndicator color="#FFFFFF" />
                                             ) : (
                                                 <Text style={styles.addToCartText}>
-                                                    Buy {Count} with Agri-Cash
+                                                    {t("Buy")} {Count} {t("with Agri-Cash")}
                                                 </Text>
                                             )}
                                         </TouchableOpacity>
@@ -410,7 +410,7 @@ const ProductScr = () => {
                                             {isLoading ? (
                                                 <ActivityIndicator color="#FFFFFF" />
                                             ) : (
-                                                <Text style={styles.notifyButtonText}>Notify Me</Text>
+                                                <Text style={styles.notifyButtonText}>{t("Notify Me")}</Text>
                                             )}
                                         </TouchableOpacity>
                                     )}
@@ -422,12 +422,12 @@ const ProductScr = () => {
                         <View style={styles.cashPurchaseContainer}>
                             <View style={styles.cashPurchaseSection}>
                                 <View style={styles.priceInfoContainer}>
-                                    <Text style={styles.cashTitle}>Buy with Cash</Text>
+                                    <Text style={styles.cashTitle}>{t("Buy with Cash")}</Text>
                                     <Text style={styles.priceInfo}>
-                                        Price: Rs {formatPrice(ProductInfo.price)}
+                                        {t("Price")}: Rs {formatPrice(ProductInfo.price)}
                                     </Text>
                                     <Text style={styles.packSizeInfo}>
-                                        Pack Size: {ProductInfo.weight} Kg
+                                        {t("Pack Size")}: {ProductInfo.weight} {t("Kg")}
                                     </Text>
                                 </View>
 
@@ -465,7 +465,7 @@ const ProductScr = () => {
                                             <ActivityIndicator color="#FFFFFF" />
                                         ) : (
                                             <Text style={styles.addToCartText}>
-                                                Buy {CashCount} with Cash
+                                                {t("Buy")} {CashCount} {t("with Cash")}
                                             </Text>
                                         )}
                                     </TouchableOpacity>
@@ -489,7 +489,7 @@ const ProductScr = () => {
                                         <ActivityIndicator color="#FFFFFF" />
                                     ) : (
                                         <Text style={styles.addToCartText}>
-                                            Buy Total Items: {Count} + {CashCount}
+                                            {t("Buy")} {Count} + {CashCount}
                                         </Text>
                                     )}
                                 </TouchableOpacity>
@@ -497,7 +497,7 @@ const ProductScr = () => {
                         )}
 
                         <View style={styles.descriptionContainer}>
-                            <Text style={styles.descriptionTitle}>Product Description:</Text>
+                            <Text style={styles.descriptionTitle}>{t("Product Description")}:</Text>
                             <Text style={styles.descriptionText}>
                                {ProductInfo.Description}
                             </Text>
@@ -505,7 +505,7 @@ const ProductScr = () => {
                     </View>
                 ) : (
                     <View style={styles.loadingContainer}>
-                        <Text style={styles.loadingText}>Loading product information...</Text>
+                        <Text style={styles.loadingText}>{t("Loading product information...")}</Text>
                     </View>
                 )}
             </ScrollView>

@@ -22,7 +22,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
+import { useTranslation } from "react-i18next";
 type RootStackParamList = {
     ProductScr: undefined;
     DosageCalculator: undefined;
@@ -35,7 +35,7 @@ const TreatmentProductDescription = () => {
     const PlantDiagnosisData = new MMKV();
     const ProductClickInfo = new MMKV();
     const [isLoading, setIsLoading] = useState(false);
-    
+    const { t } = useTranslation();
     // Get selected product data from MMKV
     const selectedProductStr = PlantDiagnosisData.getString("SelectedProduct");
     const selectedProduct = selectedProductStr ? JSON.parse(selectedProductStr) : null;
@@ -136,26 +136,26 @@ const TreatmentProductDescription = () => {
             </View>
             <ScrollView style={styles.contentContainer}>
                 {/* Product Title */}
-                <Text style={styles.title}>{productName}</Text>
+                <Text style={styles.title}>{t(productName)}</Text>
                 
                 {/* Product Description */}
                 {selectedProduct && productDataMap[selectedProduct.id as keyof typeof productDataMap] && (
                     <Text style={styles.description}>
-                        {productDataMap[selectedProduct.id as keyof typeof productDataMap].description}
+                        {t(productDataMap[selectedProduct.id as keyof typeof productDataMap].description)}
                     </Text>
                 )}
                 
                 {/* Dosage Calculator Section */}
-                <Text style={styles.sectionTitle}>Dosage Calculator</Text>
+                <Text style={styles.sectionTitle}>{t("Dosage Calculator")}</Text>
                 <Text style={styles.description}>
-                    Get the exact dosage, dilution, application frequency, and pre-harvest interval for your plot
+                    {t("Get the exact dosage, dilution, application frequency, and pre-harvest interval for your plot")}
                 </Text>
                 
                 <TouchableOpacity 
                     style={styles.calculateButton} 
                     onPress={() => navigation.navigate(ScreensName.DosageCalculator as never)}
                 >
-                    <Text style={styles.calculateButtonText}>Calculate Dosage</Text>
+                    <Text style={styles.calculateButtonText}>{t("Calculate Dosage")}</Text>
                 </TouchableOpacity>
                 
                 {/* Application Method */}
@@ -167,8 +167,8 @@ const TreatmentProductDescription = () => {
                         />
                     </View>
                     <View style={styles.infoTextContainer}>
-                        <Text style={styles.infoTitle}>Application Method</Text>
-                        <Text style={styles.infoValue}>Spray</Text>
+                        <Text style={styles.infoTitle}>{t("Application Method")}</Text>
+                        <Text style={styles.infoValue}>{t("Spray")}</Text>
                     </View>
                 </View>
                 
@@ -183,9 +183,9 @@ const TreatmentProductDescription = () => {
                         />
                     </View>
                     <View style={styles.infoTextContainer}>
-                        <Text style={styles.infoTitle}>Weather Conditions</Text>
+                        <Text style={styles.infoTitle}>{t("Weather Conditions")}</Text>
                         <Text style={styles.infoValue}>
-                            Do not apply product if it is windy or raining. Avoid application during the hottest hours of the day
+                            {t("Do not apply product if it is windy or raining. Avoid application during the hottest hours of the day")}
                         </Text>
                     </View>
                 </View>
@@ -193,8 +193,8 @@ const TreatmentProductDescription = () => {
                 {/* Spraying Conditions */}
                 <View style={styles.infoSection}>
                     <View style={styles.infoTextContainer}>
-                        <Text style={styles.infoTitle}>Spraying Conditions</Text>
-                        <Text style={styles.infoValue}>Unfavorable until 7pm</Text>
+                        <Text style={styles.infoTitle}>{t("Spraying Conditions")}</Text>
+                        <Text style={styles.infoValue}>{t("Unfavorable until 7pm")}</Text>
                     </View>
                 </View>
                 
@@ -209,8 +209,8 @@ const TreatmentProductDescription = () => {
                         />
                     </View>
                     <View style={styles.infoTextContainer}>
-                        <Text style={styles.infoTitle}>Toxicity</Text>
-                        <Text style={styles.infoValue}>Slightly toxic</Text>
+                        <Text style={styles.infoTitle}>{t("Toxicity")}</Text>
+                        <Text style={styles.infoValue}>{t("Slightly toxic")}</Text>
                     </View>
                 </View>
                 
@@ -218,14 +218,14 @@ const TreatmentProductDescription = () => {
                 
                 {/* Safety Precautions */}
                 <View style={styles.safetyContainer}>
-                <Text style={[styles.sectionTitle, { marginTop: hp('2%') }]}>Safety Precautions</Text>
+                <Text style={[styles.sectionTitle, { marginTop: hp('2%') }]}>{t("Safety Precautions")}</Text>
                 <View style={styles.safetyItem}>
                     <Text style={styles.safetyNumber}>1.</Text>
-                    <Text style={styles.safetyText}>Keep it locked away and out of reach of children</Text>
+                    <Text style={styles.safetyText}>{t("Keep it locked away and out of reach of children")}</Text>
                 </View>
                 <View style={styles.safetyItem}>
                     <Text style={styles.safetyNumber}>2.</Text>
-                    <Text style={styles.safetyText}>Wash the hands and face with clean water after usage</Text>
+                    <Text style={styles.safetyText}>{t("Wash the hands and face with clean water after usage")}</Text>
                 </View>
                 </View>
                 
@@ -238,7 +238,7 @@ const TreatmentProductDescription = () => {
                     {isLoading ? (
                         <ActivityIndicator color={colors.WHITE} />
                     ) : (
-                        <Text style={styles.buyButtonText}>Buy This Product</Text>
+                        <Text style={styles.buyButtonText}>{t("Buy This Product")}</Text>
                     )}
                 </TouchableOpacity>
             </ScrollView>

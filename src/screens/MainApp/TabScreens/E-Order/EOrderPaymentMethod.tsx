@@ -282,7 +282,7 @@ function EOrderPaymentMethod(): React.JSX.Element {
                                             />
                                         )}
                                     </View>
-                                    <Text style={styles.paymentMethodName}>{method.name}</Text>
+                                    <Text style={styles.paymentMethodName}>{t(method.name)}</Text>
                                 </TouchableOpacity>
                             ))}
                         </Animated.View>

@@ -59,24 +59,24 @@ function LineOfCreditPay(): React.JSX.Element {
 
                 <View style={{ marginBottom: hp(1.2), marginTop: hp(1), marginHorizontal: wp(5), }}>
                     <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(3), textAlign: 'center' }}>
-                        Pay with Line of Credit
+                        {t("Pay with Line of Credit")}
                     </Text>
                 </View>
                 <View style={styles.bodyContainer}>
 
                     {/* TRANSFER TO */}
                     <View style={{ width: wp(85) }}>
-                        <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(1) }}>{t('Transfer To')}</Text>
+                        <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(1) }}>{t("Transfer To")}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center' }}>
                         <View style={styles.amountContainer}>
-                            <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t('Agri-Tech Bank')}</Text>
+                            <Text style={{ color: colors.DARK_GRAY, fontSize: hp(2), fontFamily: fonts.Regular }}>{t("Agri-Tech Bank")}</Text>
                         </View>
                     </View>
 
                     {/* SHOWING AMOUNT TO BE PAID */}
                     <View style={{ width: wp(85) }}>
-                        <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(2) }}>{t('Amount')}</Text>
+                        <Text style={{ fontFamily: fonts.SemiBold, fontSize: hp(2.5), marginTop: hp(2) }}>{t("Amount")}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', width: wp(85), alignItems: 'center', borderBottomWidth: 1 }}>
                         <View style={styles.amountContainer}>
@@ -90,11 +90,11 @@ function LineOfCreditPay(): React.JSX.Element {
                         <Image source={LOCIMG} style={{ width: hp(10), height: hp(10) }} />
                         <View style={{ flexDirection: 'column', gap: hp(1) }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>Remaining Amount:</Text>
+                                <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>{t("Remaining Amount")}:</Text>
                                 <Text style={{ fontSize: hp(1.4), color: colors.GREEN, fontFamily: fonts.Bold }}>PKR 53,950</Text>
                             </View>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>Utilized Amount:</Text>
+                                <Text style={{ fontSize: hp(1.4), color: colors.OLD_MILL_BLUE }}>{t("Utilized Amount")}:</Text>
                                 <Text style={{ fontSize: hp(1.4), color: colors.ORANGE, fontFamily: fonts.Bold }}>PKR 27,1740</Text>
                             </View>
                         </View>

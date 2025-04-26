@@ -19,10 +19,11 @@ import Navbar from "../../Navbar/Navbar.jsx";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
+import { useTranslation } from "react-i18next";
 const Treatment = () => {
     const navigation = useNavigation();
     const PlantDiagnosisData = new MMKV();
-    
+    const { t } = useTranslation();
     // Get diagnosis data from MMKV
     const diagnosisName = PlantDiagnosisData.getString("Diagnosis");
     const imageUri = PlantDiagnosisData.getString("DiagnosisImage");
@@ -43,7 +44,7 @@ const Treatment = () => {
             id: 75
         },
         {
-            name: "Moveto 240",
+            name: "Movento 240",
             manufacturer: "Bayer",
             type: "Insecticide",
             id: 76
@@ -57,7 +58,7 @@ const Treatment = () => {
             </View>
             <ScrollView style={styles.contentContainer}>
                 {/* Title */}
-                <Text style={styles.title}>Treatment</Text>
+                <Text style={styles.title}>{t("Treatment")}</Text>
 
                 {/* Pest Info Row */}
                 <View style={styles.pestInfoContainer}>
@@ -73,17 +74,17 @@ const Treatment = () => {
                         </View>
                     )}
                     <View style={styles.pestNameContainer}>
-                        <Text style={styles.pestName}>{diagnosisName || "Unknown Condition"}</Text>
+                        <Text style={styles.pestName}>{diagnosisName || t("Unknown Condition")}</Text>
                     </View>
                     <TouchableOpacity style={styles.insectButton}>
-                        <Text style={styles.insectButtonText}>{pathogenClass || "Unknown"}</Text>
+                        <Text style={styles.insectButtonText}>{pathogenClass || t("Unknown")}</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Recommended Products Section */}
-                <Text style={styles.sectionTitle}>Recommended Products:</Text>
+                <Text style={styles.sectionTitle}>{t("Recommended Products")}:</Text>
                 <View style={styles.warningContainer}>
-                    <Text style={styles.warningText}>Select and apply only one of these products to your crop.</Text>
+                    <Text style={styles.warningText}>{t("Select and apply only one of these products to your crop.")}</Text>
                 </View>
 
                 {/* Product List */}
@@ -100,8 +101,8 @@ const Treatment = () => {
                             <Image source={require('./AssetsPlantDr/Treatment/image.png')} style={styles.productIcon} />
                         </View>
                         <View style={styles.productInfo}>
-                            <Text style={styles.productType}>{insecticide.type}</Text>
-                            <Text style={styles.productName}>{insecticide.name} by {insecticide.manufacturer}</Text>
+                            <Text style={styles.productType}>{t(insecticide.type)}</Text>
+                            <Text style={styles.productName}>{t(insecticide.name)} by {t(insecticide.manufacturer)}</Text>
                         </View>
                         <Image source={require('./AssetsPlantDr/Treatment/Arrow.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>

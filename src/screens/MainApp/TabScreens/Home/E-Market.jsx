@@ -105,7 +105,7 @@ const EMarket = () => {
             dispatch(setSelectedCategory(""));
             return;
         }
-        
+
         dispatch(setProducts([]));
         dispatch(setSelectedCategory(category));
     }, [selectedCategory, dispatch, setProducts, setSelectedCategory]);
@@ -197,6 +197,8 @@ const EMarket = () => {
         );
     }, [products, searchQuery]);
 
+
+
     const handleSearch = useCallback((query) => {
         setSearchQuery(query);
     }, []);
@@ -254,26 +256,26 @@ const EMarket = () => {
 
                     <View style={styles.tabsContainer}>
                         <View style={styles.tabsWrapper}>
-                            <TouchableOpacity 
-                                style={[styles.tab, activeTab === 'products' && styles.activeTab]} 
+                            <TouchableOpacity
+                                style={[styles.tab, activeTab === 'products' && styles.activeTab]}
                                 onPress={() => handleTabPress('products')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'products' && styles.activeTabText]}>
                                     Products
                                 </Text>
                             </TouchableOpacity>
-                            
-                            <TouchableOpacity 
-                                style={[styles.tab, activeTab === 'favorites' && styles.activeTab]} 
+
+                            <TouchableOpacity
+                                style={[styles.tab, activeTab === 'favorites' && styles.activeTab]}
                                 onPress={() => handleTabPress('favorites')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'favorites' && styles.activeTabText]}>
                                     Favorites ({favoritesCount})
                                 </Text>
                             </TouchableOpacity>
-                            
-                            <TouchableOpacity 
-                                style={[styles.tab, activeTab === 'notified' && styles.activeTab]} 
+
+                            <TouchableOpacity
+                                style={[styles.tab, activeTab === 'notified' && styles.activeTab]}
                                 onPress={() => handleTabPress('notified')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'notified' && styles.activeTabText]}>
@@ -281,7 +283,7 @@ const EMarket = () => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <Animated.View 
+                        <Animated.View
                             style={[
                                 styles.tabIndicator,
                                 {
@@ -310,10 +312,11 @@ const EMarket = () => {
                                     </View>
                                 ) : filteredProducts.length > 0 ? (
                                     <View style={styles.productContainer}>
-                                        
+
                                         {filteredProducts.map((product, index) => (
                                             <View style={styles.productBoxWrapper} key={index}>
                                                 <MemoizedProductBox
+                                                    product={product}
                                                     name={product.name}
                                                     price={product.price}
                                                     discounted_price={product.discounted_price}

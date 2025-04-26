@@ -1,5 +1,5 @@
-import React from "react";
-import { SafeAreaView, ScrollView, View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, ScrollView, View, Text, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import Navbar from "../../Navbar/Navbar.jsx";
 import CustomSearchApp from "../../CustomComponent/CustomSearchApp.jsx";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
@@ -8,30 +8,134 @@ import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import axios from 'axios';
+import { storage } from '../../../InitialStartScreens/SignIn.jsx';
 
 function EmunshiLineOfCredit() {
     const { t } = useTranslation();
-    
-    // Calculate cash and line of credit amounts
-    const totalLoanAmount = 500000;
-    const cashAmount = 150000;
-    const lineOfCreditAmount = 350000;
-    
-    // Cash spending
-    const cashSpent = 138900;
-    const cashRemaining = 24000;
-    const cashSpentPercentage = (cashSpent / cashAmount) * 100;
-    
-    // Line of credit spending
-    const locSpent = 290167;
-    const locRemaining = 59833;
-    const locSpentPercentage = (locSpent / lineOfCreditAmount) * 100;
-    
+    const [walletData, setWalletData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchWalletData = async () => {
+            try {
+                // Get token from MMKV storage
+                const token = storage.getString('token');
+                const userId = storage.getString('userId');
+
+                if (!token) {
+                    console.error(t('No token found in storage'));
+                    setError(t('Authentication error. Please login again.'));
+                    setLoading(false);
+                    return;
+                }
+
+                if (!userId) {
+                    console.error(t('No user ID found in storage'));
+                    setError(t('User ID not found. Please login again.'));
+                    setLoading(false);
+                    return;
+                }
+
+                // Make API call with token in header
+                const url = 'https://eagri-backend.vercel.app/users/wallet/balance';
+                const response = await axios.get(url, {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.data.status === "success") {
+                    setWalletData(response.data.data);
+                } else {
+                    setError(t("Failed to load wallet data"));
+                }
+
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching wallet data:", err);
+                setError(t("Failed to load wallet data"));
+                setLoading(false);
+            }
+        };
+
+        fetchWalletData();
+    }, []);
+
     // Format amounts for display
-    const formatAmount = (amount: number) => {
-        return amount.toLocaleString();
+    const formatAmount = (amount) => {
+        if (!amount) return "0";
+        return parseFloat(amount).toLocaleString();
     };
-    
+
+    // Format date for display
+    const formatDate = (dateString) => {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB'); // DD-MM-YYYY format
+    };
+
+    // Get current date
+    const getCurrentDate = () => {
+        return formatDate(new Date().toString());
+    };
+
+    if (loading) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.navbarContainer}>
+                    <Navbar gobackOnly={true} />
+                </View>
+                <View style={styles.loaderContainer}>
+                    <ActivityIndicator size="large" color={colors.BLUE} />
+                </View>
+            </SafeAreaView>
+        );
+    }
+
+    if (error) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.navbarContainer}>
+                    <Navbar gobackOnly={true} />
+                </View>
+                <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{error}</Text>
+                </View>
+            </SafeAreaView>
+        );
+    }
+
+    if (!walletData) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.navbarContainer}>
+                    <Navbar gobackOnly={true} />
+                </View>
+                <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{t("No wallet data available")}</Text>
+                </View>
+            </SafeAreaView>
+        );
+    }
+
+    // Calculate cash spending percentage
+    const cashTotalAmount = parseFloat(walletData.current_balances.cash_balance);
+    const cashSpent = parseFloat(walletData.cash_balance_history.total_spent || '0');
+    const cashRemaining = parseFloat(walletData.cash_balance_history.remaining);
+    const cashSpentPercentage = (cashSpent / parseFloat(walletData.cash_balance_history.total_received)) * 100;
+
+    // Calculate line of credit (agri cash) spending percentage
+    const locTotalAmount = parseFloat(walletData.current_balances.line_of_credit);
+    const locSpent = parseFloat(walletData.line_of_credit_history.total_spent || '0');
+    const locRemaining = parseFloat(walletData.line_of_credit_history.remaining);
+    const locSpentPercentage = (locSpent / parseFloat(walletData.line_of_credit_history.total_received)) * 100;
+
+    // Total loan amount
+    const totalLoanAmount = parseFloat(walletData.current_balances.total_balance);
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -39,10 +143,10 @@ function EmunshiLineOfCredit() {
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp 
-                        placeholder={t("Search in here")} 
-                        value="" 
-                        onChangeText={() => {}} 
+                    <CustomSearchApp
+                        placeholder={t("Search in here")}
+                        value=""
+                        onChangeText={() => { }}
                     />
                 </View>
                 <View style={styles.titleContainer}>
@@ -51,8 +155,8 @@ function EmunshiLineOfCredit() {
                 <View style={styles.summaryContainer}>
                     <View style={styles.summaryCard}>
                         <Text style={styles.cardTitle}>Summary of Loan</Text>
-                        <Text>Loan taken on: <Text style={styles.boldText}>08-02-2025</Text></Text>
-                        <Text>Loan amount: <Text style={styles.boldText}>500,000 Rupees</Text></Text>
+                        <Text>Loan taken on: <Text style={styles.boldText}>{getCurrentDate()}</Text></Text>
+                        <Text>Loan amount: <Text style={styles.boldText}>{formatAmount(totalLoanAmount)} Rupees</Text></Text>
                         <View style={styles.mainProgressContainer}>
                             <AnimatedCircularProgress
                                 size={wp(45)}
@@ -72,13 +176,13 @@ function EmunshiLineOfCredit() {
                             <View style={styles.progressTextContainer}>
                                 <View style={styles.progressTextRow}>
                                     <Text style={styles.progressMainText}>
-                                        {formatAmount(cashAmount)} Rupees
+                                        {formatAmount(cashTotalAmount)} Rupees
                                     </Text>
                                     <Text style={styles.progressSubText}>is cash</Text>
                                 </View>
                                 <View style={styles.progressTextRow}>
                                     <Text style={styles.progressMainText}>
-                                        {formatAmount(lineOfCreditAmount)} Rupees
+                                        {formatAmount(locTotalAmount)} Rupees
                                     </Text>
                                     <Text style={styles.progressSubText}>is line of credit</Text>
                                 </View>
@@ -282,6 +386,22 @@ const styles = StyleSheet.create({
         color: colors.GRAY,
         textAlign: 'center',
         marginTop: hp(0.2),
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    errorContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    errorText: {
+        color: colors.RED,
+        fontSize: hp(2),
+        fontFamily: fonts.Bold,
+        marginBottom: hp(2),
     },
 });
 

@@ -13,6 +13,7 @@ import {
     StyleSheet,
     Text,
     View,
+    ActivityIndicator,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { fonts } from "../../../../../util/Constants/FontName.js";
@@ -20,6 +21,7 @@ import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
 import CustomButton from "../../../../components/CustomButton.jsx";
+import axios from 'axios';
 
 // Import your assets
 import RAAST from "../../../../assets/MainApp/E-Order/PaymentMethods/RAAST.svg";
@@ -41,15 +43,20 @@ const paymentMethods = [
     { name: "Kisaan Card", image: KISSANCARD },
 ];
 
-function EOrderPaymentMethod(): React.JSX.Element {
+function EOrderPaymentMethod() {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Raast");
     const storage = new MMKV();
-    const passedAm=new MMKV()
+    const passedAm = new MMKV()
     const savedCart = storage.getString("cart");
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
-    const CREDIT_LIMIT = 100000; // Example credit limit: 1 Lakh
+
+    // Wallet data state
+    const [walletData, setWalletData] = useState(null);
+    const [walletLoading, setWalletLoading] = useState(true);
+    const [walletError, setWalletError] = useState(null);
+
     // Animation refs
     const translateY = useRef(new Animated.Value(hp(20))).current;
     const opacity = useRef(new Animated.Value(0)).current;
@@ -57,6 +64,54 @@ function EOrderPaymentMethod(): React.JSX.Element {
     // Get cart from Redux if available
     const reduxCart = useSelector((state) => state?.emarket?.cart || []);
     const cartItems = reduxCart.length > 0 ? reduxCart : parsedCart;
+
+    // Fetch wallet data
+    useEffect(() => {
+        const fetchWalletData = async () => {
+            try {
+                // Get token from MMKV storage
+                const token = storage.getString('token');
+                const userId = storage.getString('userId');
+
+                if (!token) {
+                    console.error(t('No token found in storage'));
+                    setWalletError(t('Authentication error. Please login again.'));
+                    setWalletLoading(false);
+                    return;
+                }
+
+                if (!userId) {
+                    console.error(t('No user ID found in storage'));
+                    setWalletError(t('User ID not found. Please login again.'));
+                    setWalletLoading(false);
+                    return;
+                }
+
+                // Make API call with token in header
+                const url = 'https://eagri-backend.vercel.app/users/wallet/balance';
+                const response = await axios.get(url, {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.data.status === "success") {
+                    setWalletData(response.data.data);
+                } else {
+                    setWalletError(t("Failed to load wallet data"));
+                }
+
+                setWalletLoading(false);
+            } catch (err) {
+                console.error("Error fetching wallet data:", err);
+                setWalletError(t("Failed to load wallet data"));
+                setWalletLoading(false);
+            }
+        };
+
+        fetchWalletData();
+    }, []);
 
     useEffect(() => {
         Animated.timing(translateY, {
@@ -76,42 +131,49 @@ function EOrderPaymentMethod(): React.JSX.Element {
     const { agriCashItems, cashItems, agriCashTotal, cashTotal, grandTotal } = useMemo(() => {
         const agriItems = cartItems.filter(item => !item.isCashPurchase);
         const regularItems = cartItems.filter(item => item.isCashPurchase);
-        
+
         const agriTotal = agriItems.reduce((acc, item) => {
             const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
             return acc + (price * item.quantity);
         }, 0);
-        
+
         const regTotal = regularItems.reduce((acc, item) => {
             const price = parseFloat(item.price?.replace(/,/g, '') || 0);
             return acc + (price * item.quantity);
         }, 0);
-        
+
         // Add tax (13%)
         const agriWithTax = agriTotal * 1.13;
         const cashWithTax = regTotal * 1.13;
         const total = agriWithTax + cashWithTax;
-        
+
         return {
             agriCashItems: agriItems,
-            cashItems: regularItems, 
+            cashItems: regularItems,
             agriCashTotal: agriWithTax,
             cashTotal: cashWithTax,
             grandTotal: total
         };
     }, [cartItems]);
-    passedAm.set("AgriCash",cashTotal)
-    
+    passedAm.set("AgriCash", cashTotal)
+
     // Format numbers with commas
     const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num?.toFixed(2) ?? 0);
 
-    // Calculate remaining credit
-    const remainingCredit = 66500;
+    // Get the credit limit and remaining credit from wallet data
+    const CREDIT_LIMIT = walletData?.current_balances?.line_of_credit
+        ? parseFloat(walletData.current_balances.line_of_credit) + parseFloat(walletData.line_of_credit_history.total_spent || 0)
+        : 100000; // Fallback to 100000 if API data isn't available
+
+    // Get the remaining credit from the wallet API
+    const remainingCredit = walletData?.line_of_credit_history?.remaining
+        ? parseFloat(walletData.line_of_credit_history.remaining)
+        : 66500; // Fallback to 66500 if API data isn't available
 
     const handlePaymentMethodSelect = (method) => {
         console.log(method)
         setSelectedPaymentMethod(method);
-        
+
         // Store selected payment method
         storage.set("selectedPaymentMethod", method);
     };
@@ -119,25 +181,19 @@ function EOrderPaymentMethod(): React.JSX.Element {
     const handleProceed = () => {
         // Store the selected payment method in MMKV
         storage.set("PassedName", selectedPaymentMethod);
-        
+
         // Store both Agri-Cash and regular amounts separately
         storage.set("AgriCashAmount", agriCashTotal.toString());
         storage.set("RegularCashAmount", cashTotal.toString());
-        
+
         // Set flag for Agri-Cash only payments
         storage.set("IsAgriCashOnly", (agriCashItems.length > 0 && cashItems.length === 0).toString());
-        
+
         // Navigate based on payment method
         if (selectedPaymentMethod === "Raast") {
-            navigation.navigate({
-                name: "RaastConfirmPayment",
-                params: { paymentMethod: selectedPaymentMethod }
-            });
+            navigation.navigate("RaastConfirmPayment", { paymentMethod: selectedPaymentMethod });
         } else {
-            navigation.navigate({
-                name: "RaastPaymentScreen",
-                params: { paymentMethod: selectedPaymentMethod }
-            });
+            navigation.navigate("RaastPaymentScreen", { paymentMethod: selectedPaymentMethod });
         }
     };
 
@@ -148,9 +204,9 @@ function EOrderPaymentMethod(): React.JSX.Element {
             </View>
             <ScrollView style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <CustomSearchApp placeholder={t("Search in here")} value="" onChangeText={() => {}} />
+                    <CustomSearchApp placeholder={t("Search in here")} value="" onChangeText={() => { }} />
                 </View>
-                
+
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>{t("Payment Methods")}</Text>
                 </View>
@@ -161,17 +217,17 @@ function EOrderPaymentMethod(): React.JSX.Element {
                         <Text style={styles.totalLabel}>{t("Grand Total")}</Text>
                         <Text style={styles.totalValue}>PKR {formatNumber(grandTotal)}</Text>
                     </View>
-                    
+
                     {/* Divider */}
                     <View style={styles.divider}></View>
-                    
+
                     {agriCashItems.length > 0 && (
                         <View style={styles.totalRow}>
                             <Text style={styles.subtotalLabel}>{t("Agri-Cash Items")}</Text>
                             <Text style={styles.subtotalValue}>PKR {formatNumber(agriCashTotal)}</Text>
                         </View>
                     )}
-                    
+
                     {cashItems.length > 0 && (
                         <View style={styles.totalRow}>
                             <Text style={styles.subtotalLabel}>{t("Cash Items")}</Text>
@@ -186,16 +242,24 @@ function EOrderPaymentMethod(): React.JSX.Element {
                         <View style={styles.sectionHeader}>
                             <Text style={styles.sectionTitle}>{t("Agri-Cash Payment")}</Text>
                         </View>
-                        
-                        <View style={styles.creditInfoContainer}>
-                            <Text style={styles.creditInfoText}>
-                                {t("Credit Limit")}: PKR {formatNumber(CREDIT_LIMIT)}
-                            </Text>
-                            <Text style={styles.creditInfoText}>
-                                {t("Remaining Credit")}: PKR {formatNumber(remainingCredit)}
-                            </Text>
-                        </View>
-                        
+
+                        {walletLoading ? (
+                            <View style={styles.loaderContainer}>
+                                <ActivityIndicator size="small" color={colors.GREEN} />
+                            </View>
+                        ) : walletError ? (
+                            <Text style={styles.errorText}>{walletError}</Text>
+                        ) : (
+                            <View style={styles.creditInfoContainer}>
+                                <Text style={styles.creditInfoText}>
+                                    {t("Credit Limit")}: PKR {formatNumber(CREDIT_LIMIT)}
+                                </Text>
+                                <Text style={styles.creditInfoText}>
+                                    {t("Remaining Credit")}: PKR {formatNumber(remainingCredit)}
+                                </Text>
+                            </View>
+                        )}
+
                         <View style={styles.paymentOption}>
                             <View style={styles.paymentRadioContainer}>
                                 <RadioButton
@@ -206,15 +270,15 @@ function EOrderPaymentMethod(): React.JSX.Element {
                                 />
                                 <Text style={styles.paymentOptionText}>{t("Agri Cash          ")}</Text>
                             </View>
-                            
+
                             <View style={styles.paymentImageContainer}>
-                                <Image 
-                                    source={Wallet} 
-                                    style={styles.paymentOptionImage} 
+                                <Image
+                                    source={Wallet}
+                                    style={styles.paymentOptionImage}
                                     resizeMode="contain"
                                 />
                             </View>
-                            
+
                             <Text style={styles.paymentAmountText}>
                                 PKR {formatNumber(agriCashTotal)}
                             </Text>
@@ -228,7 +292,7 @@ function EOrderPaymentMethod(): React.JSX.Element {
                         <View style={styles.sectionHeader}>
                             <Text style={styles.sectionTitle}>{t("Cash Payment")}</Text>
                         </View>
-                        
+
                         <View style={styles.defaultPaymentMethod}>
                             <View style={styles.paymentRadioContainer}>
                                 <RadioButton
@@ -239,16 +303,16 @@ function EOrderPaymentMethod(): React.JSX.Element {
                                 />
                                 <Text style={styles.paymentOptionText}>{t("Raast")}</Text>
                             </View>
-                            
+
                             {selectedPaymentMethod === "Raast" && (
                                 <Text style={styles.paymentAmountText}>
                                     PKR {formatNumber(cashTotal)}
                                 </Text>
                             )}
                         </View>
-                        
+
                         <Text style={styles.changePaymentText}>{t("Or change payment method")}</Text>
-                        
+
                         <Animated.View
                             style={[
                                 styles.paymentMethodsGrid,
@@ -296,6 +360,9 @@ function EOrderPaymentMethod(): React.JSX.Element {
                         BgGiven={colors.GREEN}
                         txColor={colors.WHITE}
                         onPressG={handleProceed}
+                        name=""
+                        isNavigation={false}
+                        b_end_only={0}
                     />
                 </View>
             </ScrollView>
@@ -440,7 +507,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.LIGHT_GREEN,
         borderColor: colors.GREEN,
         borderWidth: 1,
-         borderRadius: hp(1),
+        borderRadius: hp(1),
         padding: wp(3),
         marginBottom: hp(2),
     },
@@ -503,6 +570,18 @@ const styles = StyleSheet.create({
         marginHorizontal: wp(5),
         marginBottom: hp(5),
         alignSelf: "center",
+    },
+    loaderContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: hp(2),
+    },
+    errorText: {
+        fontFamily: fonts.Medium,
+        fontSize: hp(1.6),
+        color: colors.RED,
+        textAlign: 'center',
+        marginBottom: hp(2),
     },
 });
 

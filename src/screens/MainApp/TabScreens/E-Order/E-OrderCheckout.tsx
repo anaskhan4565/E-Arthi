@@ -43,7 +43,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
       setKey(prevKey => prevKey + 1);
     }, [])
   );
-
+ 
   const savedCart = storage.getString("cart");
   const parsedCart = savedCart ? JSON.parse(savedCart) : [];
 

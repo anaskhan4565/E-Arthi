@@ -75,9 +75,7 @@ const Treatment = () => {
                     <View style={styles.pestNameContainer}>
                         <Text style={styles.pestName}>{diagnosisName || "Unknown Condition"}</Text>
                     </View>
-                    <TouchableOpacity style={styles.insectButton}>
-                        <Text style={styles.insectButtonText}>{pathogenClass || "Unknown"}</Text>
-                    </TouchableOpacity>
+     
                 </View>
 
                 {/* Recommended Products Section */}
@@ -136,22 +134,19 @@ const styles = StyleSheet.create({
     seedsFertilizerButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         backgroundColor: colors.GREEN,
         padding: wp('4%'),
         borderRadius: wp('2%'),
         elevation: 3,
+
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
     },
     buttonContent: {
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'center',
-        alignSelf:'center',
-        textAlign:'center',
     },
     buttonIcon: {
         marginRight: wp('2%'),

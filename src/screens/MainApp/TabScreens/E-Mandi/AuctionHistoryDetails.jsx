@@ -91,8 +91,8 @@ function AuctionHistoryDetails() {
     const renderProductDetails = () => (
         <View style={styles.productDetailsCard}>
             <View style={styles.imageContainer}>
-                {auction.image ? (
-                    <Image source={auction.} style={styles.productImage} />
+                {auction.imageData ? (
+                    <Image source={auctionData.imageData.source} style={styles.productImage} />
                 ) : (
                     <View style={styles.imagePlaceholder} />
                 )}
@@ -137,7 +137,7 @@ function AuctionHistoryDetails() {
                 <View style={styles.verticalDivider} />
                 <View style={styles.infoColumn}>
                     <Text style={styles.infoLabel}>{t('Winning bid:')}</Text>
-                    <Text style={styles.infoValue}>{auction.startPrice} Rs</Text>
+                    <Text style={styles.infoValue}>{auction.winprice} Rs</Text>
                 </View>
             </View>
         </View>
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     imageContainer: {
-        width: wp(30),
+        width: wp(20),
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -294,8 +294,8 @@ const styles = StyleSheet.create({
         borderRadius: hp(1),
     },
     productImage: {
-        width: wp(30),
-        aspectRatio: 1,
+        width: wp(25),
+        height: wp(25),
         borderRadius: hp(1),
     },
     productDetails: {

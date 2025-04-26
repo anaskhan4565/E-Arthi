@@ -13,6 +13,9 @@ import { useTranslation } from 'react-i18next';
 import Navbar from '../../Navbar/Navbar.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
+import { useState, useEffect } from 'react';
+import { database } from '../../../../../firebase/firebase';
+import { ref, get } from 'firebase/database';
 
 function MyAuctionDetail({ route }) {
     const { t } = useTranslation();
@@ -31,6 +34,7 @@ function MyAuctionDetail({ route }) {
         return null;
     };
 
+    const [topBidders, setTopBidders] = useState([]);
 
     const renderBidderRow = (user, bid) => (
         <View style={styles.bidderRow}>
@@ -38,7 +42,26 @@ function MyAuctionDetail({ route }) {
             <Text style={styles.bidAmount}>{bid} Rs</Text>
         </View>
     );
-
+    useEffect(() => {
+        const fetchTopBids = async () => {
+            try {
+                const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
+                const snapshot = await get(auctionRef);
+                const auction = snapshot.val();
+    
+                if (auction?.highestBids && auction.highestBids.length > 0) {
+                    setTopBidders(auction.highestBids);
+                } else {
+                    setTopBidders([]);
+                }
+            } catch (error) {
+                console.error('Error fetching top bids:', error);
+            }
+        };
+    
+        fetchTopBids();
+    }, [auctionData.id]);
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -62,7 +85,7 @@ function MyAuctionDetail({ route }) {
                         <View style={styles.detailsRow}>
                             <View style={styles.detailColumn}>
                                 <Text style={styles.detailLabel}>{t('Made By:')}</Text>
-                                <Text style={styles.detailValue}>{auctionData?.sellerName || 'User'}</Text>
+                                <Text style={styles.detailValue}>{auctionData?.madeBy || 'User'}</Text>
                             </View>
                             <View style={styles.verticalDivider} />
                             <View style={styles.detailColumn}>
@@ -100,28 +123,29 @@ function MyAuctionDetail({ route }) {
                 </View>
 
                 <View style={styles.biddersSection}>
-                    <Text style={styles.sectionTitle}>{t('Top three highest bidders:')}</Text>
-                    <View style={styles.biddersCard}>
-                        <View style={styles.biddersHeader}>
-                            <Text style={styles.headerText}>Users</Text>
-                            <Text style={styles.headerText}>Bids</Text>
-                        </View>
-                        <View style={styles.biddersList}>
-                            <View style={styles.bidderRow}>
-                                <Text style={styles.bidderText}>User 1</Text>
-                                <Text style={styles.bidAmount}>1000</Text>
-                            </View>
-                            <View style={[styles.bidderRow, styles.middleRow]}>
-                                <Text style={styles.bidderText}>User 1</Text>
-                                <Text style={styles.bidAmount}>1000</Text>
-                            </View>
-                            <View style={styles.bidderRow}>
-                                <Text style={styles.bidderText}>User 1</Text>
-                                <Text style={styles.bidAmount}>1000</Text>
-                            </View>
-                        </View>
-                    </View>
+    <Text style={styles.sectionTitle}>{t('Top three highest bidders:')}</Text>
+    <View style={styles.biddersCard}>
+        <View style={styles.biddersHeader}>
+            <Text style={styles.headerText}>Users</Text>
+            <Text style={styles.headerText}>Bids</Text>
+        </View>
+        <View style={styles.biddersList}>
+            {topBidders.length === 0 ? (
+                <View style={styles.bidderRow}>
+                    <Text style={styles.bidderText}>{t('No bids yet')}</Text>
                 </View>
+            ) : (
+                topBidders.map((bid, index) => (
+                    <View key={index} style={styles.bidderRow}>
+                        <Text style={styles.bidderText}>User ID: {bid.userId}</Text>
+                        <Text style={styles.bidAmount}>{bid.bidAmount} Rs</Text>
+                    </View>
+                ))
+            )}
+        </View>
+    </View>
+</View>
+
 
            
             </ScrollView>

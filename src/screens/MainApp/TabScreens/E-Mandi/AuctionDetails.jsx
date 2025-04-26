@@ -21,6 +21,11 @@ import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
+import { database } from '../../../../../firebase/firebase';
+import { ref, get, update } from 'firebase/database';
+import { MMKV } from 'react-native-mmkv';
+
+const storage = new MMKV();
 function AuctionDetails() {
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -73,41 +78,89 @@ function AuctionDetails() {
         setTotalAmount(total);
     }, [selectedBags, selectedQuantities, auctionData]);
     
-    // Calculate total bid amount when maxBid changes
     useEffect(() => {
         const bidValue = parseInt(maxBid) || 0;
         setCalculatedBid(bidValue);
     }, [maxBid]);
 
-    // Function to handle placing a bid
-    const handlePlaceBid = () => {
+    const handlePlaceBid = async () => {
         const bidValue = parseInt(maxBid) || 0;
+        const userId = storage.getString('userId') || 'anonymous';
+    
         if (bidValue <= 0) {
             Alert.alert(t('Invalid Bid'), t('Please enter a valid bid amount.'));
             return;
         }
-        
-        if (bidValue <= currentBid && bidValue !== 0) {
-            Alert.alert(
-                t('Low Bid'),
-                t('Your bid must be higher than the current bid.')
-            );
-            return;
+    
+        const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
+    
+        try {
+            const snapshot = await get(auctionRef);
+            const auction = snapshot.val();
+            let bids = auction?.highestBids || [];
+            let bidCount = auction?.numberOfBids || 0;
+    
+            // Check if user already exists in highestBids
+            const existingBidIndex = bids.findIndex((bid) => bid.userId === userId);
+    
+            if (existingBidIndex !== -1) {
+                if (bidValue > bids[existingBidIndex].bidAmount) {
+                    bids[existingBidIndex].bidAmount = bidValue;
+                } else {
+                    Alert.alert(t('Low Bid'), t('Your bid must be higher than your previous bid.'));
+                    return;
+                }
+            } else {
+                bids.push({ bidAmount: bidValue, userId: userId });
+            }
+    
+            // Sort descending and keep top 3
+            bids.sort((a, b) => b.bidAmount - a.bidAmount);
+            bids = bids.slice(0, 3);
+    
+            // Always increment bid count
+            bidCount += 1;
+    
+            // Update DB
+            await update(auctionRef, {
+                highestBids: bids,
+                numberOfBids: bidCount,
+            });
+    
+            // 🟢 After successful bid, refetch the highest bid
+            await fetchCurrentBid();
+    
+            // Update local state for the current user’s bid
+            setUserCurrentBid(bidValue);
+            setShowBidSuccessMessage(true);
+    
+            setTimeout(() => setShowBidSuccessMessage(false), 3000);
+        } catch (error) {
+            console.error('Error placing bid:', error);
+            Alert.alert('Error', 'Failed to place bid. Please try again.');
         }
-        
-        // Set the new current bid
-        setCurrentBid(bidValue);
-        setUserCurrentBid(bidValue);
-        
-        // Show success message
-        setShowBidSuccessMessage(true);
-        
-        // Hide the message after 3 seconds
-        setTimeout(() => {
-            setShowBidSuccessMessage(false);
-        }, 3000);
     };
-
+    
+    const fetchCurrentBid = async () => {
+        const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
+        try {
+            const snapshot = await get(auctionRef);
+            const auction = snapshot.val();
+            const highestBids = auction?.highestBids || [];
+    
+            // Get the highest bid amount from the top of the sorted list
+            const highestBidAmount = highestBids.length > 0 ? highestBids[0].bidAmount : auctionData.startPrice;
+    
+            setCurrentBid(highestBidAmount);
+        } catch (error) {
+            console.error('Error fetching current bid:', error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchCurrentBid();
+    }, []);
+    
     const handleQuantityChange = (bag, value) => {
         const newValue = Math.max(1, parseInt(value) || 1);
         setSelectedQuantities(prev => ({
@@ -432,81 +485,95 @@ function AuctionDetails() {
 
     );
 
-    const renderMakeAnOffer = () => (
-        <View style={styles.offerContainer}>
-            <Text style={styles.offerTitle}>{t('Make An Offer')}</Text>
-
-            <View style={styles.offerTableHeader}>
-                <Text style={styles.offerHeaderItem}>{t('Bags')}</Text>
-                <Text style={styles.offerHeaderItem}>{t('Price')}</Text>
-                <Text style={styles.offerHeaderItem}>{t('Quantity')}</Text>
-            </View>
-
-            {Object.keys(selectedQuantities).map((bag) => (
-                <View key={bag} style={styles.offerTableRow}>
-                    <View style={styles.checkboxContainer}>
-                        <TouchableOpacity
-                            style={[
-                                styles.checkbox,
-                                selectedBags[bag] && styles.checkboxChecked
-                            ]}
-                            onPress={() => handleBagSelection(bag)}
-                        />
-                        <Text style={styles.bagText}>{bag} Kg</Text>
-                    </View>
-
-                    <Text style={styles.priceText}>{auctionData.startPrice} RS</Text>
-
-                    <View style={styles.quantityContainer}>
-                        <TouchableOpacity
-                            style={styles.quantityButton}
-                            onPress={() => handleDecreaseQuantity(bag)}
-                        >
-                            <Text style={styles.quantityButtonText}>-</Text>
-                        </TouchableOpacity>
-
+    const renderMakeAnOffer = () => {
+        const qualityDiscounts = auctionData.qualityDiscounts || [];
+    
+        if (!qualityDiscounts.length) {
+            return null; 
+        }
+    
+        return (
+            <View style={styles.offerContainer}>
+                <Text style={styles.offerTitle}>{t('Make An Offer')}</Text>
+    
+                <View style={styles.offerTableHeader}>
+                    <Text style={styles.offerHeaderItem}>{t('Bags')}</Text>
+                    <Text style={styles.offerHeaderItem}>{t('Price')}</Text>
+                    <Text style={styles.offerHeaderItem}>{t('Quantity')}</Text>
+                </View>
+    
+                {qualityDiscounts.map((discount, index) => {
+                    const bagWeight = discount.bags;
+                    const price = discount.price;
+    
+                    return (
+                        <View key={index} style={styles.offerTableRow}>
+                            <View style={styles.checkboxContainer}>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.checkbox,
+                                        selectedBags[bagWeight] && styles.checkboxChecked
+                                    ]}
+                                    onPress={() => handleBagSelection(bagWeight)}
+                                />
+                                <Text style={styles.bagText}>{bagWeight}</Text>
+                            </View>
+    
+                            <Text style={styles.priceText}>{price} Rs</Text>
+    
+                            <View style={styles.quantityContainer}>
+                                <TouchableOpacity
+                                    style={styles.quantityButton}
+                                    onPress={() => handleDecreaseQuantity(bagWeight)}
+                                >
+                                    <Text style={styles.quantityButtonText}>-</Text>
+                                </TouchableOpacity>
+    
+                                <TextInput
+                                    style={styles.quantityInput}
+                                    value={(selectedQuantities[bagWeight] || 1).toString()}
+                                    onChangeText={(value) => handleQuantityChange(bagWeight, value)}
+                                    keyboardType="numeric"
+                                />
+    
+                                <TouchableOpacity
+                                    style={styles.quantityButton}
+                                    onPress={() => handleIncreaseQuantity(bagWeight)}
+                                >
+                                    <Text style={styles.quantityButtonText}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    );
+                })}
+    
+                <View style={styles.totalContainer}>
+                    <Text style={styles.totalLabel}>{t('Total Amount')}:</Text>
+                    <View style={styles.totalValueContainer}>
                         <TextInput
-                            style={styles.quantityInput}
-                            value={selectedQuantities[bag].toString()}
-                            onChangeText={(value) => handleQuantityChange(bag, value)}
-                            keyboardType="numeric"
+                            style={styles.totalInput}
+                            value={totalAmount.toString()}
+                            editable={false}
                         />
-
-                        <TouchableOpacity
-                            style={styles.quantityButton}
-                            onPress={() => handleIncreaseQuantity(bag)}
-                        >
-                            <Text style={styles.quantityButtonText}>+</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.totalCurrency}>Rs</Text>
                     </View>
                 </View>
-            ))}
-
-            <View style={styles.totalContainer}>
-                <Text style={styles.totalLabel}>{t('Total Amount')}:</Text>
-                <View style={styles.totalValueContainer}>
-                    <TextInput
-                        style={styles.totalInput}
-                        value={totalAmount.toString()}
-                        editable={false}
+    
+                <View style={styles.submitButtonContainer}>
+                    <CustomButton
+                        MainText={t('Submit')}
+                        BgGiven={colors.GREEN}
+                        txColor={colors.WHITE}
+                        wgiven={wp('80%')}
+                        hgiven={hp('5%')}
+                        isNavigation={true}
+                        name={ScreensName.AuctionSubmissionSuccess}
                     />
-                    <Text style={styles.totalCurrency}>Rs</Text>
                 </View>
             </View>
-
-            <View style={styles.submitButtonContainer}>
-                <CustomButton
-                    MainText={t('Submit')}
-                    BgGiven={colors.GREEN}
-                    txColor={colors.WHITE}
-                    wgiven={wp('80%')}
-                    hgiven={hp('5%')}
-                    isNavigation={true}
-                    name={ScreensName.AuctionSubmissionSuccess}
-                />
-            </View>
-        </View>
-    );
+        );
+    };
+    
 
     const renderLiveAuctionContent = () => (
         <>
@@ -907,7 +974,7 @@ const styles = StyleSheet.create({
     },
     quantityInput: {
         width: wp(10),
-        height: hp(4),
+        height: hp(5),
         borderWidth: 1,
         borderColor: colors.LIGHT_GRAY,
         borderRadius: 4,

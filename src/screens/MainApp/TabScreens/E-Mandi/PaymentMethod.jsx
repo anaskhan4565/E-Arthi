@@ -21,10 +21,11 @@ import VISA from '../../../../assets/MainApp/E-Order/PaymentMethods/visa-logo.sv
 import MASTER from '../../../../assets/MainApp/E-Order/PaymentMethods/Mastercard.svg';
 import DEBIT from '../../../../assets/MainApp/E-Order/PaymentMethods/DEBIT.svg';
 import RAAST from '../../../../assets/MainApp/E-Order/PaymentMethods/RAAST.svg';
+import CustomButton from '../../../../components/CustomButton.jsx';
 
 function PaymentMethod({ navigation }) {
     const { t } = useTranslation();
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('raast');
     const totalAmount = 2430; // Example amount
 
     const handlePaymentMethodSelect = (method) => {
@@ -84,6 +85,13 @@ function PaymentMethod({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
+            <View style={styles.paymentContainer}>
+            <TouchableOpacity
+                style={styles.payButton}
+            >
+                <Text style={styles.payButtonText}>{t('Pay now')}</Text>
+            </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }
@@ -92,6 +100,28 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.WHITE,
+    },
+    paymentLabel: {
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+    },
+    paymentContainer: {
+        width: wp(70),
+        alignSelf:'center',
+        marginBottom: hp(4),
+    },
+    payButton: {
+        backgroundColor: colors.GREEN,
+        paddingHorizontal: wp(4),
+        paddingVertical: hp(1),
+        borderRadius: hp(1),
+    },
+    payButtonText: {
+        color: colors.WHITE,
+        fontSize: hp(1.8),
+        fontFamily: fonts.Medium,
+        alignSelf:'center',
     },
     navbarContainer: {
         height: hp('8.5%'),

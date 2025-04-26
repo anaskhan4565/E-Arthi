@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
   smallPicker: {
-    height: hp('5%'),
+    height: hp('8%'),
     color: colors.BLACK,
     fontSize: wp('3.5%'),
     fontFamily: fonts.Regular,

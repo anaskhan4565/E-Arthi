@@ -187,6 +187,8 @@ export default {
     FertilizationChemical: "FertilizationChemical",
     BasalFertilization: "BasalFertilization",
     Fetch1: "Fetch1",
+    SeedsFertilizers: "SeedsFertilizers",
+    SeedsFertilizersProductDescription: "SeedsFertilizersProductDescription",
     NewHomeMainStack: "NewHomeMainStack",
     NewHomeScreen: "NewHomeScreen",
     DashboardScreen: "DashboardScreen",

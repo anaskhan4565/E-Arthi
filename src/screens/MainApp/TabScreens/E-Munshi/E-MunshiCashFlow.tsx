@@ -22,68 +22,190 @@ const transactions = [
     {
         "id": 1214,
         "number": 1,
-        "status": "Active",
-        "Date": "2025-02-10",
-        "Location": "Store A",
+        "status": "Complete",
+        "Date": "2025-04-02",
+        "Location": "Agri Market Lahore",
         "Time": "14:30",
         "Items": [
-            { "name": "Laptop", "qty": 2, "price": 1200 },
-            { "name": "Mouse", "qty": 1, "price": 2500 },
-            { "name": "Gpu", "qty": 2, "price": 20000 },
+            { "name": "Sarsabz Urea", "qty": 3, "price": 2300 },
+            { "name": "Sarsabz DAP", "qty": 1, "price": 9100 },
         ],
-        "Vendor": "TechMart",
+        "Vendor": "Agri Market ",
+    },
+  
+    {
+        "id": 1218,
+        "number": 5,
+        "status": "Complete",
+        "Date": "2025-04-12",
+        "Location": "Sialkot Agri Expo",
+        "Time": "13:45",
+        "Items": [
+            { "name": "Syngenta Gengwei 550 SC", "qty": 1, "price": 2300 },
+            { "name": "Sulphuric Acid", "qty": 1, "price": 9500 }
+        ],
+        "Vendor": "Agri Market ",
+    },
+    {
+        "id": 1219,
+        "number": 6,
+        "status": "Active",
+        "Date": "2025-04-15",
+        "Location": "Faisalabad Warehouse",
+        "Time": "10:30",
+        "Items": [
+            { "name": "Badshah Single Super Phosphate (SSP)", "qty": 2, "price": 4100 }
+        ],
+        "Vendor": "Agri Market ",
     },
     {
         "id": 1215,
         "number": 2,
-        "status": "Complete",
-        "Date": "2025-02-11",
-        "Location": "Online Store B",
+        "status": "Active",
+        "Date": "2025-04-05",
+        "Location": "Online - E-Agri Store",
         "Time": "09:15",
         "Items": [
-            { "name": "Headphones", "qty": 2, "price": 75.00 },
-            { "name": "Keyboard", "qty": 1, "price": 45.00 }
+            { "name": "Movento 240 SC by Bayer", "qty": 2, "price": 2755 },
+            { "name": "Acelan 20SL by FMC", "qty": 1, "price": 1055 }
         ],
-        "Vendor": "AudioGear",
+        "Vendor": "Pesticide Direct",
     },
     {
         "id": 1216,
         "number": 3,
-        "status": "Active",
-        "Date": "2025-02-12",
-        "Location": "Store C",
+        "status": "Complete",
+        "Date": "2025-04-07",
+        "Location": "Islamabad Farmers Market",
         "Time": "17:45",
         "Items": [
-            { "name": "Monitor", "qty": 1, "price": 300 }
+            { "name": "PlantCare Plus by Terminix Pakistan", "qty": 1, "price": 3000 },
+            { "name": "Sona Zinc", "qty": 2, "price": 2300 }
         ],
-        "Vendor": "VisionTech",
+        "Vendor": "Green Solutions",
     },
     {
         "id": 1217,
         "number": 4,
         "status": "Active",
-        "Date": "2025-02-10",
-        "Location": "Store A",
-        "Time": "14:30",
+        "Date": "2025-04-10",
+        "Location": "Mobile Dealer Visit",
+        "Time": "11:30",
         "Items": [
-            { "name": "Laptop", "qty": 2, "price": 1200 },
-            { "name": "Mouse", "qty": 1, "price": 2500 },
-            { "name": "Gpu", "qty": 2, "price": 20000 },
+            { "name": "Syngenta Primextra Gold", "qty": 2, "price": 1500 },
+            { "name": "Syngenta Metribuzin", "qty": 1, "price": 600 },
+            { "name": "Syngenta Logran 75 WG", "qty": 3, "price": 800 },
         ],
-        "Vendor": "TechMart",
+        "Vendor": "Syngenta Official Distributor",
     },
     {
-        "id": 1218,
-        "number": 5,
+        "id": 1220,
+        "number": 7,
         "status": "Complete",
-        "Date": "2025-02-11",
-        "Location": "Online Store B",
+        "Date": "2025-04-18",
+        "Location": "Multan Online Store",
         "Time": "09:15",
         "Items": [
-            { "name": "Headphones", "qty": 2, "price": 75.00 },
-            { "name": "Keyboard", "qty": 1, "price": 45.00 }
+            { "name": "Sarsabz CAN", "qty": 2, "price": 7000 },
+            { "name": "Sarsabz Nitrophos (NP)", "qty": 1, "price": 8500 }
         ],
-        "Vendor": "AudioGear",
+        "Vendor": "South Punjab Suppliers",
+    },
+   
+    {
+        "id": 1223,
+        "number": 10,
+        "status": "Active",
+        "Date": "2025-04-3",
+        "Location": "Mobile Retailer",
+        "Time": "14:15",
+        "Items": [
+            { "name": "Acelan 20SL by FMC", "qty": 2, "price": 1055 },
+            { "name": "PlantCare Plus by Terminix Pakistan", "qty": 1, "price": 3000 }
+        ],
+        "Vendor": "Farm Solutions Pakistan",
+    },
+    {
+        "id": 1221,
+        "number": 8,
+        "status": "Active",
+        "Date": "2025-04-20",
+        "Location": "Karachi Distributor",
+        "Time": "16:45",
+        "Items": [
+            { "name": "Sona Boron", "qty": 3, "price": 2000 },
+            { "name": "MOP", "qty": 1, "price": 7700 }
+        ],
+        "Vendor": "Sindh Agro Services",
+    },
+    {
+        "id": 1222,
+        "number": 9,
+        "status": "Complete",
+        "Date": "2025-04-23",
+        "Location": "Peshawar Market",
+        "Time": "11:30",
+        "Items": [
+            { "name": "SOP", "qty": 1, "price": 11200 },
+            { "name": "Sona Urea", "qty": 2, "price": 9200 }
+        ],
+        "Vendor": "KPK Agricultural Supply Co.",
+    },
+    {
+        "id": 1224,
+        "number": 11,
+        "status": "Complete",
+        "Date": "2025-04-1",
+        "Location": "Quetta Agricultural Fair",
+        "Time": "10:45",
+        "Items": [
+            { "name": "Movento 240 SC by Bayer", "qty": 1, "price": 2755 },
+            { "name": "Syngenta Primextra Gold", "qty": 1, "price": 1500 }
+        ],
+        "Vendor": "Balochistan Agri Supply",
+    },
+    {
+        "id": 1225,
+        "number": 12,
+        "status": "Active",
+        "Date": "2025-02-30",
+        "Location": "Gujranwala Depot",
+        "Time": "13:00",
+        "Items": [
+            { "name": "Sarsabz Urea", "qty": 3, "price": 2300 },
+            { "name": "Sarsabz DAP", "qty": 2, "price": 9100 },
+            { "name": "Sona Zinc", "qty": 1, "price": 2300 }
+        ],
+        "Vendor": "Punjab Farm Services",
+    },
+    {
+        "id": 1226,
+        "number": 13,
+        "status": "Active",
+        "Date": "2025-03-25",
+        "Location": "Online - E-Agri Store",
+        "Time": "10:15",
+        "Items": [
+            { "name": "Badshah Single Super Phosphate (SSP)", "qty": 3, "price": 12900 },
+            { "name": "Badshah Single Super Phosphate (SSP) (AGRI-CASH)", "qty": 3, "price": 12300 },
+        ],
+        "Vendor": "Agri Market ",
+    },
+    {
+        "id": 1227,
+        "number": 14,
+        "status": "Active",
+        "Date": "2025-04-25",
+        "Location": "Online - E-Agri Store",
+        "Time": "10:15",
+        "Items": [
+            { "name": "Hybird Okra Seeds (AGRI-CASH)", "qty": 2, "price": 1200 },
+            { "name": "Hybird Okra Seeds ", "qty": 2, "price": 1400 },
+            {"name": "Hybird Watermelon Seeds (AGRI-CASH)", "qty": 1, "price": 3500},
+            {"name": "Hybird Watermelon Seeds ", "qty": 1, "price": 3700},
+
+        ],
+        "Vendor": "Agri Market ",
     },
 ]
 
@@ -94,11 +216,15 @@ function CashFlow(): React.JSX.Element {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.navbarContainer}>
-                <Navbar />
+                <Navbar gobackOnly={true} />
             </View>
             <View style={{ flex: 7 }}>
                 <View style={styles.searchbar}>
-                    <CustomSearchApp placeholder={"Search in here"} />
+                    <CustomSearchApp 
+                        placeholder={"Search in here"} 
+                        value="" 
+                        onChangeText={() => {}}
+                    />
                 </View>
                 <View style={styles.HeaderRow}>
                     <Text style={styles.headerText}>{t("Cash Flow")}</Text>
@@ -108,7 +234,15 @@ function CashFlow(): React.JSX.Element {
                     {
                     transactions.length>0? 
                     transactions.map((transaction, index) => (
-                        <TouchableOpacity key={transaction.id} style={styles.rectangle} onPress={() => { navigation.navigate(ScreensName.EmunshiTransactionDetail, { transactiondata: transactions[index] }) }}>
+                        <TouchableOpacity 
+                            key={transaction.id} 
+                            style={styles.rectangle} 
+                            onPress={() => { 
+                                navigation.navigate(ScreensName.EmunshiTransactionDetail as any, { 
+                                    transactiondata: transactions[index] 
+                                }) 
+                            }}
+                        >
                             <View style={styles.RectangleheaderRow}>
                                 <Text style={[styles.transactionText, styles.transactionLabel]}>
                                     Transaction {index + 1}

@@ -15,6 +15,7 @@ import Navbar from '../../Navbar/Navbar';
 import colors from '../../../../../util/Constants/colors';
 import ScreensName from '../../../../../util/Constants/ScreensName';
 import { fonts } from '../../../../../util/Constants/FontName';
+import CustomButton from '../../../../components/CustomButton';
 
 type RootStackParamList = {
     FertilizerAdvisorSelectedCrop: { crop: CropType };
@@ -91,6 +92,17 @@ const RequestGrading = () => {
                         </TouchableOpacity>
                     ))}
                 </View>
+
+                <View style={styles.bottomBarContainer}>    
+                    <CustomButton
+                        MainText={"Request Grading for other crops"}
+                        BgGiven={colors.PRIMARY}
+                        name={"Request Grading"}
+                        isNavigation={true}
+                        txColor={colors.WHITE}
+                        wgiven={wp('80%')}
+                    />W
+                </View>
             </ScrollView>
 {/* 
             <View style={styles.bottomBarContainer}>
@@ -163,6 +175,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.WHITE,
         borderTopWidth: 1,
         borderTopColor: colors.LIGHT_GRAY,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 

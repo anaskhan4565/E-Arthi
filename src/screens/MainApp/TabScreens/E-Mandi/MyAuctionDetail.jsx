@@ -24,6 +24,13 @@ function MyAuctionDetail({ route }) {
             <Text style={styles.detailValue}>{value}</Text>
         </View>
     );
+    const getImageSource = (item) => {
+        if (item.imageData && item.imageData.base64) {
+            return { uri: `data:${item.imageData.type};base64,${item.imageData.base64}` };
+        }
+        return null;
+    };
+
 
     const renderBidderRow = (user, bid) => (
         <View style={styles.bidderRow}>
@@ -49,7 +56,7 @@ function MyAuctionDetail({ route }) {
                 <Text style={styles.sectionTitle}>{t('Bidding Highlights')}</Text>
 
                 <View style={styles.productDetailsCard}>
-                    <View style={styles.imagePlaceholder} />
+                    <Image source={{ uri: auctionData.imageData.source }} style={styles.productImage} />
                     <View style={styles.productDetails}>
                         <Text style={styles.detailsTitle}>{t('Product Details')}</Text>
                         <View style={styles.detailsRow}>

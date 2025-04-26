@@ -5,6 +5,8 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity,
+    Image,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +14,6 @@ import { useNavigation } from '@react-navigation/native';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
-import EInventoryBoxes from '../../CustomComponent/EInventoryBoxes.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
@@ -22,26 +23,50 @@ const warehouseTypes = [
         title: "Silo",
         screen: ScreensName.ESiloRental2,
         img: require("../../../../assets/MainApp/E-Warehouse/Silo.png"),
+        location: "95 Km away",
+        description: "Grain storage silos for bulk agricultural commodities"
     },
     {
         title: "Temperature Controlled",
-        screen: ScreensName.EWarehouseNewSpaceConfirmWarehouse,
+        screen: ScreensName.EColdStorageRental,
         img: require("../../../../assets/MainApp/E-Warehouse/TemperatureInside.png"),
+        location: "120 Km away",
+        description: "Climate-controlled storage for perishable goods"
     },
     {
         title: "Cold Storage",
         screen: ScreensName.EColdStorageRental,
         img: require("../../../../assets/MainApp/E-Warehouse/ColdStorage.png"),
+        location: "85 Km away",
+        description: "Low temperature storage for frozen products"
     },
     {
         title: "Dry Beds",
-        screen: ScreensName.EWarehouseNewSpaceConfirmWarehouse,
+        screen: ScreensName.EColdStorageRental,
         img: require("../../../../assets/MainApp/E-Warehouse/DryBeds.png"),
+        location: "65 Km away",
+        description: "Moisture-free storage beds for dry goods"
     }
 ];
 
 function EWarehouseRental() {
     const { t } = useTranslation();
+    const navigation = useNavigation();
+    
+    const handleStoragePress = (item) => {
+        console.log('Navigating to', item.screen, 'with params:', {
+            storageType: item.title,
+            location: item.location,
+            description: item.description
+        });
+        
+        navigation.navigate(item.screen, {
+            storageType: item.title,
+            location: item.location,
+            description: item.description,
+            imageSource: item.img
+        });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -62,30 +87,21 @@ function EWarehouseRental() {
                     <Text style={styles.subtitleText}>{t('Choose the warehouse you need')}</Text>
                 </View>
 
-                <View style={styles.bodyContainer}>
-                    <View style={styles.scrollContainer}>
-                        {warehouseTypes.map((type, index) => (
-                            <View style={styles.itemBoxWrapper} key={index}>
-                                <EInventoryBoxes
-                                    name={t(type.title)}
-                                    screenName={type.screen}
-                                    navigationName={ScreensName.EWarehouseMainStack}
-                                    SourceGiven={type.img}
-                                    isNavigation={1}
-                                    w={wp("26%")}
-                                    h={hp("14%")}
-                                    img_size_h={hp(6.5)}
-                                    img_size_w={wp(14)}
-                                    font_Size={hp('1.8%')}
-                                    isLightBold={true}
-                                    fontcolor={colors.BLACK}
-                                    backgroundColor={colors.WHITE}
-                                    elevation={0}
-                                    borderRadius={hp(2)}
-                                />
-                            </View>
-                        ))}
-                    </View>
+                <View style={styles.scrollContainer}>
+                    {warehouseTypes.map((type, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            style={styles.storageBox}
+                            onPress={() => handleStoragePress(type)}
+                        >
+                            <Image 
+                                source={type.img}
+                                style={styles.storageImage}
+                                resizeMode="contain"
+                            />
+                            <Text style={styles.storageTitle}>{t(type.title)}</Text>
+                        </TouchableOpacity>
+                    ))}
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -128,22 +144,43 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
         color: colors.DARK_GRAY,
     },
-    bodyContainer: {
-        // marginHorizontal: hp(2),
-        // marginLeft: hp(2),
-    },
     scrollContainer: {
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: "space-between",
         paddingVertical: hp("1%"),
+        paddingHorizontal: wp("4%"),
         width: '100%',
     },
-    itemBoxWrapper: {
+    storageBox: {
         marginBottom: hp("2%"),
-        // width: wp(44),
-        // backgroundColor: "red",
-
+        width: wp("45%"),
+        backgroundColor: colors.WHITE,
+        borderWidth: 1,
+        borderColor: colors.LIGHT_GRAY,
+        borderRadius: hp(2),
+        padding: hp(2),
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3.84,
+        elevation: 3,
+    },
+    storageImage: {
+        width: wp(20),
+        height: hp(7),
+        marginBottom: hp(1),
+    },
+    storageTitle: {
+        fontSize: hp(1.8),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
+        textAlign: 'center',
     },
 });
 

@@ -39,7 +39,7 @@ const NewDrawerData = [
         id: 'marketplace',
         title: 'E-Market',
         svgImage: EMarketIcon,
-        screen: ScreensName.EMarket,
+        screen: ScreensName.EMarketMainStack,
         isNavigation: true,
     },
     {

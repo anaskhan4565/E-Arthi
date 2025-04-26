@@ -35,10 +35,11 @@ import captureButton from './AssetsPlantDr/HealCrop/button.png';
 import galleryButton from './AssetsPlantDr/HealCrop/gallery.png';
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { MMKV } from "react-native-mmkv";
+// @ts-ignore - Add this to suppress the env module error
 import { PLANTIX_API_KEY } from '@env';
 
 const HealCropImageCapture = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigation = useNavigation<any>();
     const PlantDiagnosisData = new MMKV();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -235,6 +236,22 @@ const HealCropImageCapture = () => {
         setIsAnalyzing(true);
         setAnalysisError(null);
 
+        // Get current language from i18n
+        const currentLanguage = i18n.language || 'en';
+        
+        // Map our app language codes to API accepted language codes if needed
+        const languageMap: {[key: string]: string} = {
+            'en': 'en',
+            'ur': 'ur',
+            'sin': 'ur', // assuming Sindhi maps to 'sd' in API
+            'psh': 'ur'  // assuming Pashto maps to 'ps' in API
+        };
+        
+        // Use mapped language or default to English
+        const apiLanguage = languageMap[currentLanguage] || 'en';
+        
+        console.log("Using language for API request:", apiLanguage);
+
         const formData = new FormData();
         formData.append('image', {
             uri: selectedImage,
@@ -251,7 +268,7 @@ const HealCropImageCapture = () => {
                 headers: {
                     'Authorization': `Bearer ${PLANTIX_API_KEY}`,
                     'Accept': 'application/json',
-                    'Accept-Language': 'en'
+                    'Accept-Language': apiLanguage
                 },
                 body: formData
             });

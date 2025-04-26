@@ -25,7 +25,11 @@ const RequestGradingDone = () => {
           </View>
 
           <Text style={styles.successTitle}>
-            Your soil test has{'\n'}been successfully{'\n'}scheduled!
+            Your Grading Request has{'\n'}been successfully{'\n'}scheduled!
+          </Text>
+          <Text style={styles.successTitle2}>
+            We will notify you{'\n'}when the grading is{'\n'}completed.
+
           </Text>
         </View>
       </View>
@@ -80,6 +84,14 @@ const styles = StyleSheet.create({
     color: colors.BLACK,
     textAlign: 'center',
     lineHeight: wp('8%'),
+  },
+  successTitle2: {
+    fontSize: wp('4%'),
+    fontFamily: fonts.Regular,
+    color: colors.BLACK,
+    textAlign: 'center',
+    marginTop: hp('2%'),
+
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,75 +8,122 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
+    ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import { MMKV } from 'react-native-mmkv';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
+import { firestore } from '../../../../../firebase/firebase';
 
-
-const SAMPLE_AUCTIONS = [
-    {
-        id: '1',
-        productName: 'Apples',
-        startPrice: 120,
-        grading: 'A+',
-        region: 'Karachi',
-        endDate: '01/01/2025',
-        endTime: '06:13',
-        status: 'ongoing'
-    },
-    {
-        id: '2',
-        productName: 'Tomatoes',
-        startPrice: 85,
-        grading: 'A',
-        region: 'Lahore',
-        endDate: '15/01/2025',
-        endTime: '12:30',
-        status: 'pre_auction'
-    },
-    {
-        id: '3',
-        productName: 'Rice',
-        startPrice: 250,
-        grading: 'B+',
-        region: 'Islamabad',
-        endDate: '05/02/2025',
-        endTime: '14:45',
-        status: 'ongoing'
-    },
-    {
-        id: '4',
-        productName: 'Wheat',
-        startPrice: 180,
-        grading: 'A',
-        region: 'Multan',
-        endDate: '20/01/2025',
-        endTime: '09:15',
-        status: 'pre_auction'
-    },
-    {
-        id: '5',
-        productName: 'Mangoes',
-        startPrice: 300,
-        grading: 'A++',
-        region: 'Hyderabad',
-        endDate: '10/02/2025',
-        endTime: '18:00',
-        status: 'expiring_soon'
-    },
-];
+// Initialize MMKV storage
+const storage = new MMKV();
 
 function LiveAuctions() {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [filterStatus, setFilterStatus] = useState('');
+    const [auctions, setAuctions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        // Get the user ID from storage
+        const currentUserId = storage.getString('userId') || 'anonymous';
+        setUserId(currentUserId);
+        
+        // Function to fetch auctions
+        const fetchAuctions = async () => {
+            try {
+                setLoading(true);
+                
+                // Get only ongoing auctions
+                const auctionsCollection = await firestore()
+                    .collection('auctions')
+                    .where('status', '==', 'ongoing')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                if (auctionsCollection.empty) {
+                    console.log("No live auctions found");
+                    setAuctions([]);
+                    setLoading(false);
+                    return;
+                }
+                
+                const auctionsData = auctionsCollection.docs.map(doc => {
+                    const auctionData = doc.data();
+                    // Mark auctions that belong to the current user
+                    const isOwnAuction = auctionData.userId === currentUserId;
+                    
+                    return {
+                        id: doc.id,
+                        ...auctionData,
+                        isOwnAuction: isOwnAuction,
+                        // For date fields that come from Firestore Timestamp
+                        createdAt: auctionData.createdAt 
+                            ? new Date(auctionData.createdAt.toMillis()).toLocaleDateString() 
+                            : 'N/A',
+                    };
+                });
+                
+                console.log(`Found ${auctionsData.length} live auctions`);
+                setAuctions(auctionsData);
+                
+            } catch (error) {
+                console.error('Error fetching auctions:', error);
+                Alert.alert('Error', 'Failed to load auctions. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        // Fetch auctions when component mounts
+        fetchAuctions();
+        
+        // Set up real-time listener for updates
+        const unsubscribe = firestore()
+            .collection('auctions')
+            .where('status', '==', 'ongoing')
+            .onSnapshot(
+                snapshot => {
+                    const updatedAuctions = snapshot.docs.map(doc => {
+                        const auctionData = doc.data();
+                        const isOwnAuction = auctionData.userId === currentUserId;
+                        
+                        return {
+                            id: doc.id,
+                            ...auctionData,
+                            isOwnAuction: isOwnAuction,
+                            createdAt: auctionData.createdAt 
+                                ? new Date(auctionData.createdAt.toMillis()).toLocaleDateString() 
+                                : 'N/A',
+                        };
+                    });
+                    setAuctions(updatedAuctions);
+                    setLoading(false);
+                },
+                error => {
+                    console.error('Listening error:', error);
+                    setLoading(false);
+                }
+            );
+        
+        // Cleanup listener on component unmount
+        return () => unsubscribe();
+    }, []);
+
+    const handleSearch = (text) => {
+        setSearchQuery(text);
+    };
 
     const renderFilterButton = (label, value) => (
         <TouchableOpacity
@@ -98,43 +145,112 @@ function LiveAuctions() {
     );
 
     const handleAuctionPress = (item) => {
+        // If it's the user's own auction, show a message
+        if (item.isOwnAuction) {
+            Alert.alert(
+                t('Your Auction'),
+                t('This is your own auction. You cannot place bids on your own auctions.'),
+                [{ text: t('OK'), style: 'default' }]
+            );
+            return;
+        }
+        
+        // Otherwise navigate to auction details
         navigation.navigate(ScreensName.AuctionDetails, { auctionData: item });
     };
 
-    // Filter auctions based on selected filter
-    const filteredAuctions = filterStatus
-        ? SAMPLE_AUCTIONS.filter(auction => auction.status === filterStatus)
-        : SAMPLE_AUCTIONS;
+    // Filter auctions based on selected filter and search query
+    const filteredAuctions = auctions.filter(auction => {
+        // First apply category filter if active
+        if (filterStatus && filterStatus !== 'starting_soon' && filterStatus !== 'expiring_soon') {
+            if (filterStatus === 'region' && !auction.region?.toLowerCase().includes(searchQuery.toLowerCase())) {
+                return false;
+            }
+            if (filterStatus === 'grading' && !auction.grading?.toLowerCase().includes(searchQuery.toLowerCase())) {
+                return false;
+            }
+            if (filterStatus === 'products' && !auction.productName?.toLowerCase().includes(searchQuery.toLowerCase())) {
+                return false;
+            }
+        }
+        
+        // Then apply search filter if there's a search query
+        if (searchQuery) {
+            const matchesProduct = auction.productName?.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesCategory = auction.category?.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesRegion = auction.region?.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesProduct || matchesCategory || matchesRegion;
+        }
+        
+        // Special filters for time-based filtering
+        if (filterStatus === 'starting_soon') {
+            // Apply logic for auctions starting soon
+            // This is a simplified example - you might want more complex date comparison
+            return auction.status === 'pre_auction';
+        }
+        if (filterStatus === 'expiring_soon') {
+            // Apply logic for auctions expiring soon
+            // This is a simplified example - you might want more complex date comparison
+            const now = new Date();
+            // Logic for expiring soon would go here
+            return true;
+        }
+        
+        return true;
+    });
+
+    // Function to get image source - either from base64 data or a placeholder
+    const getImageSource = (item) => {
+        if (item.imageData && item.imageData.base64) {
+            return { uri: `data:${item.imageData.type};base64,${item.imageData.base64}` };
+        }
+        return null;
+    };
 
     const renderAuctionItem = ({ item }) => (
         <TouchableOpacity
-            style={styles.auctionItem}
+            style={[
+                styles.auctionItem,
+                item.isOwnAuction && styles.ownAuctionItem
+            ]}
             onPress={() => handleAuctionPress(item)}
         >
             <View style={styles.auctionImageContainer}>
-
-                <View style={styles.placeholderImage} />
+                {getImageSource(item) ? (
+                    <Image 
+                        source={getImageSource(item)} 
+                        style={styles.productImage} 
+                    />
+                ) : (
+                    <View style={styles.placeholderImage} />
+                )}
             </View>
             <View style={styles.auctionDetails}>
-                <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName)}</Text>
-                <Text style={styles.auctionPrice}>{t('Auction Start Price')}: {item.startPrice} Rs</Text>
-                <Text style={styles.auctionGrading}>{t('Grading')}: {item.grading}</Text>
-                <Text style={styles.auctionRegion}>{t('Region')}: {t(item.region)}</Text>
+                <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName || 'N/A')}</Text>
+                <Text style={styles.auctionPrice}>{t('Auction Start Price')}: {item.startPrice || 0} Rs</Text>
+                <Text style={styles.auctionGrading}>{t('Category')}: {item.category || 'N/A'}</Text>
+                <Text style={styles.auctionRegion}>{t('Region')}: {t(item.region || 'N/A')}</Text>
                 <Text style={styles.auctionEndsAt}>{t('Auction ends at')}:</Text>
                 <View style={styles.dateTimeContainer}>
-                    <Text style={styles.auctionDate}>{item.endDate}</Text>
-                    <Text style={styles.auctionTime}>{item.endTime}</Text>
+                    <Text style={styles.auctionDate}>{item.endDate || 'N/A'}</Text>
+                    <Text style={styles.auctionTime}>{item.endTime || 'N/A'}</Text>
                 </View>
             </View>
             <View style={styles.statusBadgeContainer}>
-                <View style={[
-                    styles.statusBadge,
-                    item.status === 'ongoing' ? styles.ongoingBadge : styles.preAuctionBadge
-                ]}>
-                    <Text style={styles.statusText}>
-                        {item.status === 'ongoing' ? t('On going') : t('Pre auction')}
-                    </Text>
-                </View>
+                {item.isOwnAuction ? (
+                    <View style={styles.yourAuctionBadge}>
+                        <Text style={styles.statusText}>{t('Your Auction')}</Text>
+                    </View>
+                ) : (
+                    <View style={[
+                        styles.statusBadge,
+                        item.status === 'pre_auction' ? styles.preAuctionBadge : styles.ongoingBadge
+                    ]}>
+                        <Text style={styles.statusText}>
+                            {item.status === 'pre_auction' ? t('Pre auction') : t('On going')}
+                        </Text>
+                    </View>
+                )}
             </View>
         </TouchableOpacity>
     );
@@ -146,7 +262,11 @@ function LiveAuctions() {
             </View>
 
             <View style={styles.searchContainer}>
-                <CustomSearchApp placeholder={t('Search in here')} />
+                <CustomSearchApp 
+                    placeholder={t('Search in here')} 
+                    onChangeText={handleSearch}
+                    value={searchQuery}
+                />
             </View>
 
             <View style={styles.content}>
@@ -160,13 +280,30 @@ function LiveAuctions() {
                     {renderFilterButton('Region', 'region')}
                 </View>
 
-                <FlatList
-                    data={filteredAuctions}
-                    renderItem={renderAuctionItem}
-                    keyExtractor={item => item.id}
-                    contentContainerStyle={styles.auctionsList}
-                    showsVerticalScrollIndicator={false}
-                />
+                {loading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color={colors.GREEN} />
+                        <Text style={styles.loadingText}>{t('Loading auctions...')}</Text>
+                    </View>
+                ) : auctions.length === 0 ? (
+                    <View style={styles.emptyContainer}>
+                        <Text style={styles.emptyText}>{t('No live auctions available.')}</Text>
+                        <TouchableOpacity 
+                            style={styles.createButton}
+                            onPress={() => navigation.navigate(ScreensName.RequestForAuction)}
+                        >
+                            <Text style={styles.createButtonText}>{t('Create Auction')}</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={filteredAuctions}
+                        renderItem={renderAuctionItem}
+                        keyExtractor={item => item.id}
+                        contentContainerStyle={styles.auctionsList}
+                        showsVerticalScrollIndicator={false}
+                    />
+                )}
             </View>
         </SafeAreaView>
     );
@@ -232,7 +369,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 1,
-
+    },
+    ownAuctionItem: {
+        borderWidth: 2,
+        borderColor: colors.GREEN,
+        backgroundColor: colors.LIGHT_GREEN + '80', // Adding transparency
     },
     auctionImageContainer: {
         width: wp(25),
@@ -245,13 +386,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.LIGHT_GRAY,
         borderRadius: hp(1),
     },
+    productImage: {
+        width: wp(20),
+        height: wp(20),
+        borderRadius: hp(1),
+        resizeMode: 'cover',
+    },
     auctionDetails: {
         flex: 1,
         paddingLeft: wp(2),
         justifyContent: 'center',
         marginTop: hp(4),
     },
-
     auctionPrice: {
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
@@ -319,8 +465,47 @@ const styles = StyleSheet.create({
     preAuctionBadge: {
         backgroundColor: colors.GREEN,
     },
+    yourAuctionBadge: {
+        backgroundColor: colors.BLUE || '#3498db',
+        paddingHorizontal: wp(2),
+        paddingVertical: hp(0.4),
+        borderRadius: hp(1),
+    },
     statusText: {
         fontSize: hp(1.4),
+        fontFamily: fonts.Medium,
+        color: colors.WHITE,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        marginTop: hp(2),
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+        marginBottom: hp(2),
+    },
+    createButton: {
+        backgroundColor: colors.GREEN,
+        paddingHorizontal: wp(5),
+        paddingVertical: hp(1.5),
+        borderRadius: hp(1),
+    },
+    createButtonText: {
+        fontSize: hp(2),
         fontFamily: fonts.Medium,
         color: colors.WHITE,
     },

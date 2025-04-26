@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -7,7 +7,9 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
-    TextInput
+    TextInput,
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -18,11 +20,67 @@ import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
+import { firestore } from '../../../../../firebase/firebase';
+
 function AuctionHistoryDetails() {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const route = useRoute();
     const { auctionData } = route.params;
+    const [auction, setAuction] = useState(auctionData);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        // If we received only the ID, fetch the complete auction data
+        const fetchAuctionDetails = async () => {
+            if (!auctionData || (auctionData && !auctionData.productName && auctionData.id)) {
+                try {
+                    setLoading(true);
+                    const auctionDoc = await firestore()
+                        .collection('auctions')
+                        .doc(auctionData.id)
+                        .get();
+                    
+                    if (!auctionDoc.exists) {
+                        Alert.alert('Error', 'Auction not found');
+                        navigation.goBack();
+                        return;
+                    }
+                    
+                    const auctionDetails = {
+                        id: auctionDoc.id,
+                        ...auctionDoc.data(),
+                        createdAt: auctionDoc.data().createdAt 
+                            ? new Date(auctionDoc.data().createdAt.toMillis()).toLocaleDateString() 
+                            : 'N/A',
+                    };
+                    
+                    setAuction(auctionDetails);
+                } catch (error) {
+                    console.error('Error fetching auction details:', error);
+                    Alert.alert('Error', 'Failed to load auction details');
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+        
+        fetchAuctionDetails();
+    }, [auctionData, navigation]);
+
+    if (loading) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.navbarContainer}>
+                    <Navbar hasBackButton={true} />
+                </View>
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color={colors.GREEN} />
+                    <Text style={styles.loadingText}>{t('Loading auction details...')}</Text>
+                </View>
+            </SafeAreaView>
+        );
+    }
 
     // Handle payment button press
     const handlePayNow = () => {
@@ -33,8 +91,8 @@ function AuctionHistoryDetails() {
     const renderProductDetails = () => (
         <View style={styles.productDetailsCard}>
             <View style={styles.imageContainer}>
-                {auctionData.image ? (
-                    <Image source={auctionData.image} style={styles.productImage} />
+                {auction.imageData ? (
+                    <Image source={auctionData.imageData.source} style={styles.productImage} />
                 ) : (
                     <View style={styles.imagePlaceholder} />
                 )}
@@ -44,12 +102,12 @@ function AuctionHistoryDetails() {
                 <View style={styles.detailsRow}>
                     <View style={styles.detailColumn}>
                         <Text style={styles.detailLabel}>{t('Made By:')}</Text>
-                        <Text style={styles.detailValue}>User</Text>
+                        <Text style={styles.detailValue}>{auction.madeby}</Text>
                     </View>
                     <View style={styles.verticalDivider} />
                     <View style={styles.detailColumn}>
                         <Text style={styles.detailLabel}>{t('Product Name:')}</Text>
-                        <Text style={styles.detailValue}>{auctionData.productName}</Text>
+                        <Text style={styles.detailValue}>{auction.productName}</Text>
                     </View>
                 </View>
             </View>
@@ -62,24 +120,24 @@ function AuctionHistoryDetails() {
             <View style={styles.auctionInfoRow}>
                 <View style={styles.infoColumn}>
                     <Text style={styles.infoLabel}>{t('Auction starts at:')}</Text>
-                    <Text style={styles.infoValue}>01/01/2025 06:13</Text>
+                    <Text style={styles.infoValue}>{auction.startDate} {auction.startTime}</Text>
                 </View>
                 <View style={styles.verticalDivider} />
                 <View style={styles.infoColumn}>
                     <Text style={styles.infoLabel}>{t('Auction ends at:')}</Text>
-                    <Text style={styles.infoValue}>{auctionData.endDate} {auctionData.endTime}</Text>
+                    <Text style={styles.infoValue}>{auction.endDate} {auction.endTime}</Text>
                 </View>
             </View>
             <View style={styles.horizontalDivider} />
             <View style={styles.auctionInfoRow}>
                 <View style={styles.infoColumn}>
                     <Text style={styles.infoLabel}>{t('Auction start price:')}</Text>
-                    <Text style={styles.infoValue}>{auctionData.startPrice} Rs</Text>
+                    <Text style={styles.infoValue}>{auction.startPrice} Rs</Text>
                 </View>
                 <View style={styles.verticalDivider} />
                 <View style={styles.infoColumn}>
                     <Text style={styles.infoLabel}>{t('Winning bid:')}</Text>
-                    <Text style={styles.infoValue}>{auctionData.startPrice} Rs</Text>
+                    <Text style={styles.infoValue}>{auction.winprice} Rs</Text>
                 </View>
             </View>
         </View>
@@ -89,7 +147,7 @@ function AuctionHistoryDetails() {
     const renderStatus = () => (
         <View style={styles.statusContainer}>
             <Text style={styles.statusLabel}>{t('Status')}:</Text>
-            {auctionData.status === 'won' && (
+            {auction.status === 'won' && (
                 <View style={styles.wonContainer}>
                     <View style={styles.statusBadge}>
                         <Text style={styles.badgeText}>Won</Text>
@@ -120,13 +178,12 @@ function AuctionHistoryDetails() {
 
             <View style={styles.searchContainer}>
                 <CustomSearchApp placeholder={t("Search in here")} />
-
             </View>
 
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.title}>{t('Auction 1')}</Text>
-                    {auctionData.status === 'won' && (
+                    {auction.status === 'won' && (
                         <View style={styles.headerStatusBadge}>
                             <Text style={styles.headerBadgeText}>Won</Text>
                         </View>
@@ -226,7 +283,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     imageContainer: {
-        width: wp(30),
+        width: wp(20),
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -237,8 +294,8 @@ const styles = StyleSheet.create({
         borderRadius: hp(1),
     },
     productImage: {
-        width: wp(30),
-        aspectRatio: 1,
+        width: wp(25),
+        height: wp(25),
         borderRadius: hp(1),
     },
     productDetails: {
@@ -358,6 +415,17 @@ const styles = StyleSheet.create({
         color: colors.WHITE,
         fontSize: hp(1.8),
         fontFamily: fonts.Medium,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        marginTop: hp(2),
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
     },
 });
 

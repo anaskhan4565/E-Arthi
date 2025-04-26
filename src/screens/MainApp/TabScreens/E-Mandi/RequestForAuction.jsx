@@ -7,12 +7,17 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
+    Alert,
+    Platform,
+    Modal,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker } from "@react-native-picker/picker";
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { MMKV } from 'react-native-mmkv';
+import { launchImageLibrary } from 'react-native-image-picker';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 
 import Navbar from '../../Navbar/Navbar.jsx';
@@ -21,6 +26,10 @@ import colors from '../../../../../util/Constants/colors.js';
 import CustomInput from '../../../../components/CustomInput.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
+import { firestore } from '../../../../../firebase/firebase';
+
+// Initialize MMKV storage
+const storage = new MMKV();
 
 function RequestForAuction() {
     const { t } = useTranslation();
@@ -40,12 +49,27 @@ function RequestForAuction() {
     const [category, setCategory] = useState('');
     const [quantity, setQuantity] = useState('');
     const [qualityDiscounts, setQualityDiscounts] = useState([
-        { bags: '1 Kg', price: '100 RS', quantity: 1, enabled: false },
-        { bags: '5 Kg', price: '100 RS', quantity: 1, enabled: false },
-        { bags: '10 Kg', price: '100 RS', quantity: 1, enabled: false },
-        { bags: '20 Kg', price: '100 RS', quantity: 1, enabled: false },
+        { bags: '1 Kg', price: '100', quantity: 1, enabled: false },
+        { bags: '5 Kg', price: '100', quantity: 1, enabled: false },
+        { bags: '10 Kg', price: '100', quantity: 1, enabled: false },
+        { bags: '20 Kg', price: '100', quantity: 1, enabled: false },
     ]);
     const [totalAmount, setTotalAmount] = useState('0');
+    const [productImage, setProductImage] = useState(null);
+    const [uploadedCertificate, setUploadedCertificate] = useState(null);
+    
+    // Category options
+    const categoryOptions = [
+        'Fruit',
+        'Vegetable',
+        'Machinery',
+        'Insecticides',
+        'Herbicides',
+        'Seeds',
+        'Fertilizers',
+        'Tools',
+        'Other'
+    ];
 
     // Date picker visibility states
     const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
@@ -88,6 +112,70 @@ function RequestForAuction() {
         return `${hours}:${minutes}`;
     };
 
+    // Image picker function
+    const handleImagePicker = () => {
+        const options = {
+            mediaType: 'photo',
+            quality: 0.8,
+            maxWidth: 800,
+            maxHeight: 800,
+            includeBase64: true,
+        };
+
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.errorCode) {
+                console.log('ImagePicker Error: ', response.errorCode);
+                Alert.alert('Error', 'Failed to pick image. Please try again.');
+            } else if (response.assets && response.assets.length > 0) {
+                console.log('Image selected successfully');
+                setProductImage({
+                    uri: response.assets[0].uri,
+                    type: response.assets[0].type,
+                    name: response.assets[0].fileName,
+                    base64: response.assets[0].base64,
+                });
+            }
+        });
+    };
+    
+    // Certificate upload handler
+    const handleCertificateUpload = () => {
+        const options = {
+            mediaType: 'photo',
+            quality: 0.8,
+            maxWidth: 800,
+            maxHeight: 800,
+            includeBase64: true,
+        };
+
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled certificate picker');
+            } else if (response.errorCode) {
+                console.log('ImagePicker Error: ', response.errorCode);
+                Alert.alert('Error', 'Failed to pick certificate. Please try again.');
+            } else if (response.assets && response.assets.length > 0) {
+                console.log('Certificate selected successfully');
+                setUploadedCertificate({
+                    uri: response.assets[0].uri,
+                    type: response.assets[0].type,
+                    name: response.assets[0].fileName,
+                    base64: response.assets[0].base64,
+                });
+            }
+        });
+    };
+    
+    const handleRequestGrading = () => {
+        navigation.navigate(ScreensName.RequestGrading);
+    };
+    
+    const handleRemoveCertificate = () => {
+        setUploadedCertificate(null);
+    };
+
     // Quality discount handlers
     const toggleDiscountEnabled = (index) => {
         const newDiscounts = [...qualityDiscounts];
@@ -96,6 +184,13 @@ function RequestForAuction() {
         calculateTotal(newDiscounts);
     };
 
+    const updateDiscountPrice = (index, value) => {
+        const newDiscounts = [...qualityDiscounts];
+        newDiscounts[index].price = value;
+        setQualityDiscounts(newDiscounts);
+        calculateTotal(newDiscounts);
+    };
+    
     const incrementQuantity = (index) => {
         const newDiscounts = [...qualityDiscounts];
         newDiscounts[index].quantity += 1;
@@ -116,8 +211,8 @@ function RequestForAuction() {
         let total = 0;
         discounts.forEach(discount => {
             if (discount.enabled) {
-                // Extract numeric part from the price (assuming format like "100 RS")
-                const priceValue = parseInt(discount.price.split(' ')[0], 10);
+                // Extract numeric part from the price
+                const priceValue = parseInt(discount.price, 10);
                 total += priceValue * discount.quantity;
             }
         });
@@ -125,9 +220,55 @@ function RequestForAuction() {
     };
 
     // Submit handler
-    const handleSubmit = () => {
-        // Navigate to success screen
-        navigation.navigate(ScreensName.AuctionSubmissionSuccess);
+    const handleSubmit = async () => {
+        if (!productName || !startPrice) {
+            alert('Please fill in at least Product Name and Start Price!');
+            return;
+        }
+    
+        try {
+            // Get the user ID from storage
+            const userId = storage.getString('userId') || 'anonymous';
+            console.log("Creating auction for user ID:", userId);
+            
+            // Create auction data object
+            const auctionData = {
+                madeBy,
+                productName,
+                startDate,
+                startTime,
+                endDate,
+                endTime,
+                startPrice,
+                reservePrice,
+                buyNowPrice,
+                description,
+                category,
+                quantity,
+                qualityDiscounts: qualityDiscounts.filter(discount => discount.enabled),
+                totalAmount,
+                createdAt: firestore.FieldValue.serverTimestamp(),
+                status:createdAt==Date.now() ? 'ongoing' : 'pre-auction',
+                userId: userId, // Use the user ID from storage
+            };
+            
+            // Add image data if available
+            if (productImage && productImage.base64) {
+                auctionData.imageData = {
+                    base64: productImage.base64,
+                    type: productImage.type
+                };
+            }
+            
+            await firestore()
+                .collection('auctions')
+                .add(auctionData);
+            
+            navigation.navigate(ScreensName.AuctionSubmissionSuccess);
+        } catch (error) {
+            console.error('Error adding auction:', error);
+            alert('Failed to submit auction. Please try again.');
+        }
     };
 
     return (
@@ -136,29 +277,36 @@ function RequestForAuction() {
                 <Navbar hasBackButton={true} />
             </View>
 
-            <View style={styles.searchContainer}>
-                <CustomSearchApp placeholder={t('Search in here')} />
-            </View>
-
             <ScrollView style={styles.scrollView}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>{t('Mundi - Create Auction')}</Text>
+                    <Text style={styles.title}>{t('Mandi - Create Auction')}</Text>
 
                     <View style={styles.formContainer}>
-
-
                         <View style={styles.formFieldsContainer}>
                             <Text style={styles.formLabel}>{t('Enter the following details:')}</Text>
 
                             <View style={styles.imageUploadContainer}>
-                                <View style={styles.imageBox}>
-                                    {/* Placeholder for image upload */}
-                                </View>
+                                <TouchableOpacity 
+                                    style={styles.imageBox}
+                                    onPress={handleImagePicker}
+                                >
+                                    {productImage ? (
+                                        <Image 
+                                            source={{ uri: productImage.uri }} 
+                                            style={styles.productImage} 
+                                        />
+                                    ) : (
+                                        <View style={styles.imageHint}>
+                                            <Text style={styles.imageHintText}>+</Text>
+                                            <Text style={styles.imageHintSubtext}>{t('Upload Image')}</Text>
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
                                 <View style={styles.formFields}>
                                     <View style={styles.formField}>
                                         <Text style={styles.fieldLabel}>{t('Made By:')}</Text>
                                         <CustomInput
-                                            placeholder="User"
+                                            placeholder="Your Name"
                                             w={wp('45%')}
                                             h={hp('5.5%')}
                                             value={madeBy}
@@ -229,87 +377,116 @@ function RequestForAuction() {
                         <View style={styles.priceContainer}>
                             <Text style={styles.fieldLabel}>{t('Auction start price:')}</Text>
                             <View style={styles.priceInputContainer}>
+                                <View style={styles.currencyContainer}>
+                                    <Text style={styles.currencyText}>PKR</Text>
+                                </View>
                                 <CustomInput
                                     placeholder="Enter price"
-                                    w={wp('90%')}
+                                    w={wp('80%')}
                                     value={startPrice}
                                     h={hp('5.5%')}
                                     onChangeText={setStartPrice}
                                     numericOnly={true}
                                     bg_give={colors.WHITE}
+                                    AllowNumberOnly={true}
                                 />
-
                             </View>
                         </View>
 
                         <View style={styles.priceContainer}>
                             <Text style={styles.fieldLabel}>{t('Auction reserve price:')}</Text>
                             <View style={styles.priceInputContainer}>
+                                <View style={styles.currencyContainer}>
+                                    <Text style={styles.currencyText}>PKR</Text>
+                                </View>
                                 <CustomInput
                                     placeholder="Enter reserve price"
-                                    w={wp('90%')}
+                                    w={wp('80%')}
                                     h={hp('5.5%')}
                                     value={reservePrice}
                                     onChangeText={setReservePrice}
                                     numericOnly={true}
                                     bg_give={colors.WHITE}
+                                    AllowNumberOnly={true}
                                 />
-
                             </View>
                         </View>
 
                         <View style={styles.priceContainer}>
                             <Text style={styles.fieldLabel}>{t('Buy now price:')}</Text>
                             <View style={styles.priceInputContainer}>
+                                <View style={styles.currencyContainer}>
+                                    <Text style={styles.currencyText}>PKR</Text>
+                                </View>
                                 <CustomInput
                                     placeholder="Enter buy now price"
-                                    w={wp('90%')}
+                                    w={wp('80%')}
                                     h={hp('5.5%')}
                                     value={buyNowPrice}
                                     onChangeText={setBuyNowPrice}
                                     numericOnly={true}
                                     bg_give={colors.WHITE}
+                                    AllowNumberOnly={true}
                                 />
-
                             </View>
                         </View>
 
-                        <View style={styles.descriptionContainer}>
-                            <Text style={styles.fieldLabel}>{t('Enter product description:')}</Text>
-                            <CustomInput
-                                placeholder="Enter description"
-                                w={wp('90%')}
-                                h={hp('7%')}
-                                value={description}
-                                onChangeText={setDescription}
-                                bg_give={colors.WHITE}
-                            />
+                        <View style={styles.pickerContainer}>
+                            <Text style={styles.fieldLabel}>{t('Category')}:</Text>
+                            <View style={styles.picker}>
+                                <Picker
+                                    selectedValue={category}
+                                    onValueChange={(itemValue) => setCategory(itemValue)}
+                                    mode="dropdown"
+                                    itemStyle={styles.pickerItem}
+                                >
+                                    <Picker.Item
+                                        label={t('Select category')}
+                                        value=""
+                                        style={styles.pickerItem}
+                                    />
+                                    {categoryOptions.map((item, index) => (
+                                        <Picker.Item
+                                            key={index}
+                                            label={item}
+                                            value={item}
+                                            style={styles.pickerItem}
+                                        />
+                                    ))}
+                                </Picker>
+                            </View>
                         </View>
 
                         <View style={styles.pickerContainer}>
-                            <Text style={styles.fieldLabel}>{t('Category:')}</Text>
+                            <Text style={styles.fieldLabel}>{t('Enter quantity available(In Kg)')}:</Text>
                             <CustomInput
-                                placeholder="Enter category"
-                                w={wp('90%')}
-                                h={hp('5.5%')}
-                                value={category}
-                                onChangeText={setCategory}
-                                bg_give={colors.WHITE}
-                            />
-                        </View>
-
-                        <View style={styles.pickerContainer}>
-                            <Text style={styles.fieldLabel}>{t('Quantity:')}</Text>
-                            <CustomInput
-                                placeholder="Enter quantity/weight"
+                                placeholder="Enter quantity"
                                 w={wp('90%')}
                                 h={hp('5.5%')}
                                 value={quantity}
                                 onChangeText={setQuantity}
                                 bg_give={colors.WHITE}
+                                AllowNumberOnly={true}
                             />
                         </View>
 
+                        <View style={styles.descriptionContainer}>
+                            <Text style={styles.fieldLabel}>{t('Enter product description:')}</Text>
+                            <View style={styles.descriptionInputContainer}>
+                                <CustomInput
+                                    placeholder="Enter description"
+                                    w={wp('90%')}
+                                    h={hp('12%')}
+                                    value={description}
+                                    onChangeText={setDescription}
+                                    bg_give={colors.WHITE}
+                                    customStyle={{textAlignVertical: 'top'}}
+                                    multiline={true}
+                                    numberOfLines={4}
+                                />
+                            </View>
+                        </View>
+                        
                         <View style={styles.certificateContainer}>
                             <View style={styles.certificateRow}>
                                 <Text style={styles.fieldLabel}>{t('Upload Grading Certificate:')}</Text>
@@ -319,8 +496,21 @@ function RequestForAuction() {
                                     txColor={colors.WHITE}
                                     wgiven={wp('25%')}
                                     hgiven={hp('4%')}
+                                    onPressG={handleCertificateUpload}
                                 />
                             </View>
+                            
+                            {uploadedCertificate && (
+                                <View style={styles.uploadedFileRow}>
+                                    <Text style={styles.uploadedFileText}>
+                                        {t('Certificate Uploaded!')}
+                                    </Text>
+                                    <TouchableOpacity onPress={handleRemoveCertificate}>
+                                        <Text style={styles.removeText}>{t('Remove')}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                            
                             <Text style={styles.certificateHelp}>{t('Don\'t have a certificate yet?')}</Text>
                             <View style={styles.certificateRow}>
                                 <Text style={styles.fieldLabel}>{t('Request Grading Certificate:')}</Text>
@@ -330,17 +520,17 @@ function RequestForAuction() {
                                     txColor={colors.WHITE}
                                     wgiven={wp('25%')}
                                     hgiven={hp('4%')}
+                                    onPressG={handleRequestGrading}
                                 />
                             </View>
                         </View>
 
                         <View style={styles.qualityDiscountsContainer}>
-                            <Text style={styles.discountTitle}>{t('Quality Discounts')}</Text>
+                            <Text style={styles.discountTitle}>{t('Quantity Discounts')}</Text>
 
                             <View style={styles.discountHeaderRow}>
                                 <Text style={styles.discountHeader}>{t('Bags')}</Text>
                                 <Text style={styles.discountHeader}>{t('Price')}</Text>
-                                <Text style={styles.discountHeader}>{t('Quantity')}</Text>
                             </View>
 
                             {qualityDiscounts.map((discount, index) => (
@@ -354,32 +544,19 @@ function RequestForAuction() {
                                         </TouchableOpacity>
                                         <Text style={styles.discountText}>{discount.bags}</Text>
                                     </View>
-                                    <Text style={styles.discountText}>{discount.price}</Text>
-                                    <View style={styles.quantityControls}>
-                                        <TouchableOpacity
-                                            style={styles.quantityButton}
-                                            onPress={() => incrementQuantity(index)}
-                                        >
-                                            <Text style={styles.quantityButtonText}>+</Text>
-                                        </TouchableOpacity>
-                                        <Text style={styles.quantityText}>{discount.quantity}</Text>
-                                        <TouchableOpacity
-                                            style={styles.quantityButton}
-                                            onPress={() => decrementQuantity(index)}
-                                        >
-                                            <Text style={styles.quantityButtonText}>-</Text>
-                                        </TouchableOpacity>
+                                    <View style={styles.discountPriceContainer}>
+                                        <CustomInput 
+                                            w={wp('25%')}
+                                            h={hp('5%')}
+                                            bg_give={colors.WHITE}
+                                            value={0}
+                                            onChangeText={(value) => updateDiscountPrice(index, value)}
+                                            AllowNumberOnly={true}
+                                        />
+                                        <Text style={styles.discountUnit}>RS</Text>
                                     </View>
                                 </View>
                             ))}
-                        </View>
-
-                        <View style={styles.totalContainer}>
-                            <Text style={styles.totalLabel}>{t('Total Amount:')}</Text>
-                            <View style={styles.totalAmountContainer}>
-                                <Text style={styles.totalAmount}>{totalAmount}</Text>
-                                <Text style={styles.totalCurrency}>Rs</Text>
-                            </View>
                         </View>
 
                         <View style={styles.buttonContainer}>
@@ -392,8 +569,6 @@ function RequestForAuction() {
                                 onPressG={handleSubmit}
                             />
                         </View>
-
-
 
                     </View>
                 </View>
@@ -448,7 +623,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content: {
-        // padding: hp(1),
         paddingBottom: hp(5),
     },
     title: {
@@ -462,7 +636,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.WHITE,
         borderRadius: hp(1.5),
         padding: hp(2),
-
     },
     formLabel: {
         fontSize: hp(2),
@@ -487,6 +660,28 @@ const styles = StyleSheet.create({
         backgroundColor: colors.GRAY,
         borderRadius: hp(1),
         marginRight: wp(3),
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
+    productImage: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+    imageHint: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    imageHintText: {
+        fontSize: hp(4),
+        color: colors.WHITE,
+        fontWeight: 'bold',
+    },
+    imageHintSubtext: {
+        fontSize: hp(1.4),
+        color: colors.WHITE,
+        marginTop: hp(0.5),
     },
     formFields: {
         flex: 1,
@@ -500,6 +695,11 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(0.5),
+        marginLeft: hp(1),
+        marginRight: hp(1),
+        marginTop: hp(1),
+        marginHorizontal: hp(1),
+        marginBottom: hp(1),
     },
     dateTimeContainer: {
         marginBottom: hp(2),
@@ -541,18 +741,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative',
     },
+    currencyContainer: {
+        height: hp('5.5%'),
+        backgroundColor: colors.GREEN,
+        borderTopLeftRadius: hp(0.5),
+        borderBottomLeftRadius: hp(0.5),
+        justifyContent: 'center',
+        paddingHorizontal: wp(3),
+        marginRight: -2,
+    },
     currencyText: {
         fontSize: hp(1.8),
         fontFamily: fonts.Medium,
-        color: colors.BLACK,
-        position: 'absolute',
-        right: wp(2),
+        color: colors.WHITE,
     },
     descriptionContainer: {
-        // marginBottom: hp(2),
+        marginBottom: hp(2),
+    },
+    descriptionInputContainer: {
+        height: hp('12%'),
     },
     pickerContainer: {
-        // marginBottom: hp(2),
+        marginBottom: hp(2),
         alignSelf: 'center',
     },
     picker: {
@@ -564,21 +774,10 @@ const styles = StyleSheet.create({
         borderColor: colors.LIGHT_GRAY,
         justifyContent: 'center',
     },
-    pickerTouch: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: wp(2),
-        justifyContent: 'space-between',
-    },
-    pickerText: {
+    pickerItem: {
         fontSize: hp(1.8),
         fontFamily: fonts.Regular,
         color: colors.BLACK,
-    },
-    pickerDropdown: {
-        fontSize: hp(1.5),
-        color: colors.GRAY,
     },
     certificateContainer: {
         marginTop: hp(2),
@@ -590,10 +789,32 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: hp(1),
     },
+    uploadedFileRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: hp(1),
+        marginBottom: hp(1),
+    },
+    uploadedFileText: {
+        fontSize: hp(1.6),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
+        marginRight: wp(2),
+    },
+    removeText: {
+        fontSize: hp(1.6),
+        fontFamily: fonts.Regular,
+        color: colors.GREEN,
+    },
     certificateHelp: {
         fontSize: hp(1.6),
         fontFamily: fonts.Regular,
         color: colors.GRAY,
+        marginBottom: hp(1),
+        marginLeft: hp(1),
+        marginRight: hp(1),
+        marginTop: hp(1),
+        marginHorizontal: hp(1),
         marginBottom: hp(1),
     },
     qualityDiscountsContainer: {
@@ -657,7 +878,18 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
         color: colors.BLACK,
         flex: 1,
-        textAlign: 'center',
+    },
+    discountPriceContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flex: 1,
+    },
+    discountUnit: {
+        fontSize: hp(1.8),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
+        marginLeft: wp(1),
     },
     quantityControls: {
         flexDirection: 'row',

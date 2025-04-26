@@ -36,6 +36,10 @@ import EWarehouseSuccess from "./EWarehouseSuccess";
 import ESiloRental2 from "./EsiloRental2";
 import ExistingRentals from "./ExistingRentals";
 import RentalDetails from "./RentalDetails";
+import Grading from "../EAdvisers/Grading";
+import RequestGrading from "../EAdvisers/RequestGrading";
+import GradingInfo from "../EAdvisers/GradingInfo";
+import RequestGradingDone from "../EAdvisers/RequestGradingDone";
 const Stack = createNativeStackNavigator();
 
 
@@ -61,6 +65,11 @@ function EWarehouseMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.FoodSafetyAndSecurity} component={FoodSafetyAndSecurity} />
             <Stack.Screen name={ScreensName.ExistingRentals} component={ExistingRentals} />
             <Stack.Screen name={ScreensName.RentalDetails} component={RentalDetails} />
+            <Stack.Screen name={ScreensName.GradingInfo} component={GradingInfo} />
+            <Stack.Screen name={ScreensName.Grading} component={Grading} />
+            <Stack.Screen name={ScreensName.RequestGrading} component={RequestGrading} />
+            <Stack.Screen name={ScreensName.RequestGradingDone} component={RequestGradingDone} />
+
         </Stack.Navigator>
         // </I18nextProvider>
     );

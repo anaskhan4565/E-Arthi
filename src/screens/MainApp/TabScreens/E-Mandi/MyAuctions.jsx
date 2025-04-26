@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,81 +8,179 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
+    ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import { MMKV } from 'react-native-mmkv';
 
 import Navbar from '../../Navbar/Navbar.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
+import { firestore } from '../../../../../firebase/firebase';
+
+// Initialize MMKV storage
+const storage = new MMKV();
+
+// Helper function to get human-readable status text
+const getStatusString = (status) => {
+    switch (status) {
+        case 'pre_auction':
+            return 'Upcoming';
+        case 'ongoing':
+            return 'Ongoing';
+        case 'closed':
+            return 'Closed';
+        case 'cancelled':
+            return 'Cancelled';
+        default:
+            return 'Unknown';
+    }
+};
 
 function MyAuctions() {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const [auctions, setAuctions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [userId, setUserId] = useState(null);
 
-    // Sample auction data
-    const auctions = [
-        {
-            id: '1',
-            productName: 'Fruits',
-            startPrice: 100,
-            grading: 'A+',
-            region: 'Karachi',
-            endDate: '01/01/2025',
-            endTime: '06:13',
-            status: 'ongoing',
-        },
-        {
-            id: '2',
-            productName: 'Fruits',
-            startPrice: 100,
-            grading: 'A',
-            region: 'Lahore',
-            endDate: '01/01/2025',
-            endTime: '06:13',
-            status: 'ended',
-        },
-        {
-            id: '3',
-            productName: 'Fruits',
-            startPrice: 100,
-            grading: 'B+',
-            region: 'Islamabad',
-            endDate: '01/01/2025',
-            endTime: '06:13',
-            status: 'ended',
-        },
-    ];
+    useEffect(() => {
+        // Get the user ID from storage
+        const currentUserId = storage.getString('userId') || 'anonymous';
+        setUserId(currentUserId);
+        
+        // Function to fetch user's auctions
+        const fetchAuctions = async () => {
+            try {
+                setLoading(true);
+                
+                console.log("Fetching auctions for user ID:", currentUserId);
+                
+                const auctionsCollection = await firestore()
+                    .collection('auctions')
+                    .where('userId', '==', currentUserId)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                if (auctionsCollection.empty) {
+                    console.log("No auctions found for this user");
+                    setAuctions([]);
+                    setLoading(false);
+                    return;
+                }
+                
+                const auctionsData = auctionsCollection.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    // For date fields that come from Firestore Timestamp, convert to readable format
+                    createdAt: doc.data().createdAt ? new Date(doc.data().createdAt.toMillis()).toLocaleDateString() : 'N/A',
+                }));
+                
+                console.log(`Found ${auctionsData.length} auctions for user`);
+                setAuctions(auctionsData);
+                
+            } catch (error) {
+                console.error('Error fetching auctions:', error);
+                Alert.alert('Error', 'Failed to load auctions. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        // Fetch auctions when component mounts
+        fetchAuctions();
+        
+        // Set up real-time listener for updates
+        const unsubscribe = firestore()
+            .collection('auctions')
+            .where('userId', '==', currentUserId)
+            .onSnapshot(
+                snapshot => {
+                    const updatedAuctions = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data(),
+                        createdAt: doc.data().createdAt ? new Date(doc.data().createdAt.toMillis()).toLocaleDateString() : 'N/A',
+                    }));
+                    setAuctions(updatedAuctions);
+                    setLoading(false);
+                },
+                error => {
+                    console.error('Listening error:', error);
+                    setLoading(false);
+                }
+            );
+        
+        // Cleanup listener on component unmount
+        return () => unsubscribe();
+    }, []);
+
+    // Filter auctions based on search query
+    const filteredAuctions = searchQuery
+        ? auctions.filter(auction => 
+            auction.productName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            auction.category?.toLowerCase().includes(searchQuery.toLowerCase()))
+        : auctions;
+
+    const handleSearch = (text) => {
+        setSearchQuery(text);
+    };
+
+    // Function to get image source - either from base64 data or a placeholder
+    const getImageSource = (item) => {
+        if (item.imageData && item.imageData.base64) {
+            return { uri: `data:${item.imageData.type};base64,${item.imageData.base64}` };
+        }
+        return null;
+    };
 
     const renderAuctionItem = ({ item }) => (
         <TouchableOpacity
-            style={styles.auctionItem}
+            style={[
+                styles.auctionItem,
+                // Visual indicator of auction status
+                item.status === 'pre_auction' && styles.preAuctionItem,
+                item.status === 'ongoing' && styles.ongoingItem,
+                item.status === 'closed' && styles.closedItem,
+                item.status === 'cancelled' && styles.cancelledItem,
+            ]}
             onPress={() => navigation.navigate(ScreensName.MyAuctionDetail, { auctionData: item })}
         >
             <View style={styles.auctionImageContainer}>
-                <View style={styles.placeholderImage} />
+                {getImageSource(item) ? (
+                    <Image 
+                        source={getImageSource(item)} 
+                        style={styles.productImage} 
+                    />
+                ) : (
+                    <View style={styles.placeholderImage} />
+                )}
             </View>
             <View style={styles.auctionDetails}>
-                <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName)}</Text>
-                <Text style={styles.auctionPrice}>{t('Auction Start Price')}: {item.startPrice} Rs</Text>
-                <Text style={styles.auctionGrading}>{t('Grading')}: {item.grading}</Text>
-                <Text style={styles.auctionRegion}>{t('Region')}: {t(item.region)}</Text>
-                <Text style={styles.auctionEndsAt}>{t('Auction ends at')}:</Text>
-                <View style={styles.dateTimeContainer}>
-                    <Text style={styles.auctionDate}>{item.endDate}</Text>
-                    <Text style={styles.auctionTime}>{item.endTime}</Text>
-                </View>
+                <Text style={styles.auctionTitle}>{t(item.productName || 'N/A')}</Text>
+                <Text style={styles.auctionPrice}>{t('Start Price')}: {item.startPrice || 0} Rs</Text>
+                <Text style={styles.auctionDetail}>{t('Category')}: {item.category || 'N/A'}</Text>
+                <Text style={styles.auctionDetail}>{t('Start Date')}: {item.startDate || 'N/A'}</Text>
+                <Text style={styles.auctionDetail}>{t('End Date')}: {item.endDate || 'N/A'}</Text>
+                {item.highestBid > 0 && (
+                    <Text style={styles.auctionHighestBid}>{t('Highest Bid')}: {item.highestBid} Rs</Text>
+                )}
             </View>
             <View style={styles.statusBadgeContainer}>
                 <View style={[
                     styles.statusBadge,
-                    item.status === 'ended' ? styles.endedBadge : styles.ongoingBadge
+                    item.status === 'pre_auction' && styles.preAuctionBadge,
+                    item.status === 'ongoing' && styles.ongoingBadge,
+                    item.status === 'closed' && styles.closedBadge,
+                    item.status === 'cancelled' && styles.cancelledBadge,
                 ]}>
                     <Text style={styles.statusText}>
-                        {item.status === 'ended' ? t('Ended') : t('On going')}
+                        {t(getStatusString(item.status))}
                     </Text>
                 </View>
             </View>
@@ -96,19 +194,40 @@ function MyAuctions() {
             </View>
 
             <View style={styles.searchContainer}>
-                <CustomSearchApp placeholder={t('Search in here')} />
+                <CustomSearchApp 
+                    placeholder={t('Search in here')} 
+                    onChangeText={handleSearch}
+                    value={searchQuery}
+                />
             </View>
 
             <View style={styles.content}>
                 <Text style={styles.title}>{t('My Auctions')}</Text>
 
-                <FlatList
-                    data={auctions}
-                    renderItem={renderAuctionItem}
-                    keyExtractor={item => item.id}
-                    contentContainerStyle={styles.auctionsList}
-                    showsVerticalScrollIndicator={false}
-                />
+                {loading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color={colors.GREEN} />
+                        <Text style={styles.loadingText}>{t('Loading auctions...')}</Text>
+                    </View>
+                ) : auctions.length === 0 ? (
+                    <View style={styles.emptyContainer}>
+                        <Text style={styles.emptyText}>{t('You have no auctions yet.')}</Text>
+                        <TouchableOpacity 
+                            style={styles.createButton}
+                            onPress={() => navigation.navigate(ScreensName.RequestForAuction)}
+                        >
+                            <Text style={styles.createButtonText}>{t('Create Auction')}</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={filteredAuctions}
+                        renderItem={renderAuctionItem}
+                        keyExtractor={item => item.id}
+                        contentContainerStyle={styles.auctionsList}
+                        showsVerticalScrollIndicator={false}
+                    />
+                )}
             </View>
         </SafeAreaView>
     );
@@ -166,62 +285,41 @@ const styles = StyleSheet.create({
         backgroundColor: colors.LIGHT_GRAY,
         borderRadius: hp(1),
     },
+    productImage: {
+        width: wp(20),
+        height: wp(20),
+        borderRadius: hp(1),
+        resizeMode: 'cover',
+    },
     auctionDetails: {
         flex: 1,
         paddingLeft: wp(2),
         justifyContent: 'center',
         marginTop: hp(4),
     },
-    auctionPrice: {
+    auctionTitle: {
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(0.1),
     },
-    auctionGrading: {
+    auctionPrice: {
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(0.3),
     },
-    auctionRegion: {
+    auctionDetail: {
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(0.3),
     },
-    auctionEndsAt: {
+    auctionHighestBid: {
         fontSize: hp(1.5),
         fontFamily: fonts.Medium,
         color: colors.BLACK,
         marginBottom: hp(0.3),
-    },
-    dateTimeContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: wp(35),
-    },
-    auctionDate: {
-        fontSize: hp(1.5),
-        fontFamily: fonts.Medium,
-        color: colors.BLACK,
-        backgroundColor: colors.WHITE,
-        paddingHorizontal: wp(2),
-        paddingVertical: hp(0.5),
-        borderRadius: hp(1),
-        borderWidth: 1,
-        borderColor: colors.LIGHT_GRAY,
-    },
-    auctionTime: {
-        fontSize: hp(1.5),
-        fontFamily: fonts.Medium,
-        color: colors.BLACK,
-        backgroundColor: colors.WHITE,
-        paddingHorizontal: wp(2),
-        paddingVertical: hp(0.5),
-        borderRadius: hp(1),
-        borderWidth: 1,
-        borderColor: colors.LIGHT_GRAY,
     },
     statusBadgeContainer: {
         position: 'absolute',
@@ -233,16 +331,67 @@ const styles = StyleSheet.create({
         paddingVertical: hp(0.4),
         borderRadius: hp(1),
     },
+    preAuctionBadge: {
+        backgroundColor: colors.ORANGE,
+    },
     ongoingBadge: {
         backgroundColor: colors.ORANGE,
     },
-    endedBadge: {
+    closedBadge: {
+        backgroundColor: colors.RED,
+    },
+    cancelledBadge: {
         backgroundColor: colors.RED,
     },
     statusText: {
         fontSize: hp(1.4),
         fontFamily: fonts.Medium,
         color: colors.WHITE,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        marginTop: hp(2),
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+        marginBottom: hp(2),
+    },
+    createButton: {
+        backgroundColor: colors.GREEN,
+        paddingHorizontal: wp(5),
+        paddingVertical: hp(1.5),
+        borderRadius: hp(1),
+    },
+    createButtonText: {
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.WHITE,
+    },
+    preAuctionItem: {
+        backgroundColor: colors.ORANGE,
+    },
+    ongoingItem: {
+        backgroundColor: colors.ORANGE,
+    },
+    closedItem: {
+        backgroundColor: colors.RED,
+    },
+    cancelledItem: {
+        backgroundColor: colors.RED,
     },
 });
 

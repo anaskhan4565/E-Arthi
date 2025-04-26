@@ -31,6 +31,8 @@ import PestAndDiseasesAlert from "./PestAndDiseasesAlert.tsx";
 import PlantDrCommunity from "./PlantDrCommunity.jsx";
 import DrPostDetail from "./DrCommunity2.jsx";
 import Fetch1 from "./Fetch1.tsx";
+import SeedsFertilizers from "./SeedsFertilizers.tsx";
+import SeedsFertilizersProductDescription from "./SeedsFertilizersProductDescription.tsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,6 +63,8 @@ function PlantDoctorMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.FertilizationChemical} component={FertilizationChemical} />
             <Stack.Screen name={ScreensName.BasalFertilization} component={BasalFertilization} />
             <Stack.Screen name={ScreensName.Fetch1} component={Fetch1} />
+            <Stack.Screen name={ScreensName.SeedsFertilizers} component={SeedsFertilizers} />
+            <Stack.Screen name={ScreensName.SeedsFertilizersProductDescription} component={SeedsFertilizersProductDescription} />
         </Stack.Navigator>
         // </I18nextProvider>
     );

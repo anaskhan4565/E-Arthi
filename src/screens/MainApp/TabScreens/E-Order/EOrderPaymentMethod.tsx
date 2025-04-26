@@ -106,7 +106,7 @@ function EOrderPaymentMethod(): React.JSX.Element {
     const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num?.toFixed(2) ?? 0);
 
     // Calculate remaining credit
-    const remainingCredit = CREDIT_LIMIT - agriCashTotal;
+    const remainingCredit = 66500;
 
     const handlePaymentMethodSelect = (method) => {
         console.log(method)
@@ -204,7 +204,7 @@ function EOrderPaymentMethod(): React.JSX.Element {
                                     color={colors.GREEN}
                                     disabled
                                 />
-                                <Text style={styles.paymentOptionText}>{t("Line of Credit")}</Text>
+                                <Text style={styles.paymentOptionText}>{t("Agri Cash          ")}</Text>
                             </View>
                             
                             <View style={styles.paymentImageContainer}>

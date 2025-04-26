@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     storageBox: {
         marginBottom: hp("2%"),
-        width: wp("40%"),
+        width: wp("45%"),
         backgroundColor: colors.WHITE,
         borderWidth: 1,
         borderColor: colors.LIGHT_GRAY,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     storageImage: {
         width: wp(20),
-        height: hp(10),
+        height: hp(7),
         marginBottom: hp(1),
     },
     storageTitle: {

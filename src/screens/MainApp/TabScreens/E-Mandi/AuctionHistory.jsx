@@ -22,33 +22,45 @@ import ScreensName from '../../../../../util/Constants/ScreensName.ts';
 const AUCTION_HISTORY = [
     {
         id: '1',
-        productName: 'Fruits',
-        startPrice: 100,
+        productName: 'Apples',
+        startPrice: 140,
         grading: 'A+',
         region: 'Karachi',
         endDate: '01/01/2025',
         endTime: '06:13',
         status: 'won',
+        imageData: {
+            source: require('./pics/ac1.png'),
+        },
+        madeby: 'Izaan Mali',
     },
     {
         id: '2',
-        productName: 'Fruits',
-        startPrice: 100,
+        productName: 'Tomatoes Red',
+        startPrice: 130,
         grading: 'B',
         region: 'Lahore',
         endDate: '01/01/2025',
         endTime: '06:13',
         status: 'ongoing',
+        imageData: {
+            source: require('./pics/ac2.png'),
+        },
+        madeby: 'Hadi Malik',
     },
     {
         id: '3',
-        productName: 'Fruits',
-        startPrice: 100,
+        productName: 'Sugercane-Bulk',
+        startPrice: 70,
         grading: 'A',
         region: 'Islamabad',
         endDate: '01/01/2025',
         endTime: '06:13',
         status: 'won',
+        imageData: {
+            source: require('./pics/ac3.png'),
+        },
+        madeby: 'Sheikh Ali',
     }
 ];
 
@@ -68,7 +80,7 @@ function AuctionHistory() {
             onPress={() => handleAuctionPress(item)}
         >
             <View style={styles.auctionImageContainer}>
-                <View style={styles.placeholderImage} />
+                <Image source={item.imageData.source} style={styles.auctionImage} />
             </View>
             <View style={styles.auctionDetails}>
                 <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName)}</Text>
@@ -134,6 +146,11 @@ const styles = StyleSheet.create({
         marginTop: hp('2%'),
         height: hp('7%'),
         marginHorizontal: hp(2),
+    },
+    auctionImage:{
+        width: wp('25%'),
+        height: wp('25%'),
+        borderRadius: hp(1),
     },
     content: {
         flex: 1,

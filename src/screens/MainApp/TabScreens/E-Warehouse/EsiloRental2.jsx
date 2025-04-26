@@ -35,7 +35,7 @@ function ESiloRental2() {
     // Base data object
     const baseData = {
         location: {
-            distance: '120',
+            distance: '24',
             unit: 'Km'
         },
         details: {

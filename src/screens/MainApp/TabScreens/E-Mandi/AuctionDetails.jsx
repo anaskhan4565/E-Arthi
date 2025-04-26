@@ -7,6 +7,8 @@ import {
     ScrollView,
     TouchableOpacity,
     TextInput,
+    Image,
+    Alert,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -39,17 +41,25 @@ function AuctionDetails() {
     });
     const [totalAmount, setTotalAmount] = useState(0);
     const [maxBid, setMaxBid] = useState('100');
+    const [calculatedBid, setCalculatedBid] = useState(0);
+    const [userCurrentBid, setUserCurrentBid] = useState(0);
+    const [showBidSuccessMessage, setShowBidSuccessMessage] = useState(false);
 
     // Additional auction data not present in the list view
-    const reservePrice = auctionData.reservePrice || auctionData.startPrice;
-    const quantity = auctionData.quantity || '100 KG';
+    const reservePrice = auctionData.reservePrice;
+    const quantity = auctionData.quantity || '100';
     const description = auctionData.description || 'This product is made from this and that and this and that.';
     const madeBy = auctionData.madeBy || 'User';
     const category = auctionData.category || auctionData.productName;
     const buyNowPrice = auctionData.buyNowPrice || (auctionData.startPrice * 1.5);
     const startDate = auctionData.startDate || auctionData.endDate;
     const startTime = auctionData.startTime || auctionData.endTime;
-    const currentBid = auctionData.currentBid || auctionData.startPrice;
+    const [currentBid, setCurrentBid] = useState(auctionData.currentBid || auctionData.startPrice);
+    
+    // Determine if user is the top bidder
+    const isTopBidder = userCurrentBid > 0 && userCurrentBid >= currentBid;
+    
+    auctionData.status = auctionData.status || 'ongoing';
     const isLiveAuction = auctionData.status === 'ongoing';
 
     // Update total amount when quantities or selected bags change
@@ -62,6 +72,41 @@ function AuctionDetails() {
         });
         setTotalAmount(total);
     }, [selectedBags, selectedQuantities, auctionData]);
+    
+    // Calculate total bid amount when maxBid changes
+    useEffect(() => {
+        const bidValue = parseInt(maxBid) || 0;
+        setCalculatedBid(bidValue);
+    }, [maxBid]);
+
+    // Function to handle placing a bid
+    const handlePlaceBid = () => {
+        const bidValue = parseInt(maxBid) || 0;
+        if (bidValue <= 0) {
+            Alert.alert(t('Invalid Bid'), t('Please enter a valid bid amount.'));
+            return;
+        }
+        
+        if (bidValue <= currentBid && bidValue !== 0) {
+            Alert.alert(
+                t('Low Bid'),
+                t('Your bid must be higher than the current bid.')
+            );
+            return;
+        }
+        
+        // Set the new current bid
+        setCurrentBid(bidValue);
+        setUserCurrentBid(bidValue);
+        
+        // Show success message
+        setShowBidSuccessMessage(true);
+        
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            setShowBidSuccessMessage(false);
+        }, 3000);
+    };
 
     const handleQuantityChange = (bag, value) => {
         const newValue = Math.max(1, parseInt(value) || 1);
@@ -94,9 +139,66 @@ function AuctionDetails() {
         }));
     };
 
+    const renderProductDetails = () => {
+        // Try multiple methods to get a valid image source
+        let imageSource = null;
+        
+        // Method 1: Use direct URL if available
+        if (auctionData.imageUrl) {
+            imageSource = { uri: auctionData.imageUrl };
+        } 
+        // Method 2: Use base64 data with mime type if available
+        else if (auctionData.imageData && auctionData.imageData.base64) {
+            const mimeType = auctionData.imageData.type || 'image/jpeg';
+            imageSource = { uri: `data:${mimeType};base64,${auctionData.imageData.base64}` };
+        }
+        
+        return (
+            <View style={styles.productDetailsCard}>
+                <Text style={styles.productDetailsTitle}>{t('Product Details')}</Text>
+
+                <View style={styles.productContentContainer}>
+                    <View style={styles.imageContainer}>
+                        {imageSource ? (
+                            <Image 
+                                source={imageSource}
+                                style={styles.productImage}
+                                resizeMode="cover"
+                            />
+                        ) : (
+                            // Fallback to test image to ensure something displays
+                            <Image 
+                                source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                                style={styles.productImage}
+                                resizeMode="cover"
+                            />
+                        )}
+                    </View>
+
+                    <View style={styles.verticalDivider} />
+
+                    <View style={styles.detailsContainer}>
+                        <View style={styles.detailDivider}>
+                            <View style={styles.detailColumn}>
+                                <Text style={styles.detailLabel}>{t('Made By')}:</Text>
+                                <Text style={styles.detailValue}>{madeBy}</Text>
+                            </View>
+                            <View style={styles.verticalDivider} />
+                            <View style={styles.detailColumn}>
+                                <Text style={styles.detailLabel}>{t('Product Name')}:</Text>
+                                <Text style={styles.detailValue}>{t(auctionData.productName)}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    };
+
     const renderTitle = () => (
         <View style={styles.header}>
-            <Text style={styles.title}>{t('Auction')} {auctionData.id}</Text>
+            <View style={styles.titleContainer}>
+            <Text style={styles.title}>{t('Auction')} {auctionData.productName}</Text>
             <View style={[
                 styles.statusBadge,
                 isLiveAuction ? styles.ongoingBadge : styles.preAuctionBadge
@@ -105,34 +207,8 @@ function AuctionDetails() {
                     {isLiveAuction ? t('On going') : t('Pre auction')}
                 </Text>
             </View>
-        </View>
-    );
-
-    const renderProductDetails = () => (
-        <View style={styles.productDetailsCard}>
-            <Text style={styles.productDetailsTitle}>{t('Product Details')}</Text>
-
-            <View style={styles.productContentContainer}>
-                <View style={styles.imageContainer}>
-                    <View style={styles.placeholderImage} />
-                </View>
-
-                <View style={styles.verticalDivider} />
-
-                <View style={styles.detailsContainer}>
-                    <View style={styles.detailDivider}>
-                        <View style={styles.detailColumn}>
-                            <Text style={styles.detailLabel}>{t('Made By')}:</Text>
-                            <Text style={styles.detailValue}>{madeBy}</Text>
-                        </View>
-                        <View style={styles.verticalDivider} />
-                        <View style={styles.detailColumn}>
-                            <Text style={styles.detailLabel}>{t('Product Name')}:</Text>
-                            <Text style={styles.detailValue}>{t(auctionData.productName)}</Text>
-                        </View>
-                    </View>
-                </View>
             </View>
+
         </View>
     );
 
@@ -164,10 +240,18 @@ function AuctionDetails() {
                     <Text style={styles.sectionValue}>{auctionData.startPrice} Rs</Text>
                 </View>
                 <View style={styles.verticalDivider} />
-                <View style={styles.sectionColumn}>
-                    <Text style={styles.sectionLabel}>{t('Auction reserve price')}:</Text>
-                    <Text style={styles.sectionValue}>{reservePrice} Rs</Text>
-                </View>
+                {!isLiveAuction && (
+                    <View style={styles.sectionColumn}>
+                        <Text style={styles.sectionLabel}>{t('Auction reserve price')}:</Text>
+                        <Text style={styles.sectionValue}>{reservePrice} Rs</Text>
+                    </View>
+                )}
+                {isLiveAuction && (
+                    <View style={styles.sectionColumn}>
+                        <Text style={styles.sectionLabel}>{t('Current highest bid')}:</Text>
+                        <Text style={styles.sectionValue}>{currentBid} Rs</Text>
+                    </View>
+                )}
             </View>
             <View style={styles.horizontalDivider} />
         </View>
@@ -191,7 +275,7 @@ function AuctionDetails() {
                 <View style={styles.verticalDivider} />
                 <View style={styles.categoryColumn}>
                     <Text style={styles.sectionLabel}>{t('Quantity')}</Text>
-                    <Text style={styles.sectionValue}>{quantity}</Text>
+                    <Text style={styles.sectionValue}>{quantity} KG</Text>
                 </View>
                 <View style={styles.verticalDivider} />
                 <View style={styles.categoryColumn}>
@@ -222,7 +306,15 @@ function AuctionDetails() {
     const renderCurrentBid = () => (
         <View style={styles.sectionContainer}>
             <Text style={styles.currentBidLabel}>{t('Current bid')}</Text>
-            <Text style={styles.currentBidValue}>{currentBid} Rs</Text>
+            <Text style={styles.currentBidValue}>{currentBid} Rs/KG</Text>
+            
+            {showBidSuccessMessage && (
+                <View style={styles.bidSuccessMessage}>
+                    <Text style={styles.bidSuccessText}>
+                        {t('Your bid is the highest bid currently!')}
+                    </Text>
+                </View>
+            )}
         </View>
     );
 
@@ -245,12 +337,21 @@ function AuctionDetails() {
                             txColor={colors.WHITE}
                             wgiven={wp('25%')}
                             hgiven={hp('4%')}
+                            onPressG={handlePlaceBid}
                         />
                     </View>
                 </View>
             </View>
+            <View style={styles.totalBidRow}>
+                <Text style={styles.totalBidLabel}>{t('Your bid:')}</Text>
+                <Text style={[
+                    styles.totalBidValue,
+                    isTopBidder && styles.topBidderValue
+                ]}>
+                    {calculatedBid} Rs
+                </Text>
+            </View>
             <Text style={styles.bidIncrementText}>{t('Increase bid in increments of 100 Rs')}</Text>
-
         </View>
     );
 
@@ -315,7 +416,6 @@ function AuctionDetails() {
                     <Text style={styles.totalCurrency}>Rs</Text>
                 </View>
             </View>
-
             <View style={styles.submitButtonContainer}>
                 <CustomButton
                     MainText={t('Submit')}
@@ -328,6 +428,8 @@ function AuctionDetails() {
                 />
             </View>
         </View>
+
+
     );
 
     const renderMakeAnOffer = () => (
@@ -416,7 +518,7 @@ function AuctionDetails() {
             {renderCategories()}
             {renderCurrentBid()}
             {renderPlaceBid()}
-            {renderQualityDiscounts()}
+            
         </>
     );
 
@@ -484,11 +586,17 @@ const styles = StyleSheet.create({
         fontSize: hp(3.5),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
+        marginBottom: hp(3),
+    },
+    titleContainer: {
+        flexDirection: 'column',
     },
     statusBadge: {
         paddingHorizontal: wp(4),
         paddingVertical: hp(0.7),
         borderRadius: hp(1),
+        width: wp('30%'),   
+        height: hp('5%'),
     },
     ongoingBadge: {
         backgroundColor: colors.ORANGE,
@@ -527,12 +635,21 @@ const styles = StyleSheet.create({
     imageContainer: {
         flex: 0.45,
         alignItems: 'center',
+        justifyContent: 'center',
+        padding: hp(1),
     },
     placeholderImage: {
-        width: wp(35),
-        height: wp(35),
+        width: wp(20),
+        height: wp(20),
         backgroundColor: colors.LIGHT_GRAY,
         borderRadius: hp(1),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    placeholderText: {
+        fontSize: hp(1.6),
+        fontFamily: fonts.Medium,
+        color: colors.DARK_GRAY,
     },
     detailsContainer: {
         flex: 0.5,
@@ -566,7 +683,7 @@ const styles = StyleSheet.create({
         marginBottom: hp(0.5),
     },
     detailValue: {
-        fontSize: hp(2),
+        fontSize: hp(1.3),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
     },
@@ -607,7 +724,7 @@ const styles = StyleSheet.create({
         marginBottom: hp(0.5),
     },
     sectionValue: {
-        fontSize: hp(1.7),
+        fontSize: hp(1.4),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
     },
@@ -830,6 +947,43 @@ const styles = StyleSheet.create({
     submitButtonContainer: {
         alignItems: 'center',
         marginTop: hp(3),
+    },
+    totalBidRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: hp(1),
+    },
+    totalBidLabel: {
+        fontSize: hp(1.8),
+        fontFamily: fonts.Medium,
+        color: colors.DARK_GRAY,
+    },
+    totalBidValue: {
+        fontSize: hp(2.2),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
+    },
+    topBidderValue: {
+        fontSize: hp(2.2),
+        fontFamily: fonts.SemiBold,
+        color: colors.GREEN,
+    },
+    bidSuccessMessage: {
+        backgroundColor: colors.GREEN,
+        padding: hp(2),
+        borderRadius: hp(0.5),
+        marginTop: hp(2),
+    },
+    bidSuccessText: {
+        color: colors.WHITE,
+        fontSize: hp(1.8),
+        fontFamily: fonts.Medium,
+    },
+    productImage: {
+        width: wp(30),
+        height: wp(30),
+        borderRadius: hp(1),
     },
 });
 

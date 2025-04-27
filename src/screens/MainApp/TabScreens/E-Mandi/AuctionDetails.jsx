@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -30,7 +30,12 @@ function AuctionDetails() {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const route = useRoute();
-    const { auctionData } = route.params;
+    const { auctionData: initialAuctionData } = route.params;
+
+    // State to hold the latest auction data
+    const [auctionData, setAuctionData] = useState(initialAuctionData);
+    // Ref to track whether component is mounted
+    const isMounted = useRef(true);
 
     const [selectedQuantities, setSelectedQuantities] = useState({
         '1': 1,
@@ -51,22 +56,63 @@ function AuctionDetails() {
     const [showBidSuccessMessage, setShowBidSuccessMessage] = useState(false);
     const [timeLeft, setTimeLeft] = useState(null);
     const [auctionExpired, setAuctionExpired] = useState(false);
-    // Additional auction data not present in the list view
-    const reservePrice = auctionData.reservePrice;
-    const quantity = auctionData.quantity || '100';
-    const description = auctionData.description || 'This product is made from this and that and this and that.';
-    const madeBy = auctionData.madeBy || 'User';
-    const category = auctionData.category || auctionData.productName;
-    const buyNowPrice = auctionData.buyNowPrice || (auctionData.startPrice * 1.5);
-    const startDate = auctionData.startDate || auctionData.endDate;
-    const startTime = auctionData.startTime || auctionData.endTime;
-    const [currentBid, setCurrentBid] = useState(auctionData.currentBid || auctionData.startPrice);
+
+    // Additional auction data
+    const [currentBid, setCurrentBid] = useState(
+        initialAuctionData.currentBid || initialAuctionData.startPrice
+    );
 
     // Determine if user is the top bidder
     const isTopBidder = userCurrentBid > 0 && userCurrentBid >= currentBid;
-
-    auctionData.status = auctionData.status || 'ongoing';
     const isLiveAuction = auctionData.status === 'ongoing';
+
+    // Function to fetch the latest auction data
+    const fetchAuctionData = async () => {
+        if (!isMounted.current || !auctionData.id) return;
+
+        try {
+            const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
+            const snapshot = await get(auctionRef);
+
+            if (snapshot.exists()) {
+                const fetchedData = snapshot.val();
+                if (isMounted.current) {
+                    // Update the auction data state with the fetched data
+                    setAuctionData(prevData => ({
+                        ...prevData,
+                        ...fetchedData,
+                    }));
+
+                    // Update current bid if it exists in the fetched data
+                    const highestBids = fetchedData.highestBids || [];
+                    const highestBidAmount = highestBids.length > 0
+                        ? highestBids[0].bidAmount
+                        : fetchedData.startPrice || initialAuctionData.startPrice;
+
+                    setCurrentBid(highestBidAmount);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching auction data:', error);
+        }
+    };
+
+    // Set up interval to fetch data every 3 seconds
+    useEffect(() => {
+        isMounted.current = true;
+
+        // Fetch data immediately once
+        fetchAuctionData();
+
+        // Then set up interval for every 3 seconds
+        const intervalId = setInterval(fetchAuctionData, 3000);
+
+        // Clean up interval when component unmounts
+        return () => {
+            isMounted.current = false;
+            clearInterval(intervalId);
+        };
+    }, []);
 
     // Update total amount when quantities or selected bags change
     useEffect(() => {
@@ -92,7 +138,7 @@ function AuctionDetails() {
         // Validate bid is at least the start price
         if (bidValue < auctionData.startPrice) {
             Alert.alert(
-                t('Bid Too Low'), 
+                t('Bid Too Low'),
                 t('Your bid must be at least the starting price of ') + auctionData.startPrice + ' Rs.',
                 [{ text: t('OK'), style: 'default' }]
             );
@@ -102,7 +148,7 @@ function AuctionDetails() {
         // If there are existing bids, validate new bid is higher than current highest
         if (currentBid && bidValue <= currentBid) {
             Alert.alert(
-                t('Bid Too Low'), 
+                t('Bid Too Low'),
                 t('Your bid must be higher than the current highest bid of ') + currentBid + ' Rs.',
                 [{ text: t('OK'), style: 'default' }]
             );
@@ -134,8 +180,8 @@ function AuctionDetails() {
                     return;
                 }
             } else {
-                bids.push({ 
-                    bidAmount: bidValue, 
+                bids.push({
+                    bidAmount: bidValue,
                     userId: userId,
                     userName: userName,
                     timestamp: new Date().toISOString()
@@ -158,14 +204,14 @@ function AuctionDetails() {
                 numberOfBids: bidCount,
             });
 
-            // 🟢 After successful bid, refetch the highest bid
-            await fetchCurrentBid();
-
             // Update local state for the current user's bid
             setUserCurrentBid(bidValue);
             setShowBidSuccessMessage(true);
 
             setTimeout(() => setShowBidSuccessMessage(false), 3000);
+
+            // Fetch the latest data after placing bid
+            fetchAuctionData();
         } catch (error) {
             console.error('Error placing bid:', error);
             Alert.alert('Error', 'Failed to place bid. Please try again.');
@@ -186,9 +232,9 @@ function AuctionDetails() {
                 category: auctionData.category || auctionData.productName || 'N/A',
                 status: auctionData.status || 'ongoing'
             };
-            
+
             const userBidsRef = ref(database, `userBids/${userId}/${auctionId}`);
-            
+
             // Save/update with latest bid info
             await update(userBidsRef, {
                 auctionId: auctionId,
@@ -203,42 +249,23 @@ function AuctionDetails() {
         }
     };
 
-    const fetchCurrentBid = async () => {
-        const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
-        try {
-            const snapshot = await get(auctionRef);
-            const auction = snapshot.val();
-            const highestBids = auction?.highestBids || [];
-
-            // Get the highest bid amount from the top of the sorted list
-            const highestBidAmount = highestBids.length > 0 ? highestBids[0].bidAmount : auctionData.startPrice;
-
-            setCurrentBid(highestBidAmount);
-        } catch (error) {
-            console.error('Error fetching current bid:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchCurrentBid();
-    }, []);
     useEffect(() => {
         let interval = null;
-    
+
         const calculateTimeLeft = () => {
             const now = new Date().getTime();
-        
+
             // Combine date and time into ISO 8601 format, handling slash format
             const parseDateTime = (dateStr, timeStr) => {
                 if (!dateStr || !timeStr) {
                     console.error("Missing date or time strings", { dateStr, timeStr });
                     return now;
                 }
-                
+
                 try {
                     // Ensure timeStr has seconds
                     const timeWithSeconds = timeStr.length === 5 ? `${timeStr}:00` : timeStr;
-                    
+
                     // Handle different date formats - both slashes and hyphens
                     let dateParts;
                     if (dateStr.includes('/')) {
@@ -269,13 +296,14 @@ function AuctionDetails() {
                     return now;
                 }
             };
-        
+
             const targetTime = isLiveAuction
                 ? parseDateTime(auctionData.endDate, auctionData.endTime)
-                : parseDateTime(startDate, startTime);
-        
+                : parseDateTime(auctionData.startDate || auctionData.endDate,
+                    auctionData.startTime || auctionData.endTime);
+
             const difference = targetTime - now;
-        
+
             if (difference <= 0) {
                 setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
                 setAuctionExpired(true);
@@ -285,7 +313,7 @@ function AuctionDetails() {
                 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
+
                 if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
                     console.error("Invalid time calculations", { difference, days, hours, minutes, seconds });
                     setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -294,12 +322,13 @@ function AuctionDetails() {
                 }
             }
         };
-        
-        calculateTimeLeft(); 
+
+        calculateTimeLeft();
         interval = setInterval(calculateTimeLeft, 1000);
-    
+
         return () => clearInterval(interval); // Cleanup on unmount
     }, [auctionData, isLiveAuction]);
+
     const handleQuantityChange = (bag, value) => {
         const newValue = Math.max(1, parseInt(value) || 1);
         setSelectedQuantities(prev => ({
@@ -323,9 +352,6 @@ function AuctionDetails() {
             }));
         }
     };
-
-
-
 
     const handleBagSelection = (bag) => {
         setSelectedBags(prev => ({
@@ -376,7 +402,7 @@ function AuctionDetails() {
                         <View style={styles.detailDivider}>
                             <View style={styles.detailColumn}>
                                 <Text style={styles.detailLabel}>{t('Made By')}:</Text>
-                                <Text style={styles.detailValue}>{madeBy}</Text>
+                                <Text style={styles.detailValue}>{auctionData.madeBy}</Text>
                             </View>
                             <View style={styles.verticalDivider} />
                             <View style={styles.detailColumn}>
@@ -412,7 +438,7 @@ function AuctionDetails() {
             <View style={styles.sectionDivider}>
                 <View style={styles.sectionColumn}>
                     <Text style={styles.sectionLabel}>{t('Auction starts at')}:</Text>
-                    <Text style={styles.sectionValue}>{startDate}              <Text style={styles.sectionValue1}>{startTime}</Text></Text>
+                    <Text style={styles.sectionValue}>{auctionData.startDate}              <Text style={styles.sectionValue1}>{auctionData.startTime}</Text></Text>
 
                 </View>
                 <View style={styles.verticalDivider} />
@@ -439,7 +465,7 @@ function AuctionDetails() {
                 {!isLiveAuction && (
                     <View style={styles.sectionColumn}>
                         <Text style={styles.sectionLabel}>{t('Auction reserve price')}:</Text>
-                        <Text style={styles.sectionValue}>{reservePrice} Rs</Text>
+                        <Text style={styles.sectionValue}>{auctionData.reservePrice} Rs</Text>
                     </View>
                 )}
                 {isLiveAuction && (
@@ -463,7 +489,7 @@ function AuctionDetails() {
                 </View>
             );
         }
-        
+
         // Format time values safely
         const formatTime = (value) => {
             if (value === undefined || value === null || isNaN(value)) {
@@ -471,12 +497,12 @@ function AuctionDetails() {
             }
             return String(value).padStart(2, '0');
         };
-        
+
         const days = timeLeft?.days || 0;
         const hours = formatTime(timeLeft?.hours);
         const minutes = formatTime(timeLeft?.minutes);
         const seconds = formatTime(timeLeft?.seconds);
-        
+
         // Format timer string based on days remaining
         let timerStr = '';
         if (days > 0) {
@@ -499,7 +525,7 @@ function AuctionDetails() {
     const renderProductDescription = () => (
         <View style={styles.descriptionContainer}>
             <Text style={styles.sectionLabel}>{t('Product Description')}</Text>
-            <Text style={styles.descriptionText}>{t(description)}</Text>
+            <Text style={styles.descriptionText}>{t(auctionData.description)}</Text>
             <View style={styles.horizontalDivider} />
         </View>
     );
@@ -509,12 +535,12 @@ function AuctionDetails() {
             <View style={styles.categoryDivider}>
                 <View style={styles.categoryColumn}>
                     <Text style={styles.sectionLabel}>{t('Category')}:</Text>
-                    <Text style={styles.sectionValue}>{t(category)}</Text>
+                    <Text style={styles.sectionValue}>{t(auctionData.category)}</Text>
                 </View>
                 <View style={styles.verticalDivider} />
                 <View style={styles.categoryColumn}>
                     <Text style={styles.sectionLabel}>{t('Quantity')}</Text>
-                    <Text style={styles.sectionValue}>{quantity} KG</Text>
+                    <Text style={styles.sectionValue}>{auctionData.quantity} KG</Text>
                 </View>
                 <View style={styles.verticalDivider} />
                 <View style={styles.categoryColumn}>
@@ -527,13 +553,13 @@ function AuctionDetails() {
     );
 
     const renderBuyNow = () => {
-        const totalQuantity = quantity || 150; // Default to 150kg if not specified
-        const totalBuyNowPrice = buyNowPrice * totalQuantity;
-        
+        const totalQuantity = auctionData.quantity || 150; // Default to 150kg if not specified
+        const totalBuyNowPrice = auctionData.buyNowPrice * totalQuantity;
+
         const handleBuyNowPress = () => {
             Alert.alert(
                 t('Confirm Purchase'),
-                t(`You are about to buy ${auctionData.productName} directly:\n\nQuantity: ${totalQuantity} kg\nPrice per kg: ${buyNowPrice} Rs\nTotal Amount: ${totalBuyNowPrice} Rs`),
+                t(`You are about to buy ${auctionData.productName} directly:\n\nQuantity: ${totalQuantity} kg\nPrice per kg: ${auctionData.buyNowPrice} Rs\nTotal Amount: ${totalBuyNowPrice} Rs`),
                 [
                     {
                         text: t('Cancel'),
@@ -547,7 +573,7 @@ function AuctionDetails() {
                                 auctionData: auctionData,
                                 totalQuantity: totalQuantity,
                                 totalPrice: totalBuyNowPrice,
-                                buyNowPrice: buyNowPrice,
+                                buyNowPrice: auctionData.buyNowPrice,
                                 purchaseType: 'buyNow'
                             });
                         },
@@ -555,12 +581,12 @@ function AuctionDetails() {
                 ]
             );
         };
-        
+
         return (
             <View style={styles.buyNowContainer}>
                 <View style={styles.buyNowRow}>
                     <Text style={styles.buyNowLabel}>{t('Buy now price')}:</Text>
-                    <Text style={styles.buyNowPrice}>{buyNowPrice} Rs</Text>
+                    <Text style={styles.buyNowPrice}>{auctionData.buyNowPrice} Rs</Text>
                 </View>
                 <CustomButton
                     MainText={t('Buy it now')}
@@ -574,7 +600,7 @@ function AuctionDetails() {
             </View>
         );
     };
-    
+
 
     const renderCurrentBid = () => (
         <View style={styles.sectionContainer}>
@@ -917,7 +943,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Medium,
         color: colors.ORANGE,
     },
-    
+
     productDetailsCard: {
         backgroundColor: colors.LIGHT_GREEN,
         borderRadius: hp(1.5),

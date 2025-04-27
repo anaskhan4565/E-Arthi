@@ -150,10 +150,7 @@ const AboutMore = () => {
                 );
             });
 
-            // Wait for all orders to be placed
             const results = await Promise.all(orderPromises);
-
-            // Filter out null results and check for errors
             const successfulOrders = results.filter(result => result !== null);
 
             if (successfulOrders.length > 0) {

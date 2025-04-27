@@ -113,7 +113,7 @@ const DashboardInitialization = () => {
                 <View style={styles.nextButton}>
                     <CustomButton
                         MainText={t('Next')}
-                        BgGiven={colors.GREEN} name={ScreensName.PaymentSuccess} txColor={colors.WHITE} isNavigation={1} />
+                        BgGiven={colors.GREEN} name={ScreensName.MainTabNavigation} txColor={colors.WHITE} isNavigation={1} />
                 </View>
 
             </ScrollView>

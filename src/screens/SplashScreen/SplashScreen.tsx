@@ -76,7 +76,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
           routes: [{ name: ScreensName.MainTabNavigation}],
         }),
       );
-    }, 3000);
+    }, 3000);   
 
     return () => clearTimeout(timer);
   }, [navigation]);

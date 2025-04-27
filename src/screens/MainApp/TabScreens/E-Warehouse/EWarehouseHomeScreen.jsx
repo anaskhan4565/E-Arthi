@@ -29,7 +29,7 @@ const warehouseOptions = [
     },
     {
         title: "Monitoring",
-        screen: ScreensName.InventoryMonitoring,
+        screen: ScreensName.FoodSafetyAndSecurity,
         img: require("../../../../assets/MainApp/E-Warehouse/Monitoring.png"),
     },
     {

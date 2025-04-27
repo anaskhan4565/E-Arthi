@@ -94,7 +94,7 @@ const DashBoardNew = () => {
 
 
 
-                    <Text style={styles.dashboardTitle}>Dashboard</Text>
+                    <Text style={styles.dashboardTitle}>Satellite Monitoring</Text>
 
                     <View style={styles.dashboardContainer}>
                         <View style={styles.farmImageContainer}>
@@ -157,7 +157,7 @@ const DashBoardNew = () => {
 
                 {/* Left Screen */}
                 <View style={styles.slide}>
-                    <Text style={styles.dashboardTitle}>Dashboard</Text>
+                    <Text style={styles.dashboardTitle}>Farm Overview</Text>
 
                     <View style={styles.dashboardContainer}>
                         {/* Harvest Timeline */}
@@ -250,7 +250,7 @@ const DashBoardNew = () => {
 
                 {/* Right Screen */}
                 <View style={styles.slide}>
-                    <Text style={styles.dashboardTitle}>Dashboard</Text>
+                    <Text style={styles.dashboardTitle}>Finance Management</Text>
 
                     <View style={styles.dashboardContainer}>
                         {/* Financial Info */}

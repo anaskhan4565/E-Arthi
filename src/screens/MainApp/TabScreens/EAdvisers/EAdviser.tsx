@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -23,6 +23,11 @@ import ScreensName from '../../../../../util/Constants/ScreensName';
 
 const EAdviser = () => {
     const navigation = useNavigation();
+    const [taskCompleted, setTaskCompleted] = useState(false);
+
+    const handleMarkAsDone = () => {
+        setTaskCompleted(true);
+    };
 
     return (
         <View style={styles.container}>
@@ -46,8 +51,14 @@ const EAdviser = () => {
                                 />
                             </View>
                             <Text style={styles.taskText}>Watering Day</Text>
-                            <TouchableOpacity style={styles.markButton}>
-                                <Text style={styles.markButtonText}>Mark as done</Text>
+                            <TouchableOpacity 
+                                style={[styles.markButton, taskCompleted && styles.markButtonCompleted]}
+                                onPress={handleMarkAsDone}
+                                disabled={taskCompleted}
+                            >
+                                <Text style={styles.markButtonText}>
+                                    {taskCompleted ? 'Completed' : 'Mark as done'}
+                                </Text>
                             </TouchableOpacity>
                         </View>
 
@@ -242,6 +253,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp('4%'),
         borderRadius: wp('2%'),
         alignItems: 'center',
+    },
+    markButtonCompleted: {
+        backgroundColor: colors.GRAY,
     },
     markButtonText: {
         color: colors.WHITE,

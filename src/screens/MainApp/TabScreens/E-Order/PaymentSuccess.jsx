@@ -133,7 +133,7 @@ const AboutMore = () => {
                     const cartOrderData = {
                         product_id: productId,
                         quantity: product.quantity || 1,
-                        payment_type: isAgriCashOnly ? "WALLET" : (hasBothPaymentTypes ? "MIXED" : paymentMethod),
+                        payment_type: "WALLET",
                         shipping_address: shippingAddress,
                         contact_number: contactNumber
                     };

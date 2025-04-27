@@ -49,7 +49,8 @@ function AuctionDetails() {
     const [calculatedBid, setCalculatedBid] = useState(0);
     const [userCurrentBid, setUserCurrentBid] = useState(0);
     const [showBidSuccessMessage, setShowBidSuccessMessage] = useState(false);
-
+    const [timeLeft, setTimeLeft] = useState(null);
+    const [auctionExpired, setAuctionExpired] = useState(false);
     // Additional auction data not present in the list view
     const reservePrice = auctionData.reservePrice;
     const quantity = auctionData.quantity || '100';
@@ -60,10 +61,10 @@ function AuctionDetails() {
     const startDate = auctionData.startDate || auctionData.endDate;
     const startTime = auctionData.startTime || auctionData.endTime;
     const [currentBid, setCurrentBid] = useState(auctionData.currentBid || auctionData.startPrice);
-    
+
     // Determine if user is the top bidder
     const isTopBidder = userCurrentBid > 0 && userCurrentBid >= currentBid;
-    
+
     auctionData.status = auctionData.status || 'ongoing';
     const isLiveAuction = auctionData.status === 'ongoing';
 
@@ -77,7 +78,7 @@ function AuctionDetails() {
         });
         setTotalAmount(total);
     }, [selectedBags, selectedQuantities, auctionData]);
-    
+
     useEffect(() => {
         const bidValue = parseInt(maxBid) || 0;
         setCalculatedBid(bidValue);
@@ -86,81 +87,219 @@ function AuctionDetails() {
     const handlePlaceBid = async () => {
         const bidValue = parseInt(maxBid) || 0;
         const userId = storage.getString('userId') || 'anonymous';
-    
+        const userName = storage.getString('userName') || storage.getString('userEmail')?.split('@')[0] || 'Anonymous User';
+
+        // Validate bid is at least the start price
+        if (bidValue < auctionData.startPrice) {
+            Alert.alert(
+                t('Bid Too Low'), 
+                t('Your bid must be at least the starting price of ') + auctionData.startPrice + ' Rs.',
+                [{ text: t('OK'), style: 'default' }]
+            );
+            return;
+        }
+
+        // If there are existing bids, validate new bid is higher than current highest
+        if (currentBid && bidValue <= currentBid) {
+            Alert.alert(
+                t('Bid Too Low'), 
+                t('Your bid must be higher than the current highest bid of ') + currentBid + ' Rs.',
+                [{ text: t('OK'), style: 'default' }]
+            );
+            return;
+        }
+
         if (bidValue <= 0) {
             Alert.alert(t('Invalid Bid'), t('Please enter a valid bid amount.'));
             return;
         }
-    
+
         const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
-    
+
         try {
             const snapshot = await get(auctionRef);
             const auction = snapshot.val();
             let bids = auction?.highestBids || [];
             let bidCount = auction?.numberOfBids || 0;
-    
+
             // Check if user already exists in highestBids
             const existingBidIndex = bids.findIndex((bid) => bid.userId === userId);
-    
+
             if (existingBidIndex !== -1) {
                 if (bidValue > bids[existingBidIndex].bidAmount) {
                     bids[existingBidIndex].bidAmount = bidValue;
+                    bids[existingBidIndex].userName = userName; // Update name in case it changed
                 } else {
                     Alert.alert(t('Low Bid'), t('Your bid must be higher than your previous bid.'));
                     return;
                 }
             } else {
-                bids.push({ bidAmount: bidValue, userId: userId });
+                bids.push({ 
+                    bidAmount: bidValue, 
+                    userId: userId,
+                    userName: userName,
+                    timestamp: new Date().toISOString()
+                });
             }
-    
+
             // Sort descending and keep top 3
             bids.sort((a, b) => b.bidAmount - a.bidAmount);
             bids = bids.slice(0, 3);
-    
+
             // Always increment bid count
             bidCount += 1;
-    
+
+            // Store this auction in user's bid history
+            await saveToUserBidHistory(userId, auctionData.id, bidValue);
+
             // Update DB
             await update(auctionRef, {
                 highestBids: bids,
                 numberOfBids: bidCount,
             });
-    
+
             // 🟢 After successful bid, refetch the highest bid
             await fetchCurrentBid();
-    
-            // Update local state for the current user’s bid
+
+            // Update local state for the current user's bid
             setUserCurrentBid(bidValue);
             setShowBidSuccessMessage(true);
-    
+
             setTimeout(() => setShowBidSuccessMessage(false), 3000);
         } catch (error) {
             console.error('Error placing bid:', error);
             Alert.alert('Error', 'Failed to place bid. Please try again.');
         }
     };
-    
+
+    // Save auction to user's bid history
+    const saveToUserBidHistory = async (userId, auctionId, bidAmount) => {
+        try {
+            // Create a safe auction data object with default values for missing fields
+            const safeAuctionData = {
+                productName: auctionData.productName || 'Unknown Product',
+                startPrice: auctionData.startPrice || 0,
+                endDate: auctionData.endDate || 'N/A',
+                endTime: auctionData.endTime || 'N/A',
+                grading: auctionData.grading || 'N/A',
+                imageUrl: auctionData.imageUrl || null,
+                category: auctionData.category || auctionData.productName || 'N/A',
+                status: auctionData.status || 'ongoing'
+            };
+            
+            const userBidsRef = ref(database, `userBids/${userId}/${auctionId}`);
+            
+            // Save/update with latest bid info
+            await update(userBidsRef, {
+                auctionId: auctionId,
+                lastBidAmount: bidAmount,
+                lastBidTime: new Date().toISOString(),
+                // Store auction data for easy retrieval with safe values
+                auctionData: safeAuctionData
+            });
+        } catch (error) {
+            console.error('Error saving to user bid history:', error);
+            Alert.alert('Bid Placed', 'Your bid was placed, but there was an issue saving to history.');
+        }
+    };
+
     const fetchCurrentBid = async () => {
         const auctionRef = ref(database, `allAuctions/${auctionData.id}`);
         try {
             const snapshot = await get(auctionRef);
             const auction = snapshot.val();
             const highestBids = auction?.highestBids || [];
-    
+
             // Get the highest bid amount from the top of the sorted list
             const highestBidAmount = highestBids.length > 0 ? highestBids[0].bidAmount : auctionData.startPrice;
-    
+
             setCurrentBid(highestBidAmount);
         } catch (error) {
             console.error('Error fetching current bid:', error);
         }
     };
-    
+
     useEffect(() => {
         fetchCurrentBid();
     }, []);
+    useEffect(() => {
+        let interval = null;
     
+        const calculateTimeLeft = () => {
+            const now = new Date().getTime();
+        
+            // Combine date and time into ISO 8601 format, handling slash format
+            const parseDateTime = (dateStr, timeStr) => {
+                if (!dateStr || !timeStr) {
+                    console.error("Missing date or time strings", { dateStr, timeStr });
+                    return now;
+                }
+                
+                try {
+                    // Ensure timeStr has seconds
+                    const timeWithSeconds = timeStr.length === 5 ? `${timeStr}:00` : timeStr;
+                    
+                    // Handle different date formats - both slashes and hyphens
+                    let dateParts;
+                    if (dateStr.includes('/')) {
+                        dateParts = dateStr.split('/'); // Handle DD/MM/YYYY
+                        const [day, month, year] = dateParts;
+                        // Create date using individual components to ensure correct parsing
+                        const dateObj = new Date(year, parseInt(month) - 1, day);
+                        dateObj.setHours(...timeWithSeconds.split(':'));
+                        return dateObj.getTime();
+                    } else if (dateStr.includes('-')) {
+                        dateParts = dateStr.split('-');
+                        // Assume DD-MM-YYYY format
+                        if (dateParts[0].length !== 4) {
+                            const [day, month, year] = dateParts;
+                            const dateObj = new Date(year, parseInt(month) - 1, day);
+                            dateObj.setHours(...timeWithSeconds.split(':'));
+                            return dateObj.getTime();
+                        } else {
+                            // YYYY-MM-DD format
+                            return new Date(`${dateStr}T${timeWithSeconds}`).getTime();
+                        }
+                    } else {
+                        console.error("Unsupported date format", dateStr);
+                        return now;
+                    }
+                } catch (err) {
+                    console.error("Error parsing date", { dateStr, timeStr, error: err.message });
+                    return now;
+                }
+            };
+        
+            const targetTime = isLiveAuction
+                ? parseDateTime(auctionData.endDate, auctionData.endTime)
+                : parseDateTime(startDate, startTime);
+        
+            const difference = targetTime - now;
+        
+            if (difference <= 0) {
+                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                setAuctionExpired(true);
+            } else {
+                // Calculate total days, hours, minutes and seconds
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+                    console.error("Invalid time calculations", { difference, days, hours, minutes, seconds });
+                    setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                } else {
+                    setTimeLeft({ days, hours, minutes, seconds });
+                }
+            }
+        };
+        
+        calculateTimeLeft(); 
+        interval = setInterval(calculateTimeLeft, 1000);
+    
+        return () => clearInterval(interval); // Cleanup on unmount
+    }, [auctionData, isLiveAuction]);
     const handleQuantityChange = (bag, value) => {
         const newValue = Math.max(1, parseInt(value) || 1);
         setSelectedQuantities(prev => ({
@@ -185,6 +324,9 @@ function AuctionDetails() {
         }
     };
 
+
+
+
     const handleBagSelection = (bag) => {
         setSelectedBags(prev => ({
             ...prev,
@@ -195,17 +337,17 @@ function AuctionDetails() {
     const renderProductDetails = () => {
         // Try multiple methods to get a valid image source
         let imageSource = null;
-        
+
         // Method 1: Use direct URL if available
         if (auctionData.imageUrl) {
             imageSource = { uri: auctionData.imageUrl };
-        } 
+        }
         // Method 2: Use base64 data with mime type if available
         else if (auctionData.imageData && auctionData.imageData.base64) {
             const mimeType = auctionData.imageData.type || 'image/jpeg';
             imageSource = { uri: `data:${mimeType};base64,${auctionData.imageData.base64}` };
         }
-        
+
         return (
             <View style={styles.productDetailsCard}>
                 <Text style={styles.productDetailsTitle}>{t('Product Details')}</Text>
@@ -213,14 +355,14 @@ function AuctionDetails() {
                 <View style={styles.productContentContainer}>
                     <View style={styles.imageContainer}>
                         {imageSource ? (
-                            <Image 
+                            <Image
                                 source={imageSource}
                                 style={styles.productImage}
                                 resizeMode="cover"
                             />
                         ) : (
                             // Fallback to test image to ensure something displays
-                            <Image 
+                            <Image
                                 source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                                 style={styles.productImage}
                                 resizeMode="cover"
@@ -251,15 +393,15 @@ function AuctionDetails() {
     const renderTitle = () => (
         <View style={styles.header}>
             <View style={styles.titleContainer}>
-            <Text style={styles.title}>{t('Auction')} {auctionData.productName}</Text>
-            <View style={[
-                styles.statusBadge,
-                isLiveAuction ? styles.ongoingBadge : styles.preAuctionBadge
-            ]}>
-                <Text style={styles.statusText}>
-                    {isLiveAuction ? t('On going') : t('Pre auction')}
-                </Text>
-            </View>
+                <Text style={styles.title}>{t('Auction')} {auctionData.productName}</Text>
+                <View style={[
+                    styles.statusBadge,
+                    isLiveAuction ? styles.ongoingBadge : styles.preAuctionBadge
+                ]}>
+                    <Text style={styles.statusText}>
+                        {isLiveAuction ? t('On going') : t('Pre auction')}
+                    </Text>
+                </View>
             </View>
 
         </View>
@@ -280,6 +422,7 @@ function AuctionDetails() {
                     </Text>
 
                 </View>
+
             </View>
         </View>
     );
@@ -309,7 +452,50 @@ function AuctionDetails() {
             <View style={styles.horizontalDivider} />
         </View>
     );
+    const renderAuctionTimer = () => {
+        if (auctionExpired) {
+            return (
+                <View style={styles.timerContainer}>
+                    <Text style={styles.timerHeading}>
+                        {isLiveAuction ? t('Auction Ended') : t('Auction Not Started Yet')}
+                    </Text>
+                    <Text style={styles.timerText}>{t('No longer available')}</Text>
+                </View>
+            );
+        }
+        
+        // Format time values safely
+        const formatTime = (value) => {
+            if (value === undefined || value === null || isNaN(value)) {
+                return '00';
+            }
+            return String(value).padStart(2, '0');
+        };
+        
+        const days = timeLeft?.days || 0;
+        const hours = formatTime(timeLeft?.hours);
+        const minutes = formatTime(timeLeft?.minutes);
+        const seconds = formatTime(timeLeft?.seconds);
+        
+        // Format timer string based on days remaining
+        let timerStr = '';
+        if (days > 0) {
+            timerStr = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else {
+            timerStr = `${hours}h ${minutes}m ${seconds}s`;
+        }
 
+        return (
+            <View style={styles.timerContainer}>
+                <Text style={styles.timerHeading}>
+                    {isLiveAuction ? t('⏰ Time to finish this auction') : t('⏳ Time for auction to begin')}
+                </Text>
+                <Text style={styles.timerText}>
+                    {timerStr}
+                </Text>
+            </View>
+        );
+    };
     const renderProductDescription = () => (
         <View style={styles.descriptionContainer}>
             <Text style={styles.sectionLabel}>{t('Product Description')}</Text>
@@ -340,27 +526,61 @@ function AuctionDetails() {
         </View>
     );
 
-    const renderBuyNow = () => (
-        <View style={styles.buyNowContainer}>
-            <View style={styles.buyNowRow}>
-                <Text style={styles.buyNowLabel}>{t('Buy now price')}:</Text>
-                <Text style={styles.buyNowPrice}>{buyNowPrice} Rs</Text>
+    const renderBuyNow = () => {
+        const totalQuantity = quantity || 150; // Default to 150kg if not specified
+        const totalBuyNowPrice = buyNowPrice * totalQuantity;
+        
+        const handleBuyNowPress = () => {
+            Alert.alert(
+                t('Confirm Purchase'),
+                t(`You are about to buy ${auctionData.productName} directly:\n\nQuantity: ${totalQuantity} kg\nPrice per kg: ${buyNowPrice} Rs\nTotal Amount: ${totalBuyNowPrice} Rs`),
+                [
+                    {
+                        text: t('Cancel'),
+                        style: 'cancel',
+                    },
+                    {
+                        text: t('Buy'),
+                        onPress: () => {
+                            // Navigate to payment method
+                            navigation.navigate(ScreensName.PaymentHistory, {
+                                auctionData: auctionData,
+                                totalQuantity: totalQuantity,
+                                totalPrice: totalBuyNowPrice,
+                                buyNowPrice: buyNowPrice,
+                                purchaseType: 'buyNow'
+                            });
+                        },
+                    },
+                ]
+            );
+        };
+        
+        return (
+            <View style={styles.buyNowContainer}>
+                <View style={styles.buyNowRow}>
+                    <Text style={styles.buyNowLabel}>{t('Buy now price')}:</Text>
+                    <Text style={styles.buyNowPrice}>{buyNowPrice} Rs</Text>
+                </View>
+                <CustomButton
+                    MainText={t('Buy it now')}
+                    BgGiven={auctionExpired ? colors.LIGHT_GRAY : colors.GREEN}
+                    txColor={colors.WHITE}
+                    wgiven={wp('30%')}
+                    hgiven={hp('5%')}
+                    disabled={auctionExpired}
+                    onPressG={handleBuyNowPress}
+                />
             </View>
-            <CustomButton
-                MainText={t('Buy it now')}
-                BgGiven={colors.GREEN}
-                txColor={colors.WHITE}
-                wgiven={wp('30%')}
-                hgiven={hp('5%')}
-            />
-        </View>
-    );
+        );
+    };
+    
 
     const renderCurrentBid = () => (
         <View style={styles.sectionContainer}>
             <Text style={styles.currentBidLabel}>{t('Current bid')}</Text>
             <Text style={styles.currentBidValue}>{currentBid} Rs/KG</Text>
-            
+
             {showBidSuccessMessage && (
                 <View style={styles.bidSuccessMessage}>
                     <Text style={styles.bidSuccessText}>
@@ -404,7 +624,6 @@ function AuctionDetails() {
                     {calculatedBid} Rs
                 </Text>
             </View>
-            <Text style={styles.bidIncrementText}>{t('Increase bid in increments of 100 Rs')}</Text>
         </View>
     );
 
@@ -487,25 +706,25 @@ function AuctionDetails() {
 
     const renderMakeAnOffer = () => {
         const qualityDiscounts = auctionData.qualityDiscounts || [];
-    
+
         if (!qualityDiscounts.length) {
-            return null; 
+            return null;
         }
-    
+
         return (
             <View style={styles.offerContainer}>
                 <Text style={styles.offerTitle}>{t('Make An Offer')}</Text>
-    
+
                 <View style={styles.offerTableHeader}>
                     <Text style={styles.offerHeaderItem}>{t('Bags')}</Text>
                     <Text style={styles.offerHeaderItem}>{t('Price')}</Text>
                     <Text style={styles.offerHeaderItem}>{t('Quantity')}</Text>
                 </View>
-    
+
                 {qualityDiscounts.map((discount, index) => {
                     const bagWeight = discount.bags;
                     const price = discount.price;
-    
+
                     return (
                         <View key={index} style={styles.offerTableRow}>
                             <View style={styles.checkboxContainer}>
@@ -518,9 +737,9 @@ function AuctionDetails() {
                                 />
                                 <Text style={styles.bagText}>{bagWeight}</Text>
                             </View>
-    
+
                             <Text style={styles.priceText}>{price} Rs</Text>
-    
+
                             <View style={styles.quantityContainer}>
                                 <TouchableOpacity
                                     style={styles.quantityButton}
@@ -528,14 +747,14 @@ function AuctionDetails() {
                                 >
                                     <Text style={styles.quantityButtonText}>-</Text>
                                 </TouchableOpacity>
-    
+
                                 <TextInput
                                     style={styles.quantityInput}
                                     value={(selectedQuantities[bagWeight] || 1).toString()}
                                     onChangeText={(value) => handleQuantityChange(bagWeight, value)}
                                     keyboardType="numeric"
                                 />
-    
+
                                 <TouchableOpacity
                                     style={styles.quantityButton}
                                     onPress={() => handleIncreaseQuantity(bagWeight)}
@@ -546,7 +765,7 @@ function AuctionDetails() {
                         </View>
                     );
                 })}
-    
+
                 <View style={styles.totalContainer}>
                     <Text style={styles.totalLabel}>{t('Total Amount')}:</Text>
                     <View style={styles.totalValueContainer}>
@@ -558,7 +777,7 @@ function AuctionDetails() {
                         <Text style={styles.totalCurrency}>Rs</Text>
                     </View>
                 </View>
-    
+
                 <View style={styles.submitButtonContainer}>
                     <CustomButton
                         MainText={t('Submit')}
@@ -573,7 +792,7 @@ function AuctionDetails() {
             </View>
         );
     };
-    
+
 
     const renderLiveAuctionContent = () => (
         <>
@@ -581,11 +800,13 @@ function AuctionDetails() {
             {renderProductDetails()}
             {renderAuctionTimings()}
             {renderAuctionPrices()}
+            {renderAuctionTimer()}
+
             {renderProductDescription()}
             {renderCategories()}
             {renderCurrentBid()}
             {renderPlaceBid()}
-            
+
         </>
     );
 
@@ -595,6 +816,8 @@ function AuctionDetails() {
             {renderProductDetails()}
             {renderAuctionTimings()}
             {renderAuctionPrices()}
+            {renderAuctionTimer()}
+
             {renderProductDescription()}
             {renderCategories()}
             {renderBuyNow()}
@@ -662,7 +885,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp(4),
         paddingVertical: hp(0.7),
         borderRadius: hp(1),
-        width: wp('30%'),   
+        width: wp('30%'),
         height: hp('5%'),
     },
     ongoingBadge: {
@@ -676,6 +899,25 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Medium,
         fontSize: hp(1.7),
     },
+    timerContainer: {
+        alignItems: 'center',
+        paddingVertical: hp(2),
+        backgroundColor: colors.LIGHT_GREEN,
+        borderRadius: hp(1),
+        marginBottom: hp(2),
+    },
+    timerHeading: {
+        fontSize: hp(2.2),
+        fontFamily: fonts.SemiBold,
+        color: colors.BLACK,
+        marginBottom: hp(1),
+    },
+    timerText: {
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.ORANGE,
+    },
+    
     productDetailsCard: {
         backgroundColor: colors.LIGHT_GREEN,
         borderRadius: hp(1.5),
@@ -1054,4 +1296,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AuctionDetails; 
+export default AuctionDetails;

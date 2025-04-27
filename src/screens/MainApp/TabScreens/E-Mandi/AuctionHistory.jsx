@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -7,6 +7,7 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
+    ActivityIndicator,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +18,14 @@ import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
 import { fonts } from '../../../../../util/Constants/FontName.js';
 import colors from '../../../../../util/Constants/colors.js';
 import ScreensName from '../../../../../util/Constants/ScreensName.ts';
+import { database } from '../../../../../firebase/firebase';
+import { ref, get } from 'firebase/database';
+import { MMKV } from 'react-native-mmkv';
 
-// Sample auction history data
-const AUCTION_HISTORY = [
+const storage = new MMKV();
+
+// Fallback auction history data in case no history exists
+const FALLBACK_AUCTION_HISTORY = [
     {
         id: '1',
         productName: 'Apples',
@@ -35,47 +41,231 @@ const AUCTION_HISTORY = [
         },
         madeby: 'Izaan Mali',
     },
-    {
-        id: '2',
-        productName: 'Tomatoes Red',
-        startPrice: 130,
-        winprice: 140,
-        grading: 'B',
-        region: 'Lahore',
-        endDate: '01/01/2025',
-        endTime: '06:13',
-        status: 'ongoing',
-        imageData: {
-            source: require('./pics/ac2.png'),
-        },
-        madeby: 'Hadi Malik',
-    },
-    {
-        id: '3',
-        productName: 'Sugercane-Bulk',
-        startPrice: 70,
-        grading: 'A',
-        winprice: 80,
-        region: 'Islamabad',
-        endDate: '01/01/2025',
-        endTime: '06:13',
-        status: 'won',
-        imageData: {
-            source: require('./pics/ac3.png'),
-        },
-        madeby: 'Sheikh Ali',
-    }
+    // other fallback data...
 ];
 
 function AuctionHistory() {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const [auctions, setAuctions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const handleAuctionPress = (auction) => {
-        navigation.navigate(ScreensName.AuctionHistoryDetails, { auctionData: auction });
+    useEffect(() => {
+        fetchUserBidHistory();
+    }, []);
+
+    const fetchUserBidHistory = async () => {
+        setLoading(true);
+        try {
+            const userId = storage.getString('userId');
+            if (!userId) {
+                // No user logged in, use fallback data
+                setAuctions(FALLBACK_AUCTION_HISTORY);
+                setLoading(false);
+                return;
+            }
+
+            let auctionsArray = [];
+            
+            // 1. Fetch all auctions user has bid on
+            const userBidsRef = ref(database, `userBids/${userId}`);
+            const bidsSnapshot = await get(userBidsRef);
+            const userBids = bidsSnapshot.val();
+
+            if (userBids) {
+                for (const auctionId in userBids) {
+                    // Fetch current auction data to get latest status
+                    const auctionRef = ref(database, `allAuctions/${auctionId}`);
+                    const auctionSnapshot = await get(auctionRef);
+                    const auctionData = auctionSnapshot.val();
+                    
+                    // Combine user bid data with auction data
+                    const userBid = userBids[auctionId];
+                    
+                    // Determine if user won the auction
+                    let bidStatus = 'participated';
+                    let isHighestBidder = false;
+                    
+                    if (auctionData && auctionData.highestBids && auctionData.highestBids.length > 0) {
+                        // Check if user is the top bidder
+                        if (auctionData.highestBids[0].userId === userId) {
+                            isHighestBidder = true;
+                        }
+                        
+                        // Check if auction has ended
+                        const now = new Date().getTime();
+                        const endTime = new Date(`${auctionData.endDate}T${auctionData.endTime}`).getTime();
+                        
+                        if (now > endTime) {
+                            bidStatus = isHighestBidder ? 'won' : 'lost';
+                        } else {
+                            bidStatus = isHighestBidder ? 'winning' : 'outbid';
+                        }
+                    }
+                    
+                    // Create auction history item
+                    auctionsArray.push({
+                        id: auctionId,
+                        productName: userBid.auctionData?.productName || 'Unknown Product',
+                        startPrice: userBid.auctionData?.startPrice || 0,
+                        winprice: userBid.lastBidAmount,
+                        grading: userBid.auctionData?.grading || 'N/A',
+                        region: userBid.auctionData?.region || 'N/A',
+                        endDate: userBid.auctionData?.endDate || 'N/A',
+                        endTime: userBid.auctionData?.endTime || 'N/A',
+                        status: bidStatus,
+                        imageData: {
+                            source: userBid.auctionData?.imageUrl 
+                                ? { uri: userBid.auctionData.imageUrl } 
+                                : require('./pics/ac1.png')
+                        },
+                        madeby: auctionData?.madeBy || 'Unknown',
+                        lastBidTime: userBid.lastBidTime,
+                        isPurchased: false,
+                        // Add more fields as needed
+                    });
+                }
+            }
+            
+            // 2. Fetch user's direct purchases (Buy Now)
+            const userPurchasesRef = ref(database, `userPurchases/${userId}`);
+            const purchasesSnapshot = await get(userPurchasesRef);
+            const userPurchases = purchasesSnapshot.val();
+            
+            if (userPurchases) {
+                for (const auctionId in userPurchases) {
+                    const purchase = userPurchases[auctionId];
+                    
+                    // Fetch the complete auction data if available
+                    const auctionRef = ref(database, `allAuctions/${auctionId}`);
+                    const auctionSnapshot = await get(auctionRef);
+                    const auctionData = auctionSnapshot.val() || {};
+                    
+                    auctionsArray.push({
+                        id: auctionId,
+                        productName: purchase.productName || auctionData.productName || 'Unknown Product',
+                        startPrice: auctionData.startPrice || 0,
+                        winprice: purchase.totalAmount || auctionData.buyNowPrice || 0,
+                        grading: auctionData.grading || 'N/A',
+                        region: auctionData.region || 'N/A',
+                        endDate: auctionData.endDate || 'N/A',
+                        endTime: auctionData.endTime || 'N/A',
+                        status: 'purchased',
+                        imageData: {
+                            source: auctionData.imageUrl 
+                                ? { uri: auctionData.imageUrl } 
+                                : require('./pics/ac1.png')
+                        },
+                        madeby: auctionData.madeBy || 'Unknown',
+                        lastBidTime: purchase.purchaseDate || new Date().toISOString(),
+                        isPurchased: true,
+                        purchaseType: purchase.purchaseType || 'Pre-Auction',
+                        winNumber: purchase.winNumber
+                    });
+                }
+            }
+            
+            // Sort by most recent bid/purchase
+            auctionsArray.sort((a, b) => new Date(b.lastBidTime) - new Date(a.lastBidTime));
+            
+            setAuctions(auctionsArray.length > 0 ? auctionsArray : FALLBACK_AUCTION_HISTORY);
+        } catch (error) {
+            console.error('Error fetching bid history:', error);
+            setAuctions(FALLBACK_AUCTION_HISTORY);
+        } finally {
+            setLoading(false);
+        }
     };
 
+    const handleAuctionPress = (auction) => {
+        // If the auction is purchased or won, navigate to history details
+        if (auction.status === 'purchased' || auction.status === 'won') {
+            navigation.navigate(ScreensName.AuctionHistoryDetails, { auctionData: auction });
+            return;
+        }
+        
+        // For all other cases (ongoing auctions, outbid, etc.), navigate to auction details
+        // where user can still place bids if the auction is active
+        const auctionId = auction.id;
+        
+        // Fetch the most up-to-date auction data from the database
+        const fetchCurrentAuctionData = async () => {
+            try {
+                const auctionRef = ref(database, `allAuctions/${auctionId}`);
+                const snapshot = await get(auctionRef);
+                const currentAuctionData = snapshot.val();
+                
+                if (currentAuctionData) {
+                    // Navigate to AuctionDetails with the current data
+                    navigation.navigate(ScreensName.AuctionDetails, { 
+                        auctionData: {
+                            id: auctionId,
+                            ...currentAuctionData
+                        }
+                    });
+                } else {
+                    // If auction not found in database, use the history data
+                    navigation.navigate(ScreensName.AuctionDetails, { 
+                        auctionData: auction
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching current auction data:', error);
+                // Fallback to using history data
+                navigation.navigate(ScreensName.AuctionDetails, { 
+                    auctionData: auction
+                });
+            }
+        };
+        
+        fetchCurrentAuctionData();
+    };
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+    };
+
+    const filteredAuctions = searchQuery 
+        ? auctions.filter(auction => 
+            auction.productName.toLowerCase().includes(searchQuery.toLowerCase()))
+        : auctions;
+
+    const getStatusBadgeStyle = (status) => {
+        switch (status) {
+            case 'won':
+                return styles.wonBadge;
+            case 'winning':
+                return styles.winningBadge;
+            case 'lost':
+                return styles.lostBadge;
+            case 'outbid':
+                return styles.outbidBadge;
+            case 'purchased':
+                return styles.purchasedBadge;
+            default:
+                return styles.participatedBadge;
+        }
+    };
+
+    const getStatusText = (status, purchaseType) => {
+        switch (status) {
+            case 'won':
+                return t('Won');
+            case 'winning':
+                return t('Winning');
+            case 'lost':
+                return t('Lost');
+            case 'outbid':
+                return t('Outbid');
+            case 'purchased':
+                return purchaseType ? `${t('Paid')} | ${t(purchaseType)}` : t('Purchased');
+            case 'participated':
+                return t('Participated');
+            default:
+                return t('On going');
+        }
+    };
 
     const renderAuctionItem = ({ item }) => (
         <TouchableOpacity
@@ -83,13 +273,28 @@ function AuctionHistory() {
             onPress={() => handleAuctionPress(item)}
         >
             <View style={styles.auctionImageContainer}>
-                <Image source={item.imageData.source} style={styles.auctionImage} />
+                <Image 
+                    source={
+                        typeof item.imageData.source === 'object' 
+                            ? item.imageData.source 
+                            : item.imageData.source
+                    } 
+                    style={styles.auctionImage} 
+                />
             </View>
             <View style={styles.auctionDetails}>
                 <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName)}</Text>
                 <Text style={styles.auctionPrice}>{t('Auction Start Price')}: {item.startPrice} Rs</Text>
+                <Text style={styles.auctionPrice}>{t('Your Bid')}: {item.winprice} Rs</Text>
                 <Text style={styles.auctionGrading}>{t('Grading')}: {item.grading}</Text>
                 <Text style={styles.auctionRegion}>{t('Region')}: {t(item.region)}</Text>
+                
+                {item.isPurchased && item.winNumber && (
+                    <Text style={styles.winNumberText}>
+                        {t('Win Number')}: {item.winNumber}
+                    </Text>
+                )}
+                
                 <Text style={styles.auctionEndsAt}>{t('Auction ends at')}:</Text>
                 <View style={styles.dateTimeContainer}>
                     <Text style={styles.auctionDate}>{item.endDate}</Text>
@@ -99,10 +304,10 @@ function AuctionHistory() {
             <View style={styles.statusBadgeContainer}>
                 <View style={[
                     styles.statusBadge,
-                    item.status === 'won' ? styles.wonBadge : styles.ongoingBadge
+                    getStatusBadgeStyle(item.status)
                 ]}>
                     <Text style={styles.statusText}>
-                        {item.status === 'won' ? t('Won') : t('On going')}
+                        {getStatusText(item.status, item.purchaseType)}
                     </Text>
                 </View>
             </View>
@@ -116,19 +321,34 @@ function AuctionHistory() {
             </View>
 
             <View style={styles.searchContainer}>
-                <CustomSearchApp placeholder={t('Search in here')} />
+                <CustomSearchApp 
+                    placeholder={t('Search in here')} 
+                    onSearch={handleSearch}
+                />
             </View>
 
             <View style={styles.content}>
-                <Text style={styles.title}>{t('History')}</Text>
+                <Text style={styles.title}>{t('Auction History')}</Text>
 
-                <FlatList
-                    data={AUCTION_HISTORY}
-                    renderItem={renderAuctionItem}
-                    keyExtractor={item => item.id}
-                    contentContainerStyle={styles.auctionsList}
-                    showsVerticalScrollIndicator={false}
-                />
+                {loading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color={colors.GREEN} />
+                        <Text style={styles.loadingText}>{t('Loading your auction history...')}</Text>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={filteredAuctions}
+                        renderItem={renderAuctionItem}
+                        keyExtractor={item => item.id}
+                        contentContainerStyle={styles.auctionsList}
+                        showsVerticalScrollIndicator={false}
+                        ListEmptyComponent={
+                            <View style={styles.emptyContainer}>
+                                <Text style={styles.emptyText}>{t('No auction history found')}</Text>
+                            </View>
+                        }
+                    />
+                )}
             </View>
         </SafeAreaView>
     );
@@ -169,6 +389,27 @@ const styles = StyleSheet.create({
         fontSize: hp(3),
         fontFamily: fonts.SemiBold,
         color: colors.BLACK,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        marginTop: hp(2),
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+    },
+    emptyContainer: {
+        padding: hp(5),
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: hp(2),
+        fontFamily: fonts.Medium,
+        color: colors.GRAY,
+        textAlign: 'center',
     },
     paymentHistoryButton: {
         backgroundColor: colors.GREEN,
@@ -277,13 +518,31 @@ const styles = StyleSheet.create({
     wonBadge: {
         backgroundColor: colors.GREEN,
     },
-    ongoingBadge: {
+    winningBadge: {
+        backgroundColor: colors.SKY,
+    },
+    lostBadge: {
+        backgroundColor: colors.RED,
+    },
+    outbidBadge: {
         backgroundColor: colors.ORANGE,
+    },
+    participatedBadge: {
+        backgroundColor: colors.PURPLE,
+    },
+    purchasedBadge: {
+        backgroundColor: colors.GREEN,
     },
     statusText: {
         fontSize: hp(1.4),
         fontFamily: fonts.Medium,
         color: colors.WHITE,
+    },
+    winNumberText: {
+        fontSize: hp(1.4),
+        fontFamily: fonts.Medium,
+        color: colors.BLACK,
+        marginBottom: hp(0.1),
     },
 });
 

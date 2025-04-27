@@ -244,6 +244,7 @@ export default {
     ELoanNewLand: 'ELoanNewLand',
     EAdviser: 'EAdviser',
     AgriServices: 'AgriServices',
+    GradeRequest: 'GradeRequest',
     CropAdvisor: 'CropAdvisor',
     ZoneDetails: 'ZoneDetails',
     FertilizerAdvisor: 'FertilizerAdvisor',

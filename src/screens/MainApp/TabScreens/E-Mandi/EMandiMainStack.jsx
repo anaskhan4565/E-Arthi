@@ -25,6 +25,11 @@ import AuctionHistoryDetails from "./AuctionHistoryDetails";
 
 import PaymentHistory from "./PaymentHistory";
 import PaymentMethod from "./PaymentMethod";
+import RequestGrading from "../EAdvisers/RequestGrading";
+import EAdviserMainStack from "../EAdvisers/EAdviserMainStack";
+import Grading from "../EAdvisers/Grading";
+import GradingInfo from "../EAdvisers/GradingInfo";
+import RequestGradingDone from "../EAdvisers/RequestGradingDone";
 const Stack = createNativeStackNavigator();
 
 function EMandiMainStack() {
@@ -42,6 +47,10 @@ function EMandiMainStack() {
             <Stack.Screen name={ScreensName.AuctionHistoryDetails} component={AuctionHistoryDetails} />
        
             <Stack.Screen name={ScreensName.PaymentHistory} component={PaymentMethod} />
+            <Stack.Screen name={ScreensName.GradingInfo} component={GradingInfo} />
+            <Stack.Screen name={ScreensName.Grading} component={Grading} />
+            <Stack.Screen name={ScreensName.RequestGrading} component={RequestGrading} />
+            <Stack.Screen name={ScreensName.RequestGradingDone} component={RequestGradingDone} />
         </Stack.Navigator>
     );
 }

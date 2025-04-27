@@ -47,7 +47,14 @@ function LiveAuctions() {
                     id: key,
                     ...data[key],
                     isOwnAuction: data[key].userId === currentUserId,
-                })).filter(auction => auction.status === 'ongoing' || auction.status === 'pre_auction') ; // Only ongoing auctions
+                })).filter(auction => 
+                    // Only show ongoing or pre_auction auctions
+                    (auction.status === 'ongoing' || auction.status === 'pre_auction') &&
+                    // Don't show purchased auctions
+                    auction.status !== 'purchased' &&
+                    // Don't show auctions marked as not visible
+                    auction.visible !== false
+                );
                 setAuctions(auctionList);
             } else {
                 setAuctions([]);
@@ -89,37 +96,63 @@ function LiveAuctions() {
         return null;
     };
 
-    const renderAuctionItem = ({ item }) => (
-        <TouchableOpacity
-            style={[styles.auctionItem, item.isOwnAuction && styles.ownAuctionItem]}
-            onPress={() => handleAuctionPress(item)}
-        >
-            <View style={styles.auctionImageContainer}>
-                {getImageSource(item) ? (
-                    <Image source={getImageSource(item)} style={styles.productImage} />
-                ) : (
-                    <View style={styles.placeholderImage} />
-                )}
-            </View>
-            <View style={styles.auctionDetails}>
-                <Text style={styles.auctionTitle}>{item.productName || 'N/A'}</Text>
-                <Text style={styles.auctionDetail}>{t('Start Price')}: {item.startPrice} Rs</Text>
-                <Text style={styles.auctionDetail}>{t('Category')}: {item.category || 'N/A'}</Text>
-                <Text style={styles.auctionDetail}>{t('Ends at')}: {item.endDate} {item.endTime}</Text>
-            </View>
-            <View style={styles.statusBadgeContainer}>
-                {item.isOwnAuction ? (
-                    <View style={styles.yourAuctionBadge}>
-                        <Text style={styles.statusText}>{t('Your Auction')}</Text>
+    // Calculate the highest bid for an auction
+    const getHighestBid = (auction) => {
+        if (auction.highestBids && auction.highestBids.length > 0) {
+            return auction.highestBids[0].bidAmount;
+        }
+        return auction.startPrice; // Default to start price if no bids
+    };
+
+    const renderAuctionItem = ({ item }) => {
+        const highestBid = getHighestBid(item);
+        const hasHighestBid = item.highestBids && item.highestBids.length > 0;
+        
+        return (
+            <TouchableOpacity
+                style={[styles.auctionItem, item.isOwnAuction && styles.ownAuctionItem]}
+                onPress={() => handleAuctionPress(item)}
+            >
+                <View style={styles.auctionImageContainer}>
+                    {getImageSource(item) ? (
+                        <Image source={getImageSource(item)} style={styles.productImage} />
+                    ) : (
+                        <View style={styles.placeholderImage} />
+                    )}
+                </View>
+                <View style={styles.auctionDetails}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.auctionTitle} numberOfLines={1} ellipsizeMode="tail">
+                            {item.productName || 'N/A'}
+                        </Text>
                     </View>
-                ) : (
-                    <View style={styles.ongoingBadge}>
-                        <Text style={styles.statusText}>{t('Ongoing')}</Text>
-                    </View>
-                )}
-            </View>
-        </TouchableOpacity>
-    );
+                    <Text style={styles.auctionDetail}>{t('Start Price')}: {item.startPrice} Rs</Text>
+                    {hasHighestBid && (
+                        <Text style={styles.highestBidText}>
+                            {t('Highest Bid')}: <Text style={styles.bidAmount}>{highestBid} Rs</Text>
+                        </Text>
+                    )}
+                    <Text style={styles.auctionDetail}>{t('Category')}: {item.category || 'N/A'}</Text>
+                    <Text style={styles.auctionDetail}>{t('Ends at')}: {item.endDate} {item.endTime}</Text>
+                </View>
+                <View style={styles.statusBadgeContainer}>
+                    {item.isOwnAuction ? (
+                        <View style={styles.yourAuctionBadge}>
+                            <Text style={styles.statusText}>{t('Your Auction')}</Text>
+                        </View>
+                    ) : item.status === 'pre_auction' ? (
+                        <View style={styles.preAuctionBadge}>
+                            <Text style={styles.statusText}>{t('Pre Auction')}</Text>
+                        </View>
+                    ) : (
+                        <View style={styles.ongoingBadge}>
+                            <Text style={styles.statusText}>{t('Ongoing')}</Text>
+                        </View>
+                    )}
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -165,14 +198,15 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.WHITE },
     searchContainer: { marginTop: hp(2), height: hp(3), marginHorizontal: hp(2) },
     content: { flex: 1, paddingHorizontal: wp(5) },
-    screenTitle: { fontSize: hp(3), fontFamily: fonts.SemiBold, color: colors.BLACK, marginBottom: hp(2) },
+    screenTitle: { fontSize: hp(3), fontFamily: fonts.SemiBold, color: colors.BLACK, marginBottom: hp(2),marginTop:hp(4) },
     auctionItem: {
         flexDirection: 'row',
         backgroundColor: colors.LIGHT_GREEN,
         borderRadius: hp(1),
         marginBottom: hp(2),
-        padding: hp(1),
+        padding: hp(1.5),
         alignItems: 'center',
+        position: 'relative',
     },
     headerContainer: {
         height: hp('8.5%'),
@@ -182,13 +216,70 @@ const styles = StyleSheet.create({
     auctionImageContainer: { width: wp(25), height: wp(25), justifyContent: 'center', alignItems: 'center' },
     placeholderImage: { width: wp(20), height: wp(20), backgroundColor: colors.LIGHT_GRAY, borderRadius: hp(1) },
     productImage: { width: wp(20), height: wp(20), borderRadius: hp(1), resizeMode: 'cover' },
-    auctionDetails: { flex: 1, paddingLeft: wp(4) },
-    auctionTitle: { fontSize: hp(2), fontFamily: fonts.Medium, color: colors.BLACK, marginBottom: hp(0.5) },
-    auctionDetail: { fontSize: hp(1.8), fontFamily: fonts.Regular, color: colors.BLACK },
-    statusBadgeContainer: { position: 'absolute', top: hp(1.5), right: wp(4) },
-    yourAuctionBadge: { backgroundColor: colors.BLUE || '#3498db', paddingHorizontal: wp(2), paddingVertical: hp(0.4), borderRadius: hp(1) },
-    ongoingBadge: { backgroundColor: colors.ORANGE, paddingHorizontal: wp(2), paddingVertical: hp(0.4), borderRadius: hp(1) },
-    statusText: { fontSize: hp(1.4), fontFamily: fonts.Medium, color: colors.WHITE },
+    auctionDetails: { 
+        flex: 1, 
+        paddingLeft: wp(4),
+        paddingRight: wp(16), // Add padding for badge
+    },
+    titleContainer: { 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: hp(0.5),
+    },
+    auctionTitle: { 
+        fontSize: hp(2), 
+        fontFamily: fonts.Medium, 
+        color: colors.BLACK, 
+        marginBottom: hp(0.5),
+        flexShrink: 1, // Allow text to shrink
+    },
+    auctionDetail: { 
+        fontSize: hp(1.8), 
+        fontFamily: fonts.Regular, 
+        color: colors.BLACK,
+        marginBottom: hp(0.3), 
+    },
+    highestBidText: { 
+        fontSize: hp(1.8), 
+        fontFamily: fonts.Regular, 
+        color: colors.BLACK,
+        marginBottom: hp(0.3),
+    },
+    bidAmount: { 
+        fontSize: hp(1.8), 
+        fontFamily: fonts.Medium, 
+        color: colors.GREEN 
+    },
+    statusBadgeContainer: { 
+        position: 'absolute', 
+        top: hp(1.5), 
+        right: wp(2),
+        zIndex: 1,
+    },
+    yourAuctionBadge: { 
+        backgroundColor: colors.BLUE || '#3498db', 
+        paddingHorizontal: wp(2), 
+        paddingVertical: hp(0.4), 
+        borderRadius: hp(1) 
+    },
+    preAuctionBadge: { 
+        backgroundColor: colors.SKY || '#3498db', 
+        paddingHorizontal: wp(2), 
+        paddingVertical: hp(0.4), 
+        borderRadius: hp(1) 
+    },
+    ongoingBadge: { 
+        backgroundColor: colors.ORANGE, 
+        paddingHorizontal: wp(2), 
+        paddingVertical: hp(0.4), 
+        borderRadius: hp(1) 
+    },
+    statusText: { 
+        fontSize: hp(1.4), 
+        fontFamily: fonts.Medium, 
+        color: colors.WHITE 
+    },
     emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
     emptyText: { fontSize: hp(2), fontFamily: fonts.Medium, color: colors.GRAY, marginBottom: hp(2) },
     createButton: { backgroundColor: colors.GREEN, paddingHorizontal: wp(5), paddingVertical: hp(1.5), borderRadius: hp(1) },

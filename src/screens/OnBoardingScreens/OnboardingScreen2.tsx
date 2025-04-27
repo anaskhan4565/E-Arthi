@@ -39,9 +39,33 @@ const OnboardingScreen2 = () => {
                 console.log('Location permission status:', error?.code, error?.message);
                 setLocationPermissionGranted(false);
                 setIsCheckingPermission(false);
+
+                // If error is because location service is disabled
+                if (error.code === 2) {  // POSITION_UNAVAILABLE usually means location is off
+                    promptEnableLocationServices();
+                }
             },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
         );
+    };
+
+    const promptEnableLocationServices = () => {
+        Alert.alert(
+            "Location Services Disabled",
+            "Please enable location services on your device for this app to work properly.",
+            [
+                { text: "Cancel", style: "cancel" },
+                { text: "Open Settings", onPress: openLocationSettings }
+            ]
+        );
+    };
+
+    const openLocationSettings = () => {
+        if (Platform.OS === 'ios') {
+            Linking.openURL('App-Prefs:Privacy&path=LOCATION');
+        } else {
+            Linking.openSettings();
+        }
     };
 
     const requestLocationPermission = () => {
@@ -50,7 +74,7 @@ const OnboardingScreen2 = () => {
         setIsCheckingPermission(true);
 
         if (Platform.OS === 'ios') {
-            // For iOS, just try to get location which will trigger the permission prompt
+            // For iOS, request authorization then get location
             Geolocation.requestAuthorization();
             Geolocation.getCurrentPosition(
                 (position) => {
@@ -63,12 +87,17 @@ const OnboardingScreen2 = () => {
                 },
                 (error) => {
                     setIsCheckingPermission(false);
-                    handleLocationPermissionError(error);
+                    // Check if the error is because location service is disabled
+                    if (error.code === 2) {  // POSITION_UNAVAILABLE
+                        promptEnableLocationServices();
+                    } else {
+                        handleLocationPermissionError(error);
+                    }
                 },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
             );
         } else {
-            // For Android, permissions are already handled by the Geolocation API
+            // For Android
             Geolocation.getCurrentPosition(
                 (position) => {
                     const latitude = position.coords.latitude;
@@ -80,9 +109,14 @@ const OnboardingScreen2 = () => {
                 },
                 (error) => {
                     setIsCheckingPermission(false);
-                    handleLocationPermissionError(error);
+                    // Check if the error is because location service is disabled
+                    if (error.code === 2) {  // POSITION_UNAVAILABLE
+                        promptEnableLocationServices();
+                    } else {
+                        handleLocationPermissionError(error);
+                    }
                 },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
             );
         }
     };

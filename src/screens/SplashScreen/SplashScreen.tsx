@@ -73,7 +73,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: ScreensName.SignIn}],
+          routes: [{ name: ScreensName.OnboardingScreen1}],
         }),
       );
     }, 3000);

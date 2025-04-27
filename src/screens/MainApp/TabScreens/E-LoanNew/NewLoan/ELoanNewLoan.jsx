@@ -82,7 +82,7 @@ const specialPrograms = [
     {
         id: 5,
         title: 'Islamic Banking\n(Salam)',
-        screen: ScreensName.ELoanSalam,
+        screen: ScreensName.ELoanSalamOnBoarding,
         icon: require('../TempImgs/MFinance.png') // Placeholder icon
     }
 ];

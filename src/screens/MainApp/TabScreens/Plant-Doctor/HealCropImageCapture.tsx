@@ -45,116 +45,9 @@ const HealCropImageCapture = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
     const [analysisError, setAnalysisError] = useState<string | null>(null);
-    const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
 
-    useEffect(() => {
-        checkCameraPermission();
-    }, []);
-
-    const checkCameraPermission = async () => {
-        try {
-            if (Platform.OS === 'android') {
-                const result = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA);
-                setHasCameraPermission(result);
-            }
-        } catch (err) {
-            console.warn('Error checking camera permission:', err);
-            setHasCameraPermission(false);
-        }
-    };
-
-    const requestCameraPermission = async () => {
-        try {
-            if (Platform.OS === 'android') {
-                // Try requesting through the Android permissions API first
-                const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.CAMERA,
-                    {
-                        title: 'Camera Permission',
-                        message: 'EArthi needs camera access to diagnose plant health',
-                        buttonPositive: 'Allow Camera',
-                        buttonNegative: 'Cancel',
-                    }
-                );
-
-                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                    setHasCameraPermission(true);
-                    handleCameraLaunch();
-                } else {
-                    // If permission is denied, try a different approach
-                    Alert.alert(
-                        'Camera Access Required',
-                        'EArthi needs camera access to work properly. Please enable camera access in your device settings.',
-                        [
-                            {
-                                text: 'Cancel',
-                                style: 'cancel',
-                                onPress: () => {
-                                    // Optionally handle cancel
-                                }
-                            },
-                            {
-                                text: 'Enable Camera',
-                                onPress: async () => {
-                                    try {
-                                        // Try to open app settings directly
-                                        await Linking.openSettings();
-                                        
-                                        // When user comes back to app, check permission again
-                                        const backHandler = BackHandler.addEventListener(
-                                            'hardwareBackPress',
-                                            () => {
-                                                checkCameraPermission();
-                                                backHandler.remove();
-                                                return false;
-                                            }
-                                        );
-
-                                        // Also check permission when app comes to foreground
-                                        const timeout = setTimeout(() => {
-                                            checkCameraPermission();
-                                        }, 1000);
-
-                                        return () => {
-                                            clearTimeout(timeout);
-                                            backHandler.remove();
-                                        };
-                                    } catch (error) {
-                                        console.error('Failed to open settings:', error);
-                                        Alert.alert(
-                                            'Manual Setup Required',
-                                            'Please follow these steps:\n\n' +
-                                            '1. Open your phone Settings\n' +
-                                            '2. Tap on Apps & notifications\n' +
-                                            '3. Find and tap on EArthi\n' +
-                                            '4. Tap on Permissions\n' +
-                                            '5. Enable Camera permission'
-                                        );
-                                    }
-                                }
-                            }
-                        ]
-                    );
-                }
-            } else {
-                // For iOS, try direct camera launch
-                handleCameraLaunch();
-            }
-        } catch (err) {
-            console.warn('Error requesting camera permission:', err);
-            Alert.alert(
-                'Permission Error',
-                'Unable to request camera permission. Please enable camera access manually in your device settings.'
-            );
-        }
-    };
-
+    // Handle Camera launch - simplified approach like BiometricVerification.tsx
     const handleCameraLaunch = () => {
-        if (!hasCameraPermission && Platform.OS === 'android') {
-            requestCameraPermission();
-            return;
-        }
-
         const options: CameraOptions = {
             mediaType: 'photo' as MediaType,
             quality: 1,
@@ -162,36 +55,37 @@ const HealCropImageCapture = () => {
             saveToPhotos: false,
         };
 
-        launchCamera(options)
-            .then(response => {
-                if (response.didCancel) {
-                    return;
+        launchCamera(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled camera');
+                return;
+            }
+            
+            if (response.errorCode) {
+                console.log('Camera error:', response.errorMessage);
+                
+                // Simple error handling with a user-friendly message
+                if (response.errorCode === 'camera_unavailable') {
+                    Alert.alert('Error', 'Camera is not available on this device');
+                } else if (response.errorCode === 'permission') {
+                    Alert.alert(
+                        'Camera Permission Required',
+                        'Please allow camera access in your device settings to use this feature.',
+                        [
+                            { text: 'OK', style: 'default' }
+                        ]
+                    );
+                } else {
+                    Alert.alert('Error', 'Failed to access camera. Please try again.');
                 }
+                return;
+            }
 
-                if (response.errorCode) {
-                    if (response.errorCode === 'camera_unavailable') {
-                        Alert.alert('Error', 'Camera is not available on this device');
-                    } else if (response.errorCode === 'permission') {
-                        setHasCameraPermission(false);
-                        requestCameraPermission();
-                    } else if (response.errorCode === 'others') {
-                        Alert.alert('Error', response.errorMessage || 'Failed to access camera');
-                    }
-                    return;
-                }
-
-                if (response.assets && response.assets[0]?.uri) {
-                    setSelectedImage(response.assets[0].uri);
-                    setAnalysisError(null);
-                }
-            })
-            .catch(error => {
-                console.error('Camera launch error:', error);
-                Alert.alert(
-                    'Camera Error',
-                    'Failed to launch camera. Please try again or use gallery option.'
-                );
-            });
+            if (response.assets && response.assets[0]?.uri) {
+                setSelectedImage(response.assets[0].uri);
+                setAnalysisError(null);
+            }
+        });
     };
 
     // Handle Gallery launch
@@ -202,28 +96,23 @@ const HealCropImageCapture = () => {
             includeBase64: false,
         };
 
-        launchImageLibrary(options)
-            .then(response => {
-                if (response.didCancel) {
-                    console.log('User cancelled gallery picker');
-                    return;
-                }
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled gallery picker');
+                return;
+            }
 
-                if (response.errorCode) {
-                    console.error('ImagePicker Error:', response.errorMessage);
-                    Alert.alert('Error', 'Failed to pick image. Please try again.');
-                    return;
-                }
+            if (response.errorCode) {
+                console.error('ImagePicker Error:', response.errorMessage);
+                Alert.alert('Error', 'Failed to pick image. Please try again.');
+                return;
+            }
 
-                if (response.assets && response.assets[0]?.uri) {
-                    setSelectedImage(response.assets[0].uri);
-                    setAnalysisError(null);
-                }
-            })
-            .catch(error => {
-                console.error('Gallery launch failed:', error);
-                Alert.alert('Error', 'Failed to open gallery. Please try again.');
-            });
+            if (response.assets && response.assets[0]?.uri) {
+                setSelectedImage(response.assets[0].uri);
+                setAnalysisError(null);
+            }
+        });
     };
 
     // Function to analyze plant image with API
@@ -424,7 +313,7 @@ const HealCropImageCapture = () => {
 
                     <TouchableOpacity
                         style={styles.iconButton}
-                        onPress={requestCameraPermission}
+                        onPress={handleCameraLaunch}
                     >
                         <Image
                             source={captureButton}

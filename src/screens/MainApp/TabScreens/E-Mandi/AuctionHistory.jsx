@@ -24,26 +24,6 @@ import { MMKV } from 'react-native-mmkv';
 
 const storage = new MMKV();
 
-// Fallback auction history data in case no history exists
-const FALLBACK_AUCTION_HISTORY = [
-    {
-        id: '1',
-        productName: 'Apples',
-        startPrice: 140,
-        winprice: 150,
-        grading: 'A+',
-        region: 'Karachi',
-        endDate: '01/01/2025',
-        endTime: '06:13',
-        status: 'won',
-        imageData: {
-            source: require('./pics/ac1.png'),
-        },
-        madeby: 'Izaan Mali',
-    },
-    // other fallback data...
-];
-
 function AuctionHistory() {
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -60,8 +40,8 @@ function AuctionHistory() {
         try {
             const userId = storage.getString('userId');
             if (!userId) {
-                // No user logged in, use fallback data
-                setAuctions(FALLBACK_AUCTION_HISTORY);
+                // No user logged in, show empty state instead of fallback data
+                setAuctions([]);
                 setLoading(false);
                 return;
             }
@@ -115,11 +95,8 @@ function AuctionHistory() {
                         endDate: userBid.auctionData?.endDate || 'N/A',
                         endTime: userBid.auctionData?.endTime || 'N/A',
                         status: bidStatus,
-                        imageData: {
-                            source: userBid.auctionData?.imageUrl 
-                                ? { uri: userBid.auctionData.imageUrl } 
-                                : require('./pics/ac1.png')
-                        },
+                        imageUrl: userBid.auctionData?.imageUrl || null,
+                        imageData: auctionData?.imageData || null,
                         madeby: auctionData?.madeBy || 'Unknown',
                         lastBidTime: userBid.lastBidTime,
                         isPurchased: false,
@@ -152,11 +129,8 @@ function AuctionHistory() {
                         endDate: auctionData.endDate || 'N/A',
                         endTime: auctionData.endTime || 'N/A',
                         status: 'purchased',
-                        imageData: {
-                            source: auctionData.imageUrl 
-                                ? { uri: auctionData.imageUrl } 
-                                : require('./pics/ac1.png')
-                        },
+                        imageUrl: auctionData.imageUrl || null,
+                        imageData: auctionData.imageData || null,
                         madeby: auctionData.madeBy || 'Unknown',
                         lastBidTime: purchase.purchaseDate || new Date().toISOString(),
                         isPurchased: true,
@@ -169,10 +143,12 @@ function AuctionHistory() {
             // Sort by most recent bid/purchase
             auctionsArray.sort((a, b) => new Date(b.lastBidTime) - new Date(a.lastBidTime));
             
-            setAuctions(auctionsArray.length > 0 ? auctionsArray : FALLBACK_AUCTION_HISTORY);
+            // Set the actual auctions array, don't use fallback data
+            setAuctions(auctionsArray);
         } catch (error) {
             console.error('Error fetching bid history:', error);
-            setAuctions(FALLBACK_AUCTION_HISTORY);
+            // Don't use fallback data on error, show empty state instead
+            setAuctions([]);
         } finally {
             setLoading(false);
         }
@@ -267,52 +243,72 @@ function AuctionHistory() {
         }
     };
 
-    const renderAuctionItem = ({ item }) => (
-        <TouchableOpacity
-            style={styles.auctionItem}
-            onPress={() => handleAuctionPress(item)}
-        >
-            <View style={styles.auctionImageContainer}>
-                <Image 
-                    source={
-                        typeof item.imageData.source === 'object' 
-                            ? item.imageData.source 
-                            : item.imageData.source
-                    } 
-                    style={styles.auctionImage} 
-                />
-            </View>
-            <View style={styles.auctionDetails}>
-                <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName)}</Text>
-                <Text style={styles.auctionPrice}>{t('Auction Start Price')}: {item.startPrice} Rs</Text>
-                <Text style={styles.auctionPrice}>{t('Your Bid')}: {item.winprice} Rs</Text>
-                <Text style={styles.auctionGrading}>{t('Grading')}: {item.grading}</Text>
-                <Text style={styles.auctionRegion}>{t('Region')}: {t(item.region)}</Text>
-                
-                {item.isPurchased && item.winNumber && (
-                    <Text style={styles.winNumberText}>
-                        {t('Win Number')}: {item.winNumber}
-                    </Text>
-                )}
-                
-                <Text style={styles.auctionEndsAt}>{t('Auction ends at')}:</Text>
-                <View style={styles.dateTimeContainer}>
-                    <Text style={styles.auctionDate}>{item.endDate}</Text>
-                    <Text style={styles.auctionTime}>{item.endTime}</Text>
+    const renderAuctionItem = ({ item }) => {
+        // Improved image source logic with multiple fallback approaches
+        let imageSource;
+        
+        // Try to get image from imageUrl property
+        if (item.imageUrl) {
+            imageSource = { uri: item.imageUrl };
+        }
+        // Try to get image from imageData.uri
+        else if (item.imageData && item.imageData.uri) {
+            imageSource = { uri: item.imageData.uri };
+        }
+        // Try to get image from base64 data
+        else if (item.imageData && item.imageData.base64) {
+            const mimeType = item.imageData.type || 'image/jpeg';
+            imageSource = { uri: `data:${mimeType};base64,${item.imageData.base64}` };
+        }
+        // Use default placeholder as last resort
+        else {
+            imageSource = require('./pics/ac1.png');
+        }
+
+        return (
+            <TouchableOpacity
+                style={styles.auctionItem}
+                onPress={() => handleAuctionPress(item)}
+            >
+                <View style={styles.auctionImageContainer}>
+                    <Image 
+                        source={imageSource}
+                        style={styles.auctionImage} 
+                        resizeMode="cover"
+                    />
                 </View>
-            </View>
-            <View style={styles.statusBadgeContainer}>
-                <View style={[
-                    styles.statusBadge,
-                    getStatusBadgeStyle(item.status)
-                ]}>
-                    <Text style={styles.statusText}>
-                        {getStatusText(item.status, item.purchaseType)}
-                    </Text>
+                <View style={styles.auctionDetails}>
+                    <Text style={styles.auctionPrice}>{t('Product Name')}: {t(item.productName)}</Text>
+                    <Text style={styles.auctionPrice}>{t('Auction Start Price')}: {item.startPrice} Rs</Text>
+                    <Text style={styles.auctionPrice}>{t('Your Bid')}: {item.winprice} Rs</Text>
+                    <Text style={styles.auctionGrading}>{t('Grading')}: {item.grading}</Text>
+                    <Text style={styles.auctionRegion}>{t('Region')}: {t(item.region)}</Text>
+                    
+                    {item.isPurchased && item.winNumber && (
+                        <Text style={styles.winNumberText}>
+                            {t('Win Number')}: {item.winNumber}
+                        </Text>
+                    )}
+                    
+                    <Text style={styles.auctionEndsAt}>{t('Auction ends at')}:</Text>
+                    <View style={styles.dateTimeContainer}>
+                        <Text style={styles.auctionDate}>{item.endDate}</Text>
+                        <Text style={styles.auctionTime}>{item.endTime}</Text>
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity>
-    );
+                <View style={styles.statusBadgeContainer}>
+                    <View style={[
+                        styles.statusBadge,
+                        getStatusBadgeStyle(item.status)
+                    ]}>
+                        <Text style={styles.statusText}>
+                            {getStatusText(item.status, item.purchaseType)}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <SafeAreaView style={styles.container}>

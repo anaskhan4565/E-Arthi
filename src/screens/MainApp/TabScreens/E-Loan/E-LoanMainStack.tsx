@@ -69,6 +69,7 @@ import Salam from "../E-LoanNew/Salam/Salam";
 import SalamS2 from "../E-LoanNew/Salam/SalamS2";
 import SalamS3 from "../E-LoanNew/Salam/SalamS3";
 import SalamSuccess from "../E-LoanNew/Salam/SalamSuccess";
+import SalamOnBoarding from "../E-LoanNew/Salam/SalamOnBoarding";
 
 const Stack = createNativeStackNavigator();
 
@@ -133,6 +134,7 @@ function ELoanMainStack(): React.JSX.Element {
             <Stack.Screen name={ScreensName.ELoanSalamS2} component={SalamS2} />
             <Stack.Screen name={ScreensName.ELoanSalamS3} component={SalamS3} />
             <Stack.Screen name={ScreensName.ELoanSalamSuccess} component={SalamSuccess} />
+            <Stack.Screen name={ScreensName.ELoanSalamOnBoarding} component={SalamOnBoarding} />
         </Stack.Navigator>
     );
 }

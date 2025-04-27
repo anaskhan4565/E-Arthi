@@ -229,7 +229,7 @@ export default {
     ELoanSalamS2: "ELoanSalamS2",
     ELoanSalamS3: "ELoanSalamS3",
     ELoanSalamSuccess: "ELoanSalamSuccess",
-
+    ELoanSalamOnBoarding:"ELoanSalamOnBoarding",
     // Settlements screens
     SettlementsMainStack: 'SettlementsMainStack',
     SettlementsScr: 'SettlementsScr',

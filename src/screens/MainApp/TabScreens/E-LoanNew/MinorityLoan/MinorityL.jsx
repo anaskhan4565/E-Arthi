@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -7,7 +7,7 @@ import {
     View,
     TextInput,
     TouchableOpacity,
-    Dimensions,
+    ActivityIndicator,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
@@ -18,22 +18,93 @@ import { fonts } from '../../../../../../util/Constants/FontName.js';
 import { useNavigation } from '@react-navigation/native';
 import ScreensName from '../../../../../../util/Constants/ScreensName.ts';
 import { Picker } from '@react-native-picker/picker';
-
-const userInfo = {
-    name: 'ABC',
-    cnic: '42201-12345-7',
-    contact: '+92 123456789',
-    email: 'abc@gmail.com',
-    city: 'Karachi'
-};
+import { storage } from '../../../../../screens/InitialStartScreens/SignIn.jsx';
+import Routes from '../../../../../../util/Constants/Routes';
 
 const MinorityL = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    
+    const [isUserDataLoading, setIsUserDataLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [userInfo, setUserInfo] = useState({
+        id: null,
+        name: '',
+        username: '',
+        email: '',
+        phone_number: '',
+        cnic: '42101-467672-3', // Default CNIC as requested
+        city: 'Karachi' // Default city
+    });
+
     const [loanType, setLoanType] = useState('');
     const [title, setTitle] = useState('');
     const [repaymentPeriod, setRepaymentPeriod] = useState('');
-    const { height } = Dimensions.get("window");
+    
+    const [formData, setFormData] = useState({
+        entity_name: '',
+        yearly_crop_revenue: '',
+        yearly_yield: '',
+        monthly_net_income: '',
+        loan_amount: ''
+    });
+
+    useEffect(() => {
+        fetchUserInfo();
+    }, []);
+
+    const fetchUserInfo = async () => {
+        try {
+            setIsUserDataLoading(true);
+            const token = storage.getString('token');
+
+            if (!token) {
+                setError(t('You must be logged in to view this page'));
+                setIsUserDataLoading(false);
+                return;
+            }
+
+            const headers = {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            const response = await fetch(Routes.UserInfo, {
+                method: 'GET',
+                headers: headers
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (response.ok) {
+                const userData = result.data;
+                setUserInfo({
+                    id: userData.id,
+                    name: `${userData.first_name} ${userData.last_name}`,
+                    username: userData.username,
+                    email: userData.email,
+                    phone_number: userData.phone_number,
+                    cnic: '42101-467672-3', // Default CNIC as requested
+                    city: t('Karachi') // Default city
+                });
+            } else {
+                setError(result.message || t('Failed to fetch user information'));
+            }
+        } catch (error) {
+            console.log('Error fetching user info:', error);
+            setError(t('An error occurred while fetching user information'));
+        } finally {
+            setIsUserDataLoading(false);
+        }
+    };
+
+    const handleInputChange = (field, value) => {
+        setFormData({
+            ...formData,
+            [field]: value
+        });
+    };
 
   return (
         <SafeAreaView style={styles.container}>
@@ -49,13 +120,20 @@ const MinorityL = () => {
 
                 <View style={styles.contentContainer}>
                     {/* User Info Section */}
-                    <View style={styles.infoSection}>
-                        <Text style={styles.infoText}>{t("Name")}: {userInfo.name}</Text>
-                        <Text style={styles.infoText}>{t("CNIC")}: {userInfo.cnic}</Text>
-                        <Text style={styles.infoText}>{t("Contact Number")}: {userInfo.contact}</Text>
-                        <Text style={styles.infoText}>{t("Email")}: {userInfo.email}</Text>
-                        <Text style={styles.infoText}>{t("City")}: {userInfo.city}</Text>
-                    </View>
+                    {isUserDataLoading ? (
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size="large" color={colors.GREEN} />
+                            <Text style={styles.loadingText}>{t("Loading user information...")}</Text>
+                        </View>
+                    ) : (
+                        <View style={styles.infoSection}>
+                            <Text style={styles.infoText}>{t("Name")}: {userInfo.name}</Text>
+                            <Text style={styles.infoText}>{t("CNIC")}: {userInfo.cnic}</Text>
+                            <Text style={styles.infoText}>{t("Contact Number")}: {userInfo.phone_number}</Text>
+                            <Text style={styles.infoText}>{t("Email")}: {userInfo.email}</Text>
+                            <Text style={styles.infoText}>{t("City")}: {userInfo.city}</Text>
+                        </View>
+                    )}
 
                     <Text style={styles.subTitle}>{t("Enter the following details:")}</Text>
 
@@ -67,6 +145,8 @@ const MinorityL = () => {
                                 style={styles.input}
                                 placeholder={t("Enter entity name")}
                                 placeholderTextColor={colors.GRAY}
+                                value={formData.entity_name}
+                                onChangeText={(text) => handleInputChange('entity_name', text)}
                             />
                         </View>
 
@@ -77,6 +157,8 @@ const MinorityL = () => {
                                 placeholder={t("Enter yearly crop revenue")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
+                                value={formData.yearly_crop_revenue}
+                                onChangeText={(text) => handleInputChange('yearly_crop_revenue', text)}
                             />
                         </View>
 
@@ -87,6 +169,8 @@ const MinorityL = () => {
                                 placeholder={t("Enter yearly yield")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
+                                value={formData.yearly_yield}
+                                onChangeText={(text) => handleInputChange('yearly_yield', text)}
                             />
                         </View>
 
@@ -97,6 +181,8 @@ const MinorityL = () => {
                                 placeholder={t("Enter monthly income")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
+                                value={formData.monthly_net_income}
+                                onChangeText={(text) => handleInputChange('monthly_net_income', text)}
                             />
                         </View>
 
@@ -145,6 +231,8 @@ const MinorityL = () => {
                                 placeholder={t("Enter loan amount")}
                                 placeholderTextColor={colors.GRAY}
                                 keyboardType="numeric"
+                                value={formData.loan_amount}
+                                onChangeText={(text) => handleInputChange('loan_amount', text)}
                             />
                         </View>
 
@@ -168,6 +256,8 @@ const MinorityL = () => {
                             </View>
                         </View>
                     </View>
+
+                    {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
                     <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate(ScreensName.ELoanMinorityS2)}>
                         <Text style={styles.continueButtonText}>{t("Continue")}</Text>
@@ -277,6 +367,28 @@ const styles = StyleSheet.create({
         color: colors.WHITE,
         fontSize: hp('2%'),
         fontFamily: fonts.Medium,
+    },
+    errorText: {
+        color: colors.RED,
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Regular,
+        marginBottom: hp('2%'),
+        textAlign: 'center',
+    },
+    loadingContainer: {
+        padding: hp('2%'),
+        borderRadius: hp('1%'),
+        marginBottom: hp('3%'),
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: hp('10%'),
+        backgroundColor: colors.LIGHT_GREEN,
+    },
+    loadingText: {
+        marginTop: hp('1%'),
+        fontSize: hp('1.8%'),
+        fontFamily: fonts.Regular,
+        color: colors.BLACK,
     },
 });
 

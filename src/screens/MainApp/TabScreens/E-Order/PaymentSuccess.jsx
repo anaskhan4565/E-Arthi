@@ -14,13 +14,15 @@ import { fonts } from '../../../../../util/Constants/FontName.js';
 import { MMKV } from 'react-native-mmkv';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCart } from '../../../../redux/emarketSlice';
 
 const AboutMore = () => {
     const { t } = useTranslation();
     const storage = new MMKV();
     const PassedPayment = new MMKV();
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     // Get cart from Redux if available
     const reduxCart = useSelector((state) => state?.emarket?.cart || []);
@@ -156,6 +158,9 @@ const AboutMore = () => {
             if (successfulOrders.length > 0) {
                 console.log(`Successfully placed ${successfulOrders.length} orders`);
                 setOrderPlaced(true);
+                
+                // Clear cart immediately after successful order placement
+                clearCart();
             } else {
                 setOrderError('Failed to place any orders');
             }
@@ -163,6 +168,17 @@ const AboutMore = () => {
             console.error('Error placing order:', error);
             setOrderError(error.message || 'Failed to place order');
         }
+    };
+
+    // Function to clear cart data from both storage and redux
+    const clearCart = () => {
+        // Clear cart from storage
+        storage.delete("cart");
+        
+        // Clear cart from Redux store
+        dispatch(setCart([]));
+        
+        console.log("Cart cleared successfully");
     };
 
     const ResetDefaultsStore = () => {
@@ -192,19 +208,22 @@ const AboutMore = () => {
                 })
             ]).start();
         } else {
-            // Clear cart and other temporary data
-            storage.delete("cart");
+            // Make sure cart is cleared again when navigating away
+            clearCart();
+            
+            // Clear other temporary data
             storage.delete("FinalPrice");
             storage.delete("AgriCashAmount");
             storage.delete("RegularCashAmount");
             storage.delete("IsAgriCashOnly");
-            // storage.delete("PaymentCompleted");
-
+            storage.delete("updatedCart");
+            storage.delete("PaymentCompleted");
+            
             // Only clear payment-related keys instead of all keys
             // This prevents authentication token from being deleted
             PassedPayment.delete("PassedName");
-            // Add any other payment-specific keys that need to be cleared
-
+            
+            // Navigate back to main screen
             navigation.navigate(ScreensName.MainTabNavigation);
         }
     }

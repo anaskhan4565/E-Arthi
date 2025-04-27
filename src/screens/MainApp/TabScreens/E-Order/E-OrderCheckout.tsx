@@ -53,7 +53,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
 
     // Calculate current cart total excluding this item
     const currentCartTotal = parsedCart.reduce((sum, item) => {
-      if (item.name !== product.name && !item.isCashPurchase) {
+      if (item.id !== product.id && !item.isCashPurchase) {
         const price = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
         return sum + (price * item.quantity);
       }
@@ -65,7 +65,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
 
   const updateQuantity = (product: any, change: number) => {
     const productIndex = parsedCart.findIndex(item => 
-      item.name === product.name && item.isCashPurchase === product.isCashPurchase
+      item.id === product.id && item.isCashPurchase === product.isCashPurchase
     );
 
     if (productIndex !== -1) {
@@ -129,7 +129,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
           </View>
           {parsedCart.map((product, index) => (
             product.quantity >= 1 && (
-              <View key={`${product.name}-${product.isCashPurchase}-${index}`} style={styles.productRow}>
+              <View key={`${product.id}-${product.isCashPurchase}-${index}`} style={styles.productRow}>
                 <View style={styles.productInfo}>
                   <Text style={styles.productText}>{product.name}</Text>
                   <Text style={styles.priceText}>

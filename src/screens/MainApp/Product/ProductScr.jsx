@@ -114,20 +114,21 @@ const ProductScr = () => {
 
         setCart((prevCart) => {
             const existingItem = prevCart.find(item =>
-                item.product_id === newItem.product_id && item.isCashPurchase === isCash
+                item.id === ProductInfo.id && item.isCashPurchase === isCash
             );
 
             let updatedCart;
             if (existingItem) {
                 updatedCart = prevCart.map(item =>
-                    item.product_id === newItem.product_id && item.isCashPurchase === isCash
+                    item.id === ProductInfo.id && item.isCashPurchase === isCash
                         ? { ...item, quantity: item.quantity + quantity }
                         : item
                 );
             } else {
                 updatedCart = [...prevCart, {
                     ...newItem,
-                    product_id: newItem.product_id,
+                    id: ProductInfo.id,
+                    product_id: ProductInfo.id,
                     quantity,
                     price,
                     isCashPurchase: isCash

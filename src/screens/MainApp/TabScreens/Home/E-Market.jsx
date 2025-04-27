@@ -117,10 +117,14 @@ const EMarket = () => {
         const itemPrice = parseFloat(newItem.discounted_price?.replace(/,/g, '') || 0);
         const newItemTotal = itemPrice * quantity;
 
-        // Calculate current cart total for Agri-Cash purchases
+        // Calculate current cart total for Agri-Cash purchases, excluding this item
         const currentCartTotal = cart.reduce((sum, item) => {
-            const itemPrice = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
-            return sum + (itemPrice * item.quantity);
+            // Only include Agri-Cash purchases (non-cash) and exclude the current item by ID
+            if ((item.id !== newItem.id) && !item.isCashPurchase) {
+                const itemPrice = parseFloat(item.discounted_price?.replace(/,/g, '') || 0);
+                return sum + (itemPrice * item.quantity);
+            }
+            return sum;
         }, 0);
 
         // Check if adding this item would exceed the limit
@@ -146,7 +150,7 @@ const EMarket = () => {
             return;
         }
 
-        const existingItemIndex = cart.findIndex(item => item.name === product.name);
+        const existingItemIndex = cart.findIndex(item => item.id === product.id);
 
         if (existingItemIndex !== -1) {
             // Update existing item
@@ -167,8 +171,14 @@ const EMarket = () => {
             dispatch(setCart(updatedCart));
             storage.set("cart", JSON.stringify(updatedCart));
         } else {
-            // Add new item
-            const updatedCart = [...cart, { ...product, quantity: 1 }];
+            // Add new item - ensure it has the ID
+            const itemToAdd = { 
+                ...product, 
+                quantity: 1, 
+                id: product.id || product._id,  // Use id or _id if available
+                isCashPurchase: false           // Default to Agri-Cash purchase
+            };
+            const updatedCart = [...cart, itemToAdd];
             dispatch(setCart(updatedCart));
             storage.set("cart", JSON.stringify(updatedCart));
         }

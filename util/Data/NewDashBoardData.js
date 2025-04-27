@@ -95,7 +95,7 @@ const NewDrawerData = [
         id: 'foodsupply',
         title: 'E-Food Supply',
         svgImage: EFoodSupply,
-        screen: ScreensName.FoodSupplyScr,
+        screen: ScreensName.FoodSafetyAndSecurity,
         isNavigation: true,
     },
     {
@@ -116,7 +116,7 @@ const NewDrawerData = [
         id: 'animalfeed',
         title: 'Animal Feed',
         svgImage: AnimalFeedIcon,
-        screen: "",
+        screen: ScreensName.FoodSafetyAndSecurity,
         isNavigation: true,
     },
 

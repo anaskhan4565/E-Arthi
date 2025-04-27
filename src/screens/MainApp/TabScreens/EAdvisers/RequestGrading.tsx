@@ -20,9 +20,10 @@ import CustomButton from '../../../../components/CustomButton';
 type RootStackParamList = {
     FertilizerAdvisorSelectedCrop: { crop: CropType };
     CropYield: { crop: CropType };
+    RequestGradingDone: { crop: CropType };
 };
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'FertilizerAdvisorSelectedCrop' | 'CropYield'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'FertilizerAdvisorSelectedCrop' | 'CropYield' | 'RequestGradingDone'>;
 
 type CropType = {
     id: string;
@@ -101,7 +102,8 @@ const RequestGrading = () => {
                         isNavigation={true}
                         txColor={colors.WHITE}
                         wgiven={wp('80%')}
-                    />W
+                        onPressG={() => {}}
+                    />
                 </View>
             </ScrollView>
 {/* 

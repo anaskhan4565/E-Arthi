@@ -65,6 +65,7 @@ import { Provider } from "react-redux";
 import store from "./src/redux/store.js";
 import EAdviserMainStack from "./src/screens/MainApp/TabScreens/EAdvisers/EAdviserMainStack.tsx";
 import ERentalMainStack from "./src/screens/MainApp/TabScreens/E-Rentals/E-RentalMainStack.tsx";
+import FoodSafetyAndSecuirty from "./src/screens/MainApp/TabScreens/E-Warehouse/FoodSafetyAndSecurity.jsx";
 const Stack = createNativeStackNavigator();
 
 const slideFromLeftOptions: NativeStackNavigationOptions = {
@@ -133,7 +134,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name={ScreensName.MyProfile} component={MyProfile} />
             <Stack.Screen name={ScreensName.OTPSignUp} component={OTPSignUp} />
 
-
+            <Stack.Screen name={ScreensName.FoodSafetyAndSecurity} component={FoodSafetyAndSecuirty} />
             <Stack.Screen name={ScreensName.EMunshiMainStack} component={EMunshiMainStack} />
 
             <Stack.Screen name={ScreensName.EMandi} component={Overview} />

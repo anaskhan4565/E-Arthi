@@ -20,12 +20,12 @@ import { storage } from '../../../../../screens/InitialStartScreens/SignIn.jsx';
 
 const CurrentLoanNew = () => {
     const { t } = useTranslation();
-    const [currentLoan, setCurrentLoan] = useState(null);
+    const [walletData, setWalletData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchCurrentLoan = async () => {
+        const fetchWalletData = async () => {
             try {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
@@ -45,8 +45,8 @@ const CurrentLoanNew = () => {
                     return;
                 }
 
-                // Make API call with token in header and userId in URL
-                const url = `https://eagri-backend.vercel.app/e_loan/get_loan/user/${userId}/`;
+                // Make API call with token in header
+                const url = 'https://eagri-backend.vercel.app/users/wallet/balance';
                 const response = await axios.get(url, {
                     headers: {
                         'Authorization': `Token ${token}`,
@@ -54,30 +54,21 @@ const CurrentLoanNew = () => {
                     }
                 });
 
-                // Filter to get only approved loans
-                const approvedLoans = response.data.filter(loan =>
-                    loan.status.toLowerCase() === 'approved' ||
-                    loan.status.toLowerCase() === 'fulfilled' ||
-                    loan.status.toLowerCase() === 'in progress'
-                );
-
-                if (approvedLoans.length > 0) {
-                    // Use the most recent approved loan as the current loan
-                    const sortedLoans = approvedLoans.sort((a, b) =>
-                        new Date(b.created_at) - new Date(a.created_at)
-                    );
-                    setCurrentLoan(sortedLoans[0]);
+                if (response.data.status === "success") {
+                    setWalletData(response.data.data);
+                } else {
+                    setError(t("Failed to load wallet data"));
                 }
 
                 setLoading(false);
             } catch (err) {
-                console.error("Error fetching current loan:", err);
-                setError(t("Failed to load current loan"));
+                console.error("Error fetching wallet data:", err);
+                setError(t("Failed to load wallet data"));
                 setLoading(false);
             }
         };
 
-        fetchCurrentLoan();
+        fetchWalletData();
     }, []);
 
     // Format date for display
@@ -139,7 +130,7 @@ const CurrentLoanNew = () => {
                     </View>
                 ) : error ? (
                     <Text style={styles.errorText}>{error}</Text>
-                ) : !currentLoan ? (
+                ) : !walletData ? (
                     <View style={styles.emptyContainer}>
                         <Text style={styles.emptyText}>{t("You don't have any active loans")}</Text>
                     </View>
@@ -147,15 +138,35 @@ const CurrentLoanNew = () => {
                     <>
                         <View style={styles.summaryContainer}>
                             <Text style={styles.sectionTitle}>{t("Loan Summary")}</Text>
-                            <Text style={styles.summaryText}>{t("Loan taken on")}: {formatDate(currentLoan.created_at)}</Text>
-                            <Text style={styles.summaryText}>{t("Loan amount")}: {formatAmount(currentLoan.loan_amount)} {t("Rupees")}</Text>
+                            <Text style={styles.summaryText}>{t("Loan taken on")}: {formatDate(new Date())}</Text>
+                            <Text style={styles.summaryText}>{t("Loan amount")}: {formatAmount(walletData.current_balances.total_balance)} {t("Rupees")}</Text>
 
                             {/* Calculate loan splits */}
                             {(() => {
-                                const loanAmount = parseFloat(currentLoan.loan_amount);
-                                const loanSplit = calculateLoanSplit(loanAmount);
-                                const cashSpending = calculateSpending(loanSplit.cashAmount);
-                                const creditSpending = calculateSpending(loanSplit.lineOfCreditAmount);
+                                const loanAmount = parseFloat(walletData.current_balances.total_balance);
+
+                                // Use the actual split from API instead of calculated
+                                const loanSplit = {
+                                    cashAmount: parseFloat(walletData.current_balances.cash_balance),
+                                    lineOfCreditAmount: parseFloat(walletData.current_balances.line_of_credit),
+                                    cashPercentage: 30,
+                                    lineOfCreditPercentage: 70
+                                };
+
+                                // Use the actual spending data from API instead of random
+                                const cashSpending = {
+                                    spent: parseFloat(walletData.cash_balance_history.total_spent || 0),
+                                    remaining: parseFloat(walletData.cash_balance_history.remaining),
+                                    // Show full circle (100%) when nothing is spent, and decrease as spending increases
+                                    percentage: 100 - (parseFloat(walletData.cash_balance_history.total_spent || 0) / parseFloat(walletData.cash_balance_history.total_received)) * 100
+                                };
+
+                                const creditSpending = {
+                                    spent: parseFloat(walletData.line_of_credit_history.total_spent || 0),
+                                    remaining: parseFloat(walletData.line_of_credit_history.remaining),
+                                    // Show full circle (100%) when nothing is spent, and decrease as spending increases
+                                    percentage: 100 - (parseFloat(walletData.line_of_credit_history.total_spent || 0) / parseFloat(walletData.line_of_credit_history.total_received)) * 100
+                                };
 
                                 return (
                                     <>
@@ -188,7 +199,7 @@ const CurrentLoanNew = () => {
                                                 <Text style={styles.progressLabel}>{t("Cash")}</Text>
                                                 <AnimatedCircularProgress
                                                     size={wp('30%')}
-                                                    width={4}
+                                                    width={8}
                                                     fill={cashSpending.percentage}
                                                     tintColor={colors.ORANGE}
                                                     backgroundColor={colors.LIGHT_ORANGE}
@@ -212,7 +223,7 @@ const CurrentLoanNew = () => {
                                                 <Text style={styles.progressLabel}>{t("Line of Credit")}</Text>
                                                 <AnimatedCircularProgress
                                                     size={wp('30%')}
-                                                    width={5}
+                                                    width={8}
                                                     fill={creditSpending.percentage}
                                                     tintColor={colors.PURPLE}
                                                     backgroundColor={colors.LIGHT_PURPLE}
@@ -239,11 +250,11 @@ const CurrentLoanNew = () => {
 
                         <View style={styles.detailsContainer}>
                             <Text style={styles.sectionTitle}>{t("Loan Details")}</Text>
-                            <DetailRow label={t("Bank")} value={currentLoan.bank_name} />
-                            <DetailRow label={t("Title")} value={currentLoan.title} />
-                            <DetailRow label={t("Loan Type")} value={currentLoan.loan_type} />
-                            <DetailRow label={t("Loan Period")} value={`${currentLoan.desired_loan_period} ${t("months")}`} />
-                            <DetailRow label={t("Entity Name")} value={currentLoan.entity_name} isLast={true} />
+                            <DetailRow label={t("Bank")} value={"SBI"} />
+                            <DetailRow label={t("Title")} value={"E-Wallet"} />
+                            <DetailRow label={t("Loan Type")} value={"Agricultural"} />
+                            <DetailRow label={t("Loan Period")} value={`12 ${t("months")}`} />
+                            <DetailRow label={t("Entity Name")} value={"E-Arthii"} isLast={true} />
                         </View>
                     </>
                 )}

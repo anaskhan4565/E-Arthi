@@ -11,7 +11,7 @@ import { MMKV } from 'react-native-mmkv';
 const formatPrice = (price) => {
   // Convert price to number if it's a string
   const numPrice = typeof price === 'string' ? parseFloat(price.replace(/,/g, '')) : price;
-  
+
   // Format number to include commas and limit decimal places
   return numPrice.toLocaleString('en-IN', {
     maximumFractionDigits: 2,
@@ -19,10 +19,12 @@ const formatPrice = (price) => {
   });
 };
 
-const ProductBox = ({ 
+const ProductBox = ({
+
+  product,
   name,
-  price, 
-  discounted_price, 
+  price,
+  discounted_price,
   SourceGiven,
   category,
   Description,
@@ -36,8 +38,10 @@ const ProductBox = ({
 
   const handlePress = () => {
     if (name) {
-      const productData = JSON.stringify({ 
-        name, price, discounted_price,
+      const id = product.id;
+   
+      const productData = JSON.stringify({
+        id, name, price, discounted_price,
         SourceGiven, weight, Description, category, stock_quantity
       });
       ProductClickInfo.set('selectedProduct', productData);
@@ -61,9 +65,9 @@ const ProductBox = ({
   const mainPriceFontSize = getPriceFontSize(mainPriceToShow);
 
   return (
-    <TouchableOpacity 
-      onPress={handlePress} 
-      activeOpacity={0.9} 
+    <TouchableOpacity
+      onPress={handlePress}
+      activeOpacity={0.9}
       style={styles.container}
     >
       <Image
@@ -71,7 +75,7 @@ const ProductBox = ({
         style={styles.image}
         resizeMode="cover"
       />
-      
+
       <View style={styles.content}>
         <Text style={styles.title} numberOfLines={2}>
           {t(name)}
@@ -95,12 +99,12 @@ const ProductBox = ({
           )}
         </View>
 
-        <TouchableOpacity 
-          style={styles.cartButton} 
+        <TouchableOpacity
+          style={styles.cartButton}
           onPress={onPressG}
         >
-          <Image 
-            source={require('./TempImages/AddImg2.png')} 
+          <Image
+            source={require('./TempImages/AddImg2.png')}
             style={styles.cartIcon}
           />
         </TouchableOpacity>
@@ -189,10 +193,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartIcon: {
-  
+
     width: wp(7),
     height: wp(6),
-    
+
   },
 });
 

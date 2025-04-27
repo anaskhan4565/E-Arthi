@@ -26,7 +26,9 @@ import colors from '../../../../../util/Constants/colors.js';
 import CustomInput from '../../../../components/CustomInput.jsx';
 import CustomButton from '../../../../components/CustomButton.jsx';
 import CustomSearchApp from '../../CustomComponent/CustomSearchApp.jsx';
-import { firestore } from '../../../../../firebase/firebase';
+// import { firestore } from '../../../../../firebase/firebase';
+import { database } from '../../../../../firebase/firebase'; 
+import { ref, set, push } from 'firebase/database';
 
 // Initialize MMKV storage
 const storage = new MMKV();
@@ -219,57 +221,49 @@ function RequestForAuction() {
         setTotalAmount(total.toString());
     };
 
-    // Submit handler
     const handleSubmit = async () => {
-        if (!productName || !startPrice) {
-            alert('Please fill in at least Product Name and Start Price!');
-            return;
-        }
+        const userId = storage.getString('userId') || 'anonymous';
+    
+        const userInputsRef = ref(database, `users/${userId}/auctions`);
+        const newUserInputRef = push(userInputsRef); // Unique key for this auction
+    
+        const allInputsRef = ref(database, `allAuctions/${newUserInputRef.key}`); // Global path
+    
+        const auctionData = {
+            madeBy,
+            productName,
+            startDate,
+            startTime,
+            endDate,
+            endTime,
+            startPrice,
+            reservePrice,
+            buyNowPrice,
+            description,
+            category,
+            quantity,
+            qualityDiscounts: qualityDiscounts.filter(discount => discount.enabled),
+            totalAmount,
+            createdAt: Date.now(),
+            status: Date.now() >= new Date(startDate.split('/').reverse().join('-')).getTime() ? 'ongoing' : 'pre_auction',
+            userId: userId,
+            imageData: productImage ? {
+                base64: productImage.base64,
+                type: productImage.type,
+            } : null,
+        };
     
         try {
-            // Get the user ID from storage
-            const userId = storage.getString('userId') || 'anonymous';
-            console.log("Creating auction for user ID:", userId);
-            
-            // Create auction data object
-            const auctionData = {
-                madeBy,
-                productName,
-                startDate,
-                startTime,
-                endDate,
-                endTime,
-                startPrice,
-                reservePrice,
-                buyNowPrice,
-                description,
-                category,
-                quantity,
-                qualityDiscounts: qualityDiscounts.filter(discount => discount.enabled),
-                totalAmount,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-                status:createdAt==Date.now() ? 'ongoing' : 'pre-auction',
-                userId: userId, // Use the user ID from storage
-            };
-            
-            // Add image data if available
-            if (productImage && productImage.base64) {
-                auctionData.imageData = {
-                    base64: productImage.base64,
-                    type: productImage.type
-                };
-            }
-            
-            await firestore()
-                .collection('auctions')
-                .add(auctionData);
-            
+            await set(newUserInputRef, auctionData);
+            await set(allInputsRef, auctionData);
+            Alert.alert('Success', 'Auction submitted successfully!');
             navigation.navigate(ScreensName.AuctionSubmissionSuccess);
         } catch (error) {
-            console.error('Error adding auction:', error);
-            alert('Failed to submit auction. Please try again.');
+            console.error('Error submitting auction:', error);
+            Alert.alert('Error', 'Failed to submit auction. Please try again.');
         }
     };
+    
 
     return (
         <SafeAreaView style={styles.container}>

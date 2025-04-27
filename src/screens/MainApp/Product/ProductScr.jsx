@@ -39,8 +39,9 @@ const ProductScr = () => {
     const { t } = useTranslation();
     const productData = ProductClickInfo.getString("selectedProduct");
     const ProductInfo = productData ? JSON.parse(productData) : null;
-    console.log("ProductInfo infoss",ProductInfo.stock_quantity);
+    // console.log("ProductInfo infoss", ProductInfo.stock_quantity);
     useEffect(() => {
+        console.log("productData", productData.id);
         const savedCart = storage.getString("cart");
         if (savedCart) {
             setCart(JSON.parse(savedCart));
@@ -53,15 +54,15 @@ const ProductScr = () => {
 
     function configureCount(less, isCash = false) {
         if (!isProductAvailable) return;
-        
+
         if (isCash) {
             let newCount = less ? Math.max(0, CashCount - 1) : CashCount + 1;
             SetCashCount(newCount);
         } else {
             let newCount = less ? Math.max(0, Count - 1) : Count + 1;
-            
+
             if (newCount <= MAX_AGRI_CASH_QUANTITY) {
-        SetCount(newCount);
+                SetCount(newCount);
                 if (newCount < MAX_AGRI_CASH_QUANTITY) {
                     setErrorMessage("");
                 }
@@ -73,7 +74,7 @@ const ProductScr = () => {
 
     const getStockStatus = () => {
         if (!ProductInfo) return {};
-        
+
         if (ProductInfo.stock_quantity === 0) {
             return {
                 text: t("Out of Stock"),
@@ -112,23 +113,24 @@ const ProductScr = () => {
         const price = isCash ? ProductInfo.price : ProductInfo.discounted_price;
 
         setCart((prevCart) => {
-            const existingItem = prevCart.find(item => 
-                item.name === newItem.name && item.isCashPurchase === isCash
+            const existingItem = prevCart.find(item =>
+                item.product_id === newItem.product_id && item.isCashPurchase === isCash
             );
 
             let updatedCart;
             if (existingItem) {
                 updatedCart = prevCart.map(item =>
-                    item.name === newItem.name && item.isCashPurchase === isCash
+                    item.product_id === newItem.product_id && item.isCashPurchase === isCash
                         ? { ...item, quantity: item.quantity + quantity }
                         : item
                 );
             } else {
-                updatedCart = [...prevCart, { 
-                    ...newItem, 
-                    quantity, 
+                updatedCart = [...prevCart, {
+                    ...newItem,
+                    product_id: newItem.product_id,
+                    quantity,
                     price,
-                    isCashPurchase: isCash 
+                    isCashPurchase: isCash
                 }];
             }
 
@@ -172,9 +174,9 @@ const ProductScr = () => {
                 price: ProductInfo.discounted_price,
                 isCashPurchase: false
             };
-            
+
             updateCart(agriCashItem, false);
-            
+
             setTimeout(() => {
                 setIsLoading(false);
                 Navigation.goBack();
@@ -198,9 +200,9 @@ const ProductScr = () => {
                 price: ProductInfo.price,
                 isCashPurchase: true
             };
-            
+
             updateCart(cashItem, true);
-            
+
             setTimeout(() => {
                 setIsLoading(false);
                 Navigation.goBack();
@@ -234,7 +236,7 @@ const ProductScr = () => {
                 };
                 updateCart(agriCashItem, false);
             }
-            
+
             // Add cash units if any
             if (CashCount > 0) {
                 const cashItem = {
@@ -245,7 +247,7 @@ const ProductScr = () => {
                 };
                 updateCart(cashItem, true);
             }
-            
+
             setTimeout(() => {
                 setIsLoading(false);
                 Navigation.goBack();
@@ -351,20 +353,20 @@ const ProductScr = () => {
                                         styles.quantitySelector,
                                         !isProductAvailable && styles.quantitySelectorDisabled
                                     ]}>
-                                    <TouchableOpacity
-                                        onPress={() => configureCount(true)}
+                                        <TouchableOpacity
+                                            onPress={() => configureCount(true)}
                                             disabled={!isProductAvailable}
                                             style={[styles.quantityButton, styles.minusButton]}
-                                    >
-                                        <Text style={styles.quantityButtonText}>−</Text>
-                                    </TouchableOpacity>
+                                        >
+                                            <Text style={styles.quantityButtonText}>−</Text>
+                                        </TouchableOpacity>
 
-                                    <Text style={styles.quantityText}>
-                                        {Count < 10 ? "0" + Count : Count}
-                                    </Text>
+                                        <Text style={styles.quantityText}>
+                                            {Count < 10 ? "0" + Count : Count}
+                                        </Text>
 
-                                    <TouchableOpacity
-                                        onPress={() => configureCount(false)}
+                                        <TouchableOpacity
+                                            onPress={() => configureCount(false)}
                                             disabled={!isProductAvailable}
                                             style={[
                                                 styles.quantityButton,
@@ -442,13 +444,13 @@ const ProductScr = () => {
 
                                         <TouchableOpacity
                                             onPress={() => configureCount(false, true)}
-                                        style={[styles.quantityButton, styles.plusButton]}
-                                    >
-                                        <Text style={styles.quantityButtonText}>+</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                            style={[styles.quantityButton, styles.plusButton]}
+                                        >
+                                            <Text style={styles.quantityButtonText}>+</Text>
+                                        </TouchableOpacity>
+                                    </View>
 
-                                <TouchableOpacity
+                                    <TouchableOpacity
                                         style={[
                                             styles.addToCartButton,
                                             styles.combinedButton,
@@ -495,7 +497,7 @@ const ProductScr = () => {
                         <View style={styles.descriptionContainer}>
                             <Text style={styles.descriptionTitle}>{t("Product Description")}:</Text>
                             <Text style={styles.descriptionText}>
-                               {ProductInfo.Description}
+                                {ProductInfo.Description}
                             </Text>
                         </View>
                     </View>
@@ -507,7 +509,7 @@ const ProductScr = () => {
             </ScrollView>
 
             {/* Bottom Tab Bar */}
-           
+
         </SafeAreaView>
     );
 };

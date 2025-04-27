@@ -21,11 +21,12 @@ import { storage } from '../../../../../screens/InitialStartScreens/SignIn.jsx';
 const CurrentLoanNew = () => {
     const { t } = useTranslation();
     const [walletData, setWalletData] = useState(null);
+    const [loanData, setLoanData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchWalletData = async () => {
+        const fetchData = async () => {
             try {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
@@ -46,31 +47,63 @@ const CurrentLoanNew = () => {
                     return;
                 }
 
-                // Make API call with token in header
-                const url = 'https://eagri-backend.vercel.app/users/wallet/balance';
-                const response = await axios.get(url, {
+                // Fetch wallet data
+                const walletUrl = 'https://eagri-backend.vercel.app/users/wallet/balance';
+                const walletResponse = await axios.get(walletUrl, {
                     headers: {
                         'Authorization': `Token ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
 
-                if (response.data.status === "success") {
-                    setWalletData(response.data.data);
+                console.log(walletResponse.data);
+
+                if (walletResponse.data.status === "success") {
+                    setWalletData(walletResponse.data.data);
                 } else {
-                    console.error("API returned error status");
+                    console.error("API returned error status for wallet data");
                     setError(t("Failed to load wallet data"));
+                }
+
+                // Fetch loan data
+                const loanUrl = `https://eagri-backend.vercel.app/e_loan/get_loan/user/${userId}/`;
+                const loanResponse = await axios.get(loanUrl, {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log(loanResponse.data);
+
+                if (loanResponse.data && loanResponse.data.length > 0) {
+                    // Filter loans with approved status
+                    const approvedLoans = loanResponse.data.filter(loan => loan.status === "approved");
+
+                    if (approvedLoans.length > 0) {
+                        // If multiple approved loans exist, select the one with the largest amount
+                        if (approvedLoans.length > 1) {
+                            // Sort approved loans by approved_amount in descending order
+                            approvedLoans.sort((a, b) => parseFloat(b.approved_amount) - parseFloat(a.approved_amount));
+                        }
+                        setLoanData(approvedLoans[0]);
+                    } else {
+                        // If no approved loans, use the first loan in the original response
+                        setLoanData(loanResponse.data[0]);
+                    }
+                } else {
+                    console.error("No loan data available or empty response");
                 }
 
                 setLoading(false);
             } catch (err) {
-                console.error("Error fetching wallet data:", err);
-                setError(t("Failed to load wallet data"));
+                console.error("Error fetching data:", err);
+                setError(t("Failed to load data"));
                 setLoading(false);
             }
         };
 
-        fetchWalletData();
+        fetchData();
     }, []);
 
     // Format date for display
@@ -139,7 +172,7 @@ const CurrentLoanNew = () => {
                         )}
                         <View style={styles.summaryContainer}>
                             <Text style={styles.sectionTitle}>{t("Loan Summary")}</Text>
-                            <Text style={styles.summaryText}>{t("Loan taken on")}: {formatDate(new Date())}</Text>
+                            <Text style={styles.summaryText}>{t("Loan taken on")}: {formatDate(loanData?.created_at || new Date())}</Text>
                             <Text style={styles.summaryText}>{t("Loan amount")}: {formatAmount(walletData?.current_balances?.total_balance || 0)} {t("Rupees")}</Text>
 
                             {/* Calculate loan splits */}
@@ -268,11 +301,16 @@ const CurrentLoanNew = () => {
 
                         <View style={styles.detailsContainer}>
                             <Text style={styles.sectionTitle}>{t("Loan Details")}</Text>
-                            <DetailRow label={t("Bank")} value={"SBI"} />
-                            <DetailRow label={t("Title")} value={"E-Wallet"} />
-                            <DetailRow label={t("Loan Type")} value={"Agricultural"} />
-                            <DetailRow label={t("Loan Period")} value={`12 ${t("months")}`} />
-                            <DetailRow label={t("Entity Name")} value={"E-Arthii"} isLast={true} />
+                            <DetailRow label={t("Bank")} value={loanData?.bank_name || "N/A"} />
+                            <DetailRow label={t("Title")} value={loanData?.title || "N/A"} />
+                            <DetailRow label={t("Loan Type")} value={loanData?.loan_type || "N/A"} />
+                            <DetailRow label={t("Loan Period")} value={`${loanData?.desired_loan_period || "N/A"} ${t("months")}`} />
+                            <DetailRow label={t("Entity Name")} value={loanData?.entity_name || "N/A"} />
+                            <DetailRow label={t("Approved Amount")} value={`${formatAmount(loanData?.approved_amount || 0)} ${t("Rupees")}`} />
+                            <DetailRow label={t("Interest Rate")} value={`${loanData?.interest_rate || 0}%`} />
+                            <DetailRow label={t("Repayment Terms")} value={loanData?.repayment_terms || "N/A"} />
+                            <DetailRow label={t("Amount Payable")} value={`${formatAmount(loanData?.amount_payable || 0)} ${t("Rupees")}`} />
+                            <DetailRow label={t("Status")} value={loanData?.status || "N/A"} isLast={true} />
                         </View>
                     </>
                 )}

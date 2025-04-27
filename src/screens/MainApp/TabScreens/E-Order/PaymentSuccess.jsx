@@ -198,9 +198,13 @@ const AboutMore = () => {
             storage.delete("AgriCashAmount");
             storage.delete("RegularCashAmount");
             storage.delete("IsAgriCashOnly");
-            storage.delete("PaymentCompleted");
+            // storage.delete("PaymentCompleted");
 
-            PassedPayment.clearAll();
+            // Only clear payment-related keys instead of all keys
+            // This prevents authentication token from being deleted
+            PassedPayment.delete("PassedName");
+            // Add any other payment-specific keys that need to be cleared
+
             navigation.navigate(ScreensName.MainTabNavigation);
         }
     }
@@ -268,8 +272,6 @@ const AboutMore = () => {
                     BgGiven={colors.GREEN}
                     onPressG={ResetDefaultsStore}
                     MainText={t('Continue')}
-                    name={ScreensName.SignUp}
-                    isNavigation={true}
                     txColor={colors.WHITE}
                 />
             </View>

@@ -41,43 +41,131 @@ function SignUp(): React.JSX.Element {
     const [Email, setEmail] = useState("");
     const [Number, setNumber] = useState("+92");
     const [Password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState();
-    const [NameError, setNameError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [FirstNameError, setFirstNameError] = useState(false);
+    const [LastNameError, setLastNameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [NumberError, setNumberError] = useState(false);
     const [EmailError, setEmailError] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(true);
     const { t } = useTranslation();
     const [selectedOption, setSelectedOption] = useState("Individual");
-    const navigation = useNavigation(); // Added navigation instance
+    const navigation = useNavigation<any>(); // Type as any to allow any screen name
     const storage = new MMKV();
     const [isLoading, setIsLoading] = useState(false);
     const handleNumberChange = (value: string) => {
-        //value = value.replace(/[^0-9]/g, "");
         setNumber(value);
+        // Clear number error when user starts typing
+        if (NumberError && value !== "+92") {
+            setNumberError(false);
+            // Clear error message if it was related to phone number
+            if (errorMessage === t("Mobile number must be 12 digits") ||
+                errorMessage === t("Please fill all fields")) {
+                setErrorMessage(null);
+            }
+        }
+    };
+
+    const handleEmailChange = (value: string) => {
+        setEmail(value);
+        // Clear email error when user starts typing
+        if (EmailError) {
+            setEmailError(false);
+            // Clear error message if it was related to email
+            if (errorMessage === t("Invalid email format") ||
+                errorMessage === t("This email is already registered") ||
+                errorMessage === t("Please fill all fields")) {
+                setErrorMessage(null);
+            }
+        }
+    };
+
+    const handlePasswordChange = (value: string) => {
+        setPassword(value);
+        // Clear password error when user starts typing
+        if (passwordError) {
+            setPasswordError(false);
+            // Clear error message if it was related to password
+            if (errorMessage === t("Please fill all fields")) {
+                setErrorMessage(null);
+            }
+        }
+    };
+
+    const handleFirstNameChange = (value: string) => {
+        setFirstName(value);
+        // Clear first name error when user starts typing
+        if (FirstNameError) {
+            setFirstNameError(false);
+            // Clear error message if it was related to first name
+            if (errorMessage === t("Please fill all fields")) {
+                setErrorMessage(null);
+            }
+        }
+    };
+
+    const handleLastNameChange = (value: string) => {
+        setLastName(value);
+        // Clear last name error when user starts typing
+        if (LastNameError) {
+            setLastNameError(false);
+            // Clear error message if it was related to last name
+            if (errorMessage === t("Please fill all fields")) {
+                setErrorMessage(null);
+            }
+        }
     };
 
     const validateInput = async () => {
+        // Reset all error states at the beginning
         setErrorMessage(null);
-        setNameError(false);
+        setFirstNameError(false);
+        setLastNameError(false);
         setPasswordError(false);
         setNumberError(false);
+        setEmailError(false);
 
-        if (!FirstName || !LastName || !Email || !Password || !Number) {
+        // Check for empty fields first
+        let hasEmptyFields = false;
+
+        if (!FirstName) {
+            setFirstNameError(true);
+            hasEmptyFields = true;
+        }
+
+        if (!LastName) {
+            setLastNameError(true);
+            hasEmptyFields = true;
+        }
+
+        if (!Password) {
+            setPasswordError(true);
+            hasEmptyFields = true;
+        }
+
+        if (Number === "+92" || !Number) {
+            setNumberError(true);
+            hasEmptyFields = true;
+        }
+
+        if (!Email) {
+            setEmailError(true);
+            hasEmptyFields = true;
+        }
+
+        if (hasEmptyFields) {
             setErrorMessage(t("Please fill all fields"));
-            if (!FirstName) setNameError(true);
-            if (!LastName) setNameError(true);
-            if (!Password) setPasswordError(true);
-            if (Number === "+92" || !Number) setNumberError(true);
-            if (!Email) setEmailError(true);
             return;
         }
+
+        // Validate phone number format
         if (Number.length < 13) {
             setErrorMessage(t("Mobile number must be 12 digits"));
             setNumberError(true);
             return;
         }
 
+        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(Email)) {
             setErrorMessage(t("Invalid email format"));
@@ -85,20 +173,15 @@ function SignUp(): React.JSX.Element {
             return;
         }
 
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-        if (!passwordRegex.test(Password)) {
-            setErrorMessage(t("Password must be at least 6 characters, with one number and one special character"));
-            setPasswordError(true);
-            return;
-        }
-
+        // Check for duplicate email
         const isEmailDuplicate = userData.some((user) => user.username === Email);
         if (isEmailDuplicate) {
             setErrorMessage(t("This email is already registered"));
-            setNameError(true);
+            setEmailError(true); // Changed from setNameError to setEmailError
             return;
         }
 
+        // All validations passed, proceed with signup
         setIsLoading(true);
         try {
             const response = await axios.post(Routes.signup, {
@@ -120,13 +203,17 @@ function SignUp(): React.JSX.Element {
 
                 userData.push(newUser);
                 storage.set("Number", Number);
-                navigation.navigate(ScreensName.OTPSignUp);
+                navigation.navigate("OTPSignUp");
             }
-        } catch (error) {
-
+        } catch (error: any) {
             console.log(error);
-            setErrorMessage(t(error.response?.data?.message || "Signup failed"));
-            setNameError(true);
+            // Handle API error response
+            if (error.response?.data?.message) {
+                setErrorMessage(t(error.response.data.message));
+            } else {
+                setErrorMessage(t("Signup failed. Please try again."));
+            }
+            // Don't set any specific field as error since we don't know which field caused the error
         } finally {
             setIsLoading(false);
         }
@@ -145,32 +232,37 @@ function SignUp(): React.JSX.Element {
                 />
             </View>
 
+            {/* Position error message at the top of the form for better visibility */}
+            {errorMessage && (
+                <View style={styles.errorBox}>
+                    <Text style={styles.error}>{errorMessage}</Text>
+                </View>
+            )}
+
             <View style={styles.inputs}>
                 <View>
                     <Text style={styles.inputBoxLabel}>{t("First Name")}</Text>
-                    <View style={[styles.passInputBox, { borderColor: NameError ? colors.RED : colors.LIGHT_GRAY }]}>
+                    <View style={[styles.passInputBox, { borderColor: FirstNameError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
                             placeholder={t("First Name")}
-                            placeholderTextColor={NameError ? colors.RED : colors.Text_Fancy}
+                            placeholderTextColor={FirstNameError ? colors.RED : colors.Text_Fancy}
                             value={FirstName}
-                            onChangeText={(value) => setFirstName(value)}
+                            onChangeText={handleFirstNameChange}
                         />
                     </View>
-
                 </View>
                 <View>
                     <Text style={styles.inputBoxLabel}>{t("Last Name")}</Text>
-                    <View style={[styles.passInputBox, { borderColor: NameError ? colors.RED : colors.LIGHT_GRAY }]}>
+                    <View style={[styles.passInputBox, { borderColor: LastNameError ? colors.RED : colors.LIGHT_GRAY }]}>
                         <TextInput
                             style={styles.Input}
                             placeholder={t("Last Name")}
-                            placeholderTextColor={NameError ? colors.RED : colors.Text_Fancy}
+                            placeholderTextColor={LastNameError ? colors.RED : colors.Text_Fancy}
                             value={LastName}
-                            onChangeText={(value) => setLastName(value)}
+                            onChangeText={handleLastNameChange}
                         />
                     </View>
-
                 </View>
                 <View>
                     <Text style={styles.inputBoxLabel}>
@@ -182,7 +274,7 @@ function SignUp(): React.JSX.Element {
                             placeholder={t("Email Address")}
                             placeholderTextColor={EmailError ? colors.RED : colors.Text_Fancy}
                             value={Email}
-                            onChangeText={(value) => setEmail(value)}
+                            onChangeText={handleEmailChange}
                         />
                     </View>
                 </View>
@@ -196,7 +288,7 @@ function SignUp(): React.JSX.Element {
                             value={Number}
                             keyboardType="number-pad"
                             maxLength={13}
-                            onChangeText={(value) => handleNumberChange(value)}
+                            onChangeText={handleNumberChange}
                         />
                     </View>
                 </View>
@@ -209,7 +301,7 @@ function SignUp(): React.JSX.Element {
                             placeholderTextColor={passwordError ? colors.RED : colors.Text_Fancy}
                             secureTextEntry={passwordVisible}
                             value={Password}
-                            onChangeText={(value) => setPassword(value)}
+                            onChangeText={handlePasswordChange}
                         />
                         <TouchableOpacity
                             style={styles.passToggleButton}
@@ -225,30 +317,23 @@ function SignUp(): React.JSX.Element {
             </View>
 
             <View style={styles.options}>
-
                 <View style={styles.RememberMe}>
                     <BouncyCheckbox
                         size={hp(2.5)}
                         fillColor={colors.GREEN}
-                        isChecked={false} // Ensure it's explicitly set to a boolean
+                        isChecked={false}
                         iconStyle={{ borderColor: colors.LIGHT_GRAY }}
                         style={styles.checkbox}
                         innerIconStyle={{ borderRadius: 7 }}
                         textComponent={
                             <Text style={styles.RememberMeText}>
-                                {t(
-                                    "Sign up for e-mails to get updates from E-Agri tips and offers"
-                                )}
+                                {t("Sign up for e-mails to get updates from E-Agri tips and offers")}
                             </Text>
                         }
                     />
                 </View>
             </View>
-            {errorMessage && (
-                <View style={styles.errorBox}>
-                    <Text style={styles.error}>{errorMessage}</Text>
-                </View>
-            )}
+
             <View style={styles.button}>
                 <TouchableOpacity
                     style={[styles.customButton, { backgroundColor: colors.GREEN }]}
@@ -476,20 +561,19 @@ const styles = StyleSheet.create({
     error: {
         textAlign: "left",
         color: colors.BLACK,
-        alignSelf: "flex-start",
         fontFamily: fonts.Medium,
         fontSize: hp(1.5),
     },
     errorBox: {
         backgroundColor: "#FFC1C3",
         borderRadius: 10,
-        textAlign: "left",
-        padding: hp(1),
-        marginLeft: wp(4),
-        alignSelf: "flex-start",
+        padding: hp(1.5),
+        marginTop: hp(1),
+        marginBottom: hp(2),
+        width: wp(85),
+        alignSelf: "center",
         borderColor: colors.RED,
         borderWidth: 1,
-        marginTop: hp(1)
     },
     loadingOverlay: {
         position: 'absolute',

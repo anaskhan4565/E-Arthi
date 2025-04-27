@@ -385,8 +385,8 @@ const HealCropImageCapture = () => {
 
             <View style={styles.contentContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Heal Your Crop</Text>
-                    <Text style={styles.subtitle}>Fit the damaged crop within the frame:</Text>
+                    <Text style={styles.title}>{t("Heal Your Crop")}</Text>
+                    <Text style={styles.subtitle}>{t("Fit the damaged crop within the frame:")}</Text>
                 </View>
 
                 <View style={styles.imagePreviewContainer}>
@@ -399,7 +399,7 @@ const HealCropImageCapture = () => {
                     ) : (
                         <View style={styles.placeholderContainer}>
                             <Text style={styles.placeholderText}>
-                                Take a photo or select from gallery
+                                {t("Take a photo or select from gallery")}
                             </Text>
                         </View>
                     )}
@@ -444,7 +444,7 @@ const HealCropImageCapture = () => {
                     {isAnalyzing ? (
                         <ActivityIndicator color={colors.WHITE} size="small" />
                     ) : (
-                        <Text style={styles.proceedButtonText}>Proceed</Text>
+                        <Text style={styles.proceedButtonText}>{t("Proceed")}</Text>
                     )}
                 </TouchableOpacity>
             </View>

@@ -19,10 +19,11 @@ import Navbar from "../../Navbar/Navbar.jsx";
 import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useNavigation } from "@react-navigation/native";
 import { MMKV } from "react-native-mmkv";
+import { useTranslation } from "react-i18next";
 const Treatment = () => {
     const navigation = useNavigation();
     const PlantDiagnosisData = new MMKV();
-    
+    const { t } = useTranslation();
     // Get diagnosis data from MMKV
     const diagnosisName = PlantDiagnosisData.getString("Diagnosis");
     const imageUri = PlantDiagnosisData.getString("DiagnosisImage");
@@ -37,13 +38,13 @@ const Treatment = () => {
             id: 74
         },
         {
-            name: "Syngenta Actara Insecticide (24 gm)",
-            manufacturer: "Syngenta",
+            name: "Acelan 20SL",
+            manufacturer: "FMC",
             type: "Insecticide",
-            id: 46
+            id: 75
         },
         {
-            name: "Moveto 240",
+            name: "Movento 240",
             manufacturer: "Bayer",
             type: "Insecticide",
             id: 76
@@ -57,7 +58,7 @@ const Treatment = () => {
             </View>
             <ScrollView style={styles.contentContainer}>
                 {/* Title */}
-                <Text style={styles.title}>Treatment</Text>
+                <Text style={styles.title}>{t("Treatment")}</Text>
 
                 {/* Pest Info Row */}
                 <View style={styles.pestInfoContainer}>
@@ -73,15 +74,17 @@ const Treatment = () => {
                         </View>
                     )}
                     <View style={styles.pestNameContainer}>
-                        <Text style={styles.pestName}>{diagnosisName || "Unknown Condition"}</Text>
+                        <Text style={styles.pestName}>{diagnosisName || t("Unknown Condition")}</Text>
                     </View>
-     
+                    <TouchableOpacity style={styles.insectButton}>
+                        <Text style={styles.insectButtonText}>{pathogenClass || t("Unknown")}</Text>
+                    </TouchableOpacity>
                 </View>
 
                 {/* Recommended Products Section */}
-                <Text style={styles.sectionTitle}>Recommended Products:</Text>
+                <Text style={styles.sectionTitle}>{t("Recommended Products")}:</Text>
                 <View style={styles.warningContainer}>
-                    <Text style={styles.warningText}>Select and apply only one of these products to your crop.</Text>
+                    <Text style={styles.warningText}>{t("Select and apply only one of these products to your crop.")}</Text>
                 </View>
 
                 {/* Product List */}
@@ -91,31 +94,19 @@ const Treatment = () => {
                         style={styles.productItem} 
                         onPress={() => {
                             PlantDiagnosisData.set("SelectedProduct", JSON.stringify(insecticide));
-                            navigation.navigate(ScreensName.TreatmentProductDescription as any);
+                            navigation.navigate(ScreensName.TreatmentProductDescription);
                         }}
                     >
                         <View style={styles.productIconContainer}>
                             <Image source={require('./AssetsPlantDr/Treatment/image.png')} style={styles.productIcon} />
                         </View>
                         <View style={styles.productInfo}>
-                            <Text style={styles.productType}>{insecticide.type}</Text>
-                            <Text style={styles.productName}>{insecticide.name} by {insecticide.manufacturer}</Text>
+                            <Text style={styles.productType}>{t(insecticide.type)}</Text>
+                            <Text style={styles.productName}>{t(insecticide.name)} by {t(insecticide.manufacturer)}</Text>
                         </View>
                         <Image source={require('./AssetsPlantDr/Treatment/Arrow.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>
                 ))}
-
-                    {/* Seeds and Fertilizers Button */}
-                    <View style={styles.seedsFertilizerButtonContainer}>
-                    <TouchableOpacity 
-                        style={styles.seedsFertilizerButton}
-                        onPress={() => navigation.navigate(ScreensName.SeedsFertilizers as any)}
-                    >
-                        <View style={styles.buttonContent}>
-                            <Text style={styles.seedsFertilizerButtonText}>Buy Plant Seeds and Fertilizers</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -127,38 +118,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.WHITE,
-    },
-    seedsFertilizerButtonContainer: {
-        marginVertical: hp('3%'),
-    },
-    seedsFertilizerButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.GREEN,
-        padding: wp('4%'),
-        borderRadius: wp('2%'),
-        elevation: 3,
-
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-    },
-    buttonContent: {
-        alignItems: 'center',
-    },
-    buttonIcon: {
-        marginRight: wp('2%'),
-    },
-    seedsFertilizerButtonText: {
-        color: colors.WHITE,
-        alignSelf:'center',
-        textAlign:'center',
-        justifyContent:'center',
-        alignItems:'center',
-        fontSize: wp('4%'),
-        fontWeight: 'bold',
     },
     header: {
         flexDirection: 'row',

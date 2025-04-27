@@ -50,12 +50,24 @@ function EmunshiLineOfCredit() {
                 if (response.data.status === "success") {
                     setWalletData(response.data.data);
                 } else {
+                    // Initialize with zeros if response unsuccessful
+                    setWalletData({
+                        current_balances: { cash_balance: '0', line_of_credit: '0', total_balance: '0' },
+                        cash_balance_history: { total_spent: '0', remaining: '0', total_received: '0' },
+                        line_of_credit_history: { total_spent: '0', remaining: '0', total_received: '0' }
+                    });
                     setError(t("Failed to load wallet data"));
                 }
 
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching wallet data:", err);
+                // Initialize with zeros if API call fails
+                setWalletData({
+                    current_balances: { cash_balance: '0', line_of_credit: '0', total_balance: '0' },
+                    cash_balance_history: { total_spent: '0', remaining: '0', total_received: '0' },
+                    line_of_credit_history: { total_spent: '0', remaining: '0', total_received: '0' }
+                });
                 setError(t("Failed to load wallet data"));
                 setLoading(false);
             }
@@ -95,46 +107,34 @@ function EmunshiLineOfCredit() {
         );
     }
 
-    if (error) {
-        return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.navbarContainer}>
-                    <Navbar gobackOnly={true} />
-                </View>
-                <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{error}</Text>
-                </View>
-            </SafeAreaView>
-        );
-    }
+    // Ensure walletData exists with default values if not
+    const safeWalletData = walletData || {
+        current_balances: { cash_balance: '0', line_of_credit: '0', total_balance: '0' },
+        cash_balance_history: { total_spent: '0', remaining: '0', total_received: '0' },
+        line_of_credit_history: { total_spent: '0', remaining: '0', total_received: '0' }
+    };
 
-    if (!walletData) {
-        return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.navbarContainer}>
-                    <Navbar gobackOnly={true} />
-                </View>
-                <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{t("No wallet data available")}</Text>
-                </View>
-            </SafeAreaView>
-        );
-    }
+    // Safely access nested properties
+    const currentBalances = safeWalletData.current_balances || { cash_balance: '0', line_of_credit: '0', total_balance: '0' };
+    const cashHistory = safeWalletData.cash_balance_history || { total_spent: '0', remaining: '0', total_received: '0' };
+    const locHistory = safeWalletData.line_of_credit_history || { total_spent: '0', remaining: '0', total_received: '0' };
 
     // Calculate cash spending percentage
-    const cashTotalAmount = parseFloat(walletData.current_balances.cash_balance);
-    const cashSpent = parseFloat(walletData.cash_balance_history.total_spent || '0');
-    const cashRemaining = parseFloat(walletData.cash_balance_history.remaining);
-    const cashSpentPercentage = (cashSpent / parseFloat(walletData.cash_balance_history.total_received)) * 100;
+    const cashTotalAmount = parseFloat(currentBalances.cash_balance || '0');
+    const cashSpent = parseFloat(cashHistory.total_spent || '0');
+    const cashRemaining = parseFloat(cashHistory.remaining || '0');
+    const cashTotalReceived = parseFloat(cashHistory.total_received || '1'); // Default to 1 to avoid division by zero
+    const cashSpentPercentage = cashTotalReceived > 0 ? (cashSpent / cashTotalReceived) * 100 : 0;
 
     // Calculate line of credit (agri cash) spending percentage
-    const locTotalAmount = parseFloat(walletData.current_balances.line_of_credit);
-    const locSpent = parseFloat(walletData.line_of_credit_history.total_spent || '0');
-    const locRemaining = parseFloat(walletData.line_of_credit_history.remaining);
-    const locSpentPercentage = (locSpent / parseFloat(walletData.line_of_credit_history.total_received)) * 100;
+    const locTotalAmount = parseFloat(currentBalances.line_of_credit || '0');
+    const locSpent = parseFloat(locHistory.total_spent || '0');
+    const locRemaining = parseFloat(locHistory.remaining || '0');
+    const locTotalReceived = parseFloat(locHistory.total_received || '1'); // Default to 1 to avoid division by zero
+    const locSpentPercentage = locTotalReceived > 0 ? (locSpent / locTotalReceived) * 100 : 0;
 
     // Total loan amount
-    const totalLoanAmount = parseFloat(walletData.current_balances.total_balance);
+    const totalLoanAmount = parseFloat(currentBalances.total_balance || '0');
 
     return (
         <SafeAreaView style={styles.container}>

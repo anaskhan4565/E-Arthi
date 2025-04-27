@@ -30,6 +30,7 @@ const CurrentLoanNew = () => {
                 // Get token from MMKV storage
                 const token = storage.getString('token');
                 const userId = storage.getString('userId');
+                console.log(token, userId);
 
                 if (!token) {
                     console.error(t('No token found in storage'));
@@ -57,6 +58,7 @@ const CurrentLoanNew = () => {
                 if (response.data.status === "success") {
                     setWalletData(response.data.data);
                 } else {
+                    console.error("API returned error status");
                     setError(t("Failed to load wallet data"));
                 }
 
@@ -128,45 +130,61 @@ const CurrentLoanNew = () => {
                     <View style={styles.loaderContainer}>
                         <ActivityIndicator size="large" color={colors.BLUE} />
                     </View>
-                ) : error ? (
-                    <Text style={styles.errorText}>{error}</Text>
-                ) : !walletData ? (
-                    <View style={styles.emptyContainer}>
-                        <Text style={styles.emptyText}>{t("You don't have any active loans")}</Text>
-                    </View>
                 ) : (
                     <>
+                        {error && (
+                            <View style={styles.errorIndicator}>
+
+                            </View>
+                        )}
                         <View style={styles.summaryContainer}>
                             <Text style={styles.sectionTitle}>{t("Loan Summary")}</Text>
                             <Text style={styles.summaryText}>{t("Loan taken on")}: {formatDate(new Date())}</Text>
-                            <Text style={styles.summaryText}>{t("Loan amount")}: {formatAmount(walletData.current_balances.total_balance)} {t("Rupees")}</Text>
+                            <Text style={styles.summaryText}>{t("Loan amount")}: {formatAmount(walletData?.current_balances?.total_balance || 0)} {t("Rupees")}</Text>
 
                             {/* Calculate loan splits */}
                             {(() => {
-                                const loanAmount = parseFloat(walletData.current_balances.total_balance);
+                                const loanAmount = parseFloat(walletData?.current_balances?.total_balance || 0);
 
-                                // Use the actual split from API instead of calculated
-                                const loanSplit = {
-                                    cashAmount: parseFloat(walletData.current_balances.cash_balance),
-                                    lineOfCreditAmount: parseFloat(walletData.current_balances.line_of_credit),
+                                // Default data when no loan exists
+                                const defaultData = {
+                                    cashAmount: 0,
+                                    lineOfCreditAmount: 0,
+                                    cashPercentage: 30,
+                                    lineOfCreditPercentage: 70,
+                                    cashSpending: {
+                                        spent: 0,
+                                        remaining: 0,
+                                        percentage: 100
+                                    },
+                                    creditSpending: {
+                                        spent: 0,
+                                        remaining: 0,
+                                        percentage: 100
+                                    }
+                                };
+
+                                // Use actual data if available, otherwise use defaults
+                                const loanSplit = walletData ? {
+                                    cashAmount: parseFloat(walletData.current_balances?.cash_balance || 0),
+                                    lineOfCreditAmount: parseFloat(walletData.current_balances?.line_of_credit || 0),
                                     cashPercentage: 30,
                                     lineOfCreditPercentage: 70
-                                };
+                                } : defaultData;
 
-                                // Use the actual spending data from API instead of random
-                                const cashSpending = {
-                                    spent: parseFloat(walletData.cash_balance_history.total_spent || 0),
-                                    remaining: parseFloat(walletData.cash_balance_history.remaining),
-                                    // Show full circle (100%) when nothing is spent, and decrease as spending increases
-                                    percentage: 100 - (parseFloat(walletData.cash_balance_history.total_spent || 0) / parseFloat(walletData.cash_balance_history.total_received)) * 100
-                                };
+                                const cashSpending = walletData ? {
+                                    spent: parseFloat(walletData.cash_balance_history?.total_spent || 0),
+                                    remaining: parseFloat(walletData.cash_balance_history?.remaining || 0),
+                                    percentage: walletData.cash_balance_history?.total_received > 0 ?
+                                        100 - (parseFloat(walletData.cash_balance_history?.total_spent || 0) / parseFloat(walletData.cash_balance_history?.total_received)) * 100 : 100
+                                } : defaultData.cashSpending;
 
-                                const creditSpending = {
-                                    spent: parseFloat(walletData.line_of_credit_history.total_spent || 0),
-                                    remaining: parseFloat(walletData.line_of_credit_history.remaining),
-                                    // Show full circle (100%) when nothing is spent, and decrease as spending increases
-                                    percentage: 100 - (parseFloat(walletData.line_of_credit_history.total_spent || 0) / parseFloat(walletData.line_of_credit_history.total_received)) * 100
-                                };
+                                const creditSpending = walletData ? {
+                                    spent: parseFloat(walletData.line_of_credit_history?.total_spent || 0),
+                                    remaining: parseFloat(walletData.line_of_credit_history?.remaining || 0),
+                                    percentage: walletData.line_of_credit_history?.total_received > 0 ?
+                                        100 - (parseFloat(walletData.line_of_credit_history?.total_spent || 0) / parseFloat(walletData.line_of_credit_history?.total_received)) * 100 : 100
+                                } : defaultData.creditSpending;
 
                                 return (
                                     <>
@@ -403,18 +421,19 @@ const styles = StyleSheet.create({
         marginTop: hp('10%'),
         marginHorizontal: wp('4%'),
     },
-    emptyContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: hp('10%'),
+    errorIndicator: {
+        backgroundColor: colors.LIGHT_RED,
+        padding: hp('0.8%'),
         marginHorizontal: wp('4%'),
+        borderRadius: hp('0.5%'),
+        marginBottom: hp('1%'),
     },
-    emptyText: {
+    errorIndicatorText: {
+        color: colors.RED,
         textAlign: 'center',
-        color: colors.GRAY,
-        fontSize: hp('2%'),
-    },
+        fontSize: hp('1.6%'),
+        fontFamily: fonts.Medium,
+    }
 });
 
 export default CurrentLoanNew;

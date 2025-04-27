@@ -117,10 +117,10 @@ const Diagnosis = () => {
                 <Navbar gobackOnly={true} />
             </View>
             <ScrollView style={styles.scrollView}>
-                <Text style={styles.title}>Diagnosis</Text>
+                <Text style={styles.title}>{t("Diagnosis")}</Text>
 
                 <View style={styles.diagnosisContainer}>
-                    <Text style={styles.diagnosisTitle}>{diagnosisName || "Unknown Condition"}</Text>
+                    <Text style={styles.diagnosisTitle}>{diagnosisName || t("Unknown Condition")}</Text>
                     <TouchableOpacity style={styles.pathogenTypeButton}>
                         <Text style={styles.pathogenTypeText}>
                             {formatPathogenClass(pathogenClass)}
@@ -137,14 +137,14 @@ const Diagnosis = () => {
                 </View>
 
                 <View style={styles.symptomsContainer}>
-                    <Text style={styles.symptomsTitle}>Symptoms:</Text>
+                    <Text style={styles.symptomsTitle}>{t("Symptoms")}:</Text>
                     <Text style={styles.symptomsText}>
-                        {symptoms || "No symptoms information available."}
+                        {symptoms || t("No symptoms information available.")}
                     </Text>
                 </View>
 
                 <View style={styles.moreInfoContainer}>
-                    <Text style={styles.moreInfoTitle}>Prevention Measures:</Text>
+                    <Text style={styles.moreInfoTitle}>{t("Prevention Measures")}:</Text>
                     {preventiveMeasures && preventiveMeasures.length > 0 ? (
                         <View style={styles.preventiveMeasuresList}>
                             {preventiveMeasures.map((measure, index) => (
@@ -154,12 +154,12 @@ const Diagnosis = () => {
                             ))}
                         </View>
                     ) : (
-                        <Text style={styles.moreInfoText}>No prevention measures available.</Text>
+                        <Text style={styles.moreInfoText}>{t("No prevention measures available.")}</Text>
                     )}
                     
                     <Text style={[styles.moreInfoText, styles.scientificNameSection]}>
-                        Scientific Name: <Text style={styles.boldText}>{scientificName || "Not specified"}</Text>{"\n"}
-                        Also found in: {hosts}
+                        {t("Scientific Name")}: <Text style={styles.boldText}>{scientificName || t("Not specified")}</Text>{"\n"}
+                        {t("Also found in")}: {hosts}
                     </Text>
                 </View>
 
@@ -167,7 +167,7 @@ const Diagnosis = () => {
                     style={styles.confirmButton} 
                     onPress={() => navigation.navigate(ScreensName.Treatment)}
                 >
-                    <Text style={styles.confirmButtonText}>Confirm and See Treatment</Text>
+                    <Text style={styles.confirmButtonText}>{t("Confirm and See Treatment")}</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>

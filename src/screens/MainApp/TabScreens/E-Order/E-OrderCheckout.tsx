@@ -75,8 +75,8 @@ function EOrderPlaceOrder(): React.JSX.Element {
       if (!product.isCashPurchase && change > 0) {
         if (!checkAgriCashLimit(product, newQuantity)) {
           Alert.alert(
-            "Agri-Cash Limit Exceeded",
-            `Increasing quantity would exceed your Agri-Cash limit of Rs ${formatNumber(AGRI_CASH_LIMIT)}.`
+            t("Agri-Cash Limit Exceeded"),
+            t("Increasing quantity would exceed your Agri-Cash limit of Rs") + " " + formatNumber(AGRI_CASH_LIMIT) + "."
           );
           return;
         }
@@ -138,7 +138,7 @@ function EOrderPlaceOrder(): React.JSX.Element {
                       product.price?.replace(/,/g, '') : 
                       product.discounted_price?.replace(/,/g, '') || 0
                     ).toFixed(2))}
-                    {product.isCashPurchase ? " (Cash)" : " (Agri-Cash)"}
+                    {product.isCashPurchase ? t(" (Cash)") : t(" (Agri-Cash)")}
                   </Text>
                 </View>
                 <View style={[styles.quantityContainer, { justifyContent: 'space-around' }]}>

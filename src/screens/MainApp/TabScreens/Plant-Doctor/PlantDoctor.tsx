@@ -27,7 +27,7 @@ import CloudSun from "../../../../assets/MainApp/PlantDoctor/CloudSun.png";
 
 const PlantDoctor = () => {
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
 
 
 
@@ -38,7 +38,7 @@ const PlantDoctor = () => {
       </View>
       <ScrollView style={styles.container}>
         <View style={styles.Title}>
-          <Text style={styles.TitleText}>Plant Doctor</Text>
+          <Text style={styles.TitleText}>{t("Plant Doctor")}</Text>
         </View>
 
         {/* Weather and Spraying Section */}
@@ -46,16 +46,16 @@ const PlantDoctor = () => {
           <View style={styles.HeaderSection}>
             <View style={styles.HeaderRow}>
               <Image source={CloudSun} style={styles.HeaderImage} />
-              <Text style={styles.HeaderText}>Weather Conditions</Text>
+              <Text style={styles.HeaderText}>{t("Weather Conditions")}</Text>
             </View>
             <Text style={styles.HeaderSubText}>Cloudy - 26°C</Text>
           </View>
           <View style={styles.HeaderSection}>
             <View style={styles.HeaderRow}>
               <Image source={require('../../../../assets/MainApp/PlantDoctor/DropletHalf.png')} style={styles.HeaderImage} />
-              <Text style={styles.HeaderText}>Spraying Conditions</Text>
+              <Text style={styles.HeaderText}>{t("Spraying Conditions")}</Text>
             </View>
-            <Text style={styles.HeaderSubText}>Unfavourable</Text>
+            <Text style={styles.HeaderSubText}>{t("Unfavourable")}</Text>
           </View>
         </View>
 
@@ -74,18 +74,18 @@ const PlantDoctor = () => {
           <TouchableOpacity
             style={styles.addCropButton}
             onPress={() => navigation.navigate(ScreensName.AddCrop)}>
-            <Text style={styles.addCropText}>Add more crops</Text>
+            <Text style={styles.addCropText}>{t("Add more crops")}</Text>
           </TouchableOpacity>
         </View>
 
         {/* Heal Your Crop Section */}
         <View style={styles.healSection}>
-          <Text style={styles.sectionTitle}>Heal Your Crop</Text>
-          <Text style={styles.sectionSubtitle}>Take a picture to see diagnosis and get a medicine</Text>
+          <Text style={styles.sectionTitle}>{t("Heal Your Crop")}</Text>
+          <Text style={styles.sectionSubtitle}>{t("Take a picture to see diagnosis and get a medicine")}</Text>
           <TouchableOpacity
             style={styles.takePictureButton}
             onPress={() => navigation.navigate(ScreensName.HealCropImageCapture)}>
-            <Text style={styles.buttonText}>Take picture</Text>
+            <Text style={styles.buttonText}>{t("Take picture")}</Text>
           </TouchableOpacity>
         </View>
 
@@ -95,29 +95,29 @@ const PlantDoctor = () => {
             style={styles.featureItem}
             onPress={() => navigation.navigate(ScreensName.FertilizerCalculator)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Fertilizer.png')} style={styles.featureIcon} />
-            <Text style={styles.featureText}>Fertilizer Calculator</Text>
+            <Text style={styles.featureText}>{t("Fertilizer Calculator")}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.featureItem}
             onPress={() => navigation.navigate(ScreensName.PestsAndDiseases)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Worm.png')} style={styles.featureIcon} />
-            <Text style={styles.featureText}>Pests and Diseases</Text>
+            <Text style={styles.featureText}>{t("Pests and Diseases")}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.featureItem} onPress={() => navigation.navigate(ScreensName.CultivationTips)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Seedling.png')} style={styles.featureIcon} />
-            <Text style={styles.featureText}>Cultivation Tips</Text>
+            <Text style={styles.featureText}>{t("Cultivation Tips")}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.featureItem} onPress={() => navigation.navigate(ScreensName.PestAndDiseasesAlert)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Warning.png')} style={styles.featureIcon} />
-            <Text style={styles.featureText}>Pests and Disease Alert</Text>
+            <Text style={styles.featureText}>{t("Pests and Disease Alert")}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.featureItem} onPress={() => navigation.navigate(ScreensName.PlantDrCommunity)}>
             <Image source={require('../../../../assets/MainApp/PlantDoctor/Chat.png')} style={styles.featureIcon} />
-            <Text style={styles.featureText}>Community</Text>
+            <Text style={styles.featureText}>{t("Community")}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

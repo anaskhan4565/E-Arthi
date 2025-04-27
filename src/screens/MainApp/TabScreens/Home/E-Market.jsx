@@ -30,7 +30,6 @@ import ScreensName from "../../../../../util/Constants/ScreensName.ts";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsThunk } from '../../../../redux/emarketThunks.js';
 import { setSelectedCategory, addToCart, setCart, setProducts } from '../../../../redux/emarketSlice';
-
 // Memoized components for better performance
 const MemoizedProductBox = memo(ProductBox);
 const MemoizedCategorybox = memo(Categorybox);
@@ -130,19 +129,19 @@ const EMarket = () => {
 
     const handleAddItem = useCallback((product) => {
         if (product.stock_quantity === 0) {
-            Alert.alert("Out of Stock", "This product is currently out of stock.");
+            Alert.alert(t("Out of Stock"), t("This product is currently out of stock."));
             return;
         }
         if (product.stock_quantity < 0) {
-            Alert.alert("Coming Soon", "This product is currently not listed.");
+            Alert.alert(t("Coming Soon"), t("This product is currently not listed."));
             return;
         }
 
         // Check Agri-Cash limit before adding
         if (!checkAgriCashLimit(product)) {
             Alert.alert(
-                "Agri-Cash Limit Exceeded",
-                `Adding this item would exceed your Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}.`
+                t("Agri-Cash Limit Exceeded"),
+                t(`Adding this item would exceed your Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}.`)
             );
             return;
         }
@@ -156,8 +155,8 @@ const EMarket = () => {
                     // Check if increasing quantity would exceed limit
                     if (!checkAgriCashLimit(item, item.quantity + 1)) {
                         Alert.alert(
-                            "Agri-Cash Limit Exceeded",
-                            `Increasing quantity would exceed your Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}.`
+                            t("Agri-Cash Limit Exceeded"),
+                            t(`Increasing quantity would exceed your Agri-Cash limit of Rs ${formatPrice(AGRI_CASH_LIMIT)}.`)
                         );
                         return item;
                     }
@@ -261,7 +260,7 @@ const EMarket = () => {
                                 onPress={() => handleTabPress('products')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'products' && styles.activeTabText]}>
-                                    Products
+                                    {t("Products")}
                                 </Text>
                             </TouchableOpacity>
 
@@ -270,7 +269,7 @@ const EMarket = () => {
                                 onPress={() => handleTabPress('favorites')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'favorites' && styles.activeTabText]}>
-                                    Favorites ({favoritesCount})
+                                    {t("Favorites")} ({favoritesCount})
                                 </Text>
                             </TouchableOpacity>
 
@@ -279,7 +278,7 @@ const EMarket = () => {
                                 onPress={() => handleTabPress('notified')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'notified' && styles.activeTabText]}>
-                                    Notified ({notifiedCount})
+                                    {t("Notified")} ({notifiedCount})
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -302,13 +301,13 @@ const EMarket = () => {
                         {activeTab === 'products' && (
                             <>
                                 <Text style={styles.recommendedTitle}>
-                                    {selectedCategory || "Top Products"}
+                                    {t(selectedCategory) || t("Top Products")}
                                 </Text>
 
                                 {isLoading ? (
                                     <View style={styles.loaderContainer}>
                                         <ActivityIndicator size="large" color={colors.GREEN} />
-                                        <Text style={styles.loaderText}>Loading products...</Text>
+                                        <Text style={styles.loaderText}>{t("Loading products...")}</Text>
                                     </View>
                                 ) : filteredProducts.length > 0 ? (
                                     <View style={styles.productContainer}>
@@ -333,7 +332,7 @@ const EMarket = () => {
                                     </View>
                                 ) : (
                                     <View style={styles.noProductsContainer}>
-                                        <Text style={styles.noProductsText}>No products found</Text>
+                                        <Text style={styles.noProductsText}>{t("No products found")}</Text>
                                     </View>
                                 )}
                             </>
@@ -341,17 +340,17 @@ const EMarket = () => {
 
                         {activeTab === 'favorites' && (
                             <View style={styles.centeredContent}>
-                                <Text style={styles.recommendedTitle}>Favorite Products</Text>
+                                <Text style={styles.recommendedTitle}>{t("Favorite Products")}</Text>
                                 {/* Favorites will be implemented later */}
-                                <Text style={styles.placeholderText}>Your favorite products will appear here</Text>
+                                <Text style={styles.placeholderText}>{t("Your favorite products will appear here")}</Text>
                             </View>
                         )}
 
                         {activeTab === 'notified' && (
                             <View style={styles.centeredContent}>
-                                <Text style={styles.recommendedTitle}>Notified Products</Text>
+                                <Text style={styles.recommendedTitle}>{t("Notified Products")}</Text>
                                 {/* Notified products will be implemented later */}
-                                <Text style={styles.placeholderText}>Products you're notified about will appear here</Text>
+                                <Text style={styles.placeholderText}>{t("Products you're notified about will appear here")}</Text>
                             </View>
                         )}
                     </View>
@@ -369,9 +368,9 @@ const EMarket = () => {
                         onPress={navigateToCheckout}
                     >
                         <Text style={styles.cartText}>
-                            {totalQuantity} Items . PKR {formatNumber(totalCost)}
+                            {totalQuantity} {t("Items")} . {t("PKR")} {formatNumber(totalCost)}
                         </Text>
-                        <Text style={styles.cartText}>Buy Now</Text>
+                        <Text style={styles.cartText}>{t("Buy Now")}</Text>
                     </TouchableOpacity>
                 </View>
             )}

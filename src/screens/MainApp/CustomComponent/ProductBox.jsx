@@ -39,6 +39,7 @@ const ProductBox = ({
   const handlePress = () => {
     if (name) {
       const id = product.id;
+      console.log("id", id);
    
       const productData = JSON.stringify({
         id, name, price, discounted_price,

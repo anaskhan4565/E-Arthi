@@ -346,7 +346,7 @@ function EOrderPaymentMethod() {
                                             />
                                         )}
                                     </View>
-                                    <Text style={styles.paymentMethodName}>{method.name}</Text>
+                                    <Text style={styles.paymentMethodName}>{t(method.name)}</Text>
                                 </TouchableOpacity>
                             ))}
                         </Animated.View>

@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Dimensions, NativeSyntheticEvent, NativeScrollEvent, Platform, Alert, Linking } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Dimensions, NativeSyntheticEvent, NativeScrollEvent, Platform, Alert, Linking, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CardsSvg from '../../assets/MainApp/OnBoarding/Cards.svg';
 import MapSvg from '../../assets/MainApp/OnBoarding/Map.svg';
+import MapSvg2 from '../../assets/MainApp/OnBoarding/MapUr.svg';
+// Import using require to avoid typescript path issues
+const mp3 = require('./assets/img2.png');
 import ScreensName from '../../../util/Constants/ScreensName';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from '../../../util/Constants/colors';
@@ -10,6 +13,7 @@ import { fonts } from '../../../util/Constants/FontName';
 import Navbar from '../MainApp/Navbar/Navbar';
 import CustomSearchApp from '../MainApp/CustomComponent/CustomSearchApp';
 import Geolocation from '@react-native-community/geolocation';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,6 +23,16 @@ const OnboardingScreen2 = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [locationPermissionGranted, setLocationPermissionGranted] = useState(false);
     const [isCheckingPermission, setIsCheckingPermission] = useState(false);
+    const { t, i18n } = useTranslation();
+    
+    // Check if current language is Urdu and add debug logging
+    const isUrduLanguage = i18n.language === 'ur';
+    
+    // Debug log to see current language
+    useEffect(() => {
+        console.log('Current language:', i18n.language);
+        console.log('Is Urdu language:', isUrduLanguage);
+    }, [i18n.language]);
 
     // Request permission when component mounts
     useEffect(() => {
@@ -182,7 +196,7 @@ const OnboardingScreen2 = () => {
                             </View>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.slideDescription}>
-                                    Let's start with getting your dashboard set up. Track your farm's performance in real time, make smarter decisions, and stay on top of everything—all from one place.
+                                    {t("Let's start with getting your dashboard set up. Track your farm's performance in real time, make smarter decisions, and stay on top of everything—all from one place.")}
                                 </Text>
                             </View>
                         </View>
@@ -193,7 +207,7 @@ const OnboardingScreen2 = () => {
                             disabled={isCheckingPermission}
                         >
                             <Text style={styles.buttonText}>
-                                {isCheckingPermission ? 'Checking...' : 'Allow location'}
+                                {isCheckingPermission ? t('Checking...') : t('Allow location')}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -203,11 +217,20 @@ const OnboardingScreen2 = () => {
                         <View style={styles.contentContainer}>
 
                             <View style={styles.mapContainer}>
-                                <MapSvg width={wp(130)} height={hp(45)} />
+                                {/* Conditionally render map based on language */}
+                                {isUrduLanguage ? (
+                                    <Image 
+                                        source={mp3} 
+                                        style={{ width: wp(130), height: hp(45) }} 
+                                        resizeMode="contain"
+                                    />
+                                ) : (
+                                    <MapSvg width={wp(130)} height={hp(45)} />
+                                )}
                             </View>
                             <View style={[styles.titleContainer, { marginTop: hp(4) }]}>
                                 <Text style={styles.slideDescription}>
-                                    Let's start with getting your dashboard set up. Track your farm's performance in real time, make smarter decisions, and stay on top of everything—all from one place.
+                                    {t("Let's start with getting your dashboard set up. Track your farm's performance in real time, make smarter decisions, and stay on top of everything—all from one place.")}
                                 </Text>
                             </View>
 
@@ -220,7 +243,7 @@ const OnboardingScreen2 = () => {
                             disabled={isCheckingPermission}
                         >
                             <Text style={styles.buttonText}>
-                                {isCheckingPermission ? 'Checking...' : 'Allow location'}
+                                {isCheckingPermission ? t('Checking...') : t('Allow location')}
                             </Text>
                         </TouchableOpacity>
                     </View>

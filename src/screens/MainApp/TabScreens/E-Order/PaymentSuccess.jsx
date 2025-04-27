@@ -30,6 +30,8 @@ const AboutMore = () => {
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
     const cartItems = reduxCart.length > 0 ? reduxCart : parsedCart;
 
+    console.log("cartItems", cartItems);
+
     // Get payment details from storage
     const finalPrice = storage.getString("FinalPrice") || "0";
     const passedName = PassedPayment.getString("PassedName") || "";
@@ -83,14 +85,8 @@ const AboutMore = () => {
             const token = storage.getString('token');
             const userId = storage.getString('userId');
 
-            // Debug log to identify what's missing
-            console.log('Debug order data:', {
-                hasToken: !!token,
-                hasUserId: !!userId,
-                cartItemsLength: cartItems?.length || 0,
-                reduxCartLength: reduxCart?.length || 0,
-                parsedCartLength: parsedCart?.length || 0
-            });
+            // Debug log to identify cart items
+            console.log('Cart items for order placement:', cartItems);
 
             // Check if we have cart items
             if (!cartItems || cartItems.length === 0) {
@@ -116,57 +112,74 @@ const AboutMore = () => {
             // Get payment method (lowercase for API)
             const paymentMethod = passedName.toLowerCase() || "cod";
 
+            // Track successful and failed orders
+            let successfulOrders = 0;
+            let failedOrders = 0;
+
+            console.log(`Placing orders for ${cartItems.length} cart items`);
+
             // Place order for each item in cart
             const orderPromises = cartItems.map(async (product, index) => {
-                // Debug: Log full product object to see what properties are available
-                console.log(`Cart item ${index} full data:`, JSON.stringify(product));
+                try {
+                    // Ensure we have a product ID (product.id or product.product_id)
+                    const productId = product.id || product.product_id;
 
-                // Ensure we have a product ID (product.id or product.product_id)
-                const productId = product.id || product.product_id;
+                    if (!productId) {
+                        console.error(`Product ID missing for item ${index}:`, product.name || 'unknown product');
+                        failedOrders++;
+                        return null;
+                    }
 
-                if (!productId) {
-                    console.error('Product ID missing for', product.name || 'unknown product');
+                    const cartOrderData = {
+                        product_id: productId,
+                        quantity: product.quantity || 1,
+                        payment_type: isAgriCashOnly ? "WALLET" : (hasBothPaymentTypes ? "MIXED" : paymentMethod),
+                        shipping_address: shippingAddress,
+                        contact_number: contactNumber
+                    };
+
+                    console.log(`Placing order ${index + 1}/${cartItems.length}:`, cartOrderData);
+
+                    // Make API call to place order
+                    const response = await axios.post(
+                        'https://eagri-backend.vercel.app/e_market/place-order/',
+                        cartOrderData,
+                        {
+                            headers: {
+                                'Authorization': `Token ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+
+                    console.log(`Order ${index + 1} placed successfully:`, response.data);
+                    successfulOrders++;
+                    return response;
+                } catch (error) {
+                    console.error(`Error placing order for item ${index}:`, error.message);
+                    failedOrders++;
                     return null;
                 }
-
-                const cartOrderData = {
-                    product_id: productId,
-                    quantity: product.quantity || 1,
-                    payment_type: "WALLET",
-                    shipping_address: shippingAddress,
-                    contact_number: contactNumber
-                };
-
-                console.log('Placing cart order:', cartOrderData);
-
-                // Make API call to place order
-                return axios.post(
-                    'https://eagri-backend.vercel.app/e_market/place-order/',
-                    cartOrderData,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
-                );
             });
 
+            // Wait for all order promises to complete
             const results = await Promise.all(orderPromises);
-            const successfulOrders = results.filter(result => result !== null);
+            const validResults = results.filter(result => result !== null);
 
-            if (successfulOrders.length > 0) {
-                console.log(`Successfully placed ${successfulOrders.length} orders`);
+            console.log(`Order placement summary: ${successfulOrders} successful, ${failedOrders} failed`);
+
+            if (validResults.length > 0) {
+                console.log(`Successfully placed ${validResults.length} orders`);
                 setOrderPlaced(true);
-                
+
                 // Clear cart immediately after successful order placement
                 clearCart();
             } else {
                 setOrderError('Failed to place any orders');
             }
         } catch (error) {
-            console.error('Error placing order:', error);
-            setOrderError(error.message || 'Failed to place order');
+            console.error('Error in order placement process:', error);
+            setOrderError(error.message || 'Failed to place orders');
         }
     };
 
@@ -174,10 +187,10 @@ const AboutMore = () => {
     const clearCart = () => {
         // Clear cart from storage
         storage.delete("cart");
-        
+
         // Clear cart from Redux store
         dispatch(setCart([]));
-        
+
         console.log("Cart cleared successfully");
     };
 
@@ -210,7 +223,7 @@ const AboutMore = () => {
         } else {
             // Make sure cart is cleared again when navigating away
             clearCart();
-            
+
             // Clear other temporary data
             storage.delete("FinalPrice");
             storage.delete("AgriCashAmount");
@@ -218,11 +231,11 @@ const AboutMore = () => {
             storage.delete("IsAgriCashOnly");
             storage.delete("updatedCart");
             storage.delete("PaymentCompleted");
-            
+
             // Only clear payment-related keys instead of all keys
             // This prevents authentication token from being deleted
             PassedPayment.delete("PassedName");
-            
+
             // Navigate back to main screen
             navigation.navigate(ScreensName.MainTabNavigation);
         }
